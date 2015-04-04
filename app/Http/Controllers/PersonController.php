@@ -1,8 +1,8 @@
 <?php namespace App\Http\Controllers;
 
+use App\Person;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Person;
 use Illuminate\Http\Request;
 
 class PersonController extends Controller {
@@ -46,7 +46,12 @@ class PersonController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		$person=Person::find($id);
+		
+		if(is_null($person)){
+			return "404";
+		}
+		return view('person.show',compact('person'));
 	}
 
 	/**

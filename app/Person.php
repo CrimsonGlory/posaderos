@@ -15,4 +15,5 @@ class Person extends Model {
 	'other'
 	];
 
+
 }

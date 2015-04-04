@@ -6,7 +6,7 @@
 <ul>
 @foreach ($people as $person)
 <div name="person">
-	<li>
+	<li> {{$person->id}}: 
 <a href="{{ url('/person', $person->id) }}">
 	{{$person->first_name}} {{$person->last_name}}
 </a>
