@@ -25,7 +25,7 @@ class PersonController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		return view('person.create');
 	}
 
 	/**
@@ -35,7 +35,9 @@ class PersonController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		$input = Request::all();
+		$person=Person::create($input);
+		return redirect('person');
 	}
 
 	/**
@@ -62,7 +64,11 @@ class PersonController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$person=Person::find($id);
+		if(is_null($person)){
+			return "404";
+		}
+		return view('person.edit',compact('person'));
 	}
 
 	/**
@@ -73,7 +79,10 @@ class PersonController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		$person = Person::findOrFail($id);
+		$person->update($request->all());
+		return redirect('person');
+
 	}
 
 	/**
