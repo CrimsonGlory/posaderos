@@ -2,8 +2,12 @@
 
 use App\Person;
 use App\Http\Requests;
+use App\Http\Requests\CreatePersonRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
+//use Illuminate\Http\Request;
+//use Illuminate\Http\Response;
+
 
 class PersonController extends Controller {
 
@@ -14,7 +18,7 @@ class PersonController extends Controller {
 	 */
 	public function index()
 	{
-		$people=Person::all();
+		$people=Person::latest('id')->get();
 		return view('person.index', compact('people'));
 	}
 
@@ -33,11 +37,11 @@ class PersonController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(CreatePersonRequest $request)
 	{
-		$input = Request::all();
-		$person=Person::create($input);
-		return redirect('person');
+		$input = $request->all();
+        $person=Person::create($input);
+        return redirect('person');
 	}
 
 	/**
@@ -77,7 +81,7 @@ class PersonController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(CreatePersonRequest $request,$id)
 	{
 		$person = Person::findOrFail($id);
 		$person->update($request->all());
