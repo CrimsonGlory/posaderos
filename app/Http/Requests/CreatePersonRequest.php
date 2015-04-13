@@ -22,7 +22,8 @@ class CreatePersonRequest extends Request {
 	public function rules()
 	{
 		return [
-			//
+			'first_name' => 'required|min:2',
+            'gender' => 'required',
 		];
 	}
 

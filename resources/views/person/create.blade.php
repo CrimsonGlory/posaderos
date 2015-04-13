@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>Editar persona</h1>
+    <h1>Guardar persona</h1>
 
     <hr/>
 
@@ -15,6 +15,11 @@
     <div class="form-group">
         {!! Form::label('last_name', 'Apellido:') !!}
         {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('birthdate', 'Fecha de nacimiento:') !!}
+        {!! Form::input('date', 'birthdate', date('Y-m-d'), ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group">
@@ -46,5 +51,13 @@
     </div>
 
     {!! Form::close() !!}
+
+    @if ($errors->any())
+        <ul class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
 
 @stop
