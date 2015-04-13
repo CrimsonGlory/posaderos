@@ -4,6 +4,9 @@
 
 <div class="form-group">
     <div class="form-group">
+        <a href="{{ action('PersonController@edit', $person->id) }}">[editar]</a>
+    </div>
+    <div class="form-group">
         @if (!is_null($person->first_name) OR !is_null($person->last_name))
             Nombre: {{$person->first_name}}
             {{$person->last_name}} <br/>
