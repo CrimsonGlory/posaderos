@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
-
+//Route::get('/', 'WelcomeController@index');
+Route::get('/','PersonController@index');
 Route::get('home', 'HomeController@index');
 
 Route::resource('person','PersonController');

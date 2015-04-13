@@ -1,7 +1,9 @@
 @extends('app')
 
 @section('content')
-
+<div class="form-group">
+<a href="{{ action('PersonController@create') }}">Agregar persona</a>
+</div>
 <div class="form-group">
     @if  (count($people) > 0 )
         <ul>
