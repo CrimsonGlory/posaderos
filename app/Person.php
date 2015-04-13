@@ -1,5 +1,6 @@
 <?php namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model {
@@ -15,5 +16,10 @@ class Person extends Model {
 	'other'
 	];
 
+    // Para que agregue la hora al guardar y no sólo el día
+    public function setBirthdateAttribute($date)
+    {
+        $this->attributes['birthdate'] = Carbon::createFromFormat('Y-m-d', $date);
+    }
 
 }
