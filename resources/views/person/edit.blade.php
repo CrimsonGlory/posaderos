@@ -18,18 +18,28 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('birthdate', 'Fecha de nacimiento:') !!}
-        {!! Form::input('date', 'birthdate', date('Y-m-d'), ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
         {!! Form::label('email', 'Email:') !!}
         {!! Form::text('email', null, ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group">
+        {!! Form::label('birthdate', 'Fecha de nacimiento:') !!}
+        {!! Form::input('date', 'birthdate', date('Y-m-d'), ['class' => 'form-control']) !!}
+    </div>
+
+    <div class="form-group">
         {!! Form::label('gender','Sexo:') !!}
         {!! Form::select('gender', array('male' => 'Hombre', 'female' => 'Mujer'), $person->gender) !!}
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('address', 'Dirección:') !!}
+        {!! Form::text('address', null, ['class' => 'form-control']) !!}
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('other', 'Otros datos:') !!}
+        {!! Form::text('other', null, ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group">

@@ -27,25 +27,26 @@
         {!! Form::text('email', null, ['class' => 'form-control']) !!}
     </div>
 
-    <?php
-    /*
-<div class="form-group">
-{!! Form::label('birthdate', 'Fecha de nacimiento:') !!}
-{!! Form::text('birthdate', $person->first_name, ['class' => 'form-control']) !!}
-</div>
-    */
-    ?>
+    <div class="form-group">
+        {!! Form::label('dni', 'DNI:') !!}
+        {!! Form::text('dni', null, ['class' => 'form-control']) !!}
+    </div>
+
     <div class="form-group">
         {!! Form::label('gender','Sexo:') !!}
         {!! Form::select('gender', array('male' => 'Hombre', 'female' => 'Mujer'), 'male') !!}
     </div>
 
-    <?php /*
     <div class="form-group">
-        {!! Form::label('body', 'Body:') !!}
-        {!! Form::textarea('body', null, ['class' => 'form-control']) !!}
+        {!! Form::label('address','Dirección:') !!}
+        {!! Form::text('address', null, ['class' => 'form-control']) !!}
     </div>
-*/ ?>
+
+    <div class="form-group">
+        {!! Form::label('other','Otro:') !!}
+        {!! Form::text('other', null, ['class' => 'form-control']) !!}
+    </div>
+
     <div class="form-group">
         {!! Form::submit('Guardar', ['class' => 'btn btn-primary form-control']) !!}
     </div>
