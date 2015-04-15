@@ -14,5 +14,6 @@
 @endforeach
 </ul>
 @endif
+       <p><a href="{{ url('/interaction/create',$person->id) }}" class="btn btn-primary" role="button">Alta Interaccion</a></p>
 </div>
 @endsection

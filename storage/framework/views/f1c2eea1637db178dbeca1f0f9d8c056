@@ -1,0 +1,39 @@
+<?php $__env->startSection('content'); ?>
+
+<div name="user">
+<?php if(!is_null($user->name) OR !is_null($user->surname)): ?>
+	Nombre: <?php echo e($user->first_name); ?> 
+	<?php echo e($user->last_name); ?> <br />
+<?php endif; ?>
+
+<?php if(!is_null($user->email)): ?>
+Email: <?php echo e($user->email); ?> <br />
+<?php endif; ?>
+
+<?php if(!is_null($user->birthdate)): ?>
+Fecha de nacimiento: <?php echo e($user->birthdate); ?> <br />
+<?php endif; ?>
+
+<?php if(!is_null($user->dni)): ?>
+DNI: <?php echo e($user->dni); ?> <br />
+<?php endif; ?>
+
+<?php if(!is_null($user->gender)): ?>
+Sexo:   <?php echo e(trans('messages.'.$user->gender)); ?>  <br />
+<?php endif; ?>
+
+<?php if(!is_null($user->address)): ?>
+Dirección: <?php echo e($user->address); ?> <br />
+<?php endif; ?>
+
+<a href="<?php echo e(url('/user/edit', $user->id)); ?>">
+	<?php echo e($user->name); ?> <?php echo e($user->surname); ?>
+
+</a>
+
+
+
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,20 @@
+<?php $__env->startSection('content'); ?>
+<div name="people">
+<?php if(count($people) > 0 ): ?>
+<ul>
+<?php foreach($people as $person): ?>
+<div name="person">
+	<li> <?php echo e($person->id); ?>: 
+<a href="<?php echo e(url('/person', $person->id)); ?>">
+	<?php echo e($person->first_name); ?> <?php echo e($person->last_name); ?>
+
+</a>
+	</li></div>
+<?php endforeach; ?>
+</ul>
+<?php endif; ?>
+       <p><a href="<?php echo e(url('/interaction/create',$person->id)); ?>" class="btn btn-primary" role="button">Alta Interaccion</a></p>
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

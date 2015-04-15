@@ -1,0 +1,244 @@
+[2015-04-10 22:35:35] local.ERROR: exception 'PDOException' with message 'SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'migrations' already exists' in /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php:358
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php(358): PDOStatement->execute(Array)
+#1 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php(612): Illuminate\Database\Connection->Illuminate\Database\{closure}(Object(Illuminate\Database\MySqlConnection), 'create table `m...', Array)
+#2 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php(576): Illuminate\Database\Connection->runQueryCallback('create table `m...', Array, Object(Closure))
+#3 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php(359): Illuminate\Database\Connection->run('create table `m...', Array, Object(Closure))
+#4 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Schema/Blueprint.php(63): Illuminate\Database\Connection->statement('create table `m...')
+#5 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php(169): Illuminate\Database\Schema\Blueprint->build(Object(Illuminate\Database\MySqlConnection), Object(Illuminate\Database\Schema\Grammars\MySqlGrammar))
+#6 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php(112): Illuminate\Database\Schema\Builder->build(Object(Illuminate\Database\Schema\Blueprint))
+#7 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Migrations/DatabaseMigrationRepository.php(125): Illuminate\Database\Schema\Builder->create('migrations', Object(Closure))
+#8 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/InstallCommand.php(52): Illuminate\Database\Migrations\DatabaseMigrationRepository->createRepository()
+#9 [internal function]: Illuminate\Database\Console\Migrations\InstallCommand->fire()
+#10 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Container/Container.php(523): call_user_func_array(Array, Array)
+#11 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(115): Illuminate\Container\Container->call(Array)
+#12 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(257): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#13 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(101): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#14 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#15 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\InstallCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#16 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#17 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#18 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#19 {main}
+
+Next exception 'Illuminate\Database\QueryException' with message 'SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'migrations' already exists (SQL: create table `migrations` (`migration` varchar(255) not null, `batch` int not null) default character set utf8 collate utf8_unicode_ci)' in /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php:620
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php(576): Illuminate\Database\Connection->runQueryCallback('create table `m...', Array, Object(Closure))
+#1 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php(359): Illuminate\Database\Connection->run('create table `m...', Array, Object(Closure))
+#2 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Schema/Blueprint.php(63): Illuminate\Database\Connection->statement('create table `m...')
+#3 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php(169): Illuminate\Database\Schema\Blueprint->build(Object(Illuminate\Database\MySqlConnection), Object(Illuminate\Database\Schema\Grammars\MySqlGrammar))
+#4 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php(112): Illuminate\Database\Schema\Builder->build(Object(Illuminate\Database\Schema\Blueprint))
+#5 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Migrations/DatabaseMigrationRepository.php(125): Illuminate\Database\Schema\Builder->create('migrations', Object(Closure))
+#6 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/InstallCommand.php(52): Illuminate\Database\Migrations\DatabaseMigrationRepository->createRepository()
+#7 [internal function]: Illuminate\Database\Console\Migrations\InstallCommand->fire()
+#8 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Container/Container.php(523): call_user_func_array(Array, Array)
+#9 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(115): Illuminate\Container\Container->call(Array)
+#10 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(257): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#11 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(101): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#12 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#13 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\InstallCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#14 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#15 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#16 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#17 {main}  
+[2015-04-10 22:38:00] local.ERROR: exception 'InvalidArgumentException' with message 'Command "migrate:make" is not defined.
+
+Did you mean one of these?
+    migrate:reset
+    migrate:refresh
+    migrate:status
+    migrate:rollback
+    migrate:install
+    migrate' in /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php:549
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(192): Symfony\Component\Console\Application->find('migrate:make')
+#1 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#2 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 {main}  
+[2015-04-10 22:38:15] local.ERROR: exception 'RuntimeException' with message 'Too many arguments.' in /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Input/ArgvInput.php:181
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Input/ArgvInput.php(90): Symfony\Component\Console\Input\ArgvInput->parseArgument('update_user_tab...')
+#1 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Input/Input.php(61): Symfony\Component\Console\Input\ArgvInput->parse()
+#2 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(229): Symfony\Component\Console\Input\Input->bind(Object(Symfony\Component\Console\Input\InputDefinition))
+#3 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(101): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#5 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\RefreshCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#6 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#7 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#8 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#9 {main}  
+[2015-04-10 22:38:24] local.ERROR: exception 'RuntimeException' with message 'Too many arguments.' in /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Input/ArgvInput.php:181
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Input/ArgvInput.php(90): Symfony\Component\Console\Input\ArgvInput->parseArgument('update_user_tab...')
+#1 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Input/Input.php(61): Symfony\Component\Console\Input\ArgvInput->parse()
+#2 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(229): Symfony\Component\Console\Input\Input->bind(Object(Symfony\Component\Console\Input\InputDefinition))
+#3 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(101): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#5 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\MigrateCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#6 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#7 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#8 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#9 {main}  
+[2015-04-10 22:38:44] local.ERROR: exception 'RuntimeException' with message 'The "--update" option does not exist.' in /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Input/ArgvInput.php:213
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Input/ArgvInput.php(154): Symfony\Component\Console\Input\ArgvInput->addLongOption('update', NULL)
+#1 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Input/ArgvInput.php(86): Symfony\Component\Console\Input\ArgvInput->parseLongOption('--update')
+#2 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Input/Input.php(61): Symfony\Component\Console\Input\ArgvInput->parse()
+#3 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(229): Symfony\Component\Console\Input\Input->bind(Object(Symfony\Component\Console\Input\InputDefinition))
+#4 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(101): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#5 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#6 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\MigrateMakeCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#7 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#8 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#9 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#10 {main}  
+[2015-04-10 22:42:45] local.ERROR: exception 'InvalidArgumentException' with message 'Command "migrate:make" is not defined.
+
+Did you mean one of these?
+    migrate:reset
+    migrate:refresh
+    migrate:status
+    migrate:rollback
+    migrate:install
+    migrate' in /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php:549
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(192): Symfony\Component\Console\Application->find('migrate:make')
+#1 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#2 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 {main}  
+[2015-04-10 23:12:03] local.ERROR: exception 'RuntimeException' with message 'Not enough arguments.' in /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Input/Input.php:77
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(252): Symfony\Component\Console\Input\Input->validate()
+#1 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(101): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#2 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\MigrateMakeCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#5 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#6 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#7 {main}  
+[2015-04-10 23:12:37] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'UserUpdateTable' not found' in /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php:301
+Stack trace:
+#0 {main}  
+[2015-04-10 23:14:33] local.ERROR: exception 'ErrorException' with message 'include(/home/enzo/Posaderos/database/migrations/2015_04_10_230341_crear_tabla_user.php): failed to open stream: No existe el archivo o el directorio' in /home/enzo/Posaderos/vendor/composer/ClassLoader.php:412
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/composer/ClassLoader.php(412): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'include(/home/e...', '/home/enzo/Posa...', 412, Array)
+#1 /home/enzo/Posaderos/vendor/composer/ClassLoader.php(412): Composer\Autoload\includeFile()
+#2 /home/enzo/Posaderos/vendor/composer/ClassLoader.php(301): Composer\Autoload\includeFile('/home/enzo/Posa...')
+#3 [internal function]: Composer\Autoload\ClassLoader->loadClass('CrearTablaUser')
+#4 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(301): spl_autoload_call('CrearTablaUser')
+#5 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(192): Illuminate\Database\Migrations\Migrator->resolve('2015_04_10_2303...')
+#6 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(172): Illuminate\Database\Migrations\Migrator->runDown(Object(stdClass), false)
+#7 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/RollbackCommand.php(59): Illuminate\Database\Migrations\Migrator->rollback(false)
+#8 [internal function]: Illuminate\Database\Console\Migrations\RollbackCommand->fire()
+#9 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Container/Container.php(523): call_user_func_array(Array, Array)
+#10 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(115): Illuminate\Container\Container->call(Array)
+#11 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(257): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#12 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(101): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#13 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#14 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\RollbackCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#15 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#16 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#17 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#18 {main}  
+[2015-04-10 23:17:24] local.ERROR: exception 'PDOException' with message 'SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'password_resets' already exists' in /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php:358
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php(358): PDOStatement->execute(Array)
+#1 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php(612): Illuminate\Database\Connection->Illuminate\Database\{closure}(Object(Illuminate\Database\MySqlConnection), 'create table `p...', Array)
+#2 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php(576): Illuminate\Database\Connection->runQueryCallback('create table `p...', Array, Object(Closure))
+#3 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php(359): Illuminate\Database\Connection->run('create table `p...', Array, Object(Closure))
+#4 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Schema/Blueprint.php(63): Illuminate\Database\Connection->statement('create table `p...')
+#5 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php(169): Illuminate\Database\Schema\Blueprint->build(Object(Illuminate\Database\MySqlConnection), Object(Illuminate\Database\Schema\Grammars\MySqlGrammar))
+#6 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php(112): Illuminate\Database\Schema\Builder->build(Object(Illuminate\Database\Schema\Blueprint))
+#7 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(213): Illuminate\Database\Schema\Builder->create('password_resets', Object(Closure))
+#8 /home/enzo/Posaderos/database/migrations/2014_10_12_100000_create_password_resets_table.php(20): Illuminate\Support\Facades\Facade::__callStatic('create', Array)
+#9 /home/enzo/Posaderos/database/migrations/2014_10_12_100000_create_password_resets_table.php(20): Illuminate\Support\Facades\Schema::create('password_resets', Object(Closure))
+#10 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(135): CreatePasswordResetsTable->up()
+#11 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(111): Illuminate\Database\Migrations\Migrator->runUp('2014_10_12_1000...', 1, false)
+#12 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(82): Illuminate\Database\Migrations\Migrator->runMigrationList(Array, false)
+#13 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/MigrateCommand.php(73): Illuminate\Database\Migrations\Migrator->run('/home/enzo/Posa...', false)
+#14 [internal function]: Illuminate\Database\Console\Migrations\MigrateCommand->fire()
+#15 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Container/Container.php(523): call_user_func_array(Array, Array)
+#16 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(115): Illuminate\Container\Container->call(Array)
+#17 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(257): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#18 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(101): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#19 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#20 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\MigrateCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#21 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#22 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#23 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#24 {main}
+
+Next exception 'Illuminate\Database\QueryException' with message 'SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'password_resets' already exists (SQL: create table `password_resets` (`email` varchar(255) not null, `token` varchar(255) not null, `created_at` timestamp default 0 not null) default character set utf8 collate utf8_unicode_ci)' in /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php:620
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php(576): Illuminate\Database\Connection->runQueryCallback('create table `p...', Array, Object(Closure))
+#1 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Connection.php(359): Illuminate\Database\Connection->run('create table `p...', Array, Object(Closure))
+#2 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Schema/Blueprint.php(63): Illuminate\Database\Connection->statement('create table `p...')
+#3 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php(169): Illuminate\Database\Schema\Blueprint->build(Object(Illuminate\Database\MySqlConnection), Object(Illuminate\Database\Schema\Grammars\MySqlGrammar))
+#4 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php(112): Illuminate\Database\Schema\Builder->build(Object(Illuminate\Database\Schema\Blueprint))
+#5 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(213): Illuminate\Database\Schema\Builder->create('password_resets', Object(Closure))
+#6 /home/enzo/Posaderos/database/migrations/2014_10_12_100000_create_password_resets_table.php(20): Illuminate\Support\Facades\Facade::__callStatic('create', Array)
+#7 /home/enzo/Posaderos/database/migrations/2014_10_12_100000_create_password_resets_table.php(20): Illuminate\Support\Facades\Schema::create('password_resets', Object(Closure))
+#8 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(135): CreatePasswordResetsTable->up()
+#9 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(111): Illuminate\Database\Migrations\Migrator->runUp('2014_10_12_1000...', 1, false)
+#10 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(82): Illuminate\Database\Migrations\Migrator->runMigrationList(Array, false)
+#11 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/MigrateCommand.php(73): Illuminate\Database\Migrations\Migrator->run('/home/enzo/Posa...', false)
+#12 [internal function]: Illuminate\Database\Console\Migrations\MigrateCommand->fire()
+#13 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Container/Container.php(523): call_user_func_array(Array, Array)
+#14 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(115): Illuminate\Container\Container->call(Array)
+#15 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(257): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#16 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Console/Command.php(101): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#17 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#18 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\MigrateCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#19 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#20 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#21 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#22 {main}  
+[2015-04-10 23:20:00] local.ERROR: exception 'InvalidArgumentException' with message 'Command "server" is not defined.
+
+Did you mean this?
+    serve' in /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php:549
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(192): Symfony\Component\Console\Application->find('server')
+#1 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#2 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 {main}  
+[2015-04-10 23:44:58] local.ERROR: exception 'InvalidArgumentException' with message 'There are no commands defined in the "generate" namespace.' in /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php:501
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(535): Symfony\Component\Console\Application->findNamespace('generate')
+#1 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(192): Symfony\Component\Console\Application->find('generate:model')
+#2 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#5 {main}  
+[2015-04-10 23:51:36] local.ERROR: exception 'InvalidArgumentException' with message 'There are no commands defined in the "controller" namespace.' in /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php:501
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(535): Symfony\Component\Console\Application->findNamespace('controller')
+#1 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(192): Symfony\Component\Console\Application->find('controller:make')
+#2 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#5 {main}  
+[2015-04-10 23:55:19] local.ERROR: exception 'InvalidArgumentException' with message 'Command "make:view" is not defined.
+
+Did you mean one of these?
+    make:migration
+    make:controller
+    make:middleware
+    make:request
+    make:provider
+    make:console
+    make:event
+    make:model
+    make:command' in /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php:549
+Stack trace:
+#0 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Command/HelpCommand.php(76): Symfony\Component\Console\Application->find('make:view')
+#1 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(257): Symfony\Component\Console\Command\HelpCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#2 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Symfony\Component\Console\Command\HelpCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 /home/enzo/Posaderos/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#5 /home/enzo/Posaderos/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(94): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#6 /home/enzo/Posaderos/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#7 {main}  

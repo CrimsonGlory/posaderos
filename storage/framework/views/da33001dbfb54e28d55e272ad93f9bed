@@ -1,0 +1,78 @@
+<?php $__env->startSection('content'); ?>
+
+    <h1>Crear usuario</h1>
+
+    <hr/>
+
+    <?php echo Form::open(['url' => 'user']); ?>
+
+
+    <div class="form-group">
+        <?php echo Form::label('name', 'Nombre:'); ?>
+
+        <?php echo Form::text('name', null, ['class' => 'form-control']); ?>
+
+        <?php echo e($errors->first('name')); ?>
+
+    </div>
+    <div class="form-group">
+        <?php echo Form::label('surname', 'Apellido:'); ?>
+
+        <?php echo Form::text('surname', null, ['class' => 'form-control']); ?>
+
+        <?php echo e($errors->first('surname')); ?> 
+    </div>
+
+    <div class="form-group">
+        <?php echo Form::label('email', 'Email:'); ?>
+
+        <?php echo Form::text('email', null, ['class' => 'form-control']); ?>
+
+        <?php echo e($errors->first('email')); ?>
+
+    </div>
+
+    <div class="form-group">
+        <?php echo Form::label('birthDate', 'Fecha de nacimiento:'); ?>
+
+        <?php echo Form::text('birthDate', null, ['class' => 'form-control']); ?>
+
+        <?php echo e($errors->first('birthDate')); ?>
+
+    </div>
+
+    <div class="form-group">
+        <?php echo Form::label('gender','Sexo:'); ?>
+
+        <?php echo Form::select('gender', array('male' => 'Hombre', 'female' => 'Mujer'), 'male'); ?>
+
+        <?php echo e($errors->first('gender')); ?>
+
+    </div>
+    <div class="form-group">
+        <?php echo Form::label('address', 'Direccion:'); ?>
+
+        <?php echo Form::text('address', null, ['class' => 'form-control']); ?>
+
+        <?php echo e($errors->first('address')); ?>
+
+    </div>
+    <div class="form-group">
+        <?php echo Form::label('dni', 'DNI:'); ?>
+
+        <?php echo Form::text('dni', null, ['class' => 'form-control']); ?>
+
+        <?php echo e($errors->first('dni')); ?>
+
+    </div>
+
+    <div class="form-group">
+        <?php echo Form::submit('Guardar', ['class' => 'btn btn-primary form-control']); ?>
+
+    </div>
+
+    <?php echo Form::close(); ?>
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

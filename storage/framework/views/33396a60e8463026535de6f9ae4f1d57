@@ -1,0 +1,60 @@
+<?php $__env->startSection('content'); ?>
+
+    <h1>Editar persona</h1>
+
+    <hr/>
+
+    <?php echo Form::open([ 'method'=> 'PATCH', 'action' => ['PersonController@update',$person->id ]]); ?>
+
+
+    <div class="form-group">
+        <?php echo Form::label('first_name', 'Nombre:'); ?>
+
+        <?php echo Form::text('first_name', $person->first_name, ['class' => 'form-control']); ?>
+
+    </div>
+    <div class="form-group">
+        <?php echo Form::label('last_name', 'Apellido:'); ?>
+
+        <?php echo Form::text('last_name', $person->last_name, ['class' => 'form-control']); ?>
+
+    </div>
+
+    <div class="form-group">
+        <?php echo Form::label('email', 'Email:'); ?>
+
+        <?php echo Form::text('email', $person->email, ['class' => 'form-control']); ?>
+
+    </div>
+
+    <?php
+            /*
+    <div class="form-group">
+        {!! Form::label('birthdate', 'Fecha de nacimiento:') !!}
+        {!! Form::text('birthdate', $person->first_name, ['class' => 'form-control']) !!}
+    </div>
+            */
+?>
+    <div class="form-group">
+    <?php echo Form::label('gender','Sexo:'); ?>
+
+    <?php echo Form::select('gender', array('male' => 'Hombre', 'female' => 'Mujer'), $person->gender); ?>
+
+    </div>
+
+    <?php /*
+    <div class="form-group">
+        {!! Form::label('body', 'Body:') !!}
+        {!! Form::textarea('body', null, ['class' => 'form-control']) !!}
+    </div>
+*/ ?>
+    <div class="form-group">
+        <?php echo Form::submit('Guardar', ['class' => 'btn btn-primary form-control']); ?>
+
+    </div>
+
+    <?php echo Form::close(); ?>
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,42 @@
+<?php $__env->startSection('content'); ?>
+
+<div name="person">
+<?php if(!is_null($person->first_name) OR !is_null($person->last_name)): ?>
+	Nombre: <?php echo e($person->first_name); ?> 
+	<?php echo e($person->last_name); ?> <br />
+<?php endif; ?>
+
+<?php if(!is_null($person->email)): ?>
+Email: <?php echo e($person->email); ?> <br />
+<?php endif; ?>
+
+<?php if(!is_null($person->birthdate)): ?>
+Fecha de nacimiento: <?php echo e($person->birthdate); ?> <br />
+<?php endif; ?>
+
+<?php if(!is_null($person->dni)): ?>
+DNI: <?php echo e($person->dni); ?> <br />
+<?php endif; ?>
+
+<?php if(!is_null($person->gender)): ?>
+Sexo:   <?php echo e(trans('messages.'.$person->gender)); ?>  <br />
+<?php endif; ?>
+
+<?php if(!is_null($person->address)): ?>
+Dirección: <?php echo e($person->address); ?> <br />
+<?php endif; ?>
+
+<?php if(!is_null($person->other)): ?>
+Otros datos: <?php echo e($person->other); ?> <br />
+<?php endif; ?>
+<a href="<?php echo e(url('/person/edit', $person->id)); ?>">
+	<?php echo e($person->first_name); ?> <?php echo e($person->last_name); ?>
+
+</a>
+       <p><a href="<?php echo e(url('/person/showAllFrom',$person->id)); ?>" class="btn btn-primary" role="button">Mostrar Interacciones</a></p>
+
+
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

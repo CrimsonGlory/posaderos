@@ -1,6 +1,7 @@
 <?php namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Interaction;
 
 class Person extends Model {
 
@@ -14,6 +15,9 @@ class Person extends Model {
 	'address',
 	'other'
 	];
-
+	public function interactions()
+	{
+		return $this->hasMany('App\Interaction');
+	}
 
 }

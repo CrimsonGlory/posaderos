@@ -31,8 +31,10 @@ Dirección: {{$person->address}} <br />
 @if (!is_null($person->other))
 Otros datos: {{$person->other}} <br />
 @endif
-
-
+<a href="{{ url('/person/edit', $person->id) }}">
+	{{$person->first_name}} {{$person->last_name}}
+</a>
+       <p><a href="{{ url('/person/showAllFrom',$person->id) }}" class="btn btn-primary" role="button">Mostrar Interacciones</a></p>
 
 
 </div>

@@ -1,0 +1,48 @@
+<?php $__env->startSection('content'); ?>
+<!-- <?php if($errors->has()): ?>
+
+We encountered the following errors:
+
+<ul>
+    <?php foreach($errors->all() as $message): ?>
+
+    <li><?php echo e($message); ?></li>
+
+    <?php endforeach; ?>
+</ul>
+
+<?php endif; ?> -->
+    <h1>Editar Area de necesidad</h1>
+
+    <hr/>
+
+    <?php echo Form::open([ 'method'=> 'PATCH', 'action' => ['NeedsAreaController@update',$needsArea->id ]]); ?>
+
+
+    <div class="form-group">
+        <?php echo Form::label('name', 'Nombre:'); ?>
+
+        <?php echo Form::text('name', $needsArea->name, ['class' => 'form-control']); ?>
+
+        <?php echo e($errors->first('name')); ?>
+
+    </div>
+    <div class="form-group">
+        <?php echo Form::label('description', 'descripcion:'); ?>
+
+        <?php echo Form::text('description', $needsArea->description, ['class' => 'form-control']); ?>
+
+        <?php echo e($errors->first('description')); ?>
+
+    </div>
+
+    <div class="form-group">
+        <?php echo Form::submit('Guardar', ['class' => 'btn btn-primary form-control']); ?>
+
+    </div>
+
+    <?php echo Form::close(); ?>
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

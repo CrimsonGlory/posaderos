@@ -59,7 +59,16 @@ class PersonController extends Controller {
 		}
 		return view('person.show',compact('person'));
 	}
+	public function showAllFrom($id)
+	{
+		$interactions=Person::find($id)->interactions;
+		$datos = array('person_id' => $id, 'interactions' => $interactions);
 
+		if(is_null($interactions)){
+			return "404";
+		}
+		return view('person.showAllInteractions',compact('datos'));	
+	}
 	/**
 	 * Show the form for editing the specified resource.
 	 *

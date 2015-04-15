@@ -1,0 +1,23 @@
+<?php $__env->startSection('content'); ?>
+
+<div name="needsArea">
+<?php if(!is_null($needsArea->name)): ?>
+	Nombre: <?php echo e($needsArea->name); ?> 
+ <br />
+<?php endif; ?>
+
+<?php if(!is_null($needsArea->description)): ?>
+Descripcion: <?php echo e($needsArea->description); ?> <br />
+<?php endif; ?>
+
+<a href="<?php echo e(url('/needsArea/edit', $needsArea->id)); ?>">
+	<?php echo e($needsArea->name); ?>
+
+</a>
+
+
+
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
