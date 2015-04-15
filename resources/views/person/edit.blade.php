@@ -30,7 +30,7 @@
 
     <div class="form-group">
         {!! Form::label('birthdate', 'Fecha de nacimiento:') !!}
-        {!! Form::input('date', 'birthdate', date('Y-m-d'), ['class' => 'form-control']) !!}
+        {!! Form::input('date', 'birthdate', $person->birthdate, ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group">
