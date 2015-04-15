@@ -43,7 +43,7 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('other','Otro:') !!}
+        {!! Form::label('other','Observaciones:') !!}
         {!! Form::text('other', null, ['class' => 'form-control']) !!}
     </div>
 

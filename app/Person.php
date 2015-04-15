@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use App\Interaction;
 
 class Person extends Model {
 
@@ -22,4 +23,8 @@ class Person extends Model {
         $this->attributes['birthdate'] = Carbon::createFromFormat('Y-m-d', $date);
     }
 
+    public function interactions()
+    {
+	return $this->hasMany('App\Interaction','person_id');
+    }
 }
