@@ -54,7 +54,7 @@
 <div class="form-group">
     @if  (count($person->interactions) > 0 )
         <ul>
-            @foreach ($person->interactions as $interaction)
+            @foreach ($person->interactions=App\Interaction::latest('id')->get() as $interaction)
                 <div class="form-group">
                     <li> {{$interaction->date}}:
                             {{$interaction->text}} <a href="{{ action("InteractionController@edit",$interaction) }}">[editar]</a> 
