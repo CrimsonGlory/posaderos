@@ -41,7 +41,7 @@ class PersonController extends Controller {
 	{
 		$input = $request->all();
         $person=Person::create($input);
-        return redirect('person');
+        return redirect('person/'.$person->id);
 	}
 
 	/**
@@ -85,7 +85,7 @@ class PersonController extends Controller {
 	{
 		$person = Person::findOrFail($id);
 		$person->update($request->all());
-		return redirect('person');
+		return redirect('person/'.$person->id);
 
 	}
 

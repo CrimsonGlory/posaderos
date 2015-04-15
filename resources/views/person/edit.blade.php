@@ -1,9 +1,10 @@
 @extends('app')
 
 @section('content')
-
+<div class="form-group">
     <h1>Editar persona</h1>
-
+<a href="{{ action('PersonController@show', $person->id) }}">[volver]</a>
+</div>
     <hr/>
 
     {!! Form::model($person, [ 'method'=> 'PATCH', 'action' => ['PersonController@update', $person->id]]) !!}
@@ -23,6 +24,11 @@
     </div>
 
     <div class="form-group">
+        {!! Form::label('dni', 'Documento:') !!}
+        {!! Form::text('dni', null, ['class' => 'form-control']) !!}
+    </div>
+
+    <div class="form-group">
         {!! Form::label('birthdate', 'Fecha de nacimiento:') !!}
         {!! Form::input('date', 'birthdate', date('Y-m-d'), ['class' => 'form-control']) !!}
     </div>
@@ -38,7 +44,7 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('other', 'Otros datos:') !!}
+        {!! Form::label('other', 'Observaciones:') !!}
         {!! Form::text('other', null, ['class' => 'form-control']) !!}
     </div>
 
