@@ -25,6 +25,6 @@ class Person extends Model {
 
     public function interactions()
     {
-	return $this->hasMany('Interaction','person_id');
+	return $this->hasMany('App\Interaction','person_id');
     }
 }
