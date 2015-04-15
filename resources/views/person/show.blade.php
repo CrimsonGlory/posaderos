@@ -48,6 +48,21 @@
             Otros datos: {{$person->other}} <br/>
         @endif
     </div>
+<hr>
+<div class="form-group">
+    @if  (count($person->interactions) > 0 )
+        <ul>
+            @foreach ($interaction as $person->interactions)
+                <div class="form-group">
+                    <li> {{$interaction->date}}:
+                            {{$interaction->text}} 
+                    </li>
+                </div>
+            @endforeach
+        </ul>
+    @endif
+</div>
+
 </div>
 
 @endsection
