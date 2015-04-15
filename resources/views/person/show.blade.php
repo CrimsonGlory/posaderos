@@ -48,11 +48,12 @@
             Otros datos: {{$person->other}} <br/>
         @endif
     </div>
-<hr>
+<hr><h1>Interacciones</h1>
+<a href="{{ url('person/'.$person->id.'/interaction/create') }}">[agregar]</a>
 <div class="form-group">
     @if  (count($person->interactions) > 0 )
         <ul>
-            @foreach ($interaction as $person->interactions)
+            @foreach ($person->interactions as $interaction)
                 <div class="form-group">
                     <li> {{$interaction->date}}:
                             {{$interaction->text}} 

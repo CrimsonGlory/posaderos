@@ -14,9 +14,10 @@
 //Route::get('/', 'WelcomeController@index');
 Route::get('/','PersonController@index');
 Route::get('home', 'HomeController@index');
-
+Route::get('person/{id}/interaction/create','InteractionController@create');
+Route::post('person/{id}/interaction','InteractionController@store');
 Route::resource('person','PersonController');
-
+Route::resource('interaction','InteractionController');
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
