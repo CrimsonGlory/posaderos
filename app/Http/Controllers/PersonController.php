@@ -11,6 +11,17 @@ use App\Http\Controllers\Controller;
 
 class PersonController extends Controller {
 
+    /**
+     * Función para que verifique autenticación al ingresar a una página
+     *
+     * Si se pusiera $this->middleware('auth', ['only' => 'create']); sólo pide login para crear uno nuevo
+     * Si se pusiera $this->middleware('auth', ['except' => 'create']); hace lo inverso al punto anterior
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -57,7 +68,8 @@ class PersonController extends Controller {
 		if(is_null($person)){
 			return "404";
 		}
-		return view('person.show',compact('person'));
+		$interactions=$person->interactions()->latest('id')->get();
+		return view('person.show',compact('person','interactions'));
 	}
 
 	/**

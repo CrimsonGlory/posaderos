@@ -52,9 +52,9 @@
 <hr><h1>Interacciones</h1>
 <a href="{{ url('person/'.$person->id.'/interaction/create') }}">[agregar]</a>
 <div class="form-group">
-    @if  (count($person->interactions) > 0 )
+    @if  (count($interactions) > 0 )
         <ul>
-            @foreach ($person->interactions as $interaction)
+            @foreach ($interactions as $interaction)
                 <div class="form-group">
                     <li> {{$interaction->date}}:
                             {{$interaction->text}} <a href="{{ action("InteractionController@edit",$interaction) }}">[editar]</a> 
