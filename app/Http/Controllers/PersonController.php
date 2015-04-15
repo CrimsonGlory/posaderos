@@ -68,7 +68,8 @@ class PersonController extends Controller {
 		if(is_null($person)){
 			return "404";
 		}
-		return view('person.show',compact('person'));
+		$interactions=$person->interactions()->latest('id')->get();
+		return view('person.show',compact('person','interactions'));
 	}
 
 	/**
