@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use App\Person;
-
+use Carbon\Carbon;
 class Interaction extends Model {
 	protected $table = 'interactions';
 	protected $fillable = [
@@ -15,4 +15,10 @@ class Interaction extends Model {
 	{
 		return $this->belongsTo('Person');
 	}
+
+	// Para que agregue la hora al guardar y no sólo el día
+    public function setDateAttribute($date)
+    {
+        $this->attributes['date'] = Carbon::createFromFormat('Y-m-d', $date);
+    }
 }
