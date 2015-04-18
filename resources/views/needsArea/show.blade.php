@@ -12,9 +12,7 @@
 Descripcion: {{$needsArea->description}} <br />
 @endif
 
-<a href="{{ url('/needsArea/edit', $needsArea->id) }}">
-	{{$needsArea->name}}
-</a>
+<a href="{{ action('NeedsAreaController@edit',$needsArea) }}">[editar]</a>
 
 
 
