@@ -1,97 +1,96 @@
 @extends('app')
 
 @section('content')
-<div class="form-group">
-    <h1>Editar persona</h1>
-<a href="{{ action('PersonController@show', $person->id) }}">[volver]</a>
-</div>
-    <hr/>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Actualizar persona</h4>
+                    </div>
+                    <div class="panel-body">
+                        @if ($errors->any())
+                            <ul class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
 
-    {!! Form::model($person, [ 'method'=> 'PATCH', 'action' => ['PersonController@update', $person->id]]) !!}
+                        {!! Form::model($person, ['class' => 'form-horizontal', 'method'=> 'PATCH', 'action' => ['PersonController@update', $person->id]]) !!}
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-    <div class="form-group">
-        {!! Form::label('first_name', 'Nombre:') !!}
-        {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Nombre</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="first_name" value="{{ $person->first_name }}" autofocus="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Apellido</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="last_name" value="{{ $person->last_name }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">DNI</label>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" name="dni" value="{{ $person->dni }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Fecha de nacimiento</label>
+                                <div class="col-md-6">
+                                    <input type="date" class="form-control" name="birthdate" value="{{ $person->birthdate }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Sexo</label>
+                                <div class="col-md-6">
+                                    {!! Form::select('gender', array('male' => 'Hombre', 'female' => 'Mujer'), $person->gender, array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Correo electrónico</label>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" name="email" value="{{ $person->email }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Dirección</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="address" value="{{ $person->address }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Observaciones</label>
+                                <div class="col-md-6">
+                                    <textarea type="text" class="form-control" name="other" value="{{ $person->other }}"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <table width="100%">
+                                    <tr>
+                                        <td align="right"><button type="submit" class="btn btn-primary" style="width:100px;">Guardar</button></td>
+                                        <td width="20"></td>
+                                        <td align="left"><a href="{{ action('PersonController@show', $person->id) }}" class="btn btn-primary" style="width:100px;">Cancelar</a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        {!! Form::label('last_name', 'Apellido:') !!}
-        {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
-    </div>
+@endsection
 
-    <div class="form-group">
-        {!! Form::label('email', 'Email:') !!}
-        {!! Form::text('email', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('dni', 'Documento:') !!}
-        {!! Form::text('dni', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('birthdate', 'Fecha de nacimiento:') !!}
-        {!! Form::input('date', 'birthdate', $person->birthdate, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('gender','Sexo:') !!}
-        {!! Form::select('gender', array('male' => 'Hombre', 'female' => 'Mujer'), $person->gender) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('address', 'Dirección:') !!}
-        {!! Form::text('address', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('other', 'Observaciones:') !!}
-        {!! Form::text('other', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::submit('Guardar', ['class' => 'btn btn-primary form-control']) !!}
-    </div>
-
-    {!! Form::close() !!}
-
-    @if ($errors->any())
-        <ul class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
-
-
-
-
-    <?php /* Código viejo
-    <div class="form-group">
-        {!! Form::label('first_name', 'Nombre:') !!}
-        {!! Form::text('first_name', $person->first_name, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('last_name', 'Apellido:') !!}
-        {!! Form::text('last_name', $person->last_name, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('email', 'Email:') !!}
-        {!! Form::text('email', $person->email, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-    {!! Form::label('gender','Sexo:') !!}
-    {!! Form::select('gender', array('male' => 'Hombre', 'female' => 'Mujer'), $person->gender) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('body', 'Body:') !!}
-        {!! Form::textarea('body', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::submit('Guardar', ['class' => 'btn btn-primary form-control']) !!}
-    </div>
-    */ ?>
 @stop
