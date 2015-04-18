@@ -67,7 +67,7 @@ class InteractionController extends Controller {
 		if(is_null($interaction)){
 			return "404";
 		}
-		return view('interaction.show',comptact('interaction'));	
+		return view('interaction.show',compact('interaction'));	
 	}
 
 	/**
