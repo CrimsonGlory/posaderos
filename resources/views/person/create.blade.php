@@ -1,64 +1,99 @@
 @extends('app')
 
 @section('content')
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Guardar persona</h4>
+                    </div>
+                    <div class="panel-body">
+                        @if ($errors->any())
+                            <ul class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
 
-    <h1>Guardar persona</h1>
+                        <form class="form-horizontal" role="form" method="POST" action="{{ url('person') }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-    <hr/>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Nombre</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="first_name" autofocus="true">
+                                </div>
+                            </div>
 
-    {!! Form::open(['url' => 'person']) !!}
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Apellido</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}">
+                                </div>
+                            </div>
 
-    <div class="form-group">
-        {!! Form::label('first_name', 'Nombre:') !!}
-        {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">DNI</label>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" name="dni" value="{{ old('dni') }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Fecha de nacimiento</label>
+                                <div class="col-md-6">
+                                    <input type="date" class="form-control" name="birthdate" value="{{ date('Y-m-d') }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Sexo</label>
+                                <div class="col-md-6">
+                                    <select name="gender" class="form-control">
+                                        <option value="male">Hombre</option>
+                                        <option value="female">Mujer</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Correo electrónico</label>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Dirección</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="address" value="{{ old('address') }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Observaciones</label>
+                                <div class="col-md-6">
+                                    <textarea type="text" class="form-control" name="other" value="{{ old('other') }}"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <table width="100%">
+                                    <tr>
+                                        <td align="right"><button type="submit" class="btn btn-primary"  style="width:100px;">Guardar</button></td>
+                                        <td width="20"></td>
+                                        <td align="left"><a href="{{ action('PersonController@index') }}" class="btn btn-primary"  style="width:100px;">Cancelar</a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        {!! Form::label('last_name', 'Apellido:') !!}
-        {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('birthdate', 'Fecha de nacimiento:') !!}
-        {!! Form::input('date', 'birthdate', date('Y-m-d'), ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('email', 'Email:') !!}
-        {!! Form::text('email', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('dni', 'DNI:') !!}
-        {!! Form::text('dni', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('gender','Sexo:') !!}
-        {!! Form::select('gender', array('male' => 'Hombre', 'female' => 'Mujer'), 'male') !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('address','Dirección:') !!}
-        {!! Form::text('address', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('other','Observaciones:') !!}
-        {!! Form::text('other', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::submit('Guardar', ['class' => 'btn btn-primary form-control']) !!}
-    </div>
-
-    {!! Form::close() !!}
-
-    @if ($errors->any())
-        <ul class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
+@endsection
 
 @stop

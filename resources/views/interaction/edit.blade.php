@@ -1,36 +1,54 @@
 @extends('app')
 
 @section('content')
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Actualizar interacción</h4>
+                    </div>
+                    <div class="panel-body">
+                        @if ($errors->any())
+                            <ul class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                        {!! Form::model($interaction,['class' => 'form-horizontal', 'method' => 'PATCH', 'action' => ['InteractionController@update', $interaction->id]]) !!}
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-    <h1>Guardar Interacción</h1>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Descripción</label>
+                                <div class="col-md-6">
+                                    <textarea type="text" class="form-control" name="text" style="height:150px;" autofocus="true">{{ $interaction->text }}</textarea>
+                                </div>
+                            </div>
+                            {!! Form::hidden('person_id', $interaction->person_id) !!}
 
-    <hr/>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Fecha</label>
+                                <div class="col-md-6">
+                                    <input type="date" class="form-control" name="date" value="{{ $interaction->date }}">
+                                </div>
+                            </div>
 
-    {!! Form::model($interaction,[ 'method' => 'PATCH', 'action' => ['InteractionController@update', $interaction->id]]) !!}
-
-    <div class="form-group">
-        {!! Form::label('text', 'Texto:') !!}
-        {!! Form::textarea('text', $interaction->text, ['class' => 'form-control']) !!}
+                            <div class="form-group">
+                                <table width="100%">
+                                    <tr>
+                                        <td align="right"><button type="submit" class="btn btn-primary form-control"  style="width:100px;">Guardar</button></td>
+                                        <td width="20"></td>
+                                        <td align="left"><a href="{{ action('PersonController@show', $interaction->person_id) }}" class="btn btn-primary" style="width:100px;">Cancelar</a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-        {!! Form::hidden('person_id', $interaction->person_id) !!}
-
-    <div class="form-group">
-        {!! Form::label('date', 'Fecha:') !!}
-        {!! Form::input('date', 'date', $interaction->date, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::submit('Guardar', ['class' => 'btn btn-primary form-control']) !!}
-    </div>
-
-    {!! Form::close() !!}
-
-    @if ($errors->any())
-        <ul class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
+@endsection
 
 @stop
