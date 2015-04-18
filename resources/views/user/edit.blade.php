@@ -13,38 +13,11 @@
         {!! Form::text('name', $user->name, ['class' => 'form-control']) !!}
         {{ $errors->first('name') }}
     </div>
-    <div class="form-group">
-        {!! Form::label('surname', 'Apellido:') !!}
-        {!! Form::text('surname', $user->surname, ['class' => 'form-control']) !!}
-        {{ $errors->first('surname') }} 
-    </div>
 
     <div class="form-group">
         {!! Form::label('email', 'Email:') !!}
         {!! Form::text('email', $user->email, ['class' => 'form-control']) !!}
         {{ $errors->first('email') }}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('birthDate', 'Fecha de nacimiento:') !!}
-        {!! Form::text('birthDate', $user->birthDate, ['class' => 'form-control']) !!}
-        {{ $errors->first('birthDate') }}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('gender','Sexo:') !!}
-        {!! Form::select('gender', array('male' => 'Hombre', 'female' => 'Mujer'), $user->gender) !!}
-        {{ $errors->first('gender') }}
-    </div>
-    <div class="form-group">
-        {!! Form::label('address', 'Direccion:') !!}
-        {!! Form::text('address', $user->address, ['class' => 'form-control']) !!}
-        {{ $errors->first('address') }}
-    </div>
-    <div class="form-group">
-        {!! Form::label('dni', 'DNI:') !!}
-        {!! Form::text('dni', $user->dni, ['class' => 'form-control']) !!}
-        {{ $errors->first('dni') }}
     </div>
 
     <div class="form-group">
