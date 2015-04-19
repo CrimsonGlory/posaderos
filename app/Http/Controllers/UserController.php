@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Input;
 use Validator;
 use Illuminate\Http\Request;
+use Gravatar;
 
 class UserController extends Controller {
 
@@ -59,7 +60,8 @@ class UserController extends Controller {
 		if(is_null($user)){
 			return "404";
 		}
-		return view('user.show',compact('user'));
+		$gravatar=Gravatar::get($user->email);
+		return view('user.show',compact('user','gravatar'));
 	}
 
 	/**
