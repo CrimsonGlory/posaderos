@@ -8,7 +8,7 @@
 		<div class="col-md-2">
 			<div class="profile-sidebar">
 				<div class="profile-userpic">
-					<img src="{{ $gravatar }}" class="img-responsive" alt="">
+					<img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
 				</div>
 				<!-- END SIDEBAR USERPIC -->
 				<!-- SIDEBAR USER TITLE -->
@@ -31,17 +31,17 @@
 				<div class="profile-usermenu">
 					<ul class="nav">
 						<li class="active">
-							<a href="{{ action('UserController@show',$user->id) }}">
+							<a href="{{ url('/user/show',$user->id) }}">
 							<i class="glyphicon glyphicon-home"></i>
 							Mi perfil</a>
 						</li>
 						<li>
-							<a href="{{ action('UserController@edit', $user->id) }}">
+							<a href="{{ url('/user/edit',$user->id) }}">
 							<i class="glyphicon glyphicon-user"></i>
 							Editar Cuenta </a>
 						</li>
 						<li>
-							<a href="{{ action('InteractionController@index') }}">
+							<a href="#">
 							<i class="glyphicon glyphicon-ok"></i>
 							Interacciones </a>
 						</li>
@@ -73,6 +73,7 @@
 						    <tr>
 						    	<th>#</th>
 						    	<th>nombre</th>
+						    	<th>apellido</th>
 						    	<th>DNI</th>
 						    	<th>Genero</th>
 						    	<th>Direccion</th>
@@ -84,8 +85,8 @@
 								<?php $personNum=$personNum + 1; ?>
 								<tr>
 							    	<th scope="row">{{$personNum}}</th>
-							    	<th><a href="{{action('PersonController@show',$person->id) }}">
-								{{$person->first_name}} {{$person->last_name}}</a></th>
+							    	<th>{{$person->first_name}}</th>
+							    	<th>{{$person->last_name}}</th>
 							    	<th>{{$person->dni}}</th>
 							    	 @if($person->gender=="male")
 	           						<th>Hombre</th>
@@ -130,8 +131,7 @@
 								<?php $interactionNum=$interactionNum + 1; ?>
 								<tr>
 							    	<th scope="row">{{$interactionNum}}</th>
-							    	<th><a href="{{ action('PersonController@show', $interaction->person_id) }}">
-{{App\Person::find($interaction->person_id)->first_name}} {{App\Person::find($interaction->person_id)->last_name}}</a></th>
+							    	<th>{{$interaction->person_id}}</th>
 							    	<th>{{$interaction->text}}</th>
 							    	 @if($interaction->fixed==1)
 	           						<th>Solucionado</th>

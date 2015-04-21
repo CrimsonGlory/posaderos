@@ -1,5 +1,15 @@
 <?php namespace App\Http\Controllers;
-
+use App\User;
+use App\Interaction;
+use App\Person;
+//use App\Http\Requests;
+//use App\Http\Controllers\Controller;
+//use Illuminate\Support\Facades\Redirect;
+//use Input;
+//use Validator;
+//use Illuminate\Http\Request;
+use Gravatar;
+use Auth;
 class HomeController extends Controller {
 
 	/*
@@ -30,7 +40,15 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('home');
+       		$user=User::find(Auth::id());
+                $interactions = Interaction::latest()->paginate(10);
+                $persons = Person::latest()->paginate(10);
+		$gravatar=Gravatar::get($user->email);
+                if(is_null($user)){
+                        return "404";
+                }
+                return view('home',compact('user','interactions','persons','gravatar'));
+        
 	}
 
 }
