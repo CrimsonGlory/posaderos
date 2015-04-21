@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder {
 		Model::unguard();
 
 		$this->call('PeopleTableSeeder');
+		$this->call('InteractionTableSeeder');
 	}
 
 }
@@ -65,4 +66,38 @@ class PeopleTableSeeder extends Seeder {
 		// $this->call('UserTableSeeder');
 	}
 
+}
+class InteractionTableSeeder extends Seeder {
+	public function run(){
+		DB::table('interactions')->delete();
+		
+		Interaction::create(['text'=>'La persona recibio Atencion Medica',
+		 'date'=>'2015-4-20',
+			'person_id'=>30400123]);
+		Interaction::create(['text'=>'Persona con necesidad de obtener documento nacional de identidad',
+		 'date'=>'2015-4-20',
+			'person_id'=>30100123]);
+		Interaction::create(['text'=>'Persona asistio a comedor (Comedor X)',
+		 'date'=>'2015-4-20',
+			'person_id'=>30200123]);
+		Interaction::create(['text'=>'Se le dio ropa a la persona',
+		 'date'=>'2015-4-20',
+			'person_id'=>30300123]);
+	}
+}
+class UserTableSeeder extends Seeder{
+	public function run(){
+		DB::table('users')->delete();
+		User::create(['name'=>'Luciano Delorenzi',
+		 'email'=>'lgdelorenzi@gmail.com',
+			'password'=>'delorenzi']);
+		User::create(['name'=>'Enzo Sagretti',
+		 'email'=>'enzosagretti@gmail.com',
+			'password'=>'sagretti']);
+		User::create(['name'=>'Agustin Puentes',
+		 'email'=>'aguspuentes@hotmail.com',
+			'password'=>'puentes']);
+	}
+}
+	}
 }
