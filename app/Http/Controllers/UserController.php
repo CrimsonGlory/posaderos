@@ -23,24 +23,12 @@ class UserController extends Controller {
 		$users=User::all();
 		return view('user.index', compact('users'));
 	}
-	public function home($id)
-	{
-		$user=User::find($id);
-		$interactions = Interaction::paginate(10);
-		$persons = Person::paginate(10);
-		//$datos = array('user' => $user, 'interactions' => $interactions,'persons' => $persons);
-		if(is_null($user)){
-			return "404";
-		}
-		return view('user.home',compact('user','interactions','persons'));
-	}
 	public function searchView($id)
 	{
-		$user=User::find($id);
-		$datos = array('user' => $user);
-		return view('user.searchView',compact('datos'));
+		$user=User::findOrFail($id);
+		return view('user.searchView',compact('user'));
 	}
-	public function search()
+	public function search() //pasar a otro controlador?
 	{
 		$data = array('toFind' => Input::get('toFind'),'keyWord' => Input::get('key'),'error' =>1);
 		//$contents = View::make('user.resultadoBusqueda',$data)->render();

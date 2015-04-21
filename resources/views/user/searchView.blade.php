@@ -34,7 +34,9 @@ $.get( "/user/search", { toFind: tf, key: k } )
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
-						{{$datos['user']->name}} {{$datos['user']->surname}}
+						@if (isset($user))
+						{{$user->first_name}} {{$user->last_name}}
+						@endif
 					</div>
 					<div class="profile-usertitle-job">
 						Area de necesidad
@@ -51,12 +53,12 @@ $.get( "/user/search", { toFind: tf, key: k } )
 				<div class="profile-usermenu">
 					<ul class="nav">
 						<li class="active">
-							<a href="{{ url('/user/show', $datos['user']->id) }}">
+							<a href="{{ url('/user/show', $user->id) }}">
 							<i class="glyphicon glyphicon-home"></i>
 							Mi perfil</a>
 						</li>
 						<li>
-							<a href="{{ url('/user/edit', $datos['user']->id) }}">
+							<a href="{{ url('/user/edit', $user->id) }}">
 							<i class="glyphicon glyphicon-user"></i>
 							Editar Cuenta </a>
 						</li>
@@ -66,7 +68,7 @@ $.get( "/user/search", { toFind: tf, key: k } )
 							Interacciones </a>
 						</li>
 						<li>
-							<a href="{{ url('/user/searchView',$datos['user']->id) }}">
+							<a href="{{ url('/user/searchView',$user->id) }}">
 							<i class="glyphicon glyphicon-search"></i>
 							Buscar </a>
 						</li>
