@@ -1,7 +1,9 @@
 @extends('app')
 
 @section('content')
-
+<div name="gravatar">
+<img src="{{ $gravatar }}" >
+</div>
 <div name="user">
 @if (!is_null($user->name))
 	Nombre: {{$user->name}} 
