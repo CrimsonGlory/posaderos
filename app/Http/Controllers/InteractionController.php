@@ -95,6 +95,8 @@ class InteractionController extends Controller {
 	{
 		$interaction=Interaction::findorFail($id);
 		$interaction->update($request->all());
+		$tags=array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
+                $interaction->retag($tags);
 		return redirect('person/'.$interaction->person_id);	
 	}
 

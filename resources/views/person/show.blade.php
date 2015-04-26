@@ -98,6 +98,7 @@
                                                 <tr>
                                                     <td width="120" align="middle"><label>{{ $interaction->date }}</label></td>
                                                     <td align="left"><label>{{ $interaction->text }}</label></td>
+						    <td align="left"><label>Etiquetas: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label></td>
                                                     <td width="80" align="center"><a class="btn btn-link" href="{{ action("InteractionController@edit",$interaction) }}">Editar</a></td>
                                                 </tr>
                                             @endforeach
