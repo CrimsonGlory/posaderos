@@ -66,7 +66,7 @@
                                     <label class="form-control" style="height: 50px;" name="other">{{ $person->other }}</label>
                                 </div>
                             </div>
-				
+		@if (count($person->tagNames()) > 0)		
 			 <div class="form-group">
 				<label class="col-md-4 control-label">Etiquetas</label>
 				<div class="col-md-6">
@@ -74,6 +74,7 @@
 				 @include('tag.list_tags',['tagNames' => $person->tagNames()])
 				</div>
 			</div>
+		@endif
                         </form>
                     </div>
                 </div>
@@ -98,8 +99,10 @@
                                                 <tr>
                                                     <td width="120" align="middle"><label>{{ $interaction->date }}</label></td>
                                                     <td align="left"><label>{{ $interaction->text }}</label></td>
-						    <td align="left"><label>Etiquetas: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label></td>
-                                                    <td width="80" align="center"><a class="btn btn-link" href="{{ action("InteractionController@edit",$interaction) }}">Editar</a></td>
+						    @if ( count($interaction->tagNames()) > 0)
+							<td align="left"><label>Etiquetas: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label></td>
+                                                    @endif
+						    <td width="80" align="center"><a class="btn btn-link" href="{{ action("InteractionController@edit",$interaction) }}">Editar</a></td>
                                                 </tr>
                                             @endforeach
                                         </table>
