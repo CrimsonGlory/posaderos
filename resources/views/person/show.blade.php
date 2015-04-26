@@ -99,11 +99,11 @@
                                                 <tr>
                                                     <td width="120" align="middle"><label>{{ $interaction->date }}</label></td>
                                                     <td align="left"><label>{{ $interaction->text }}</label></td>
-						    @if ( count($interaction->tagNames()) > 0)
-							<td align="left"><label>Etiquetas: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label></td>
-                                                    @endif
 						    <td width="80" align="center"><a class="btn btn-link" href="{{ action("InteractionController@edit",$interaction) }}">Editar</a></td>
                                                 </tr>
+						@if ( count($interaction->tagNames()) > 0)
+                                                        <tr><td align="middle"><label>Etiquetas: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label></td></tr>
+                                                    @endif
                                             @endforeach
                                         </table>
                                     </div>
