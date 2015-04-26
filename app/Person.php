@@ -5,7 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Interaction;
 
 class Person extends Model {
-
+use \Conner\Tagging\TaggableTrait;
+   protected $table = 'people';
 	protected $fillable = [
 	'first_name',
 	'last_name',

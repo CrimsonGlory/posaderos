@@ -75,7 +75,14 @@
                                     <textarea type="text" class="form-control" name="other">{{ $person->other }}</textarea>
                                 </div>
                             </div>
-
+<?php /*
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Etiquetas</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="tags" value="{{ implode(", ",$person->tagNames() ) }}">
+                                </div>
+                            </div>
+*/ ?>
                             <div class="form-group">
                                 <table width="100%">
                                     <tr>

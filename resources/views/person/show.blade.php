@@ -66,6 +66,14 @@
                                     <label class="form-control" style="height: 50px;" name="other">{{ $person->other }}</label>
                                 </div>
                             </div>
+				
+			 <div class="form-group">
+				<label class="col-md-4 control-label">Etiquetas</label>
+				<div class="col-md-6">
+
+				 @include('tag.list_tags',['tagNames' => $person->tagNames()])
+				</div>
+			</div>
                         </form>
                     </div>
                 </div>

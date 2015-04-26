@@ -22,6 +22,8 @@ Route::resource('person','PersonController');
 Route::resource('interaction','InteractionController');
 Route::resource('needsArea','NeedsAreaController');
 Route::resource('user','UserController');
+Route::get('tag','TagController@index');
+Route::get('tag/{name}','TagController@show');
 
 
 
