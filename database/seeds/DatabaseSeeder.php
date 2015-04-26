@@ -73,10 +73,20 @@ class PeopleTableSeeder extends Seeder {
 		 'date'=>'2015-4-20']));
 		$person2->interactions()->save(new Interaction(['text'=>'Persona con necesidad de obtener documento nacional de identidad',
 		 'date'=>'2015-4-20']));
-		$person2->interactions()->save(new Interaction(['text'=>'Persona asistio a comedor (Comedor X)',
-		 'date'=>'2015-4-20']));
+		$interaction21=new Interaction(['text'=>'Persona asistio a comedor (Comedor X)',
+                 'date'=>'2015-4-20']);
+		$person2->interactions()->save($interaction21);
+		$interaction21->tag("comida");
 		$person3->interactions()->save(new Interaction(['text'=>'Se le dio ropa a la persona',
 		 'date'=>'2015-4-20']));
+
+		//Tags
+		$person1->tag("jugador");
+		$person2->tag("jugador");
+		$person3->tag("jugador");
+		$person4->tag("jugador");
+		$person4->tag("salud");
+		$person4->tag("comida");
 	}
 }
 class UserTableSeeder extends Seeder{

@@ -96,6 +96,8 @@ class PersonController extends Controller {
 	public function update(CreatePersonRequest $request,$id)
 	{
 		$person = Person::findOrFail($id);
+		$tags=array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
+		$person->retag($tags);
 		$person->update($request->all());
 		return redirect('person/'.$person->id);
 

@@ -34,6 +34,13 @@
                                 </div>
                             </div>
 
+			<div class="form-group">
+                                <label class="col-md-4 control-label">Etiquetas</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="tags" value="{{ implode(", ",$interaction->tagNames() ) }}">
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <table width="100%">
                                     <tr>

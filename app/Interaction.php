@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Person;
 use Carbon\Carbon;
 class Interaction extends Model {
+use \Conner\Tagging\TaggableTrait;
 	protected $table = 'interactions';
 	protected $fillable = [
 		'text',

@@ -148,7 +148,8 @@ return [
 		/*
 		 * Added
 		 */
-	  	'Creativeorange\Gravatar\GravatarServiceProvider'
+	  	'Creativeorange\Gravatar\GravatarServiceProvider',
+	'Conner\Tagging\TaggingServiceProvider'	
 
 	],
 
@@ -200,6 +201,7 @@ return [
         'Form'      => 'Illuminate\Html\FormFacade',
         'Html'      => 'Illuminate\Html\HtmlFacade',
 	  'Gravatar' => 'Creativeorange\Gravatar\Facades\Gravatar',
+	'TaggableTrait' => '\Conner\Tagging\TaggableTrait',
 	],
 
 ];
