@@ -131,7 +131,7 @@
 								<tr>
 							    	<th scope="row">{{$interactionNum}}</th>
 							    	<th><a href="{{ action('PersonController@show', $interaction->person_id) }}">
-{{App\Person::find($interaction->person_id)->first_name}} {{App\Person::find($interaction->person_id)->last_name}}</a></th>
+{{$interaction->person->first_name}} {{$interaction->person->last_name}}</a></th>
 							    	<th>{{$interaction->text}}</th>
 							    	 @if($interaction->fixed==1)
 	           						<th>Solucionado</th>
