@@ -25,7 +25,7 @@
             @foreach ($interactions as  $interaction)
                 <div class="form-group">
                     <li> 
-                        <a href="{{ action('PersonController@show', $interaction->person_id) }}">{{App\Person::find($interaction->person_id)->first_name}} {{App\Person::find($interaction->person_id)->last_name}}</a>
+                        <a href="{{ action('PersonController@show', $interaction->person_id) }}">{{$interaction->person->first_name}} {{$interaction->person->last_name}}</a>
 : 
                             {{$interaction->text}}
                     </li>
