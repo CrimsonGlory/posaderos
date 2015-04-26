@@ -21,7 +21,7 @@ use \Conner\Tagging\TaggableTrait;
     // Para que agregue la hora al guardar y no sólo el día
     public function setBirthdateAttribute($date)
     {
-        $this->attributes['birthdate'] = Carbon::createFromFormat('Y-m-d', $date);
+        //$this->attributes['birthdate'] = Carbon::createFromFormat('Y-m-d', $date);
     }
 
     public function interactions()
