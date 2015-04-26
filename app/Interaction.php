@@ -13,7 +13,7 @@ class Interaction extends Model {
 
 	public function person()
 	{
-		return $this->belongsTo('Person');
+		return $this->belongsTo('App\Person');
 	}
 
 	// Para que agregue la hora al guardar y no sólo el día
