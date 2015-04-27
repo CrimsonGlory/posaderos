@@ -30,9 +30,9 @@
                                 <tr>
                                     <td>
                                         @if (count($fileentries) != 0)
-                                            <img src="{{ asset($fileentries->first()->filename) }}" alt="No se pudo cargar la foto" class="img-circle" style="width:150px; height:150px;"/>
+                                            <img src="{{ asset($fileentries->first()->filename) }}" alt="No se pudo cargar la foto" class="img-circle" style="max-width:150px; max-height:150px;"/>
                                         @else
-                                            <img src="{{ asset("no-photo.png") }}" alt="Sin foto" class="img-circle" style="width:150px; height:150px;"/>
+                                            <img src="{{ asset("no-photo.png") }}" alt="Sin foto" class="img-circle" style="max-width:150px; max-height:150px;"/>
                                         @endif
                                     </td>
                                 </tr>

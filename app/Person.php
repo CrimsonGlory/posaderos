@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Interaction;
+use App\FileEntry;
 
 class Person extends Model {
 
