@@ -1,15 +1,14 @@
 <?php namespace App\Http\Controllers;
 
-use App\Person;
 use App\Http\Requests;
-use App\Http\Requests\CreatePersonRequest;
+use App\Http\Requests\CreateInteractionRequest;
 use App\Http\Controllers\Controller;
-
-//use Illuminate\Http\Request;
-//use Illuminate\Http\Response;
-
-
-class PersonController extends Controller {
+use App\Person;
+use App\Interaction;
+use Illuminate\Http\Request;
+use \Conner\Tagging\TaggableTrait;
+use Conner\Tagging\Tagged;
+class TagController extends Controller {
 
     /**
      * Función para que verifique autenticación al ingresar a una página
@@ -29,8 +28,8 @@ class PersonController extends Controller {
 	 */
 	public function index()
 	{
-		$people=Person::latest('id')->get();
-		return view('person.index', compact('people'));
+		$tags=Tagged::all()->groupBy('tag_slug')->keys()->toArray();
+		return view('tag.index',compact('tags'));	
 	}
 
 	/**
@@ -38,9 +37,9 @@ class PersonController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create($id)
 	{
-		return view('person.create');
+	return "TagController@create pending";	
 	}
 
 	/**
@@ -48,11 +47,9 @@ class PersonController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store(CreatePersonRequest $request)
+	public function store(CreateInteractionRequest $request)
 	{
-		$input = $request->all();
-        $person=Person::create($input);
-        return redirect('person/'.$person->id);
+	return "TagController@store pending";
 	}
 
 	/**
@@ -61,16 +58,15 @@ class PersonController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($name)
 	{
-		$person=Person::find($id);
 		
-		if(is_null($person)){
+		$people=Person::withAnyTag($name)->get();
+		$interactions=Interaction::withAnyTag($name)->get();
+		if(is_null($people) && is_null($interactions)){
 			return "404";
 		}
-		$interactions=$person->interactions()->latest('id')->get();
-        $fileentries=$person->fileentries()->latest('id')->get();
-		return view('person.show',compact('person','interactions','fileentries'));
+		return view('tag.show',compact('people','interactions'));	
 	}
 
 	/**
@@ -81,11 +77,7 @@ class PersonController extends Controller {
 	 */
 	public function edit($id)
 	{
-		$person=Person::find($id);
-		if(is_null($person)){
-			return "404";
-		}
-		return view('person.edit',compact('person'));
+		return "TagController@edit pending";
 	}
 
 	/**
@@ -94,14 +86,9 @@ class PersonController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update(CreatePersonRequest $request,$id)
+	public function update(CreateInteractionRequest $request,$id)
 	{
-		$person = Person::findOrFail($id);
-		$tags=array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
-		$person->retag($tags);
-		$person->update($request->all());
-		return redirect('person/'.$person->id);
-
+		return "TagController@update pending";
 	}
 
 	/**

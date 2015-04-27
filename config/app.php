@@ -145,6 +145,11 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+		/*
+		 * Added
+		 */
+	  	'Creativeorange\Gravatar\GravatarServiceProvider',
+	'Conner\Tagging\TaggingServiceProvider'	
 
 	],
 
@@ -195,7 +200,8 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
         'Form'      => 'Illuminate\Html\FormFacade',
         'Html'      => 'Illuminate\Html\HtmlFacade',
-
+	  'Gravatar' => 'Creativeorange\Gravatar\Facades\Gravatar',
+	'TaggableTrait' => '\Conner\Tagging\TaggableTrait',
 	],
 
 ];

@@ -6,7 +6,8 @@ use App\Interaction;
 use App\FileEntry;
 
 class Person extends Model {
-
+use \Conner\Tagging\TaggableTrait;
+   protected $table = 'people';
 	protected $fillable = [
 	'first_name',
 	'last_name',
@@ -21,7 +22,7 @@ class Person extends Model {
     // Para que agregue la hora al guardar y no sólo el día
     public function setBirthdateAttribute($date)
     {
-        $this->attributes['birthdate'] = Carbon::createFromFormat('Y-m-d', $date);
+        //$this->attributes['birthdate'] = Carbon::createFromFormat('Y-m-d', $date);
     }
 
     public function interactions()
