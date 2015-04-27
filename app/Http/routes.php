@@ -16,6 +16,8 @@ Route::get('/','HomeController@index');
 Route::get('home', 'HomeController@index');
 Route::get('person/{id}/interaction/create','InteractionController@create');
 Route::post('person/{id}/interaction','InteractionController@store');
+Route::get('person/{id}/fileentries/photos','FileEntryController@index');
+Route::post('person/{id}/fileentries','FileEntryController@add');
 Route::get('user/search','UserController@search');
 Route::get('user/searchView/{id}','UserController@searchView');
 Route::resource('person','PersonController');
@@ -30,3 +32,4 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+

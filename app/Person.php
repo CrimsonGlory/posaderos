@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Interaction;
+use App\FileEntry;
 
 class Person extends Model {
 use \Conner\Tagging\TaggableTrait;
@@ -27,5 +28,10 @@ use \Conner\Tagging\TaggableTrait;
     public function interactions()
     {
 	return $this->hasMany('App\Interaction','person_id');
+    }
+
+    public function fileentries()
+    {
+        return $this->hasMany('App\FileEntry','person_id');
     }
 }

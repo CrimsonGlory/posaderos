@@ -1,6 +1,7 @@
 @extends('app')
 
 @section('content')
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -24,6 +25,23 @@
 
                         <form class="form-horizontal" role="form" action="{{ url('person') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                            <table align="center">
+                                <tr>
+                                    <td>
+                                        @if (count($fileentries) != 0)
+                                            <img src="{{ asset($fileentries->first()->filename) }}" alt="No se pudo cargar la foto" class="img-circle" style="max-width:150px; max-height:150px;"/>
+                                        @else
+                                            <img src="{{ asset("no-photo.png") }}" alt="Sin foto" class="img-circle" style="max-width:150px; max-height:150px;"/>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}">Actualizar foto</a>
+                                    </td>
+                                </tr>
+                            </table>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">DNI</label>
@@ -115,6 +133,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @stop
