@@ -16,6 +16,8 @@ Route::get('/','PersonController@index'); //temporalmente
 Route::get('home', 'HomeController@index');
 Route::get('person/{id}/interaction/create','InteractionController@create');
 Route::post('person/{id}/interaction','InteractionController@store');
+Route::get('person/{id}/fileentries/photos','FileEntryController@index');
+Route::post('person/{id}/fileentries','FileEntryController@add');
 Route::resource('person','PersonController');
 Route::resource('interaction','InteractionController');
 Route::resource('needsArea','NeedsAreaController');
@@ -24,8 +26,4 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
-Route::get('fileentry', 'FileEntryController@index');
-Route::get('fileentry/get/{filename}', [
-    'as' => 'getentry', 'uses' => 'FileEntryController@get']);
-Route::post('fileentry/add',[
-    'as' => 'addentry', 'uses' => 'FileEntryController@add']);
+

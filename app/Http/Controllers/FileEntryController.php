@@ -1,8 +1,10 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Person;
 use App\Fileentry;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\CreateFileEntryRequest;
 use Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -15,13 +17,16 @@ class FileEntryController extends Controller {
      *
      * @return Response
      */
-    public function index()
+    public function index($id)
     {
-        $entries = Fileentry::all();
-        return view('fileentries.index', compact('entries'));
+        $person=Person::findOrFail($id);
+        //$entries = Fileentry::all();
+        return view('fileentries.index', compact('person'));
     }
-    public function add() {
-        $file = Request::file('filefield');
+    public function add(CreateFileEntryRequest $request)
+    {
+        $file = Request::file('filename');
+        $person = Request::input('person_id');
         $extension = $file->getClientOriginalExtension();
         Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
         move_uploaded_file($file, public_path().'/'.$file->getFilename().'.'.$extension);
@@ -29,14 +34,10 @@ class FileEntryController extends Controller {
         $entry->mime = $file->getClientMimeType();
         $entry->original_filename = $file->getClientOriginalName();
         $entry->filename = $file->getFilename().'.'.$extension;
+        $entry->person_id = $person;
         $entry->save();
-        return redirect('fileentry');
+        return redirect('person/'.$entry->person_id);
 
-    }
-    public function get($filename){
-        $entry = Fileentry::where('filename', '=', $filename)->firstOrFail();
-        $file = Storage::disk('local')->get($entry->filename);
-        return (new Response($file, 200))->header('Content-Type', $entry->mime);
     }
 
 }

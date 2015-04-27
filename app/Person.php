@@ -27,4 +27,9 @@ class Person extends Model {
     {
 	return $this->hasMany('App\Interaction','person_id');
     }
+
+    public function fileentries()
+    {
+        return $this->hasMany('App\FileEntry','person_id');
+    }
 }
