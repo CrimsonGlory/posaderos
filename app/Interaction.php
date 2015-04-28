@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use App\Person;
+use App\User;
 use Carbon\Carbon;
 class Interaction extends Model {
 use \Conner\Tagging\TaggableTrait;
@@ -15,6 +16,10 @@ use \Conner\Tagging\TaggableTrait;
 	public function person()
 	{
 		return $this->belongsTo('App\Person');
+	}
+	public function user()
+	{
+		return $this->belongsTo('App\User');
 	}
 
 	// Para que agregue la hora al guardar y no sólo el día

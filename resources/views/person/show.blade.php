@@ -119,9 +119,14 @@
                                                     <td align="left"><label>{{ $interaction->text }}</label></td>
 						    <td width="80" align="center"><a class="btn btn-link" href="{{ action("InteractionController@edit",$interaction) }}">Editar</a></td>
                                                 </tr>
+						<tr><td width="120" align="middle"><label><small><a href="{{action("UserController@show",$interaction->user->id)}}">
+								 {{ $interaction->user->name }}</a></small></label></td>
 						@if ( count($interaction->tagNames()) > 0)
-                                                        <tr><td align="middle"><label>Etiquetas: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label></td></tr>
+                                                        <td align="middle"><label>Etiquetas: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label></td>
+						@else
+							<td></td>
                                                     @endif
+						<td></td></tr>
                                             @endforeach
                                         </table>
                                     </div>
