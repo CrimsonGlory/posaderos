@@ -42,20 +42,23 @@
                                     </td>
                                 </tr>
                             </table>
-
+			    @if ($person->dni!=null && $person->dni!=0)
                             <div class="form-group">
                                 <label class="col-md-4 control-label">DNI</label>
                                 <div class="col-md-6">
                                     <label class="form-control" name="dni">{{ $person->dni }}</label>
                                 </div>
                             </div>
+			    @endif
 
+			    @if ($person->birthdate!=null)
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Fecha de nacimiento</label>
                                 <div class="col-md-6">
                                     <label  class="form-control" name="birthdate">{{ $person->birthdate }}</label>
                                 </div>
                             </div>
+			    @endif
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Sexo</label>
@@ -64,26 +67,32 @@
                                 </div>
                             </div>
 
+			    @if ($person->email!=null)
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Correo electrónico</label>
                                 <div class="col-md-6">
                                     <label class="form-control" name="email">{{ $person->email }}</label>
                                 </div>
                             </div>
+			    @endif
 
+			    @if ($person->address!=null)
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Dirección</label>
                                 <div class="col-md-6">
                                     <label class="form-control" name="address">{{ $person->address }}</label>
                                 </div>
                             </div>
+			    @endif
 
+			    @if ($person->other!=null)
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Observaciones</label>
                                 <div class="col-md-6">
                                     <label class="form-control" style="height: 50px;" name="other">{{ $person->other }}</label>
                                 </div>
                             </div>
+			    @endif
 		@if (count($person->tagNames()) > 0)		
 			 <div class="form-group">
 				<label class="col-md-4 control-label">Etiquetas</label>
