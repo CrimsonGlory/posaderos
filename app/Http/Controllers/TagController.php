@@ -66,7 +66,7 @@ class TagController extends Controller {
 		if(is_null($people) && is_null($interactions)){
 			return "404";
 		}
-		return view('tag.show',compact('people','interactions'));	
+		return view('tag.show',compact('people','interactions','name'));
 	}
 
 	/**
