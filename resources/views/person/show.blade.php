@@ -93,6 +93,21 @@
 				</div>
 			</div>
 		@endif
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><small>Persona agregada por:</small></label>
+				<div class="col-md-6"><small><a href="{{ action('UserController@show',$person->created_by) }}">
+					 {{$person->creator->name}}</a> ({{$person->created_at}})</small></label>
+				</div>
+                            </div>
+
+			   <div class="form-group">
+                                <label class="col-md-4 control-label"><small>Última actualización:</small></label>
+                                <div class="col-md-6"><small><a href="{{ action('UserController@show',$person->updated_by) }}">
+                                         {{$person->last_update_user->name}}</a> ({{$person->updated_at}})</small></label>
+                                </div>
+                            </div>
+
                         </form>
                     </div>
                 </div>

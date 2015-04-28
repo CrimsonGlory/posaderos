@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Interaction;
 use App\FileEntry;
+use App\User;
 
 class Person extends Model {
 use \Conner\Tagging\TaggableTrait;
@@ -34,4 +35,15 @@ use \Conner\Tagging\TaggableTrait;
     {
         return $this->hasMany('App\FileEntry','person_id');
     }
+
+    public function creator()
+    {
+	return $this->belongsTo('App\User','created_by');
+    }
+
+    public function last_update_user()
+    {
+        return $this->belongsTo('App\User','updated_by');
+    }
+
 }
