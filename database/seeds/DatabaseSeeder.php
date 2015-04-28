@@ -15,12 +15,11 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
 		Model::unguard();
-
 		$this->call('PeopleTableSeeder');
-		$this->call('UserTableSeeder');
 	}
-
 }
+
+
 class PeopleTableSeeder extends Seeder {
 
 	public function run()
@@ -28,6 +27,21 @@ class PeopleTableSeeder extends Seeder {
 		DB::table('interactions')->delete();
 		DB::table('people')->delete();
 		DB::table('users')->delete();
+		DB::table('fileentries')->delete();
+		DB::table('password_resets')->delete();
+		DB::table('tagging_tagged')->delete();
+		DB::table('tagging_tags')->delete();
+
+		//Users
+	         $user1=User::create(['name'=>'Luciano Delorenzi',
+                 'email'=>'lgdelorenzi2@gmail.com',
+                        'password'=>Hash::make('delorenzi')]);
+                $user2=User::create(['name'=>'Enzo Sagretti',
+                 'email'=>'enzosagretti2@gmail.com',
+                        'password'=>Hash::make('sagretti')]);
+                $user3=User::create(['name'=>'Agustin Puentes',
+                 'email'=>'aguspuentes2@hotmail.com',
+                        'password'=>Hash::make('puentes')]);
 
 		$person1=Person::create(['first_name'=>'Juan Román',
 		 'last_name'=>'Riquelme',
@@ -69,16 +83,23 @@ class PeopleTableSeeder extends Seeder {
 		
 		
 		//Interactions
-		$person1->interactions()->save(new Interaction(['text'=>'La persona recibio Atencion Medica',
-		 'date'=>'2015-4-20']));
-		$person2->interactions()->save(new Interaction(['text'=>'Persona con necesidad de obtener documento nacional de identidad',
-		 'date'=>'2015-4-20']));
+		$interaction11=new Interaction(['text'=>'La persona recibio Atencion Medica',
+                 'date'=>'2015-4-20']);
+		$interaction11->user_id=$user1->id;
+		$person1->interactions()->save($interaction11);
+		$interaction22=new Interaction(['text'=>'Persona con necesidad de obtener documento nacional de identidad',
+                 'date'=>'2015-4-20']);
+		$interaction22->user_id=$user2->id;
+		$person2->interactions()->save($interaction22);
 		$interaction21=new Interaction(['text'=>'Persona asistio a comedor (Comedor X)',
                  'date'=>'2015-4-20']);
+		$interaction21->user_id=$user1->id;
 		$person2->interactions()->save($interaction21);
 		$interaction21->tag("comida");
-		$person3->interactions()->save(new Interaction(['text'=>'Se le dio ropa a la persona',
-		 'date'=>'2015-4-20']));
+		$interaction31=new Interaction(['text'=>'Se le dio ropa a la persona',
+                 'date'=>'2015-4-20']);
+		$interaction31->user_id=$user1->id;
+		$person3->interactions()->save($interaction31);
 
 		//Tags
 		$person1->tag("jugador");
@@ -89,16 +110,4 @@ class PeopleTableSeeder extends Seeder {
 		$person4->tag("comida");
 	}
 }
-class UserTableSeeder extends Seeder{
-	public function run(){
-		User::create(['name'=>'Luciano Delorenzi',
-		 'email'=>'lgdelorenzi2@gmail.com',
-			'password'=>Hash::make('delorenzi')]);
-		User::create(['name'=>'Enzo Sagretti',
-		 'email'=>'enzosagretti2@gmail.com',
-			'password'=>Hash::make('sagretti')]);
-		User::create(['name'=>'Agustin Puentes',
-		 'email'=>'aguspuentes2@hotmail.com',
-			'password'=>Hash::make('puentes')]);
-	}
-}
+

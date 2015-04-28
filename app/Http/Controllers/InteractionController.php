@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Person;
 use App\Interaction;
 use Illuminate\Http\Request;
-
+use Auth;
 class InteractionController extends Controller {
 
     /**
@@ -51,7 +51,10 @@ class InteractionController extends Controller {
 	public function store(CreateInteractionRequest $request)
 	{
 		$input = $request->all();
-		$interaction=Interaction::create($input);
+		$interaction=new Interaction;
+		$interaction->fill($input);
+		$interaction->user_id=Auth::id();
+		$interaction->save();
 		return redirect('person/'.$interaction->person_id);	
 	}
 
