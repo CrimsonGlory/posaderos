@@ -1,20 +1,12 @@
 @extends('app')
 
 @section('content')
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <table width="100%">
-                            <tr>
-                                <td><h4>{{ $user->name }}</h4></td>
-                                @if ($user->id == Auth::user()->id)
-                                    <td align="right"><a class="btn btn-primary" href="{{ action('UserController@edit',$user) }}" style="width:80px;">Editar</a></td>
-                                @endif
-                            </tr>
-                        </table>
+                        <h4>Guardar foto de {{ $person->first_name }} {{ $person->last_name }}</h4>
                     </div>
                     <div class="panel-body">
                         @if ($errors->any())
@@ -24,19 +16,22 @@
                                 @endforeach
                             </ul>
                         @endif
-
-                        <form class="form-horizontal" role="form" action="{{ url('person') }}">
+                        <form action="{{ url('person/'.$person->id.'/fileentries') }}" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                             <div class="form-group" align="center">
-                                <img src="{{ $gravatar }}" alt="No se pudo cargar la foto" class="img-circle" style="max-width:150px; max-height:150px;">
+                                <input type="file" name="filename">
                             </div>
+                            {!! Form::hidden('person_id', $person->id) !!}
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Correo electrónico</label>
-                                <div class="col-md-6">
-                                    <label class="form-control" name="email">{{$user->email}}</label>
-                                </div>
+                                <table width="100%">
+                                    <tr>
+                                        <td align="right"><button type="submit" class="btn btn-primary form-control"  style="width:100px;">Guardar</button></td>
+                                        <td width="20"></td>
+                                        <td align="left"><a href="{{ action('PersonController@show', $person->id) }}" class="btn btn-primary" style="width:100px;">Cancelar</a></td>
+                                    </tr>
+                                </table>
                             </div>
                         </form>
                     </div>
@@ -44,5 +39,6 @@
             </div>
         </div>
     </div>
-
 @endsection
+
+@stop

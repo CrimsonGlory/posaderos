@@ -2,7 +2,7 @@
 
 use App\Http\Requests\Request;
 
-class CreatePersonRequest extends Request {
+class CreateFileEntryRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -21,11 +21,9 @@ class CreatePersonRequest extends Request {
 	 */
 	public function rules()
 	{
-		return [
-			'first_name' => 'required|min:2',
-            'gender' => 'required',
-		'dni' => 'integer'
-		];
+        return [
+            'filename' => 'required',
+        ];
 	}
 
 }

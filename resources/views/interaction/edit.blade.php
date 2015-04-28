@@ -6,7 +6,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4>Actualizar interacción</h4>
+                        <h4>Actualizar interacción con {{ $person->first_name }} {{ $person->last_name }}</h4>
                     </div>
                     <div class="panel-body">
                         @if ($errors->any())
@@ -17,32 +17,39 @@
                             </ul>
                         @endif
                         {!! Form::model($interaction,['class' => 'form-horizontal', 'method' => 'PATCH', 'action' => ['InteractionController@update', $interaction->id]]) !!}
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Descripción</label>
-                                <div class="col-md-6">
-                                    <textarea type="text" class="form-control" name="text" style="height:150px;" autofocus="true">{{ $interaction->text }}</textarea>
-                                </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Descripción</label>
+                            <div class="col-md-6">
+                                <textarea type="text" class="form-control" name="text" style="height:150px;" autofocus="true">{{ $interaction->text }}</textarea>
                             </div>
-                            {!! Form::hidden('person_id', $interaction->person_id) !!}
+                        </div>
+                        {!! Form::hidden('person_id', $interaction->person_id) !!}
 
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Fecha</label>
-                                <div class="col-md-6">
-                                    <input type="date" class="form-control" name="date" value="{{ $interaction->date }}">
-                                </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Fecha</label>
+                            <div class="col-md-6">
+                                <input type="date" class="form-control" name="date" value="{{ $interaction->date }}">
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                <table width="100%">
-                                    <tr>
-                                        <td align="right"><button type="submit" class="btn btn-primary form-control"  style="width:100px;">Guardar</button></td>
-                                        <td width="20"></td>
-                                        <td align="left"><a href="{{ action('PersonController@show', $interaction->person_id) }}" class="btn btn-primary" style="width:100px;">Cancelar</a></td>
-                                    </tr>
-                                </table>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Etiquetas</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="tags" value="{{ implode(", ",$interaction->tagNames() ) }}">
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <table width="100%">
+                                <tr>
+                                    <td align="right"><button type="submit" class="btn btn-primary form-control"  style="width:100px;">Guardar</button></td>
+                                    <td width="20"></td>
+                                    <td align="left"><a href="{{ action('PersonController@show', $interaction->person_id) }}" class="btn btn-primary" style="width:100px;">Cancelar</a></td>
+                                </tr>
+                            </table>
+                        </div>
                         {!! Form::close() !!}
                     </div>
                 </div>

@@ -1,5 +1,5 @@
-@extends('home')
-@section('homeContent')
+@extends('app')
+@section('content')
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
 $(document).ready(function(e){
@@ -21,7 +21,6 @@ $.get( "/user/search", { toFind: tf, key: k } )
 }
 
 </script>
-
 
 			<div class="container"> 
 			        <div class="col-xs-8 col-xs-offset-2">

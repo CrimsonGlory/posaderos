@@ -1,11 +1,14 @@
 <?php namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Eloquent\Model;
 use App\Interaction;
+use App\FileEntry;
+use App\User;
 
-class Person extends Eloquent {
-
+class Person extends Model {
+use \Conner\Tagging\TaggableTrait;
+   protected $table = 'people';
 	protected $fillable = [
 	'first_name',
 	'last_name',
@@ -20,11 +23,27 @@ class Person extends Eloquent {
     // Para que agregue la hora al guardar y no sólo el día
     public function setBirthdateAttribute($date)
     {
-        $this->attributes['birthdate'] = Carbon::createFromFormat('Y-m-d', $date);
+        //$this->attributes['birthdate'] = Carbon::createFromFormat('Y-m-d', $date);
     }
 
     public function interactions()
     {
 	return $this->hasMany('App\Interaction','person_id');
     }
+
+    public function fileentries()
+    {
+        return $this->hasMany('App\FileEntry','person_id');
+    }
+
+    public function creator()
+    {
+	return $this->belongsTo('App\User','created_by');
+    }
+
+    public function last_update_user()
+    {
+        return $this->belongsTo('App\User','updated_by');
+    }
+
 }

@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Person;
 use App\Interaction;
 use Illuminate\Http\Request;
-use Auth;
-class InteractionController extends Controller {
+use \Conner\Tagging\TaggableTrait;
+use Conner\Tagging\Tagged;
+class TagController extends Controller {
 
     /**
      * Función para que verifique autenticación al ingresar a una página
@@ -27,8 +28,8 @@ class InteractionController extends Controller {
 	 */
 	public function index()
 	{
-		$interactions=Interaction::latest('id')->get();
-		return view('interaction.index',compact('interactions'));	
+		$tags=Tagged::all()->groupBy('tag_slug')->keys()->toArray();
+		return view('tag.index',compact('tags'));	
 	}
 
 	/**
@@ -38,9 +39,7 @@ class InteractionController extends Controller {
 	 */
 	public function create($id)
 	{
-		$person=Person::findOrFail($id);
-		
-		return view('interaction.create',compact('person'));
+	return "TagController@create pending";	
 	}
 
 	/**
@@ -50,12 +49,7 @@ class InteractionController extends Controller {
 	 */
 	public function store(CreateInteractionRequest $request)
 	{
-		$input = $request->all();
-		$interaction=new Interaction;
-		$interaction->fill($input);
-		$interaction->user_id=Auth::id();
-		$interaction->save();
-		return redirect('person/'.$interaction->person_id);	
+	return "TagController@store pending";
 	}
 
 	/**
@@ -64,13 +58,15 @@ class InteractionController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($name)
 	{
-		$interaction=Interaction::find($id);
-		if(is_null($interaction)){
+		
+		$people=Person::withAnyTag($name)->get();
+		$interactions=Interaction::withAnyTag($name)->get();
+		if(is_null($people) && is_null($interactions)){
 			return "404";
 		}
-		return redirect('person/'.$interaction->person_id);
+		return view('tag.show',compact('people','interactions','name'));
 	}
 
 	/**
@@ -81,12 +77,7 @@ class InteractionController extends Controller {
 	 */
 	public function edit($id)
 	{
-		$interaction=Interaction::find($id);
-        $person=Person::findOrFail($interaction->person_id);
-		if(is_null($interaction)){
-			return "404";
-		}
-		return view('interaction.edit',compact('person','interaction'));
+		return "TagController@edit pending";
 	}
 
 	/**
@@ -97,11 +88,7 @@ class InteractionController extends Controller {
 	 */
 	public function update(CreateInteractionRequest $request,$id)
 	{
-		$interaction=Interaction::findorFail($id);
-		$interaction->update($request->all());
-		$tags=array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
-                $interaction->retag($tags);
-		return redirect('person/'.$interaction->person_id);	
+		return "TagController@update pending";
 	}
 
 	/**

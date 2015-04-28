@@ -17,12 +17,15 @@ Route::get('home', 'HomeController@index');
 Route::get('person/create','PersonController@create');
 Route::get('person/{id}/interaction/create','InteractionController@create');
 Route::post('person/{id}/interaction','InteractionController@store');
+Route::get('person/{id}/fileentries/photos','FileEntryController@index');
+Route::post('person/{id}/fileentries','FileEntryController@add');
 Route::get('user/search','UserController@search');
-Route::get('user/searchView/{id}','UserController@searchView');
+Route::get('user/searchView','UserController@searchView');
 Route::resource('person','PersonController');
 Route::resource('interaction','InteractionController');
-Route::resource('needsArea','NeedsAreaController');
 Route::resource('user','UserController');
+Route::get('tag','TagController@index');
+Route::get('tag/{name}','TagController@show');
 
 
 
@@ -30,3 +33,4 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+

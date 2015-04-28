@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeignPersonIdOnInteractions extends Migration {
+class AddUserIdOnInteractions extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -14,9 +14,9 @@ class AddForeignPersonIdOnInteractions extends Migration {
 	{
 		Schema::table('interactions', function(Blueprint $table)
 		{
-			$table->integer('person_id')->unsigned()->change();
-			$table->foreign('person_id')->references('id')
-										->on('people');
+		$table->integer('user_id')->unsigned();
+            	$table->foreign('user_id')->references('id')
+               		 ->on('users');
 		});
 	}
 
@@ -29,7 +29,7 @@ class AddForeignPersonIdOnInteractions extends Migration {
 	{
 		Schema::table('interactions', function(Blueprint $table)
 		{
-			$table->dropForeign('interactions_person_id_foreign');
+			$table->dropForeign('interactions_user_id_foreign');
 		});
 	}
 

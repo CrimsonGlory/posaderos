@@ -7,17 +7,17 @@
 		<div class="col-md-2">
 			<div class="profile-sidebar">
 				<div class="profile-userpic">
-					<img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
-				</div>
+				<img src="{{ $gravatar }}" class="img-responsive" alt="">
+			</div>
 				<!-- END SIDEBAR USERPIC -->
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
 						{{$user->name}}
 					</div>
-					<div class="profile-usertitle-job">
+					<!-- <div class="profile-usertitle-job">
 						Area de necesidad
-					</div>
+					</div>-->
 				</div>
 				<!-- END SIDEBAR USER TITLE -->
 				<!-- SIDEBAR BUTTONS -->
@@ -40,19 +40,9 @@
 							Editar Cuenta </a>
 						</li>
 						<li>
-							<a href="{{ action('InteractionController@create', $user->id) }}">
-							<i class="glyphicon glyphicon-ok"></i>
-							Interacciones </a>
-						</li>
-						<li>
 							<a href="{{ action('PersonController@create') }}">
 							<i class="glyphicon glyphicon-plus"></i>
 							Agregar Persona </a>
-						</li>
-						<li>
-							<a href="{{ url('/user/searchView',$user->id) }}">
-							<i class="glyphicon glyphicon-search"></i>
-							Buscar </a>
 						</li>
 					</ul>
 				</div>
