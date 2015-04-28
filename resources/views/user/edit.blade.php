@@ -1,6 +1,6 @@
-@extends('app')
+@extends('home')
 
-@section('content')
+@section('homeContent')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -33,7 +33,7 @@
                                     <tr>
                                         <td align="right"><button type="submit" class="btn btn-primary" style="width:100px;">Guardar</button></td>
                                         <td width="20"></td>
-                                        <td align="left"><a href="{{ action('UserController@home', $user->id) }}" class="btn btn-primary" style="width:100px;">Cancelar</a></td>
+                                        <td align="left"><a href="{{ action('HomeController@index', $user->id) }}" class="btn btn-primary" style="width:100px;">Cancelar</a></td>
                                     </tr>
                                 </table>
                             </div>

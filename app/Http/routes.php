@@ -14,6 +14,7 @@
 //Route::get('/', 'WelcomeController@index');
 Route::get('/','HomeController@index');
 Route::get('home', 'HomeController@index');
+Route::get('person/create','PersonController@create');
 Route::get('person/{id}/interaction/create','InteractionController@create');
 Route::post('person/{id}/interaction','InteractionController@store');
 Route::get('user/search','UserController@search');

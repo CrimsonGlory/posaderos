@@ -1,9 +1,9 @@
 <?php namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 use App\Person;
 use Carbon\Carbon;
-class Interaction extends Model {
+class Interaction extends Eloquent {
 	protected $table = 'interactions';
 	protected $fillable = [
 		'text',

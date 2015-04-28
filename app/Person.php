@@ -1,10 +1,10 @@
 <?php namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 use App\Interaction;
 
-class Person extends Model {
+class Person extends Eloquent {
 
 	protected $fillable = [
 	'first_name',
