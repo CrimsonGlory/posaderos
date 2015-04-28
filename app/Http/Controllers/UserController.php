@@ -23,10 +23,9 @@ class UserController extends Controller {
 		$users=User::all();
 		return view('user.index', compact('users'));
 	}
-	public function searchView($id)
+	public function searchView()
 	{
-		$user=User::findOrFail($id);
-		return view('user.searchView',compact('user'));
+		return view('user.searchView');
 	}
 	public function search() //pasar a otro controlador?
 	{

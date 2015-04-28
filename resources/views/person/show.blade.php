@@ -42,23 +42,23 @@
                                     </td>
                                 </tr>
                             </table>
-			    @if ($person->dni!=null && $person->dni!=0)
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">DNI</label>
-                                <div class="col-md-6">
-                                    <label class="form-control" name="dni">{{ $person->dni }}</label>
+			                @if ($person->dni!=null && $person->dni!=0)
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">DNI</label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" name="dni">{{ $person->dni }}</label>
+                                    </div>
                                 </div>
-                            </div>
-			    @endif
+			                @endif
 
-			    @if ($person->birthdate!=null)
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Fecha de nacimiento</label>
-                                <div class="col-md-6">
-                                    <label  class="form-control" name="birthdate">{{ $person->birthdate }}</label>
+			                @if ($person->birthdate!=null)
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Fecha de nacimiento</label>
+                                    <div class="col-md-6">
+                                        <label  class="form-control" name="birthdate">{{ $person->birthdate }}</label>
+                                    </div>
                                 </div>
-                            </div>
-			    @endif
+			                @endif
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Sexo</label>
@@ -67,56 +67,56 @@
                                 </div>
                             </div>
 
-			    @if ($person->email!=null)
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Correo electrónico</label>
-                                <div class="col-md-6">
-                                    <label class="form-control" name="email">{{ $person->email }}</label>
+			                @if ($person->email!=null)
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Correo electrónico</label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" name="email">{{ $person->email }}</label>
+                                    </div>
                                 </div>
-                            </div>
-			    @endif
+			                @endif
 
-			    @if ($person->address!=null)
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Dirección</label>
-                                <div class="col-md-6">
-                                    <label class="form-control" name="address">{{ $person->address }}</label>
+			                @if ($person->address!=null)
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Dirección</label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" name="address">{{ $person->address }}</label>
+                                    </div>
                                 </div>
-                            </div>
-			    @endif
+			                @endif
 
-			    @if ($person->other!=null)
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Observaciones</label>
-                                <div class="col-md-6">
-                                    <label class="form-control" style="height: 50px;" name="other">{{ $person->other }}</label>
+			                @if ($person->other!=null)
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Observaciones</label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" style="height: 50px;" name="other">{{ $person->other }}</label>
+                                    </div>
                                 </div>
-                            </div>
-			    @endif
-		@if (count($person->tagNames()) > 0)		
-			 <div class="form-group">
-				<label class="col-md-4 control-label">Etiquetas</label>
-				<div class="col-md-6">
+			                @endif
 
-				 @include('tag.list_tags',['tagNames' => $person->tagNames()])
-				</div>
-			</div>
-		@endif
+                            @if (count($person->tagNames()) > 0)
+                                 <div class="form-group">
+                                    <label class="col-md-4 control-label">Etiquetas</label>
+                                    <div class="col-md-6">
+
+                                     @include('tag.list_tags',['tagNames' => $person->tagNames()])
+                                    </div>
+                                </div>
+                            @endif
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><small>Persona agregada por:</small></label>
-				<div class="col-md-6"><small><a href="{{ action('UserController@show',$person->created_by) }}">
-					 {{$person->creator->name}}</a> ({{$person->created_at}})</small></label>
-				</div>
+                                <div class="col-md-6"><small><a href="{{ action('UserController@show',$person->created_by) }}">
+                                     {{$person->creator->name}}</a> ({{$person->created_at}})</small></label>
+                                </div>
                             </div>
 
-			   <div class="form-group">
+			                <div class="form-group">
                                 <label class="col-md-4 control-label"><small>Última actualización:</small></label>
                                 <div class="col-md-6"><small><a href="{{ action('UserController@show',$person->updated_by) }}">
                                          {{$person->last_update_user->name}}</a> ({{$person->updated_at}})</small></label>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -131,32 +131,33 @@
                             </tr>
                         </table>
                     </div>
-                    @if (count($interactions) != 0)
-                        <div class="panel-body">
-                            <form class="form-horizontal" role="form" action="{{ url('person') }}">
-                                @if (count($interactions) > 0)
-                                    <div class="form-group">
-                                        <table width="100%" align="center">
-                                            @foreach ($interactions as $interaction)
-                                                <tr>
-                                                    <td width="120" align="middle"><label>{{ $interaction->date }}</label></td>
-                                                    <td align="left"><label>{{ $interaction->text }}</label></td>
-						    <td width="80" align="center"><a class="btn btn-link" href="{{ action("InteractionController@edit",$interaction) }}">Editar</a></td>
-                                                </tr>
-						<tr><td width="120" align="middle"><label><small><a href="{{action("UserController@show",$interaction->user->id)}}">
-								 {{ $interaction->user->name }}</a></small></label></td>
-						@if ( count($interaction->tagNames()) > 0)
-                                                        <td align="middle"><label>Etiquetas: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label></td>
-						@else
-							<td></td>
-                                                    @endif
-						<td></td></tr>
-                                            @endforeach
-                                        </table>
-                                    </div>
-                                @endif
-                            </form>
-                        </div>
+
+                    @if (count($interactions) > 0)
+                        <table width="100%" align="center" class="table table-striped">
+                            @foreach ($interactions as $interaction)
+                                <tr>
+                                    <td width="120" align="middle">
+                                        <label>{{ $interaction->date }}</label>
+                                        </br>
+                                        <label>
+                                            <small>
+                                                <a href="{{action("UserController@show",$interaction->user->id)}}">
+                                                    {{ $interaction->user->name }}
+                                                </a>
+                                            </small>
+                                        </label>
+                                    </td>
+                                    <td align="left">
+                                        <label>{{ $interaction->text }}</label>
+                                        @if ( count($interaction->tagNames()) > 0)
+                                            </br>
+                                            <label>Etiquetas: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label>
+                                        @endif
+                                    </td>
+                                    <td width="80" align="center"><a class="btn btn-link" href="{{ action("InteractionController@edit",$interaction) }}">Editar</a></td>
+                                </tr>
+                            @endforeach
+                        </table>
                     @endif
                 </div>
             </div>

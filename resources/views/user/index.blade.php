@@ -1,19 +1,52 @@
 @extends('app')
 
 @section('content')
-<div name="users">
-@if  (count($users) > 0 )
-<ul>
-@foreach ($users as $user)
-<div name="user">
-	<li> {{$user->id}}: 
-<a href="{{ url('/user', $user->id) }}">
-	{{$user->name}} {{$user->surname}}
-</a>
-	</li></div>
-@endforeach
-</ul>
-@endif
- <p><a href="{{ url('/user/create') }}" class="btn btn-primary" role="button">Alta</a></p>
-</div>
+
+    <?php $userNum=0; ?>
+
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel-group" id="ultimasPersonasAgregadas" role="tablist" aria-multiselectable="false">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="UltimasPersonas">
+                    <table width="100%">
+                        <tr>
+                            <td><h4>Usuarios</h4></td>
+                        </tr>
+                    </table>
+                </div>
+                @if  (count($users) > 0)
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Usuario</th>
+                                        <th>Correo electrónico</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($users as $user)
+                                            <?php $userNum=$userNum + 1; ?>
+                                            <tr>
+                                                <th scope="row">{{$userNum}}</th>
+                                                <th>
+                                                    <a href="{{ url('/user', $user->id) }}">
+                                                        {{$user->name}} {{$user->surname}}
+                                                    </a>
+                                                </th>
+                                                <th>{{$user->email}}</th>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+
 @endsection

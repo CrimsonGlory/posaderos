@@ -40,7 +40,7 @@ class InteractionController extends Controller {
 	{
 		$person=Person::findOrFail($id);
 		
-		return view('interaction.create',compact('person'));	
+		return view('interaction.create',compact('person'));
 	}
 
 	/**
@@ -70,7 +70,7 @@ class InteractionController extends Controller {
 		if(is_null($interaction)){
 			return "404";
 		}
-		return view('interaction.show',compact('interaction'));	
+		return redirect('person/'.$interaction->person_id);
 	}
 
 	/**
@@ -82,10 +82,11 @@ class InteractionController extends Controller {
 	public function edit($id)
 	{
 		$interaction=Interaction::find($id);
+        $person=Person::findOrFail($interaction->person_id);
 		if(is_null($interaction)){
 			return "404";
 		}
-		return view('interaction.edit',compact('interaction'));	
+		return view('interaction.edit',compact('person','interaction'));
 	}
 
 	/**
