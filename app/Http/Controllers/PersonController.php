@@ -4,7 +4,7 @@ use App\Person;
 use App\Http\Requests;
 use App\Http\Requests\CreatePersonRequest;
 use App\Http\Controllers\Controller;
-
+use Auth;
 //use Illuminate\Http\Request;
 //use Illuminate\Http\Response;
 
@@ -51,8 +51,12 @@ class PersonController extends Controller {
 	public function store(CreatePersonRequest $request)
 	{
 		$input = $request->all();
-        $person=Person::create($input);
-        return redirect('person/'.$person->id);
+		$person = new Person;
+		$person->fill($input);
+		$person->created_by=Auth::id();
+		$person->updated_by=Auth::id();
+		$person->save();
+	        return redirect('person/'.$person->id);
 	}
 
 	/**
@@ -69,7 +73,7 @@ class PersonController extends Controller {
 			return "404";
 		}
 		$interactions=$person->interactions()->latest('id')->get();
-        $fileentries=$person->fileentries()->latest('id')->get();
+	        $fileentries=$person->fileentries()->latest('id')->get();
 		return view('person.show',compact('person','interactions','fileentries'));
 	}
 
@@ -99,6 +103,7 @@ class PersonController extends Controller {
 		$person = Person::findOrFail($id);
 		$tags=array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
 		$person->retag($tags);
+		$person->updated_by=Auth::id();
 		$person->update($request->all());
 		return redirect('person/'.$person->id);
 

@@ -30,6 +30,7 @@ class AddForeignPersonIdOnInteractions extends Migration {
 		Schema::table('interactions', function(Blueprint $table)
 		{
 			$table->dropForeign('interactions_person_id_foreign');
+			$table->dropColumn('person_id');
 		});
 	}
 
