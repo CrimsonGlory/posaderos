@@ -29,7 +29,7 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                             <div class="form-group" align="center">
-                                <img src="{{  Auth::user()->gravatar() }}" alt="No se pudo cargar la foto" class="img-circle" style="max-width:150px; max-height:150px;">
+                                <img src="{{ $gravatar }}" alt="No se pudo cargar la foto" class="img-circle" style="max-width:150px; max-height:150px;">
                             </div>
 
                             <div class="form-group">
