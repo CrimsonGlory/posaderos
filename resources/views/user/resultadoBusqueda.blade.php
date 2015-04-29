@@ -11,12 +11,10 @@
 		</div>
 
 @elseif (!is_null($interactions))
-		<div class="col-md-9">
-			<div class="container">
-			    <div class="row">    
+
+			<div class="container"> 
 			        <div class="col-xs-8 col-xs-offset-2">
 
-						<div class="col-md-9">
 						      <div class="panel-body">
 								<div class="table-responsive">
 								  <table class="table table-striped">
@@ -39,12 +37,10 @@
 								  </table>
 								</div>
 						      </div>
-						</div>
 
-			        </div>
 				</div>
 			</div>
-		</div>
+
 
 @elseif (!is_null($persons))
 		<div class="col-md-9">

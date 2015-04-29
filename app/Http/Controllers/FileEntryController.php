@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Person;
-use App\Fileentry;
+use App\FileEntry;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\CreateFileEntryRequest;
 use Request;

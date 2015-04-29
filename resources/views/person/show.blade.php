@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                             @endif
-
+			    @if ($person->created_by!=0 && $person->updated_by!=0 )
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><small>Persona agregada por:</small></label>
                                 <div class="col-md-6"><small><a href="{{ action('UserController@show',$person->created_by) }}">
@@ -117,6 +117,7 @@
                                          {{$person->last_update_user->name}}</a> ({{$person->updated_at}})</small></label>
                                 </div>
                             </div>
+ 			    @endif
                         </form>
                     </div>
                 </div>

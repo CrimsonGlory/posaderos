@@ -47,7 +47,7 @@ class HomeController extends Controller {
                 if(is_null($user)){
                         return "404";
                 }
-                return view('home',compact('user','interactions','persons','gravatar'));
+                return view('user.userHome',compact('user','interactions','persons','gravatar'));
         
 	}
 

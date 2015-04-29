@@ -37,18 +37,22 @@ class UserController extends Controller {
 		$users = NULL;
 		if($data['toFind'] == "Interaccion")
 		{
-			//$results = Interaction::where('text', '=', '%'.$data['keyWord'].'%')->get();
-			$interactions = Interaction::all();
+			$interactions = Interaction::where('text', 'LIKE', '%'.$data['keyWord'].'%')->get();
+			//$interactions = Interaction::all();
 			$data['error'] = 0;
 		}
 		else if($data['toFind'] == "Persona")
 		{
-			$persons = Person::all();
+			//$persons = Person::all();
+			$persons = Person::where('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
+			orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->get();
 			$data['error'] = 0;
 		}
 		else if($data['toFind'] == "Usuario")
 		{
-			$users = User::all();
+			//$users = User::all();
+			$users = User::where('name', 'LIKE', '%'.$data['keyWord'].'%')->
+			orWhere('email', 'LIKE', '%'.$data['keyWord'].'%')->get();
 			$data['error'] = 0;
 		}
 		return view('user.resultadoBusqueda',compact('data','interactions','persons','users'));		
@@ -107,7 +111,8 @@ class UserController extends Controller {
 		if(is_null($user)){
 			return "404";
 		}
-		return view('user.edit',compact('user'));
+		$gravatar=Gravatar::get($user->email);
+		return view('user.edit',compact('user','gravatar'));
 	}
 
 	/**
