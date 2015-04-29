@@ -30,25 +30,24 @@ class UserController extends Controller {
 	public function search() //pasar a otro controlador?
 	{
 		$data = array('toFind' => Input::get('toFind'),'keyWord' => Input::get('key'),'error' =>1);
-		//$contents = View::make('user.resultadoBusqueda',$data)->render();
-		//return "dsfds";
+
 		$interactions = NULL;
 		$persons = NULL;
 		$users = NULL;
-		if($data['toFind'] == "Interaccion")
+		if($data['toFind'] == "Interacciones")
 		{
 			$interactions = Interaction::where('text', 'LIKE', '%'.$data['keyWord'].'%')->get();
 			//$interactions = Interaction::all();
 			$data['error'] = 0;
 		}
-		else if($data['toFind'] == "Persona")
+		else if($data['toFind'] == "Personas")
 		{
 			//$persons = Person::all();
 			$persons = Person::where('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
 			orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->get();
 			$data['error'] = 0;
 		}
-		else if($data['toFind'] == "Usuario")
+		else if($data['toFind'] == "Usuarios")
 		{
 			//$users = User::all();
 			$users = User::where('name', 'LIKE', '%'.$data['keyWord'].'%')->
@@ -91,12 +90,10 @@ class UserController extends Controller {
 	public function show($id)
 	{
 		$user=User::find($id);
-		
 		if(is_null($user)){
 			return "404";
 		}
-		$gravatar=Gravatar::get($user->email);
-		return view('user.show',compact('user','gravatar'));
+		return view('user.show',compact('user'));
 	}
 
 	/**

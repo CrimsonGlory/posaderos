@@ -34,15 +34,37 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 @if (!Auth::guest())
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/person') }}">Personas</a></li>
+                        <li><a href="{{ url('/person') }}">
+                                <i class="glyphicon glyphicon-user"></i>
+                                Personas
+                            </a>
+                        </li>
                     </ul>
 
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/interaction') }}">Interacciones</a></li>
+                        <li><a href="{{ url('/interaction') }}">
+                                <i class="glyphicon glyphicon-edit"></i>
+                                Interacciones
+                            </a>
+                        </li>
                     </ul>
 
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/user') }}">Usuarios</a></li>
+                        <li>
+                            <a href="{{ url('/user') }}">
+                                <i class="glyphicon glyphicon-lock"></i>
+                                Usuarios
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="{{ action('PersonController@create') }}">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                Agregar persona
+                            </a>
+                        </li>
                     </ul>
 
                     <ul class="nav navbar-nav">
@@ -56,17 +78,37 @@
                 @endif
 
 				<ul class="nav navbar-nav navbar-right">
-					@if (Auth::guest())
-						<li><a href="{{ url('/auth/login') }}">Login</a></li>
-						<li><a href="{{ url('/auth/register') }}">Regístrate</a></li>
-					@else
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
-							</ul>
-						</li>
-					@endif
+                    @if (Auth::guest())
+                        <li><a href="{{ url('/auth/login') }}">Login</a></li>
+                        <li><a href="{{ url('/auth/register') }}">Regístrate</a></li>
+                    @else
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <img src="{{ Auth::user()->gravatar() }}"class="img-circle" alt="" style="width: 20px; height: 20px;"> {{ Auth::user()->name }}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="{{ action('UserController@show',Auth::user()->id) }}">
+                                        <i class="glyphicon glyphicon-home"></i>
+                                        Mi perfil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ action('UserController@edit', Auth::user()->id) }}">
+                                        <i class="glyphicon glyphicon-cog"></i>
+                                        Editar Cuenta
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/auth/logout') }}">
+                                        <i class="glyphicon glyphicon-log-out"></i>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
 				</ul>
 			</div>
 		</div>

@@ -30,9 +30,9 @@
                                 <tr>
                                     <td>
                                         @if (count($fileentries) != 0)
-                                            <img src="{{ asset($fileentries->first()->filename) }}" alt="No se pudo cargar la foto" class="img-circle" style="max-width:150px; max-height:150px;"/>
+                                            <img src="{{ asset($fileentries->first()->filename) }}" alt="" class="img-circle" style="max-width:150px; max-height:150px;"/>
                                         @else
-                                            <img src="{{ asset("no-photo.png") }}" alt="Sin foto" class="img-circle" style="max-width:150px; max-height:150px;"/>
+                                            <img src="{{ asset("no-photo.png") }}" alt="" class="img-circle" style="max-width:150px; max-height:150px;"/>
                                         @endif
                                     </td>
                                 </tr>
@@ -98,26 +98,38 @@
                                  <div class="form-group">
                                     <label class="col-md-4 control-label">Etiquetas</label>
                                     <div class="col-md-6">
-
-                                     @include('tag.list_tags',['tagNames' => $person->tagNames()])
+                                        <label class="form-control">
+                                            @include('tag.list_tags',['tagNames' => $person->tagNames()])
+                                        </label>
                                     </div>
                                 </div>
                             @endif
-			    @if ($person->created_by!=0 && $person->updated_by!=0 )
-                            <div class="form-group">
-                                <label class="col-md-4 control-label"><small>Persona agregada por:</small></label>
-                                <div class="col-md-6"><small><a href="{{ action('UserController@show',$person->created_by) }}">
-                                     {{$person->creator->name}}</a> ({{$person->created_at}})</small></label>
-                                </div>
-                            </div>
 
-			                <div class="form-group">
-                                <label class="col-md-4 control-label"><small>Última actualización:</small></label>
-                                <div class="col-md-6"><small><a href="{{ action('UserController@show',$person->updated_by) }}">
-                                         {{$person->last_update_user->name}}</a> ({{$person->updated_at}})</small></label>
+                            @if ($person->created_by != 0 && $person->updated_by != 0 )
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Persona agregada por</label>
+                                    <div class="col-md-6">
+                                        <label class="form-control">
+                                            <a href="{{ action('UserController@show',$person->created_by) }}">
+                                                {{$person->creator->name}}
+                                            </a>
+                                            ({{$person->created_at}})
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
- 			    @endif
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Última actualización</label>
+                                    <div class="col-md-6">
+                                        <label class="form-control">
+                                            <a href="{{ action('UserController@show',$person->updated_by) }}">
+                                                {{$person->last_update_user->name}}
+                                            </a>
+                                            ({{$person->updated_at}})
+                                        </label>
+                                    </div>
+                                </div>
+ 			                @endif
                         </form>
                     </div>
                 </div>

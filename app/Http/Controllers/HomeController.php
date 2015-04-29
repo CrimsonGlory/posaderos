@@ -40,14 +40,13 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-       		$user=User::find(Auth::id());
-                $interactions = Interaction::latest()->paginate(10);
-                $persons = Person::latest()->paginate(10);
-		$gravatar=Gravatar::get($user->email);
-                if(is_null($user)){
-                        return "404";
-                }
-                return view('user.userHome',compact('user','interactions','persons','gravatar'));
+        $user=User::find(Auth::id());
+        $interactions = Interaction::latest()->paginate(10);
+        $persons = Person::latest()->paginate(10);
+        if(is_null($user)){
+                return "404";
+        }
+        return view('home',compact('user','interactions','persons'));
         
 	}
 

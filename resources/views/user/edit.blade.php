@@ -6,7 +6,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4>Editar Usuario</h4>
+                        <h4>Actualizar usuario</h4>
                     </div>
                     <div class="panel-body">
                         {!! Form::model($user, ['class' => 'form-horizontal', 'method'=> 'PATCH', 'action' => ['UserController@update',$user->id]]) !!}
