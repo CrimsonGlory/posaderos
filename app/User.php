@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Gravatar;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
@@ -47,4 +48,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	return $this->hasMany('App\Person','updated_by');
     }
 
+    public function gravatar()
+    {
+        return Gravatar::get($this->email);
+    }
 }
