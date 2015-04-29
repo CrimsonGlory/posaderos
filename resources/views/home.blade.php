@@ -9,24 +9,11 @@
 				<div class="profile-userpic">
 				<img src="{{ $gravatar }}" class="img-responsive" alt="">
 			</div>
-				<!-- END SIDEBAR USERPIC -->
-				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
 						{{$user->name}}
 					</div>
-					<!-- <div class="profile-usertitle-job">
-						Area de necesidad
-					</div>-->
 				</div>
-				<!-- END SIDEBAR USER TITLE -->
-				<!-- SIDEBAR BUTTONS -->
-<!-- 				<div class="profile-userbuttons">
-					<button type="button" class="btn btn-success btn-sm">Follow</button>
-					<button type="button" class="btn btn-danger btn-sm">Message</button>
-				</div> -->
-				<!-- END SIDEBAR BUTTONS -->
-				<!-- SIDEBAR MENU -->
 				<div class="profile-usermenu">
 					<ul class="nav">
 						<li class="active">
@@ -46,7 +33,6 @@
 						</li>
 					</ul>
 				</div>
-				<!-- END MENU -->
 			</div>
 		</div>
 		<div class="col-md-9">
