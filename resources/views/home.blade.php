@@ -17,42 +17,7 @@
                                 </a>
                             </h4>
                         </div>
-                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="UltimasPersonas">
-                            <div class="panel-body">
-                                <div class="panel panel-default">
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>nombre</th>
-                                            <th>DNI</th>
-                                            <th>Genero</th>
-                                            <th>Direccion</th>
-                                            <th>Otro</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach ($persons as $person)
-                                            <?php $personNum=$personNum + 1; ?>
-                                            <tr>
-                                                <th scope="row">{{$personNum}}</th>
-                                                <th><a href="{{action('PersonController@show',$person->id) }}">
-                                                        {{$person->first_name}} {{$person->last_name}}</a></th>
-                                                <th>{{$person->dni}}</th>
-                                                @if($person->gender=="male")
-                                                    <th>Hombre</th>
-                                                @else
-                                                    <th>Mujer</th>
-                                                @endif
-                                                <th>{{$person->address}}</th>
-                                                <th>{{$person->other}}</th>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+			@include('list_people',['people' => $persons])
                     </div>
                 </div>
 

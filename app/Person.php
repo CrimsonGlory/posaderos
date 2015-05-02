@@ -46,4 +46,9 @@ use \Conner\Tagging\TaggableTrait;
         return $this->belongsTo('App\User','updated_by');
     }
 
+   public function name()
+   {
+        return $this->first_name." ".$this->last_name;
+   }
+
 }

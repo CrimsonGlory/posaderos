@@ -44,5 +44,19 @@
             </div>
         </div>
     </div>
-
+@if (count($user->people) )
+<div class="col-md-10 col-md-offset-1">
+        <div class="panel-group" id="personasCreadasPorUsuario" role="tablist" aria-multiselectable="false">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="PersonasCreadas">
+                    <table width="100%">
+                        <tr>
+                            <td><h4>Personas dadas de alta por {{ $user->name }}</h4></td>
+                        </tr>
+                    </table>
+                </div>
+ 
+@include('list_people',['people' => $user->people])
+</div></div></div>
+@endif
 @endsection
