@@ -44,5 +44,6 @@
             </div>
         </div>
     </div>
+@include('list_people',['people' => $user->people, 'username' => $user->name])
 
 @endsection
