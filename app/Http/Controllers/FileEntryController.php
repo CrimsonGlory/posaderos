@@ -9,7 +9,7 @@ use Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
-
+use Intervention\Image\ImageManagerStatic as Image;
 class FileEntryController extends Controller {
 
     /**
@@ -25,19 +25,24 @@ class FileEntryController extends Controller {
     }
     public function add(CreateFileEntryRequest $request)
     {
-        $file = Request::file('filename');
-        $person = Request::input('person_id');
-        $extension = $file->getClientOriginalExtension();
-        Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
-        move_uploaded_file($file, public_path().'/'.$file->getFilename().'.'.$extension);
-        $entry = new Fileentry();
-        $entry->mime = $file->getClientMimeType();
-        $entry->original_filename = $file->getClientOriginalName();
-        $entry->filename = $file->getFilename().'.'.$extension;
-        $entry->person_id = $person;
+	$entry = new FileEntry();
+	$file = Request::file('filename');
+	$entry->upload($file);
+        $person_id = Request::input('person_id');
+	if($person_id==NULL)
+		abort("$person_id is NULL at FileEntryContrller@add");
+	$person=Person::findOrFail($person_id);
         $entry->save();
-        return redirect('person/'.$entry->person_id);
+	$person->fileentries()->save($entry);
+        return redirect('person/'.$person_id);
 
+    }
+    public function show($id)
+    {
+	$file=FileEntry::find($id);
+	$filename=$file->filename;
+	$image = Image::make("../storage/app/assets/fileentries/$filename");
+	return $image->response();
     }
 
 }

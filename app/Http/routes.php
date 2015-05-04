@@ -25,8 +25,7 @@ Route::resource('interaction','InteractionController');
 Route::resource('user','UserController');
 Route::get('tag','TagController@index');
 Route::get('tag/{name}','TagController@show');
-
-
+Route::get('file/{id}','FileEntryController@show');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

@@ -6,11 +6,11 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Gravatar;
+use Astronau\ImageCache\Uploader;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
-
 	use Authenticatable, CanResetPassword;
-
+	protected $imagesdir = 'user';
 	/**
 	 * The database table used by the model.
 	 *
@@ -52,4 +52,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return Gravatar::get($this->email);
     }
+    public function uploadAndSetAvatar($file)
+    {
+	if(!is_null($file)){
+		$this->other = Uploader::upload($file,$this->imagesdir);
+	}
+    }
+
 }

@@ -33,7 +33,7 @@ use \Conner\Tagging\TaggableTrait;
 
     public function fileentries()
     {
-        return $this->hasMany('App\FileEntry','person_id');
+        return $this->morphToMany('App\FileEntry','fileentrieable');
     }
 
     public function creator()

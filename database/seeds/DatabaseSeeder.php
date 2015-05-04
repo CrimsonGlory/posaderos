@@ -24,10 +24,11 @@ class PeopleTableSeeder extends Seeder {
 
 	public function run()
 	{
+		DB::table('fileentrieables')->delete();
+		DB::table('fileentries')->delete();
 		DB::table('interactions')->delete();
 		DB::table('people')->delete();
 		DB::table('users')->delete();
-		DB::table('fileentries')->delete();
 		DB::table('password_resets')->delete();
 		DB::table('tagging_tagged')->delete();
 		DB::table('tagging_tags')->delete();

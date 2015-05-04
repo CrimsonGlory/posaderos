@@ -1,7 +1,6 @@
 @extends('app')
 
 @section('content')
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -9,7 +8,7 @@
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
-                                <td><h4>{{ $person->first_name }} {{ $person->last_name }}</h4></td>
+                                <td><h4>{{ $person->name() }} </h4></td>
                                 <td align="right"><a class="btn btn-primary" href="{{ action('PersonController@edit', $person->id) }}" style="width:80px;">Editar</a></td>
                             </tr>
                         </table>
@@ -29,8 +28,8 @@
                             <table align="center">
                                 <tr>
                                     <td>
-                                        @if (count($fileentries) != 0)
-                                            <img src="{{ asset($fileentries->first()->filename) }}" alt="" class="img-circle" style="max-width:150px; max-height:150px;"/>
+                                        @if ($fileentries!=null && count($fileentries) != 0)
+                                            <img src="{{ action("FileEntryController@show",$fileentries->first()->id ) }}" alt="" class="img-circle" style="max-width:150px; max-height:150px;"/>
                                         @else
                                             <img src="{{ asset("no-photo.png") }}" alt="" class="img-circle" style="max-width:150px; max-height:150px;"/>
                                         @endif
@@ -176,7 +175,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @stop
