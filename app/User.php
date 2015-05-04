@@ -9,7 +9,6 @@ use Gravatar;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 	use Authenticatable, CanResetPassword;
-	protected $imagesdir = 'user';
 	/**
 	 * The database table used by the model.
 	 *
