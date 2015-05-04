@@ -8,9 +8,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Gravatar;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
-
 	use Authenticatable, CanResetPassword;
-
 	/**
 	 * The database table used by the model.
 	 *
@@ -52,4 +50,5 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return Gravatar::get($this->email);
     }
+
 }

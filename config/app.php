@@ -149,7 +149,9 @@ return [
 		 * Added
 		 */
 	  	'Creativeorange\Gravatar\GravatarServiceProvider',
-	'Conner\Tagging\TaggingServiceProvider'	
+	'Conner\Tagging\TaggingServiceProvider'	,
+	 'Astroanu\ImageCache\ImageCacheProvider',
+	'Intervention\Image\ImageServiceProvider'
 
 	],
 
@@ -202,6 +204,7 @@ return [
         'Html'      => 'Illuminate\Html\HtmlFacade',
 	  'Gravatar' => 'Creativeorange\Gravatar\Facades\Gravatar',
 	'TaggableTrait' => '\Conner\Tagging\TaggableTrait',
+	'Image' => 'Intervention\Image\Facades\Image'
 	],
 
 ];

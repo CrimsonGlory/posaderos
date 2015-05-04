@@ -21,6 +21,10 @@ use \Conner\Tagging\TaggableTrait;
 	{
 		return $this->belongsTo('App\User');
 	}
+        public function fileentries()
+	{
+		return $this->morphToMany('App\FileEntry','fileentrieable');
+        }
 
 	// Para que agregue la hora al guardar y no sólo el día
     public function setDateAttribute($date)
