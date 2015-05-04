@@ -56,7 +56,7 @@ class PersonController extends Controller {
 		$person->created_by=Auth::id();
 		$person->updated_by=Auth::id();
 		$person->save();
-	        return redirect('person/'.$person->id);
+        return redirect('person/'.$person->id);
 	}
 
 	/**
@@ -69,11 +69,12 @@ class PersonController extends Controller {
 	{
 		$person=Person::find($id);
 		
-		if(is_null($person)){
+		if(is_null($person))
+        {
 			return "404";
 		}
 		$interactions=$person->interactions()->latest('id')->get();
-	        $fileentries=$person->fileentries()->latest('id')->get();
+        $fileentries=$person->fileentries()->latest('id')->get();
 		return view('person.show',compact('person','interactions','fileentries'));
 	}
 
@@ -86,7 +87,8 @@ class PersonController extends Controller {
 	public function edit($id)
 	{
 		$person=Person::find($id);
-		if(is_null($person)){
+		if(is_null($person))
+        {
 			return "404";
 		}
 		return view('person.edit',compact('person'));

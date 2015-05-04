@@ -24,7 +24,8 @@ class CreatePersonRequest extends Request {
 		return [
 			'first_name' => 'required|min:2',
             'gender' => 'required',
-		'dni' => 'integer'
+		    'dni' => 'integer',
+            'birthdate' => 'date'
 		];
 	}
 

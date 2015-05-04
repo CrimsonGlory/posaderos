@@ -8,27 +8,30 @@ use App\User;
 
 class Person extends Model {
 use \Conner\Tagging\TaggableTrait;
-   protected $table = 'people';
-	protected $fillable = [
-	'first_name',
-	'last_name',
-	'email',
-	'birthdate',
-	'dni',
-	'gender',
-	'address',
-	'other'
+    protected $table = 'people';
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'email',
+        'birthdate',
+        'dni',
+        'gender',
+        'address',
+        'other'
 	];
 
     // Para que agregue la hora al guardar y no sólo el día
     public function setBirthdateAttribute($date)
     {
-        //$this->attributes['birthdate'] = Carbon::createFromFormat('Y-m-d', $date);
+        if ($date != null)
+        {
+            $this->attributes['birthdate'] = Carbon::createFromFormat('Y-m-d', $date);
+        }
     }
 
     public function interactions()
     {
-	return $this->hasMany('App\Interaction','person_id');
+	    return $this->hasMany('App\Interaction','person_id');
     }
 
     public function fileentries()
@@ -38,7 +41,7 @@ use \Conner\Tagging\TaggableTrait;
 
     public function creator()
     {
-	return $this->belongsTo('App\User','created_by');
+	    return $this->belongsTo('App\User','created_by');
     }
 
     public function last_update_user()
