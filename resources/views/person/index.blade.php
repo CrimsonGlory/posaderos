@@ -10,7 +10,7 @@
                 <div class="panel-heading" role="tab" id="UltimasPersonas">
                     <table width="100%">
                         <tr>
-                            <td><h4>Personas</h4></td>
+                            <td><h4>Asistidos</h4></td>
                             <td align="right"><a class="btn btn-primary" href="{{ action('PersonController@create') }}" style="width:80px;">Agregar</a></td>
                         </tr>
                     </table>

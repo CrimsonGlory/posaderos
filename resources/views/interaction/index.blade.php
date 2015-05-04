@@ -22,7 +22,7 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Persona</th>
+                                        <th>Asistido</th>
                                         <th>Descripcion</th>
                                         <th>Estado</th>
                                         <th>Fecha</th>

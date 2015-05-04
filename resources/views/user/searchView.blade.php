@@ -31,7 +31,7 @@
                         </button>
                         <ul class="dropdown-menu" role="menu">
                           <li><a href="#user">Usuarios</a></li>
-                          <li><a href="#person">Personas</a></li>
+                          <li><a href="#person">Asistidos</a></li>
                           <li><a href="#interaction">Interacciones</a></li>
                         </ul>
                     </div>

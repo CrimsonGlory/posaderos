@@ -36,7 +36,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{{ url('/person') }}">
                                 <i class="glyphicon glyphicon-user"></i>
-                                Personas
+                                Asistidos
                             </a>
                         </li>
                     </ul>
@@ -62,7 +62,7 @@
                         <li>
                             <a href="{{ action('PersonController@create') }}">
                                 <i class="glyphicon glyphicon-plus"></i>
-                                Agregar persona
+                                Nuevo asistido
                             </a>
                         </li>
                     </ul>

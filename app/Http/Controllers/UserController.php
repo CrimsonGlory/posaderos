@@ -40,7 +40,7 @@ class UserController extends Controller {
 			//$interactions = Interaction::all();
 			$data['error'] = 0;
 		}
-		else if($data['toFind'] == "Personas")
+		else if($data['toFind'] == "Asistidos")
 		{
 			//$persons = Person::all();
 			$persons = Person::where('first_name', 'LIKE', '%'.$data['keyWord'].'%')->

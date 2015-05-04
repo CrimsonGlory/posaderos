@@ -13,11 +13,11 @@
                         <div class="panel-heading" role="tab" id="UltimasPersonas">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#ultimasPersonasAgregadas" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Últimas 10 personas agregadas
+                                    Últimos 10 asistidos agregados
                                 </a>
                             </h4>
                         </div>
-			@include('list_people',['people' => $persons])
+			        @include('list_people',['people' => $persons])
                     </div>
                 </div>
 
@@ -37,7 +37,7 @@
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Persona</th>
+                                            <th>Asistido</th>
                                             <th>Descripcion</th>
                                             <th>Estado</th>
                                             <th>Fecha</th>
