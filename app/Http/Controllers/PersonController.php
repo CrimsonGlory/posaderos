@@ -78,6 +78,21 @@ class PersonController extends Controller {
 		return view('person.show',compact('person','interactions','fileentries'));
 	}
 
+
+        public function photos($id)
+        {
+                $person=Person::find($id);
+
+                if(is_null($person))
+        {
+                        return "404";
+                }
+                $interactions=$person->interactions()->latest('id')->get();
+        $fileentries=$person->fileentries()->get();
+                return view('person.photos',compact('person','interactions','fileentries'));
+        }
+
+
 	/**
 	 * Show the form for editing the specified resource.
 	 *
