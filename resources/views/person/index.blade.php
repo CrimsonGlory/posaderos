@@ -56,17 +56,19 @@
                                     </tbody>
                                 </table>
 
-                                <table width="100%">
-                                    <tr>
-                                        <td align="right">
-                                            <nav>
-                                                <ul class="pagination">
-                                                    {!! $paginator->renderBootstrap('<', '>') !!}
-                                                </ul>
-                                            </nav>
-                                        </td>
-                                    </tr>
-                                </table>
+                                @if ($paginator->hasPrevPage || $paginator->hasNextPage)
+                                    <table width="100%">
+                                        <tr>
+                                            <td align="right">
+                                                <nav>
+                                                    <ul class="pagination">
+                                                        {!! $paginator->renderBootstrap('<', '>') !!}
+                                                    </ul>
+                                                </nav>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                @endif
                             </div>
                         </div>
                     </div>
