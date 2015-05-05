@@ -6,7 +6,6 @@
         <div class="row profile">
             <div class="col-md-10 col-md-offset-1">
                 <?php $interactionNum=0; ?>
-                <?php $personNum=0; ?>
 
                 <div class="panel-group" id="ultimasPersonasAgregadas" role="tablist" aria-multiselectable="false">
                     <div class="panel panel-default">

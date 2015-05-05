@@ -13,9 +13,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php $personNum=0; ?>
                     @foreach ($people as $person)
-                        <?php $personNum=$personNum + 1; ?>
                         <tr>
                             <th scope="row">
                                 @if ($person->fileentries()!=null && count( $person->fileentries()->get())!=0 )
