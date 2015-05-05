@@ -5,11 +5,16 @@ use App\Http\Requests;
 use App\Http\Requests\CreatePersonRequest;
 use App\Http\Controllers\Controller;
 use Auth;
+use App\Lib\Pagination\Pagination;
+use Symfony\Component\HttpFoundation\Request;
+
 //use Illuminate\Http\Request;
 //use Illuminate\Http\Response;
 
 
 class PersonController extends Controller {
+
+    private $pagination;
 
     /**
      * Función para que verifique autenticación al ingresar a una página
@@ -17,9 +22,10 @@ class PersonController extends Controller {
      * Si se pusiera $this->middleware('auth', ['only' => 'create']); sólo pide login para crear uno nuevo
      * Si se pusiera $this->middleware('auth', ['except' => 'create']); hace lo inverso al punto anterior
      */
-    public function __construct()
+    public function __construct(Pagination $pagination)
     {
         $this->middleware('auth');
+        $this->pagination = $pagination;
     }
 
 	/**
@@ -27,10 +33,11 @@ class PersonController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
-		$people=Person::latest('id')->get();
-		return view('person.index', compact('people'));
+	public function index(Request $request)
+    {
+		$people = Person::paginate(10);
+        $paginator = $this->pagination->set($people, $request->getBaseUrl());
+		return view('person.index', compact('people', 'paginator'));
 	}
 
 	/**
