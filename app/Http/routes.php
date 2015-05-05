@@ -17,6 +17,7 @@ Route::get('home', 'HomeController@index');
 Route::get('person/{id}/interaction/create','InteractionController@create');
 Route::post('person/{id}/interaction','InteractionController@store');
 Route::get('person/{id}/fileentries/photos','FileEntryController@index');
+Route::get('person/{id}/photos','PersonController@photos');
 Route::post('person/{id}/fileentries','FileEntryController@add');
 Route::get('user/search','UserController@search');
 Route::get('user/searchView','UserController@searchView');
