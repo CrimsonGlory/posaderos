@@ -27,6 +27,22 @@ use \Conner\Tagging\TaggableTrait;
         {
             $this->attributes['birthdate'] = Carbon::createFromFormat('Y-m-d', $date);
         }
+        else
+        {
+            $this->attributes['birthdate'] = null;
+        }
+    }
+
+    public function setDNIAttribute($dni)
+    {
+        if ($dni != null)
+        {
+            $this->attributes['dni'] = $dni;
+        }
+        else
+        {
+            $this->attributes['dni'] = null;
+        }
     }
 
     public function interactions()
