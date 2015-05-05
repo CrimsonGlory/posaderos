@@ -4,7 +4,7 @@
 			<div class="container">
 			    <div class="row">    
 			        <div class="col-xs-8 col-xs-offset-2">
-						<span class="label label-danger">Se produjo un error en la consulta: Falta parametro de búsqueda</span>
+						<span class="label label-danger">Se produjo un error en la consulta: Falta parámetro de búsqueda</span>
 			        </div>
 				</div>
 			</div>
@@ -57,8 +57,8 @@
 									    	<th>Nombre</th>
 									    	<th>Apellido</th>
 									    	<th>DNI</th>
-									    	<th>Direccion</th>
-									    	<th>Otro</th>
+									    	<th>Dirección</th>
+									    	<th>Otros</th>
 									    </tr>
 									</thead>
 								  	<tbody>
@@ -94,7 +94,7 @@
 								  	<thead>
 									    <tr>
 									    	<th>Nombre</th>
-									    	<th>Email</th>
+									    	<th>Correo electrónico</th>
 									    </tr>
 									</thead>
 								  	<tbody>

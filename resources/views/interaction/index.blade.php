@@ -23,7 +23,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Asistido</th>
-                                        <th>Descripcion</th>
+                                        <th>Descripción</th>
                                         <th>Estado</th>
                                         <th>Fecha</th>
                                     </tr>

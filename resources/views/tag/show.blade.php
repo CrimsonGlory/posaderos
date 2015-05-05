@@ -9,7 +9,7 @@
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
-                                <td><h4>{{$name}} - Personas</h4></td>
+                                <td><h4>{{ ucfirst($name) }} - Asistidos</h4></td>
                             </tr>
                         </table>
                     </div>
@@ -18,13 +18,19 @@
                         <table width="100%" align="center" class="table table-striped">
                             @foreach ($people as $person)
                                 <tr>
-                                    <td width="40%">
+                                    <td>
                                         <a href="{{ url('/person', $person->id) }}">
                                             {{$person->first_name}} {{$person->last_name}}
                                         </a>
                                     </td>
-                                    <td width="60%">
+                                    <td>
                                         {{trans('messages.'.$person->gender)}}
+                                    </td>
+                                    <td>
+                                        {{ $person->address }}
+                                    </td>
+                                    <td>
+                                        {{ $person->other }}
                                     </td>
                                 </tr>
                             @endforeach
@@ -36,7 +42,7 @@
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
-                                <td><h4>{{$name}} - Interacciones</h4></td>
+                                <td><h4>{{ ucfirst($name) }} - Interacciones</h4></td>
                             </tr>
                         </table>
                     </div>

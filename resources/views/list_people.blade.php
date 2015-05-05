@@ -7,8 +7,9 @@
                     <tr>
                         <th>Foto</th>
                         <th>Nombre</th>
-                        <th>Direccion</th>
-                        <th>Otro</th>
+                        <th>Género</th>
+                        <th>Dirección</th>
+                        <th>Otros</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -27,6 +28,9 @@
                                 <a href="{{ action('PersonController@show',$person->id) }}">
                                     {{$person->name()}}
                                 </a>
+                            </th>
+                            <th>
+                                {{trans('messages.'.$person->gender)}}
                             </th>
                             <th>{{$person->address}}</th>
                             <th>{{$person->other}}</th>

@@ -25,9 +25,9 @@
                                         <th>#</th>
                                         <th>Nombre</th>
                                         <th>DNI</th>
-                                        <th>Genero</th>
-                                        <th>Direccion</th>
-                                        <th>Otro</th>
+                                        <th>Género</th>
+                                        <th>Dirección</th>
+                                        <th>Otros</th>
                                     </tr>
                                     </thead>
                                     <tbody>

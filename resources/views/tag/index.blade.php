@@ -1,21 +1,35 @@
 @extends('app')
 
 @section('content')
-<h1>Etiquetas</h1>
-<div class="form-group">
-    @if  (count($tags) > 0 )
-        <ul>
-            @foreach ($tags as $tag)
-                <div class="form-group">
-                    <li> 
-                        <a href="{{ action('TagController@show',$tag) }}">
-                            {{ucfirst($tag)}}
-                        </a>
-                    </li>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <table width="100%">
+                            <tr>
+                                <td><h4>Etiquetas</h4></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    @if (count($tags) > 0)
+                        <table width="100%" align="center" class="table table-striped">
+                            @foreach ($tags as $tag)
+                                <tr>
+                                    <td>
+                                        <a href="{{ action('TagController@show',$tag) }}">
+                                            {{ ucfirst($tag) }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    @endif
                 </div>
-            @endforeach
-        </ul>
-    @endif
-</div>
+            </div>
+        </div>
+    </div>
 
 @endsection
