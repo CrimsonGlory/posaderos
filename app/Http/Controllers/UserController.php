@@ -91,10 +91,11 @@ class UserController extends Controller {
 	{
 		$user=User::find($id);
         $gravatar=Gravatar::get($user->email);
+        $people = $user->people()->latest('id')->limit(10)->get();
 		if(is_null($user)){
 			return "404";
 		}
-		return view('user.show',compact('user','gravatar'));
+		return view('user.show',compact('user','gravatar','people'));
 	}
 
 	/**

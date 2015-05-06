@@ -51,12 +51,12 @@
                     <div class="panel-heading" role="tab" id="PersonasCreadas">
                         <table width="100%">
                             <tr>
-                                <td><h4>Asistidos dados de alta por {{ $user->name }}</h4></td>
+                                <td><h4>Últimos asistidos dados de alta por {{ $user->name }}</h4></td>
                             </tr>
                         </table>
                     </div>
 
-                    @include('list_people',['people' => $user->people])
+                    @include('list_people',['people' => $people])
                 </div>
             </div>
         </div>
