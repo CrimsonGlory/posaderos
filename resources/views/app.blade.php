@@ -70,7 +70,7 @@
 
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="{{ url('/user/searchView') }}">
+                            <a href="{{ url('/search/searchView') }}">
                                 <i class="glyphicon glyphicon-search"></i>
                                 Buscar
                             </a>

@@ -5,8 +5,6 @@
     <div class="container-fluid">
         <div class="row profile">
             <div class="col-md-10 col-md-offset-1">
-                <?php $interactionNum=0; ?>
-
                 <div class="panel-group" id="ultimasPersonasAgregadas" role="tablist" aria-multiselectable="false">
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="UltimasPersonas">
@@ -35,7 +33,6 @@
                                     <table class="table table-striped">
                                         <thead>
                                         <tr>
-                                            <th>#</th>
                                             <th>Asistido</th>
                                             <th>Descripción</th>
                                             <th>Estado</th>
@@ -44,9 +41,7 @@
                                         </thead>
                                         <tbody>
                                         @foreach ($interactions as $interaction)
-                                            <?php $interactionNum=$interactionNum + 1; ?>
                                             <tr>
-                                                <th scope="row">{{$interactionNum}}</th>
                                                 <th><a href="{{ action('PersonController@show', $interaction->person_id) }}">
                                                         {{App\Person::find($interaction->person_id)->first_name}} {{App\Person::find($interaction->person_id)->last_name}}</a></th>
                                                 <th>{{$interaction->text}}</th>

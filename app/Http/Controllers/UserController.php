@@ -1,8 +1,6 @@
 <?php namespace App\Http\Controllers;
 
 use App\User;
-use App\Interaction;
-use App\Person;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
@@ -39,39 +37,7 @@ class UserController extends Controller {
         $paginator = $this->pagination->set($users, $request->getBaseUrl());
 		return view('user.index', compact('users', 'paginator'));
 	}
-	public function searchView()
-	{
-		return view('user.searchView');
-	}
-	public function search() //pasar a otro controlador?
-	{
-		$data = array('toFind' => Input::get('toFind'),'keyWord' => Input::get('key'),'error' =>1);
 
-		$interactions = NULL;
-		$persons = NULL;
-		$users = NULL;
-		if($data['toFind'] == "Interacciones")
-		{
-			$interactions = Interaction::where('text', 'LIKE', '%'.$data['keyWord'].'%')->get();
-			//$interactions = Interaction::all();
-			$data['error'] = 0;
-		}
-		else if($data['toFind'] == "Asistidos")
-		{
-			//$persons = Person::all();
-			$persons = Person::where('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
-			orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->get();
-			$data['error'] = 0;
-		}
-		else if($data['toFind'] == "Usuarios")
-		{
-			//$users = User::all();
-			$users = User::where('name', 'LIKE', '%'.$data['keyWord'].'%')->
-			orWhere('email', 'LIKE', '%'.$data['keyWord'].'%')->get();
-			$data['error'] = 0;
-		}
-		return view('user.resultadoBusqueda',compact('data','interactions','persons','users'));		
-	}
 	/**
 	 * Show the form for creating a new resource.
 	 *

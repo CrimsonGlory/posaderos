@@ -14,7 +14,7 @@
         function buscar(){
         var k = $('#keyWord').val();
         var tf = $('#search_param').text();
-        $.get( "/user/search", { toFind: tf, key: k } )
+        $.get( "/search/search", { toFind: tf, key: k } )
           .done(function( data ) {
             $('#resultado').html("");
             $('#resultado').html(data);
@@ -30,9 +30,9 @@
                             <span id="search_concept">¿Qué desea buscar?</span> <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                          <li><a href="#user">Usuarios</a></li>
-                          <li><a href="#person">Asistidos</a></li>
-                          <li><a href="#interaction">Interacciones</a></li>
+                          <li><a href="#user">Asistidos</a></li>
+                          <li><a href="#person">Interacciones</a></li>
+                          <li><a href="#interaction">Usuarios</a></li>
                         </ul>
                     </div>
                     <input type="hidden" name="search_param" value="Interaccion" id="search_param">
