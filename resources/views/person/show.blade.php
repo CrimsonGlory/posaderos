@@ -37,7 +37,8 @@
                                 </tr>
                                 <tr>
                                     <td align="center">
-                                        <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}">Actualizar foto</a>
+					<a class="btn btn-link" href="{{ action("PersonController@photos",$person->id) }}">Ver fotos</a> | 
+                                        <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i></a>
                                     </td>
                                 </tr>
                             </table>
