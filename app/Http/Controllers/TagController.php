@@ -61,8 +61,8 @@ class TagController extends Controller {
 	public function show($name)
 	{
 		
-		$people=Person::withAnyTag($name)->get();
-		$interactions=Interaction::withAnyTag($name)->get();
+		$people=Person::withAnyTag($name)->latest('id')->limit(10)->get();
+		$interactions=Interaction::withAnyTag($name)->latest('id')->limit(10)->get();
 		if(is_null($people) && is_null($interactions)){
 			return "404";
 		}

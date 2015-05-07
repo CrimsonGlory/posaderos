@@ -9,7 +9,7 @@
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
-                                <td><h4>{{ ucfirst($name) }} - Asistidos</h4></td>
+                                <td><h4>{{ ucfirst($name) }} - Últimos asistidos</h4></td>
                             </tr>
                         </table>
                     </div>
@@ -42,7 +42,7 @@
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
-                                <td><h4>{{ ucfirst($name) }} - Interacciones</h4></td>
+                                <td><h4>{{ ucfirst($name) }} - Últimas interacciones</h4></td>
                             </tr>
                         </table>
                     </div>

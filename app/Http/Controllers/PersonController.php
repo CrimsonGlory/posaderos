@@ -81,23 +81,23 @@ class PersonController extends Controller {
 			return "404";
 		}
 		$interactions=$person->interactions()->latest('id')->get();
-        $fileentries=$person->fileentries()->latest('id')->get();
+        $fileentries=$person->fileentries()->latest('id')->limit(10)->get();
 		return view('person.show',compact('person','interactions','fileentries'));
 	}
 
 
-        public function photos($id)
-        {
-                $person=Person::find($id);
+    public function photos($id)
+    {
+        $person=Person::find($id);
 
-                if(is_null($person))
+        if(is_null($person))
         {
-                        return "404";
-                }
-                $interactions=$person->interactions()->latest('id')->get();
-        $fileentries=$person->fileentries()->get();
-                return view('person.photos',compact('person','interactions','fileentries'));
+            return "404";
         }
+        $interactions=$person->interactions()->latest('id')->get();
+        $fileentries=$person->fileentries()->get();
+        return view('person.photos',compact('person','interactions','fileentries'));
+    }
 
 
 	/**

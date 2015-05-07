@@ -138,7 +138,7 @@
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
-                                <td><h4>Interacciones</h4></td>
+                                <td><h4>Últimas interacciones</h4></td>
                                 <td align="right"><a class="btn btn-primary" href="{{ url('person/'.$person->id.'/interaction/create') }}" style="width:80px;">Agregar</a></td>
                             </tr>
                         </table>

@@ -1,9 +1,12 @@
 @extends('app')
+@section('header')
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
-<link rel="stylesheet" href="css/bootstrap-image-gallery.min.css">
+<link rel="stylesheet" href="/css/bootstrap-image-gallery.min.css">
+@endsection
 @section('content')
 <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
-<div id="blueimp-gallery" class="blueimp-gallery">
+<div id="blueimp-gallery" class="blueimp-gallery"> 
     <!-- The container for the modal slides -->
     <div class="slides"></div>
     <!-- Controls for the borderless lightbox -->
@@ -45,7 +48,9 @@
 @endforeach 
 </div>
 @endsection
+@section('footer')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
-<script src="js/bootstrap-image-gallery.min.js"></script>
+<script src="/js/bootstrap-image-gallery.min.js"></script>
+@endsection
 @stop
