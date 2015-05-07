@@ -10,18 +10,34 @@ use Input;
 use Validator;
 use Illuminate\Http\Request;
 use Gravatar;
+use App\Lib\Pagination\Pagination;
 
 class UserController extends Controller {
+
+    private $pagination;
+
+    /**
+     * Función para que verifique autenticación al ingresar a una página
+     *
+     * Si se pusiera $this->middleware('auth', ['only' => 'create']); sólo pide login para crear uno nuevo
+     * Si se pusiera $this->middleware('auth', ['except' => 'create']); hace lo inverso al punto anterior
+     */
+    public function __construct(Pagination $pagination)
+    {
+        $this->middleware('auth');
+        $this->pagination = $pagination;
+    }
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(\Symfony\Component\HttpFoundation\Request $request)
 	{
-		$users=User::all();
-		return view('user.index', compact('users'));
+		$users=User::paginate(10);
+        $paginator = $this->pagination->set($users, $request->getBaseUrl());
+		return view('user.index', compact('users', 'paginator'));
 	}
 	public function searchView()
 	{

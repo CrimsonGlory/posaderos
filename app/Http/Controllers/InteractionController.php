@@ -7,7 +7,11 @@ use App\Person;
 use App\Interaction;
 use Illuminate\Http\Request;
 use Auth;
+use App\Lib\Pagination\Pagination;
+
 class InteractionController extends Controller {
+
+    private $pagination;
 
     /**
      * Función para que verifique autenticación al ingresar a una página
@@ -15,9 +19,10 @@ class InteractionController extends Controller {
      * Si se pusiera $this->middleware('auth', ['only' => 'create']); sólo pide login para crear uno nuevo
      * Si se pusiera $this->middleware('auth', ['except' => 'create']); hace lo inverso al punto anterior
      */
-    public function __construct()
+    public function __construct(Pagination $pagination)
     {
         $this->middleware('auth');
+        $this->pagination = $pagination;
     }
 
 	/**
@@ -25,10 +30,11 @@ class InteractionController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(\Symfony\Component\HttpFoundation\Request $request)
 	{
-		$interactions=Interaction::latest('id')->get();
-		return view('interaction.index',compact('interactions'));	
+		$interactions = Interaction::paginate(10);
+        $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
+		return view('interaction.index',compact('interactions', 'paginator'));
 	}
 
 	/**

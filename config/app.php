@@ -149,9 +149,10 @@ return [
 		 * Added
 		 */
 	  	'Creativeorange\Gravatar\GravatarServiceProvider',
-	'Conner\Tagging\TaggingServiceProvider'	,
-	 'Astroanu\ImageCache\ImageCacheProvider',
-	'Intervention\Image\ImageServiceProvider'
+	    'Conner\Tagging\TaggingServiceProvider'	,
+	    'Astroanu\ImageCache\ImageCacheProvider',
+	    'Intervention\Image\ImageServiceProvider',
+        'App\Lib\Pagination\PaginationServiceProvider'
 
 	],
 
