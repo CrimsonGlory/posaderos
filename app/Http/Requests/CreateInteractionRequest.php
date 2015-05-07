@@ -23,6 +23,7 @@ class CreateInteractionRequest extends Request {
 	{
 		return [
 			'text' => 'required|min:2',
+            'date' => 'date'
 		];
 	}
 
