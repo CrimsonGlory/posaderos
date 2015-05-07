@@ -32,7 +32,7 @@ class InteractionController extends Controller {
 	 */
 	public function index(\Symfony\Component\HttpFoundation\Request $request)
 	{
-		$interactions = Interaction::paginate(10);
+		$interactions = Interaction::orderBy('id', 'desc')->paginate(10);
         $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
 		return view('interaction.index',compact('interactions', 'paginator'));
 	}

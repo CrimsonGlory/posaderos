@@ -2,8 +2,6 @@
 
 @section('content')
 
-<?php $interactionNum=0; ?>
-
     <div class="col-md-10 col-md-offset-1">
         <div class="panel-group" id="ultimasPersonasAgregadas" role="tablist" aria-multiselectable="false">
             <div class="panel panel-default">
@@ -21,7 +19,6 @@
                                 <table class="table table-striped">
                                     <thead>
                                     <tr>
-                                        <th>#</th>
                                         <th>Asistido</th>
                                         <th>Descripción</th>
                                         <th>Estado</th>
@@ -30,9 +27,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($interactions as $interaction)
-                                            <?php $interactionNum=$interactionNum + 1; ?>
                                             <tr>
-                                                <th scope="row">{{$interactionNum}}</th>
                                                 <th>
                                                     <a href="{{ action('PersonController@show', $interaction->person_id) }}">
                                                         {{$interaction->person->first_name}} {{$interaction->person->last_name}}

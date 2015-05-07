@@ -35,7 +35,7 @@ class UserController extends Controller {
 	 */
 	public function index(\Symfony\Component\HttpFoundation\Request $request)
 	{
-		$users=User::paginate(10);
+		$users=User::orderBy('id', 'desc')->paginate(10);
         $paginator = $this->pagination->set($users, $request->getBaseUrl());
 		return view('user.index', compact('users', 'paginator'));
 	}

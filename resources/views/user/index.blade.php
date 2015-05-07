@@ -2,8 +2,6 @@
 
 @section('content')
 
-    <?php $userNum=0; ?>
-
     <div class="col-md-8 col-md-offset-2">
         <div class="panel-group" id="ultimasPersonasAgregadas" role="tablist" aria-multiselectable="false">
             <div class="panel panel-default">
@@ -21,16 +19,13 @@
                                 <table class="table table-striped">
                                     <thead>
                                     <tr>
-                                        <th>#</th>
                                         <th>Usuario</th>
                                         <th>Correo electrónico</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($users as $user)
-                                            <?php $userNum=$userNum + 1; ?>
                                             <tr>
-                                                <th scope="row">{{$userNum}}</th>
                                                 <th>
                                                     <a href="{{ url('/user', $user->id) }}">
                                                         {{$user->name}} {{$user->surname}}

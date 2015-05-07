@@ -37,8 +37,12 @@
                                 </tr>
                                 <tr>
                                     <td align="center">
-					<a class="btn btn-link" href="{{ action("PersonController@photos",$person->id) }}">Ver fotos</a> | 
-                                        <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i></a>
+                                        @if ($fileentries!=null && count($fileentries) != 0)
+                                            <a class="btn btn-link" href="{{ action("PersonController@photos",$person->id) }}">Ver fotos</a> |
+                                            <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i></a>
+                                        @else
+                                            <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i> Agregar foto</a>
+                                        @endif
                                     </td>
                                 </tr>
                             </table>

@@ -35,7 +35,7 @@ class PersonController extends Controller {
 	 */
 	public function index(Request $request)
     {
-		$people = Person::paginate(10);
+        $people = Person::orderBy('id', 'desc')->paginate(10);
         $paginator = $this->pagination->set($people, $request->getBaseUrl());
 		return view('person.index', compact('people', 'paginator'));
 	}
