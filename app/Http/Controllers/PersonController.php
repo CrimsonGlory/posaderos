@@ -144,4 +144,12 @@ class PersonController extends Controller {
 		//
 	}
 
+	public function set_avatar(Request $request){
+		$input=$request->all();
+		$image=FileEntry::findOrFail($input->fileentry_id);
+		$image->avatar_of()->save($input->person_id);
+		return redirect('person/'.$input->person_id);
+
+	}
+
 }
