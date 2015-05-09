@@ -33,6 +33,8 @@ class FileEntryController extends Controller {
 		abort("$person_id is NULL at FileEntryContrller@add");
 	$person=Person::findOrFail($person_id);
         $entry->save();
+	if(count($person->fileentries)==0)
+		$entry->avatar_of()->save($person);
 	$person->fileentries()->save($entry);
         return redirect('person/'.$person_id);
 

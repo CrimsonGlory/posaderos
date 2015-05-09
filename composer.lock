@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4c4248278914fb4f5dd88f845290055f",
+    "hash": "6dc4922558f294bd6ad4bdd96d39d779",
     "packages": [
         {
             "name": "astroanu/laravel-image-cache",
@@ -1057,17 +1057,47 @@
             "time": "2015-03-11 20:06:43"
         },
         {
-            "name": "laravel/framework",
-            "version": "v5.0.28",
+            "name": "laravel-5/pagination",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/laravel/framework.git",
-                "reference": "06a09429322cf53e5bd4587db1060f02a291562e"
+                "url": "https://github.com/franckhernandez/laravel-5-pagination.git",
+                "reference": "bccf9c24bac00a9b757ad1af75912977c1804ebc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/06a09429322cf53e5bd4587db1060f02a291562e",
-                "reference": "06a09429322cf53e5bd4587db1060f02a291562e",
+                "url": "https://api.github.com/repos/franckhernandez/laravel-5-pagination/zipball/bccf9c24bac00a9b757ad1af75912977c1804ebc",
+                "reference": "bccf9c24bac00a9b757ad1af75912977c1804ebc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Franck Hernandez"
+                }
+            ],
+            "description": "Easy Pagination",
+            "time": "2015-04-10 00:03:55"
+        },
+        {
+            "name": "laravel/framework",
+            "version": "5.0.30",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "c7ffbf1fd4895ac4cdac551265d635d995346d97"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/c7ffbf1fd4895ac4cdac551265d635d995346d97",
+                "reference": "c7ffbf1fd4895ac4cdac551265d635d995346d97",
                 "shasum": ""
             },
             "require": {
@@ -1180,7 +1210,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-04-21 01:44:32"
+            "time": "2015-05-08 19:11:13"
         },
         {
             "name": "league/flysystem",
@@ -1737,34 +1767,30 @@
         },
         {
             "name": "rtconner/laravel-tagging",
-            "version": "1.0.3",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rtconner/laravel-tagging.git",
-                "reference": "07c3ebf57f03619cb930203f4919b76bd6d91d18"
+                "reference": "924ebdc5e3e62a2d61c04b2d9f4dc9daf5374571"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rtconner/laravel-tagging/zipball/07c3ebf57f03619cb930203f4919b76bd6d91d18",
-                "reference": "07c3ebf57f03619cb930203f4919b76bd6d91d18",
+                "url": "https://api.github.com/repos/rtconner/laravel-tagging/zipball/924ebdc5e3e62a2d61c04b2d9f4dc9daf5374571",
+                "reference": "924ebdc5e3e62a2d61c04b2d9f4dc9daf5374571",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "~5.0",
-                "php": "~5.3"
+                "illuminate/database": "~5.0",
+                "illuminate/support": "~5.0",
+                "php": ">=5.3.0"
             },
             "require-dev": {
-                "doctrine/dbal": "~2.5",
-                "orchestra/testbench": "~3.0",
-                "phpseclib/phpseclib": ">=0.3.7",
+                "mockery/mockery": "~0.9",
                 "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "autoload": {
-                "classmap": [
-                    "migrations"
-                ],
-                "psr-0": {
+                "psr-4": {
                     "Conner\\Tagging\\": "src/"
                 }
             },
@@ -1790,7 +1816,7 @@
                 "tagging",
                 "tags"
             ],
-            "time": "2015-04-30 01:15:10"
+            "time": "2015-05-08 15:28:51"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3682,7 +3708,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "astroanu/laravel-image-cache": 20
+        "astroanu/laravel-image-cache": 20,
+        "laravel-5/pagination": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
