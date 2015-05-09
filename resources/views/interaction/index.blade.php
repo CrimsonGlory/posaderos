@@ -3,9 +3,9 @@
 @section('content')
 
     <div class="col-md-10 col-md-offset-1">
-        <div class="panel-group" id="ultimasPersonasAgregadas" role="tablist" aria-multiselectable="false">
+        <div class="panel-group" role="tablist" aria-multiselectable="false">
             <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="UltimasPersonas">
+                <div class="panel-heading" role="tab">
                     <table width="100%">
                         <tr>
                             <td><h4>Interacciones</h4></td>

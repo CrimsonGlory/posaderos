@@ -48,7 +48,7 @@ class SearchController extends Controller {
                           orWhere('email', 'LIKE', '%'.$data['keyWord'].'%')->get();
             $data['error'] = 0;
         }
-        return view('search.resultadoBusqueda', compact('data','interactions','persons','users'));
+        return view('search.resultadoBusqueda', compact('data','persons','interactions','users'));
     }
 
 }
