@@ -3,9 +3,9 @@
 @section('content')
 
     <div class="col-md-8 col-md-offset-2">
-        <div class="panel-group" id="ultimasPersonasAgregadas" role="tablist" aria-multiselectable="false">
+        <div class="panel-group" role="tablist" aria-multiselectable="false">
             <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="UltimasPersonas">
+                <div class="panel-heading" role="tab">
                     <table width="100%">
                         <tr>
                             <td><h4>Usuarios</h4></td>
@@ -27,7 +27,7 @@
                                         @foreach ($users as $user)
                                             <tr>
                                                 <th>
-                                                    <a href="{{ url('/user', $user->id) }}">
+                                                    <a href="{{ action('UserController@show', $user->id) }}">
                                                         {{$user->name}} {{$user->surname}}
                                                     </a>
                                                 </th>
