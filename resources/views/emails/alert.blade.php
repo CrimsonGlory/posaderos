@@ -1,0 +1,1 @@
+Se le ha derivado al asistido {{ $asistido }}.
