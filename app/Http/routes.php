@@ -27,6 +27,7 @@ Route::resource('user','UserController');
 Route::get('tag','TagController@index');
 Route::get('tag/{name}','TagController@show');
 Route::get('file/{id}','FileEntryController@show');
+Route::resource('maps','MapsController');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
