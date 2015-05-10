@@ -22,7 +22,7 @@ class CreateFileEntryRequest extends Request {
 	public function rules()
 	{
         return [
-            'filename' => 'required',
+            'filename' => 'required|mimes:jpg,jpeg,png',
         ];
 	}
 
