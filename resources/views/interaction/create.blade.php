@@ -35,6 +35,13 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-4 control-label">Derivar a</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="destination" placeholder="alguien@ejemplo.com">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <table width="100%">
                                     <tr>
                                         <td align="right"><button type="submit" class="btn btn-primary form-control"  style="width:100px;">Guardar</button></td>
