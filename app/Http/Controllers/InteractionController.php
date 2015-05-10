@@ -57,15 +57,24 @@ class InteractionController extends Controller {
 	 */
 	public function store(CreateInteractionRequest $request)
 	{
+        $mailError = 0; // En PersonController@show se pasa como parámetro para utilizar en la view
+
         $destinationMail = $request->destination;
         $asistido = Person::find($request->person_id);
         if ($destinationMail != null && $asistido != null)
         {
             $data = array('destination' => $destinationMail, 'asistido' => $asistido->name());
-            Mail::send('emails.alert', $data, function($message) use($data)
+            try
             {
-                $message->to($data['destination'])->subject('Nueva derivación');
-            });
+                Mail::send('emails.alert', $data, function($message) use($data)
+                {
+                    $message->to($data['destination'])->subject('Nueva derivación');
+                });
+            }
+            catch (\Swift_TransportException $e)
+            {
+                $mailError = 1;
+            }
         }
 
 		$input = $request->all();
@@ -74,7 +83,7 @@ class InteractionController extends Controller {
 		$interaction->user_id=Auth::id();
 		$interaction->save();
 
-		return redirect('person/'.$interaction->person_id);	
+		return redirect('person/'.$interaction->person_id)->with('mailError', $mailError);
 	}
 
 	/**

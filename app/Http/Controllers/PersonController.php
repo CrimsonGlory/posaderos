@@ -75,6 +75,7 @@ class PersonController extends Controller {
 	public function show($id)
 	{
 		$person=Person::find($id);
+        $mailError = 0; // Se utiliza en InteractionController@store
 		
 		if(is_null($person))
         {
@@ -82,7 +83,7 @@ class PersonController extends Controller {
 		}
 		$interactions=$person->interactions()->latest('id')->get();
         $fileentries=$person->fileentries()->latest('id')->limit(10)->get();
-		return view('person.show',compact('person','interactions','fileentries'));
+		return view('person.show',compact('person','interactions','fileentries','mailError'));
 	}
 
 
