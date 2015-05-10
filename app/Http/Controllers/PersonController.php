@@ -8,7 +8,7 @@ use Auth;
 use App\Lib\Pagination\Pagination;
 use Symfony\Component\HttpFoundation\Request;
 
-//use Illuminate\Http\Request;
+use Illuminate\Http\Request as Request2;
 //use Illuminate\Http\Response;
 
 
@@ -144,10 +144,12 @@ class PersonController extends Controller {
 		//
 	}
 
-	public function set_avatar(Request $request){
+	public function setAvatar(Request2 $request,$id){
 		$input=$request->all();
+		return $input;
 		$image=FileEntry::findOrFail($input->fileentry_id);
-		$image->avatar_of()->save($input->person_id);
+		$person=Person::findOrFail($id);
+		$image->avatar_of()->save($person);
 		return redirect('person/'.$input->person_id);
 
 	}
