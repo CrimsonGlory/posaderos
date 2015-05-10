@@ -33,7 +33,7 @@
                         <button type="button" class="btn btn-default pull-left prev">
                             <i class="glyphicon glyphicon-chevron-left"></i>
                             Anterior
-                        </button>{!! Form::open(['name'=>'formm','class' => 'reset-this', 'method'=> 'POST', 'action' => ['PersonController@setAvatar',$person->id]]) !!}
+                        </button>{!! Form::open(['name'=>'id','class' => 'reset-this', 'method'=> 'POST', 'action' => ['PersonController@setAvatar',$person->id]]) !!}
 			<input type="hidden" name="fileentry_id"  value=""> 
 			<button type="button submit" class="btn btn-default setavatar">
 			<i class="glyphicon glyphicon-user"></i>
@@ -64,7 +64,7 @@
     <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
     <script src="/js/bootstrap-image-gallery.min.js"></script>
 <script type="text/javascript">
-$("formm").submit(function(){
+$( "formm" ).submit(function(){
 	alert(2);
    // Let's find the input to check
    var $input = $(this).find("input[name=fileentry_id]");
