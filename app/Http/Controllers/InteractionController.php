@@ -8,6 +8,7 @@ use App\Interaction;
 use Illuminate\Http\Request;
 use Auth;
 use App\Lib\Pagination\Pagination;
+use Illuminate\Support\Facades\Mail;
 
 class InteractionController extends Controller {
 
@@ -56,11 +57,23 @@ class InteractionController extends Controller {
 	 */
 	public function store(CreateInteractionRequest $request)
 	{
+        $destinationMail = $request->destination;
+        $asistido = Person::find($request->person_id);
+        if ($destinationMail != null && $asistido != null)
+        {
+            $data = array('destination' => $destinationMail, 'asistido' => $asistido->name());
+            Mail::send('emails.alert', $data, function($message) use($data)
+            {
+                $message->to($data['destination'])->subject('Nueva derivación');
+            });
+        }
+
 		$input = $request->all();
 		$interaction=new Interaction;
 		$interaction->fill($input);
 		$interaction->user_id=Auth::id();
 		$interaction->save();
+
 		return redirect('person/'.$interaction->person_id);	
 	}
 
