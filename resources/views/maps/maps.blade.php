@@ -12,6 +12,9 @@
     <script type="text/javascript">
     var l;
     var map;
+    var geocoder;
+    var marker;
+    var infowindow = new google.maps.InfoWindow();
     /*function initialize() {
           var myLatlng = new google.maps.LatLng(-34.60372,-58.38159);
           var mapOptions = {
@@ -37,6 +40,7 @@
 
         }*/
 function initialize() {
+  geocoder = new google.maps.Geocoder();
   var mapOptions = {
     zoom: 17
   };
@@ -49,6 +53,40 @@ function initialize() {
       var pos = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
       crearMapa(pos);
+      google.maps.event.addListener(marker, 'click', function() {
+            //infowindow.open(map,marker);
+            var actual = marker.getPosition();
+            //infowindow.setContent(actual.toString());
+            var input = actual.toString();
+            input = input.replace('(', '');
+            input = input.replace(')', '');
+            alert(input);
+
+            var latlngStr = input.split(',', 2);
+             var lat = parseFloat(latlngStr[0]);
+              var lng = parseFloat(latlngStr[1]);
+              var latlng = new google.maps.LatLng(lat, lng);
+              geocoder.geocode({'latLng': latlng}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  if (results[1]) {
+                    infowindow.setContent(results[1].formatted_address);
+                    infowindow.open(map, marker);
+                  } else {
+                    alert('No results found');
+                  }
+                } else {
+                  alert('Geocoder failed due to: ' + status);
+                }
+            
+            });
+          });
+            google.maps.event.addListener(marker,'drag',function(event) {
+            infowindow.close(map,marker);
+            });
+
+            google.maps.event.addListener(marker,'dragend',function(event) {
+            infowindow.close(map,marker);
+            });
 
     }, function() {
       handleNoGeolocation(true);
@@ -67,26 +105,23 @@ function crearMapa(position)
 {
     if(position===undefined)
     {
+      
       var pos = new google.maps.LatLng(-34.6, -58.38);
+      alert('No tiene servicios de ubicacion activados');
+
     }
     else
     {
         var pos = position;
-    }
-       var marker = new google.maps.Marker({
+     }
+        marker = new google.maps.Marker({
               position: pos,
               map: map,
               draggable:true,
               title: 'Usted esta aqui'
           });
-            var infowindow = new google.maps.InfoWindow({
-            content: 'hola'
-            });
-            google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map,marker);
-            var actual = marker.getPosition();
-            infowindow.setContent(actual.toString());
-            });
+            infowindow.setContent('hola');
+            
             map.setCenter(pos);
 }
 
