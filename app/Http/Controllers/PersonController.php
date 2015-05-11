@@ -62,13 +62,13 @@ class PersonController extends Controller {
 		$person->fill($input);
 		$person->created_by=Auth::id();
 		$person->updated_by=Auth::id();
+
 		if($person->save()){
-			flash()->success('Asistido creado');
+			flash()->success('Asistido creado.');
 		}
 		else{
-			flash()->error('Error al intentar crear el asistido');
+			flash()->error('Error al intentar crear el asistido.');
 		}
-		
         return redirect('person/'.$person->id);
 	}
 
@@ -80,29 +80,29 @@ class PersonController extends Controller {
 	 */
 	public function show($id)
 	{
-		$person=Person::find($id);
+		$person = Person::find($id);
         $mailError = 0; // Se utiliza en InteractionController@store
 		
 		if(is_null($person))
         {
 			return "404";
 		}
-		$interactions=$person->interactions()->latest('id')->get();
-        $fileentries=$person->fileentries()->latest('id')->limit(10)->get();
+		$interactions = $person->interactions()->latest('id')->get();
+        $fileentries = $person->fileentries()->latest('id')->limit(10)->get();
 		return view('person.show',compact('person','interactions','fileentries','mailError'));
 	}
 
 
     public function photos($id)
     {
-        $person=Person::find($id);
+        $person = Person::find($id);
 
         if(is_null($person))
         {
             return "404";
         }
-        $interactions=$person->interactions()->latest('id')->get();
-        $fileentries=$person->fileentries()->get();
+        $interactions = $person->interactions()->latest('id')->get();
+        $fileentries = $person->fileentries()->get();
         return view('person.photos',compact('person','interactions','fileentries'));
     }
 
@@ -115,7 +115,7 @@ class PersonController extends Controller {
 	 */
 	public function edit($id)
 	{
-		$person=Person::find($id);
+		$person = Person::find($id);
 		if(is_null($person))
         {
 			return "404";
@@ -136,6 +136,8 @@ class PersonController extends Controller {
 		$person->retag($tags);
 		$person->updated_by=Auth::id();
 		$person->update($request->all());
+
+        flash()->success('Asistido actualizado.');
 		return redirect('person/'.$person->id);
 
 	}

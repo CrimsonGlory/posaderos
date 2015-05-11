@@ -45,7 +45,7 @@ class InteractionController extends Controller {
 	 */
 	public function create($id)
 	{
-		$person=Person::findOrFail($id);
+		$person = Person::findOrFail($id);
 		
 		return view('interaction.create',compact('person'));
 	}
@@ -82,6 +82,7 @@ class InteractionController extends Controller {
 		$interaction->fill($input);
 		$interaction->user_id=Auth::id();
 		$interaction->save();
+
 		flash()->success("Interacción creada.");
 		return redirect('person/'.$interaction->person_id)->with('mailError', $mailError);
 	}
@@ -94,7 +95,7 @@ class InteractionController extends Controller {
 	 */
 	public function show($id)
 	{
-		$interaction=Interaction::find($id);
+		$interaction = Interaction::find($id);
 		if(is_null($interaction)){
 			return "404";
 		}
@@ -109,8 +110,8 @@ class InteractionController extends Controller {
 	 */
 	public function edit($id)
 	{
-		$interaction=Interaction::find($id);
-        $person=Person::findOrFail($interaction->person_id);
+		$interaction = Interaction::find($id);
+        $person = Person::findOrFail($interaction->person_id);
 		if(is_null($interaction)){
 			return "404";
 		}
@@ -125,10 +126,12 @@ class InteractionController extends Controller {
 	 */
 	public function update(CreateInteractionRequest $request,$id)
 	{
-		$interaction=Interaction::findorFail($id);
+		$interaction = Interaction::findorFail($id);
 		$interaction->update($request->all());
 		$tags=array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
-                $interaction->retag($tags);
+        $interaction->retag($tags);
+
+        flash()->success("Interacción actualizada.");
 		return redirect('person/'.$interaction->person_id);	
 	}
 

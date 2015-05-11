@@ -21,7 +21,7 @@ class FileEntryController extends Controller {
     public function index($id)
     {
         $uploadError = 0; //Se maneja desde App\Exceptions\Handler.php para los archivos que superan los 8 MB.
-        $person=Person::findOrFail($id);
+        $person = Person::findOrFail($id);
         return view('fileentries.index', compact('person','uploadError'));
     }
 
@@ -37,15 +37,22 @@ class FileEntryController extends Controller {
         }
         $person=Person::findOrFail($person_id);
         $entry->save();
-        $person->fileentries()->save($entry);
 
+        if ($person->fileentries()->save($entry))
+        {
+            flash()->success('Foto agregada.');
+        }
+        else
+        {
+            flash()->error('Error al intentar agregar la foto del asistido.');
+        }
         return redirect('person/'.$person_id);
     }
 
     public function show($id)
     {
-        $file=FileEntry::find($id);
-        $filename=$file->filename;
+        $file = FileEntry::find($id);
+        $filename = $file->filename;
         $image = Image::make("../storage/app/assets/fileentries/$filename");
         return $image->response();
     }
