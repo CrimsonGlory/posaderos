@@ -71,7 +71,7 @@ class InteractionController extends Controller {
                     $message->to($data['destination'])->subject('Nueva derivación');
                 });
             }
-            catch (\Swift_TransportException $e)
+            catch (\Exception $e)
             {
                 $mailError = 1;
             }
