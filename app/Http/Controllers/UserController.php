@@ -111,6 +111,7 @@ class UserController extends Controller {
 		$this->validate($request,$rules);
 		$user = User::findOrFail($id);
 		$user->update(Input::all());
+		flash()->success("Usuario actualizado.");
 		return redirect('user/'.$id);
 	}
 
