@@ -16,6 +16,13 @@
                                 @endforeach
                             </ul>
                         @endif
+
+                        @if (Session::get('uploadError'))
+                            <ul class="alert alert-danger">
+                                <li>El campo filename no puede ser superior a 8 MB.</li>
+                            </ul>
+                        @endif
+
                         <form action="{{ url('person/'.$person->id.'/fileentries') }}" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
