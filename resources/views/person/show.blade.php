@@ -24,12 +24,6 @@
                             </ul>
                         @endif
 
-                        @if (Session::get('mailError'))
-                            <ul class="alert alert-danger">
-                                <label>No se pudo enviar el email notificando la derivación del asistido.</label>
-                            </ul>
-                        @endif
-
                         <form class="form-horizontal" role="form" action="{{ url('person') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 

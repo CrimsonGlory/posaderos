@@ -63,10 +63,12 @@ class PersonController extends Controller {
 		$person->created_by=Auth::id();
 		$person->updated_by=Auth::id();
 
-		if($person->save()){
+		if($person->save())
+        {
 			flash()->success('Asistido creado.');
 		}
-		else{
+		else
+        {
 			flash()->error('Error al intentar crear el asistido.');
 		}
         return redirect('person/'.$person->id);
@@ -81,15 +83,14 @@ class PersonController extends Controller {
 	public function show($id)
 	{
 		$person = Person::find($id);
-        $mailError = 0; // Se utiliza en InteractionController@store
-		
 		if(is_null($person))
         {
 			return "404";
 		}
+
 		$interactions = $person->interactions()->latest('id')->get();
         $fileentries = $person->fileentries()->latest('id')->limit(10)->get();
-		return view('person.show',compact('person','interactions','fileentries','mailError'));
+		return view('person.show',compact('person','interactions','fileentries'));
 	}
 
 

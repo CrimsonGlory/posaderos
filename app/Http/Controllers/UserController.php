@@ -33,7 +33,7 @@ class UserController extends Controller {
 	 */
 	public function index(\Symfony\Component\HttpFoundation\Request $request)
 	{
-		$users=User::orderBy('id', 'desc')->paginate(10);
+		$users = User::orderBy('id', 'desc')->paginate(10);
         $paginator = $this->pagination->set($users, $request->getBaseUrl());
 		return view('user.index', compact('users', 'paginator'));
 	}
@@ -59,7 +59,19 @@ class UserController extends Controller {
             'name' => array('required', 'min:1')
         );
 		$this->validate($request,$rules);
-		User::create(Input::all());
+
+        $input = $request->all();
+        $user = new User;
+        $user->fill($input);
+
+        if($user->save())
+        {
+            flash()->success('Usuario creado.');
+        }
+        else
+        {
+            flash()->error('Error al intentar crear el usuario.');
+        }
 		return redirect('user');
 	}
 
@@ -74,7 +86,8 @@ class UserController extends Controller {
 		$user = User::find($id);
         $gravatar = Gravatar::get($user->email);
         $people = $user->people()->latest('id')->limit(10)->get();
-		if(is_null($user)){
+		if(is_null($user))
+        {
 			return "404";
 		}
 		return view('user.show',compact('user','gravatar','people'));
@@ -89,7 +102,8 @@ class UserController extends Controller {
 	public function edit($id)
 	{
 		$user = User::find($id);
-		if(is_null($user)){
+		if(is_null($user))
+        {
 			return "404";
 		}
 		$gravatar = Gravatar::get($user->email);
@@ -112,7 +126,7 @@ class UserController extends Controller {
 		$user = User::findOrFail($id);
 		$user->update(Input::all());
 
-		flash()->success("Usuario actualizado.");
+		flash()->success('Usuario actualizado.');
 		return redirect('user/'.$id);
 	}
 
