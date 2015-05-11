@@ -152,7 +152,8 @@ return [
 	    'Conner\Tagging\TaggingServiceProvider'	,
 	    'Astroanu\ImageCache\ImageCacheProvider',
 	    'Intervention\Image\ImageServiceProvider',
-        'App\Lib\Pagination\PaginationServiceProvider'
+        'App\Lib\Pagination\PaginationServiceProvider',
+		'Laracasts\Flash\FlashServiceProvider'
 
 	],
 
@@ -205,7 +206,8 @@ return [
         'Html'      => 'Illuminate\Html\HtmlFacade',
 	  'Gravatar' => 'Creativeorange\Gravatar\Facades\Gravatar',
 	'TaggableTrait' => '\Conner\Tagging\TaggableTrait',
-	'Image' => 'Intervention\Image\Facades\Image'
+	'Image' => 'Intervention\Image\Facades\Image',
+	'Flash' => 'Laracasts\Flash\Flash'
 	],
 
 ];

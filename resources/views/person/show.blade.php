@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
+			@include('flash::message')
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
@@ -13,6 +14,7 @@
                             </tr>
                         </table>
                     </div>
+			
                     <div class="panel-body">
                         @if ($errors->any())
                             <ul class="alert alert-danger">
