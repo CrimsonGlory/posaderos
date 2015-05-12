@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="col-md-10 col-md-offset-1">
-        <div class="panel-group" id="ultimasPersonasAgregadas" role="tablist" aria-multiselectable="false">
+        <div class="panel-group" id="ultimasPersonasAgregadas" role="tablist" aria-multiselectable="false" style="min-width:500px;">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="UltimasPersonas">
                     <h4>
@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="panel-group" id="ultimasInteraccionesAgregadas" role="tablist" aria-multiselectable="false">
+        <div class="panel-group" id="ultimasInteraccionesAgregadas" role="tablist" aria-multiselectable="false" style="min-width:500px;">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="UltimasInteracciones">
                     <h4>

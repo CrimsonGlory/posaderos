@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="col-md-10 col-md-offset-1">
-        <div class="panel-group" role="tablist" aria-multiselectable="false">
+        <div class="panel-group" role="tablist" aria-multiselectable="false" style="min-width:450px;">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab">
                     <table width="100%">

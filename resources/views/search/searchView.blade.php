@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="col-md-8 col-md-offset-2">
-        <div class="panel-group" id="ultimasPersonasAgregadas" role="tablist" aria-multiselectable="false">
+        <div class="panel-group" id="ultimasPersonasAgregadas" role="tablist" aria-multiselectable="false" style="min-width:450px;">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab">
                     <table width="100%">
