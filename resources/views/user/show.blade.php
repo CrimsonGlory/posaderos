@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-			@include('flash::message')
+			        @include('flash::message')
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
@@ -45,9 +45,9 @@
             </div>
         </div>
     </div>
-    @if (count($user->people) )
+    @if (count($user->people))
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel-group" id="personasCreadasPorUsuario" role="tablist" aria-multiselectable="false">
+            <div class="panel-group" id="personasCreadasPorUsuario" role="tablist" aria-multiselectable="false" style="min-width:500px;">
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="PersonasCreadas">
                         <table width="100%">
