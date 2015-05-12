@@ -60,8 +60,8 @@
 @endsection
 
 @section('footer')
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/Gallery/js/jquery.blueimp-gallery.min.js"></script>
     <script src="/js/bootstrap-image-gallery.min.js"></script>
 <script type="text/javascript">
 $( "formm" ).submit(function(){
