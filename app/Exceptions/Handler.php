@@ -2,6 +2,8 @@
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\Redirect;
 
 class Handler extends ExceptionHandler {
 
@@ -36,6 +38,12 @@ class Handler extends ExceptionHandler {
 	 */
 	public function render($request, Exception $e)
 	{
+        // Manejo de la excepción particular cuando se intenta subir un archivo mayor a 8 MB (límite que soporta php).
+        if ($e instanceof TokenMismatchException){
+            $uploadError = 1;
+            return Redirect::back()->with('uploadError', $uploadError);
+        }
+
 		return parent::render($request, $e);
 	}
 

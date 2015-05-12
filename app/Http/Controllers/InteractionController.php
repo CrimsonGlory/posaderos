@@ -45,7 +45,7 @@ class InteractionController extends Controller {
 	 */
 	public function create($id)
 	{
-		$person=Person::findOrFail($id);
+		$person = Person::findOrFail($id);
 		
 		return view('interaction.create',compact('person'));
 	}
@@ -57,10 +57,15 @@ class InteractionController extends Controller {
 	 */
 	public function store(CreateInteractionRequest $request)
 	{
-        $mailError = 0; // En PersonController@show se pasa como parámetro para utilizar en la view
-
         $destinationMail = $request->destination;
         $asistido = Person::find($request->person_id);
+
+        $input = $request->all();
+        $interaction = new Interaction;
+        $interaction->fill($input);
+        $interaction->user_id = Auth::id();
+        $success = $interaction->save();
+
         if ($destinationMail != null && $asistido != null)
         {
             $data = array('destination' => $destinationMail, 'asistido' => $asistido->name());
@@ -70,20 +75,26 @@ class InteractionController extends Controller {
                 {
                     $message->to($data['destination'])->subject('Nueva derivación');
                 });
+                flash()->success('Se ha enviado un email notificando la derivación del asistido.');
             }
-            catch (\Swift_TransportException $e)
+            catch (\Exception $e)
             {
-                $mailError = 1;
+                flash()->error('No se pudo enviar el email notificando la derivación del asistido.');
+            }
+        }
+        else
+        {
+            if ($success)
+            {
+                flash()->success('Interacción creada.');
+            }
+            else
+            {
+                flash()->error('Error al intentar crear la interacción.');
             }
         }
 
-		$input = $request->all();
-		$interaction=new Interaction;
-		$interaction->fill($input);
-		$interaction->user_id=Auth::id();
-		$interaction->save();
-		flash()->success("Interacción creada.");
-		return redirect('person/'.$interaction->person_id)->with('mailError', $mailError);
+		return redirect('person/'.$interaction->person_id);
 	}
 
 	/**
@@ -94,8 +105,9 @@ class InteractionController extends Controller {
 	 */
 	public function show($id)
 	{
-		$interaction=Interaction::find($id);
-		if(is_null($interaction)){
+		$interaction = Interaction::find($id);
+		if(is_null($interaction))
+        {
 			return "404";
 		}
 		return redirect('person/'.$interaction->person_id);
@@ -109,9 +121,10 @@ class InteractionController extends Controller {
 	 */
 	public function edit($id)
 	{
-		$interaction=Interaction::find($id);
-        $person=Person::findOrFail($interaction->person_id);
-		if(is_null($interaction)){
+		$interaction = Interaction::find($id);
+        $person = Person::findOrFail($interaction->person_id);
+		if(is_null($interaction))
+        {
 			return "404";
 		}
 		return view('interaction.edit',compact('person','interaction'));
@@ -125,10 +138,12 @@ class InteractionController extends Controller {
 	 */
 	public function update(CreateInteractionRequest $request,$id)
 	{
-		$interaction=Interaction::findorFail($id);
+		$interaction = Interaction::findorFail($id);
 		$interaction->update($request->all());
 		$tags=array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
-                $interaction->retag($tags);
+        $interaction->retag($tags);
+
+        flash()->success("Interacción actualizada.");
 		return redirect('person/'.$interaction->person_id);	
 	}
 
