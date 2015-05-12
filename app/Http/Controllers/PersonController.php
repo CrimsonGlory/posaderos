@@ -62,7 +62,13 @@ class PersonController extends Controller {
 		$person->fill($input);
 		$person->created_by=Auth::id();
 		$person->updated_by=Auth::id();
-		$person->save();
+		if($person->save()){
+			flash()->success('Asistido creado');
+		}
+		else{
+			flash()->error('Error al intentar crear el asistido');
+		}
+		
         return redirect('person/'.$person->id);
 	}
 

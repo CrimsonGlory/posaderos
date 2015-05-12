@@ -12,7 +12,8 @@
 		"rtconner/laravel-tagging": "~1.0.2",
 		"astroanu/laravel-image-cache": "dev-master",
 		"intervention/image": "~2.2",
-        "laravel-5/pagination": "dev-master"
+        "laravel-5/pagination": "dev-master",
+		"laracasts/flash": "~1.3"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

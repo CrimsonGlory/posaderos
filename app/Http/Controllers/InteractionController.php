@@ -82,7 +82,7 @@ class InteractionController extends Controller {
 		$interaction->fill($input);
 		$interaction->user_id=Auth::id();
 		$interaction->save();
-
+		flash()->success("Interacción creada.");
 		return redirect('person/'.$interaction->person_id)->with('mailError', $mailError);
 	}
 
