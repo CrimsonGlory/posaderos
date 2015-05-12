@@ -30,8 +30,8 @@
                             <table align="center">
                                 <tr>
                                     <td>
-                                        @if ($fileentries!=null && count($fileentries) != 0)
-                                            <img src="{{ action("FileEntryController@show",$fileentries->first()->id ) }}" alt="" class="img-circle" style="max-width:150px; max-height:150px;"/>
+                                        @if ($person->get_avatar)
+                                            <img src="{{ action("FileEntryController@show",$person->get_avatar ) }}" alt="" class="img-circle" style="max-width:150px; max-height:150px;"/>
                                         @else
                                             <img src="{{ asset("no-photo.png") }}" alt="" class="img-circle" style="max-width:150px; max-height:150px;"/>
                                         @endif

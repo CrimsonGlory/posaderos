@@ -37,7 +37,8 @@ class FileEntryController extends Controller {
         }
         $person=Person::findOrFail($person_id);
         $entry->save();
-
+	if(count($person->fileentries)==0)
+		$entry->avatar_of()->save($person);
         if ($person->fileentries()->save($entry))
         {
             flash()->success('Foto agregada.');

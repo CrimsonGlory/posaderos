@@ -70,4 +70,9 @@ use \Conner\Tagging\TaggableTrait;
         return $this->first_name." ".$this->last_name;
    }
 
+   public function get_avatar()
+   {
+	return $this->belongsTo('App\FileEntry','avatar','id');
+   }
+
 }

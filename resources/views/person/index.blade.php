@@ -32,8 +32,8 @@
                                         @foreach ($people as $person)
                                             <tr>
                                                 <th scope="row">
-                                                    @if ($person->fileentries() != null && count($person->fileentries()->get()) != 0)
-                                                        <img src="{{ action("FileEntryController@show", $person->fileentries()->get()->last()->id) }}" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
+                                                    @if ($person->get_avatar)
+                                                        <img src="{{ action("FileEntryController@show", $person->get_avatar) }}" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
                                                     @else
                                                         <img src="{{ asset("no-photo.png") }}" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
                                                     @endif

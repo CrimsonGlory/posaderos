@@ -23,4 +23,8 @@ protected $filedir = 'fileentries';//used by larave-image-cache
 		$this->filename=Uploader::upload($file,$this->filedir);
 	}
     }
+    public function avatar_of()
+    {
+	return $this->hasOne('App\Person','avatar','id');
+    }
 }
