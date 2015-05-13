@@ -73,27 +73,27 @@ class PeopleTableSeeder extends Seeder {
 		// Users
         $user0 = User::create(['name'=>'Administrador',
                                'email'=>'lumencor.posaderos@gmail.com',
-                               'password'=>Hash::make('Posaderos123')]);
+                               'password'=>Hash::make('123456')]);
         $user0->attachRole($admin);
 
         $user1 = User::create(['name'=>'Luciano Delorenzi',
                                'email'=>'lgdelorenzi@gmail.com',
-                               'password'=>Hash::make('111111')]);
+                               'password'=>Hash::make('123456')]);
         $user1->attachRole($newUser);
 
         $user2 = User::create(['name'=>'Enzo Sagretti',
                                'email'=>'enzosagretti@gmail.com',
-                               'password'=>Hash::make('111111')]);
+                               'password'=>Hash::make('123456')]);
         $user2->attachRole($newUser);
 
         $user3 = User::create(['name'=>'Javier Bassi',
                                'email'=>'javierbassi@gmail.com',
-                               'password'=>Hash::make('111111')]);
+                               'password'=>Hash::make('123456')]);
         $user3->attachRole($admin);
 
         $user4 = User::create(['name'=>'Agustin Puentes',
                                'email'=>'aguspuentes@gmail.com',
-                               'password'=>Hash::make('111111')]);
+                               'password'=>Hash::make('123456')]);
         $user4->attachRole($admin);
 
         // People
