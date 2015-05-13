@@ -1,15 +1,10 @@
 <?php namespace App\Http\Controllers;
+
 use App\User;
 use App\Interaction;
 use App\Person;
-//use App\Http\Requests;
-//use App\Http\Controllers\Controller;
-//use Illuminate\Support\Facades\Redirect;
-//use Input;
-//use Validator;
-//use Illuminate\Http\Request;
-use Gravatar;
 use Auth;
+
 class HomeController extends Controller {
 
 	/*
@@ -40,14 +35,24 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-        $user=User::find(Auth::id());
-        $interactions = Interaction::latest()->paginate(10);
-        $persons = Person::latest()->paginate(10);
-        if(is_null($user)){
-                return "404";
+        $user = User::find(Auth::id());
+        if(is_null($user))
+        {
+            return "404";
         }
-        return view('home',compact('user','interactions','persons'));
-        
+
+        if ($user->hasRole('admin'))
+        {
+            $interactions = Interaction::latest()->paginate(10);
+            $persons = Person::latest()->paginate(10);
+            return view('home', compact('user', 'interactions', 'persons'));
+        }
+        else if ($user->hasRole('new-user'))
+        {
+            return view('search/searchView'); // En el futuro debería ser return view('home/homeNewUser');
+        }
+
+        return "404";
 	}
 
 }

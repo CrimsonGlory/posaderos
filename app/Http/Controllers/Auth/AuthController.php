@@ -1,9 +1,12 @@
 <?php namespace App\Http\Controllers\Auth;
 
+use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller {
 
@@ -34,5 +37,29 @@ class AuthController extends Controller {
 
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
+
+    public function postRegister(Request $request)
+    {
+        $validator = $this->registrar->validator($request->all());
+
+        if ($validator->fails())
+        {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        $this->auth->login($this->registrar->create($request->all()));
+
+        // Se le agrega al usuario el rol new-user
+        $authUser = Auth::user();
+        $roleNewUser = DB::table('roles')->where('name', 'new-user')->first();
+        if ($authUser != null && $roleNewUser != null)
+        {
+            $authUser->attachRole($roleNewUser->id);
+        }
+
+        return redirect($this->redirectPath());
+    }
 
 }
