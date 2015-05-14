@@ -26,43 +26,44 @@ class InteractionController extends Controller {
         $this->pagination = $pagination;
     }
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index(\Symfony\Component\HttpFoundation\Request $request)
-	{
-		$interactions = Interaction::orderBy('id', 'desc')->paginate(10);
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index(\Symfony\Component\HttpFoundation\Request $request)
+    {
+        $interactions = Interaction::orderBy('id', 'desc')->paginate(10);
         $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
-		return view('interaction.index',compact('interactions', 'paginator'));
-	}
+        return view('interaction.index',compact('interactions', 'paginator'));
+    }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create($id)
-	{
-		$person = Person::findOrFail($id);
-		
-		return view('interaction.create',compact('person'));
-	}
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create($id)
+    {
+        $person = Person::findOrFail($id);
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store(CreateInteractionRequest $request)
-	{
+        return view('interaction.create',compact('person'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store(CreateInteractionRequest $request)
+    {
         $destinationMail = $request->destination;
         $asistido = Person::find($request->person_id);
 
         $input = $request->all();
         $interaction = new Interaction;
         $interaction->fill($input);
+        $interaction->fixed = 0;
         $interaction->user_id = Auth::id();
         $success = $interaction->save();
 
@@ -94,68 +95,71 @@ class InteractionController extends Controller {
             }
         }
 
-		return redirect('person/'.$interaction->person_id);
-	}
+        return redirect('person/'.$interaction->person_id);
+    }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		$interaction = Interaction::find($id);
-		if(is_null($interaction))
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $interaction = Interaction::find($id);
+        if(is_null($interaction))
         {
-			return "404";
-		}
-		return redirect('person/'.$interaction->person_id);
-	}
+            return "404";
+        }
+        return redirect('person/'.$interaction->person_id);
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		$interaction = Interaction::find($id);
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        $interaction = Interaction::find($id);
         $person = Person::findOrFail($interaction->person_id);
-		if(is_null($interaction))
+        if(is_null($interaction))
         {
-			return "404";
-		}
-		return view('interaction.edit',compact('person','interaction'));
-	}
+            return "404";
+        }
+        return view('interaction.edit',compact('person','interaction'));
+    }
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update(CreateInteractionRequest $request,$id)
-	{
-		$interaction = Interaction::findorFail($id);
-		$interaction->update($request->all());
-		$tags=array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update(CreateInteractionRequest $request,$id)
+    {
+        $interaction = Interaction::findorFail($id);
+        $interaction->text = $request->text;
+        $interaction->date = $request->date;
+        $interaction->fixed = $request->fixed;
+        $interaction->update();
+        $tags = array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
         $interaction->retag($tags);
 
         flash()->success("Interacción actualizada.");
-		return redirect('person/'.$interaction->person_id);	
-	}
+        return redirect('person/'.$interaction->person_id);
+    }
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 
 }

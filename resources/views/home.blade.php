@@ -40,14 +40,13 @@
                                 <tbody>
                                 @foreach ($interactions as $interaction)
                                     <tr>
-                                        <th><a href="{{ action('PersonController@show', $interaction->person_id) }}">
-                                                {{App\Person::find($interaction->person_id)->first_name}} {{App\Person::find($interaction->person_id)->last_name}}</a></th>
+                                        <th>
+                                            <a href="{{ action('PersonController@show', $interaction->person_id) }}">
+                                                {{App\Person::find($interaction->person_id)->first_name}} {{App\Person::find($interaction->person_id)->last_name}}
+                                            </a>
+                                        </th>
                                         <th>{{$interaction->text}}</th>
-                                        @if($interaction->fixed==1)
-                                            <th>Solucionado</th>
-                                        @else
-                                            <th>Pendiente</th>
-                                        @endif
+                                        <th>{{ trans('messages.'.$interaction->fixed) }}</th>
                                         <th>{{$interaction->date}}</th>
                                     </tr>
                                 @endforeach

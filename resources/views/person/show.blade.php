@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-			@include('flash::message')
+			        @include('flash::message')
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
@@ -168,8 +168,14 @@
                                     </td>
                                     <td align="left">
                                         <label>{{ $interaction->text }}</label>
+                                        </br>
+                                        <label>Estado: </label>
+                                        @if ($interaction->fixed)
+                                            <label style="color:green">{{ trans('messages.'.$interaction->fixed) }}.</label>
+                                        @else
+                                            <label style="color:red">{{ trans('messages.'.$interaction->fixed) }}.</label>
+                                        @endif
                                         @if ( count($interaction->tagNames()) > 0)
-                                            </br>
                                             <label>Etiquetas: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label>
                                         @endif
                                     </td>

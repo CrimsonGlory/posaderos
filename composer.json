@@ -13,7 +13,8 @@
 		"astroanu/laravel-image-cache": "dev-master",
 		"intervention/image": "~2.2",
         "laravel-5/pagination": "dev-master",
-		"laracasts/flash": "~1.3"
+		"laracasts/flash": "~1.3",
+        "zizaco/entrust": "dev-laravel-5"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

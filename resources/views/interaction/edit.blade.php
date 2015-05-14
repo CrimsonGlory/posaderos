@@ -16,6 +16,7 @@
                                 @endforeach
                             </ul>
                         @endif
+
                         {!! Form::model($interaction,['class' => 'form-horizontal', 'method' => 'PATCH', 'action' => ['InteractionController@update', $interaction->id]]) !!}
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -37,7 +38,14 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Etiquetas</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="tags" value="{{ implode(", ",$interaction->tagNames() ) }}">
+                                <input type="text" class="form-control" name="tags" value="{{ implode(", ",$interaction->tagNames()) }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Estado de la interacción</label>
+                            <div class="col-md-6">
+                                {!! Form::select('fixed', array(0 => 'Pendiente', 1 => 'Finalizada'), $interaction->fixed, array('class' => 'form-control')) !!}
                             </div>
                         </div>
 
