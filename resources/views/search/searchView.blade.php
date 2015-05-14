@@ -43,9 +43,15 @@
                                             <span id="search_concept">¿Búsqueda?</span> <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#user">Asistidos</a></li>
-                                            <li><a href="#person">Interacciones</a></li>
-                                            <li><a href="#interaction">Usuarios</a></li>
+                                            @if (Auth::user()->can('see-people-search-view'))
+                                                <li><a href="#person">Asistidos</a></li>
+                                            @endif
+                                            @if (Auth::user()->can('see-interactions-search-view'))
+                                                <li><a href="#interaction">Interacciones</a></li>
+                                            @endif
+                                            @if (Auth::user()->can('see-users-search-view'))
+                                                <li><a href="#user">Usuarios</a></li>
+                                            @endif
                                         </ul>
                                     </div>
                                     <input type="hidden" name="search_param" value="Interaccion" id="search_param">
