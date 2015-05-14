@@ -41,15 +41,19 @@ class HomeController extends Controller {
             return "404";
         }
 
-        if ($user->hasRole('admin'))
+        if ($user->hasRole('admin') || $user->hasRole('posadero'))
         {
             $interactions = Interaction::latest()->paginate(10);
             $persons = Person::latest()->paginate(10);
             return view('home', compact('user', 'interactions', 'persons'));
         }
+        else if ($user->hasRole('explorer'))
+        {
+            return view('search/searchView'); // En el futuro debería ser return view('home/homeExplorer');
+        }
         else if ($user->hasRole('new-user'))
         {
-            return view('search/searchView'); // En el futuro debería ser return view('home/homeNewUser');
+            return view('person/create'); // En el futuro debería ser return view('home/homeNewUser');
         }
 
         return "404";
