@@ -39,6 +39,12 @@
                                     <label class="form-control" name="email">{{$user->email}}</label>
                                 </div>
                             </div>
+			    <div class="form-group">
+                                <label class="col-md-4 control-label">Teléfono</label>
+                                <div class="col-md-6">
+                                    <label class="form-control" name="phone">{{$user->phone}}</label>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
