@@ -11,7 +11,7 @@
                         <table width="100%">
                             <tr>
                                 <td><h4>{{ $user->name }}</h4></td>
-                                @if ($user->id == Auth::user()->id)
+                                @if ($user->id == Auth::user()->id || Auth::user()->can('edit-users'))
                                     <td align="right"><a class="btn btn-primary" href="{{ action('UserController@edit',$user) }}" style="width:80px;">Editar</a></td>
                                 @endif
                             </tr>
@@ -37,6 +37,12 @@
                                 <label class="col-md-4 control-label">Correo electrónico</label>
                                 <div class="col-md-6">
                                     <label class="form-control" name="email">{{$user->email}}</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Tipo de usuario</label>
+                                <div class="col-md-6">
+                                    <label class="form-control" name="rol">{{ $user->roles()->first()->display_name }}</label>
                                 </div>
                             </div>
                         </form>

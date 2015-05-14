@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="col-md-8 col-md-offset-2">
-        <div class="panel-group" role="tablist" aria-multiselectable="false" style="min-width:450px;">
+        <div class="panel-group" role="tablist" aria-multiselectable="false" style="min-width:550px;">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab">
                     <table width="100%">
@@ -21,6 +21,7 @@
                                     <tr>
                                         <th>Usuario</th>
                                         <th>Correo electrónico</th>
+                                        <th>Tipo</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -32,6 +33,9 @@
                                                     </a>
                                                 </th>
                                                 <th>{{$user->email}}</th>
+                                                @if (!(is_null($user->roles()->first())))
+                                                    <th>{{ $user->roles()->first()->display_name }}</th>
+                                                @endif
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -27,6 +27,19 @@
                                     {{ $errors->first('email') }}
                                 </div>
                             </div>
+                            @if ($user->id != Auth::user()->id)
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Tipo de usuario</label>
+                                    <div class="col-md-6">
+                                        {!! Form::select('role', array('admin' => 'Administrador',
+                                                                       'posadero' => 'Posadero',
+                                                                       'explorer' => 'Explorador',
+                                                                       'new-user' => 'Nuevo usuario'),
+                                                         $user->roles()->first()->name,
+                                                         array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+                            @endif
 
                             <div class="form-group">
                                 <table width="100%">
