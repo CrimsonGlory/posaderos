@@ -46,7 +46,7 @@
                                             </a>
                                         </th>
                                         <th>{{$interaction->text}}</th>
-                                        <th>{{ trans('messages.'.$interaction->fixed) }}</th>
+                                        <th><a href="{{ action("InteractionController@edit",$interaction) }}">{{ trans('messages.'.$interaction->fixed) }}</a></th>
                                         <th>{{$interaction->date}}</th>
                                     </tr>
                                 @endforeach

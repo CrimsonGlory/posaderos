@@ -3,6 +3,7 @@
 use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 use Validator;
@@ -118,14 +119,24 @@ class UserController extends Controller {
 	 */
 	public function update(Request $request,$id)
 	{
-		 $rules = array(
-        'name' => array('required', 'min:1'),
-        'email' => array('required', 'min:1'),
+        $rules = array(
+            'name' => array('required', 'min:1'),
+            'email' => array('required', 'min:1'),
         );
 		$this->validate($request,$rules);
-		$user = User::findOrFail($id);
-		$user->update(Input::all());
 
+		$user = User::findOrFail($id);
+        $newRole = DB::table('roles')->where('name', $request->role)->first();
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($newRole != null)
+        {
+            $roleKey = (array)$newRole->id;
+            $user->roles()->sync($roleKey);
+        }
+		$user->update();
+        
 		flash()->success('Usuario actualizado.');
 		return redirect('user/'.$id);
 	}

@@ -40,6 +40,7 @@
                 <tr>
                     <th>Asistido</th>
                     <th>Descripción</th>
+                    <th>Estado</th>
                     <th>Fecha</th>
                 </tr>
             </thead>
@@ -56,6 +57,7 @@
                             </a>
                         </th>
                         <th>{{ $interaction->text }}</th>
+                        <th><a href="{{ action("InteractionController@edit",$interaction) }}">{{ trans('messages.'.$interaction->fixed) }}</a></th>
                         <th>{{ $interaction->date }}</th>
                     </tr>
                 @endforeach
@@ -69,6 +71,7 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Correo electrónico</th>
+                    <th>Tipo</th>
                 </tr>
             </thead>
         @endif
@@ -84,6 +87,9 @@
                             </a>
                         </th>
                         <th>{{ $user->email }}</th>
+                        @if (!(is_null($user->roles()->first())))
+                            <th>{{ $user->roles()->first()->display_name }}</th>
+                        @endif
                     </tr>
                 @endforeach
             @endif
