@@ -34,18 +34,18 @@ class SearchController extends Controller {
         if($data['toFind'] == "Asistidos")
         {
             $persons = Person::where('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
-                               orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->get();
+                               orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->limit(30)->get();
             $data['error'] = 0;
         }
         else if($data['toFind'] == "Interacciones")
         {
-            $interactions = Interaction::where('text', 'LIKE', '%'.$data['keyWord'].'%')->get();
+            $interactions = Interaction::where('text', 'LIKE', '%'.$data['keyWord'].'%')->limit(30)->get();
             $data['error'] = 0;
         }
         else if($data['toFind'] == "Usuarios")
         {
             $users = User::where('name', 'LIKE', '%'.$data['keyWord'].'%')->
-                          orWhere('email', 'LIKE', '%'.$data['keyWord'].'%')->get();
+                          orWhere('email', 'LIKE', '%'.$data['keyWord'].'%')->limit(30)->get();
             $data['error'] = 0;
         }
         return view('search.resultadoBusqueda', compact('data','persons','interactions','users'));

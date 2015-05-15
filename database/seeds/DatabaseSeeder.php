@@ -279,7 +279,7 @@ class PeopleTableSeeder extends Seeder {
         $person9->save();
 		
 		//Interactions
-		$interaction1 = new Interaction(['text'=>'La persona recibió atencion médica.',
+		$interaction1 = new Interaction(['text'=>'La persona recibió atención médica.',
                                          'date'=>'2015-4-20',
                                          'fixed' => 0]);
 		$interaction1->user_id = $user1->id;
@@ -292,7 +292,7 @@ class PeopleTableSeeder extends Seeder {
 		$interaction2->user_id = $user2->id;
 		$person2->interactions()->save($interaction2);
 
-		$interaction3 = new Interaction(['text'=>'Persona asistió a comedor comunitario.',
+		$interaction3 = new Interaction(['text'=>'La persona asistió a comedor comunitario.',
                                          'date'=>'2015-4-20',
                                          'fixed' => 0]);
 		$interaction3->user_id = $user1->id;
