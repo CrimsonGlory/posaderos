@@ -130,6 +130,7 @@ class UserController extends Controller {
 
         $user->name = $request->name;
         $user->email = $request->email;
+	$user->phone = $request->phone;
         if ($newRole != null)
         {
             $roleKey = (array)$newRole->id;

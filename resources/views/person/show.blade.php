@@ -91,6 +91,16 @@
                                 </div>
 			                @endif
 
+
+					@if ($person->phone!=null)
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Teléfono</label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" name="phone">{{ $person->phone }}</label>
+                                    </div>
+                                </div>
+                                        @endif
+
 			                @if ($person->other!=null)
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Observaciones</label>

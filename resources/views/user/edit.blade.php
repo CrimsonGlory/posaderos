@@ -44,7 +44,7 @@
 			    <div class="form-group">
                                 <label class="col-md-4 control-label">Teléfono</label>
                                 <div class="col-md-6">
-                                    <input type="email" class="form-control" name="phone" value="{{ $user->phone }}">
+                                    <input type="text" class="form-control" name="phone" value="{{ $user->phone }}">
                                     {{ $errors->first('phone') }}
                                 </div>
                             </div>

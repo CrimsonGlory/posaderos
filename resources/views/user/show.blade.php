@@ -40,12 +40,14 @@
                                 </div>
                             </div>
 
+			    @if ($user->phone!=null)
 			    <div class="form-group">
                                 <label class="col-md-4 control-label">Teléfono</label>
                                 <div class="col-md-6">
                                     <label class="form-control" name="phone">{{$user->phone}}</label>
-			    </div>
-
+				</div>
+			   </div> 
+			    @endif
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Tipo de usuario</label>
                                 <div class="col-md-6">
