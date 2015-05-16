@@ -60,7 +60,7 @@
     </div>
 
     <div id="links">
-        @foreach ( $fileentries as $file )
+        @foreach ($fileentries as $file)
             <a href="/file/{{$file->id}}" title="" data-gallery>
                 <img src="/file/{{$file->id}}" alt=""  style="max-width:300px; max-height:300px;"/>
             </a>

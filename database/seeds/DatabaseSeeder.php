@@ -18,12 +18,12 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
 		Model::unguard();
-		$this->call('PeopleTableSeeder');
+		$this->call('UserRolesAndPermissionsSeeder');
 	}
 }
 
 
-class PeopleTableSeeder extends Seeder {
+class UserRolesAndPermissionsSeeder extends Seeder {
 
 	public function run()
 	{
@@ -85,23 +85,47 @@ class PeopleTableSeeder extends Seeder {
         $seeUsersSearchView->description  = 'Ver la página de búsqueda avanzada de usuarios.'; // optional
         $seeUsersSearchView->save();
 
+        $seeTags = new Permission();
+        $seeTags->name         = 'see-tags';
+        $seeTags->display_name = 'Ver etiquetas'; // optional
+        $seeTags->description  = 'Ver las etiquetas existentes.'; // optional
+        $seeTags->save();
+
+        $editTags = new Permission();
+        $editTags->name         = 'edit-tags';
+        $editTags->display_name = 'Editar etiquetas'; // optional
+        $editTags->description  = 'Editar las etiquetas del sistema.'; // optional
+        $editTags->save();
+
+        $addTag = new Permission();
+        $addTag->name         = 'add-tag';
+        $addTag->display_name = 'Agregar etiquetas'; // optional
+        $addTag->description  = 'Agregar nuevas etiquetas.'; // optional
+        $addTag->save();
+
         $seeUsers = new Permission();
         $seeUsers->name         = 'see-users';
-        $seeUsers->display_name = 'Ver Usuarios'; // optional
+        $seeUsers->display_name = 'Ver usuarios'; // optional
         $seeUsers->description  = 'Ver los usuarios existentes.'; // optional
         $seeUsers->save();
 
         $editUsers = new Permission();
         $editUsers->name         = 'edit-users';
-        $editUsers->display_name = 'Editar Usuarios'; // optional
+        $editUsers->display_name = 'Editar usuarios'; // optional
         $editUsers->description  = 'Editar permisos de los usuarios existentes.'; // optional
         $editUsers->save();
 
-        $seePeople = new Permission();
-        $seePeople->name         = 'see-people';
-        $seePeople->display_name = 'Ver asistidos'; // optional
-        $seePeople->description  = 'Ver los asistidos existentes.'; // optional
-        $seePeople->save();
+        $seeAllPeople = new Permission();
+        $seeAllPeople->name         = 'see-all-people';
+        $seeAllPeople->display_name = 'Ver asistidos'; // optional
+        $seeAllPeople->description  = 'Ver los asistidos existentes.'; // optional
+        $seeAllPeople->save();
+
+        $seeNewPeople = new Permission();
+        $seeNewPeople->name         = 'see-new-people';
+        $seeNewPeople->display_name = 'Ver nuevos asistidos'; // optional
+        $seeNewPeople->description  = 'Ver sólo los nuevos asistidos creados por el usuario.'; // optional
+        $seeNewPeople->save();
 
         $addPerson = new Permission();
         $addPerson->name         = 'add-person';
@@ -115,17 +139,23 @@ class PeopleTableSeeder extends Seeder {
         $editAllPeople->description  = 'Editar cualquier asistido del sistema.'; // optional
         $editAllPeople->save();
 
-        $editPerson = new Permission();
-        $editPerson->name         = 'edit-new-people';
-        $editPerson->display_name = 'Editar nuevos asistidos'; // optional
-        $editPerson->description  = 'Editar sólo los asistidos creados por el usuario.'; // optional
-        $editPerson->save();
+        $editNewPeople = new Permission();
+        $editNewPeople->name         = 'edit-new-people';
+        $editNewPeople->display_name = 'Editar nuevos asistidos'; // optional
+        $editNewPeople->description  = 'Editar sólo los asistidos creados por el usuario.'; // optional
+        $editNewPeople->save();
 
-        $seeInteractions = new Permission();
-        $seeInteractions->name         = 'see-interactions';
-        $seeInteractions->display_name = 'Ver interacciones'; // optional
-        $seeInteractions->description  = 'Ver las interacciones existentes.'; // optional
-        $seeInteractions->save();
+        $seeAllInteractions = new Permission();
+        $seeAllInteractions->name         = 'see-all-interactions';
+        $seeAllInteractions->display_name = 'Ver interacciones'; // optional
+        $seeAllInteractions->description  = 'Ver las interacciones existentes.'; // optional
+        $seeAllInteractions->save();
+
+        $seeNewInteractions = new Permission();
+        $seeNewInteractions->name         = 'see-new-interactions';
+        $seeNewInteractions->display_name = 'Ver nuevas interacciones'; // optional
+        $seeNewInteractions->description  = 'Ver sólo las nuevas interacciones creadas por el usuario.'; // optional
+        $seeNewInteractions->save();
 
         $addInteraction = new Permission();
         $addInteraction->name         = 'add-interaction';
@@ -139,26 +169,30 @@ class PeopleTableSeeder extends Seeder {
         $editAllInteractions->description  = 'Editar cualquier interacción del sistema.'; // optional
         $editAllInteractions->save();
 
-        $editInteraction = new Permission();
-        $editInteraction->name         = 'edit-new-interactions';
-        $editInteraction->display_name = 'Editar nuevas interacciones'; // optional
-        $editInteraction->description  = 'Editar sólo las interacciones creadas por el usuario.'; // optional
-        $editInteraction->save();
+        $editNewInteractions = new Permission();
+        $editNewInteractions->name         = 'edit-new-interactions';
+        $editNewInteractions->display_name = 'Editar nuevas interacciones'; // optional
+        $editNewInteractions->description  = 'Editar sólo las interacciones creadas por el usuario.'; // optional
+        $editNewInteractions->save();
 
         // Add Permisions to Roles
         $admin->attachPermissions(array($seeUsersSearchView, $seeUsers, $editUsers,
-                                        $seePeopleSearchView, $seePeople, $addPerson, $editPerson, $editAllPeople,
-                                        $seeInteractionsSearchView, $seeInteractions, $addInteraction, $editInteraction, $editAllInteractions));
+                                        $seeTags, $editTags, $addTag,
+                                        $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
+                                        $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
 
         $posadero->attachPermissions(array($seeUsersSearchView, $seeUsers,
-                                           $seePeopleSearchView, $seePeople, $addPerson, $editPerson, $editAllPeople,
-                                           $seeInteractionsSearchView, $seeInteractions, $addInteraction, $editInteraction, $editAllInteractions));
+                                           $seeTags, $editTags, $addTag,
+                                           $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
+                                           $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
 
-        $explorer->attachPermissions(array($seePeopleSearchView, $seePeople, $addPerson, $editPerson, $editAllPeople,
-                                           $seeInteractionsSearchView, $seeInteractions, $addInteraction, $editInteraction, $editAllInteractions));
+        $explorer->attachPermissions(array($seeTags, $editTags, $addTag,
+                                           $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
+                                           $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
 
-        $newUser->attachPermissions(array($addPerson, $editPerson,
-                                          $addInteraction, $editInteraction));
+        $newUser->attachPermissions(array($seeTags, $editTags, $addTag,
+                                          $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editNewPeople,
+                                          $seeInteractionsSearchView, $seeNewInteractions, $addInteraction, $editNewInteractions));
 
 		// Users
         $user0 = User::create(['name'=>'Administrador',

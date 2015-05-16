@@ -3,6 +3,7 @@
 use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Input;
@@ -34,9 +35,19 @@ class UserController extends Controller {
 	 */
 	public function index(\Symfony\Component\HttpFoundation\Request $request)
 	{
-		$users = User::orderBy('id', 'desc')->paginate(10);
-        $paginator = $this->pagination->set($users, $request->getBaseUrl());
-		return view('user.index', compact('users', 'paginator'));
+        $user = Auth::user();
+        if ($user == null)
+        {
+            return "404";
+        }
+
+        if ($user->can('see-users'))
+        {
+            $users = User::orderBy('id', 'desc')->paginate(10);
+            $paginator = $this->pagination->set($users, $request->getBaseUrl());
+            return view('user.index', compact('users', 'paginator'));
+        }
+		return Redirect::back();
 	}
 
 	/**
@@ -46,7 +57,8 @@ class UserController extends Controller {
 	 */
 	public function create()
 	{
-		return view('user.create');
+        //En principio los users se crean a sí mismos cuando se registran en el sistema.
+        return "404";
 	}
 
 	/**
@@ -84,14 +96,20 @@ class UserController extends Controller {
 	 */
 	public function show($id)
 	{
-		$user = User::find($id);
-        $gravatar = Gravatar::get($user->email);
-        $people = $user->people()->latest('id')->limit(10)->get();
-		if(is_null($user))
+        $user = Auth::user();
+        $userShown = User::find($id);
+        if ($user == null || $userShown == null)
         {
-			return "404";
-		}
-		return view('user.show',compact('user','gravatar','people'));
+            return "404";
+        }
+
+        if ($user->can('see-users') || $userShown->id == $user->id)
+        {
+            $gravatar = Gravatar::get($userShown->email);
+            $people = $userShown->people()->latest('id')->limit(10)->get();
+            return view('user.show',compact('userShown','gravatar','people'));
+        }
+		return Redirect::back();
 	}
 
 	/**
@@ -102,13 +120,19 @@ class UserController extends Controller {
 	 */
 	public function edit($id)
 	{
-		$user = User::find($id);
-		if(is_null($user))
+        $user = Auth::user();
+        $userShown = User::find($id);
+        if ($user == null || $userShown == null)
         {
-			return "404";
-		}
-		$gravatar = Gravatar::get($user->email);
-		return view('user.edit',compact('user','gravatar'));
+            return "404";
+        }
+
+        if ($user->can('edit-users') || $userShown->id == $user->id)
+        {
+            $gravatar = Gravatar::get($userShown->email);
+            return view('user.edit',compact('userShown','gravatar'));
+        }
+        return Redirect::back();
 	}
 
 	/**

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Lib\Pagination\Pagination;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 
 class InteractionController extends Controller {
 
@@ -33,7 +34,26 @@ class InteractionController extends Controller {
      */
     public function index(\Symfony\Component\HttpFoundation\Request $request)
     {
-        $interactions = Interaction::orderBy('id', 'desc')->paginate(10);
+        $user = Auth::user();
+        if ($user == null)
+        {
+            return "404";
+        }
+
+        $interactions = null;
+        if ($user->can('see-all-interactions'))
+        {
+            $interactions = Interaction::orderBy('id', 'desc')->paginate(10);
+        }
+        else if ($user->can('see-new-interactions'))
+        {
+            $interactions = Interaction::orderBy('id', 'desc')->where('user_id', $user->id)->paginate(10);
+        }
+        else
+        {
+            return Redirect::back();
+        }
+
         $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
         return view('interaction.index',compact('interactions', 'paginator'));
     }
@@ -45,9 +65,18 @@ class InteractionController extends Controller {
      */
     public function create($id)
     {
-        $person = Person::findOrFail($id);
+        $user = Auth::user();
+        if ($user == null)
+        {
+            return "404";
+        }
 
-        return view('interaction.create',compact('person'));
+        if ($user->can('add-interaction'))
+        {
+            $person = Person::findOrFail($id);
+            return view('interaction.create',compact('person'));
+        }
+        return Redirect::back();
     }
 
     /**
@@ -58,7 +87,7 @@ class InteractionController extends Controller {
     public function store(CreateInteractionRequest $request)
     {
         $destinationMail = $request->destination;
-        $asistido = Person::find($request->person_id);
+        $person = Person::find($request->person_id);
 
         $input = $request->all();
         $interaction = new Interaction;
@@ -67,9 +96,9 @@ class InteractionController extends Controller {
         $interaction->user_id = Auth::id();
         $success = $interaction->save();
 
-        if ($destinationMail != null && $asistido != null)
+        if ($destinationMail != null && $person != null)
         {
-            $data = array('destination' => $destinationMail, 'asistido' => $asistido->name());
+            $data = array('destination' => $destinationMail, 'asistido' => $person->name());
             try
             {
                 Mail::send('emails.alert', $data, function($message) use($data)
@@ -94,7 +123,6 @@ class InteractionController extends Controller {
                 flash()->error('Error al intentar crear la interacción.');
             }
         }
-
         return redirect('person/'.$interaction->person_id);
     }
 
@@ -106,12 +134,18 @@ class InteractionController extends Controller {
      */
     public function show($id)
     {
+        $user = Auth::user();
         $interaction = Interaction::find($id);
-        if(is_null($interaction))
+        if ($user == null || $interaction == null)
         {
             return "404";
         }
-        return redirect('person/'.$interaction->person_id);
+
+        if ($user->can('see-all-interactions') || ($user->can('see-new-interactions') && $interaction->user_id == $user->id))
+        {
+            return redirect('person/'.$interaction->person_id);
+        }
+        return Redirect::back();
     }
 
     /**
@@ -122,13 +156,19 @@ class InteractionController extends Controller {
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $interaction = Interaction::find($id);
-        $person = Person::findOrFail($interaction->person_id);
-        if(is_null($interaction))
+        if($user == null || $interaction == null)
         {
             return "404";
         }
-        return view('interaction.edit',compact('person','interaction'));
+
+        if ($user->can('edit-all-interactions') || ($user->can('edit-new-interactions') && $interaction->user_id == $user->id))
+        {
+            $person = Person::findOrFail($interaction->person_id);
+            return view('interaction.edit',compact('person','interaction'));
+        }
+        return Redirect::back();
     }
 
     /**

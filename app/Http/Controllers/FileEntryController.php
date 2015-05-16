@@ -3,8 +3,10 @@
 use App\Http\Controllers\Controller;
 use App\Person;
 use App\FileEntry;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests\CreateFileEntryRequest;
+use Illuminate\Support\Facades\Redirect;
 use Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -21,8 +23,18 @@ class FileEntryController extends Controller {
     public function index($id)
     {
         $uploadError = 0; //Se maneja desde App\Exceptions\Handler.php para los archivos que superan los 8 MB.
+        $user = Auth::user();
+        if ($user == null)
+        {
+            return "404";
+        }
+
         $person = Person::findOrFail($id);
-        return view('fileentries.index', compact('person','uploadError'));
+        if ($user->can('edit-all-people') || ($user->can('edit-new-people') && $person->created_by == $user->id))
+        {
+            return view('fileentries.index', compact('person','uploadError'));
+        }
+        return Redirect::back();
     }
 
     public function store(CreateFileEntryRequest $request)
@@ -30,15 +42,21 @@ class FileEntryController extends Controller {
         $entry = new FileEntry();
         $file = Request::file('filename');
         $entry->upload($file);
+
         $person_id = Request::input('person_id');
         if($person_id == NULL)
         {
-            abort("$person_id is NULL at FileEntryController@add");
+            abort("$person_id is NULL at FileEntryController@index");
         }
-        $person=Person::findOrFail($person_id);
+
+        $person = Person::findOrFail($person_id);
         $entry->save();
-	if(count($person->fileentries)==0)
-		$entry->avatar_of()->save($person);
+
+	    if(count($person->fileentries) == 0)
+        {
+            $entry->avatar_of()->save($person);
+        }
+
         if ($person->fileentries()->save($entry))
         {
             flash()->success('Foto agregada.');

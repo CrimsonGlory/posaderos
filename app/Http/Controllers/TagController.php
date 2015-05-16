@@ -8,6 +8,9 @@ use App\Interaction;
 use Illuminate\Http\Request;
 use \Conner\Tagging\TaggableTrait;
 use Conner\Tagging\Tagged;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+
 class TagController extends Controller {
 
     /**
@@ -28,8 +31,18 @@ class TagController extends Controller {
 	 */
 	public function index()
 	{
-		$tags=Tagged::all()->groupBy('tag_slug')->keys()->toArray();
-		return view('tag.index',compact('tags'));	
+        $user = Auth::user();
+        if ($user == null)
+        {
+            return "404";
+        }
+
+        if ($user->can('see-tags'))
+        {
+            $tags = Tagged::all()->groupBy('tag_slug')->keys()->toArray();
+            return view('tag.index',compact('tags'));
+        }
+		return Redirect::back();
 	}
 
 	/**
@@ -39,7 +52,17 @@ class TagController extends Controller {
 	 */
 	public function create($id)
 	{
-	return "TagController@create pending";	
+        $user = Auth::user();
+        if ($user == null)
+        {
+            return "404";
+        }
+
+        if ($user->can('add-tag'))
+        {
+            return "TagController@create pending";
+        }
+	    return Redirect::back();
 	}
 
 	/**
@@ -49,7 +72,7 @@ class TagController extends Controller {
 	 */
 	public function store(CreateInteractionRequest $request)
 	{
-	return "TagController@store pending";
+	    return "TagController@store pending";
 	}
 
 	/**
@@ -60,13 +83,37 @@ class TagController extends Controller {
 	 */
 	public function show($name)
 	{
-		
-		$people=Person::withAnyTag($name)->latest('id')->limit(10)->get();
-		$interactions=Interaction::withAnyTag($name)->latest('id')->limit(10)->get();
-		if(is_null($people) && is_null($interactions)){
-			return "404";
-		}
-		return view('tag.show',compact('people','interactions','name'));
+        $user = Auth::user();
+        if ($user == null)
+        {
+            return "404";
+        }
+
+        $people = null;
+        $interactions = null;
+        if ($user->can('see-all-people'))
+        {
+            $people = Person::withAnyTag($name)->latest('id')->limit(10)->get();
+        }
+        else if ($user->can('see-new-people'))
+        {
+            $people = Person::withAnyTag($name)->where('created_by', $user->id)->latest('id')->limit(10)->get();
+        }
+
+        if ($user->can('see-all-interactions'))
+        {
+            $interactions = Interaction::withAnyTag($name)->latest('id')->limit(10)->get();
+        }
+        else if ($user->can('see-new-interactions'))
+        {
+            $interactions = Interaction::withAnyTag($name)->where('user_id', $user->id)->latest('id')->limit(10)->get();
+        }
+
+        if ($user->can('see-tags'))
+        {
+            return view('tag.show',compact('people','interactions','name'));
+        }
+        return Redirect::back();
 	}
 
 	/**
@@ -77,7 +124,17 @@ class TagController extends Controller {
 	 */
 	public function edit($id)
 	{
-		return "TagController@edit pending";
+        $user = Auth::user();
+        if ($user == null)
+        {
+            return "404";
+        }
+
+        if ($user->can('edit-tags'))
+        {
+            return "TagController@edit pending";
+        }
+		return Redirect::back();
 	}
 
 	/**
