@@ -103,5 +103,6 @@ return [
 	*/
 
 	'attributes' => [],
+	"phone" => "El campo :attribute contiene un número inválido.",
 
 ];

@@ -135,7 +135,7 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
-        'Illuminate\Html\HtmlServiceProvider',
+	        'Illuminate\Html\HtmlServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -154,7 +154,8 @@ return [
 	    'Intervention\Image\ImageServiceProvider',
         'App\Lib\Pagination\PaginationServiceProvider',
 		'Laracasts\Flash\FlashServiceProvider',
-        'Zizaco\Entrust\EntrustServiceProvider'
+        'Zizaco\Entrust\EntrustServiceProvider',
+	 'Propaganistas\LaravelPhone\LaravelPhoneServiceProvider'
 
 	],
 

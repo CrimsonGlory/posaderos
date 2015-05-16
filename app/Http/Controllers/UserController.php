@@ -2,6 +2,7 @@
 
 use App\User;
 use App\Http\Requests;
+use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -60,7 +61,7 @@ class UserController extends Controller {
             'name' => array('required', 'min:1')
         );
 		$this->validate($request,$rules);
-
+	$request->replace(array('phone' => parse_phone($request->only('phone'))));
         $input = $request->all();
         $user = new User;
         $user->fill($input);
@@ -117,7 +118,7 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update(Request $request,$id)
+	public function update(UserRequest $request,$id)
 	{
         $rules = array(
             'name' => array('required', 'min:1'),
@@ -130,7 +131,8 @@ class UserController extends Controller {
 
         $user->name = $request->name;
         $user->email = $request->email;
-	$user->phone = $request->phone;
+	$user->phone = parse_phone($request->phone);
+
         if ($newRole != null)
         {
             $roleKey = (array)$newRole->id;

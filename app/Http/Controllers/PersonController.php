@@ -60,6 +60,7 @@ class PersonController extends Controller {
 		$input = $request->all();
 		$person = new Person;
 		$person->fill($input);
+		$request->replace(array('phone' => parse_phone($request->only('phone'))));
 		$person->created_by=Auth::id();
 		$person->updated_by=Auth::id();
 
@@ -136,6 +137,7 @@ class PersonController extends Controller {
 		$tags=array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
 		$person->retag($tags);
 		$person->updated_by=Auth::id();
+		$request->replace(array('phone' => parse_phone($request->only('phone'))));
 		$person->update($request->all());
 
         flash()->success('Asistido actualizado.');
