@@ -4,7 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Person;
 use App\FileEntry;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
+use Input;
 use App\Http\Requests\CreateFileEntryRequest;
 use Illuminate\Support\Facades\Redirect;
 use Request;
@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 use Intervention\Image\ImageManagerStatic as Image;
-
 class FileEntryController extends Controller {
 
     /**
@@ -39,32 +38,44 @@ class FileEntryController extends Controller {
 
     public function store(CreateFileEntryRequest $request)
     {
-        $entry = new FileEntry();
-        $file = Request::file('filename');
-        $entry->upload($file);
 
-        $person_id = Request::input('person_id');
+	 $person_id = Request::input('person_id');
         if($person_id == NULL)
         {
             abort("$person_id is NULL at FileEntryController@index");
         }
 
         $person = Person::findOrFail($person_id);
-        $entry->save();
+	$message="";
+	foreach(Input::file('files') as $file){
+            $rules = array(
+                'file' => 'required|max:8000|mimes:jpg,jpeg,png'
+            );
+            $validator = \Validator::make(array('file'=> $file), $rules);
+            if($validator->passes()){
+                $ext = $file->guessClientExtension(); // (Based on mime type)
+		$entry = new FileEntry();
+		$entry->upload($file);
+		$entry->save();
+	        if(count($person->fileentries) == 0)
+       		{
+	            $entry->avatar_of()->save($person);
+                }	
+		$person->fileentries()->save($entry);
+		$message.=$entry->original_filename." OK. ";
+            }else{ //Does not pass validation
+                $errors = $validator->errors();
+		$message.=$entry->original_filename.": ".implode(",",$errors->get("file")). ". ";
+            }
 
-	    if(count($person->fileentries) == 0)
-        {
-            $entry->avatar_of()->save($person);
         }
 
-        if ($person->fileentries()->save($entry))
-        {
-            flash()->success('Foto agregada.');
-        }
-        else
-        {
-            flash()->error('Error al intentar agregar la foto del asistido.');
-        }
+
+
+	    if(!isset($errors))
+            	flash()->success($message);
+	    else
+            	flash()->error($message)->important();
         return redirect('person/'.$person_id);
     }
 
