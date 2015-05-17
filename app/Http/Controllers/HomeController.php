@@ -35,7 +35,7 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-        $user = User::find(Auth::id());
+        $user = Auth::user();
         if(is_null($user))
         {
             return "404";
@@ -43,9 +43,27 @@ class HomeController extends Controller {
 
         if ($user->hasRole('admin') || $user->hasRole('posadero'))
         {
-            $interactions = Interaction::latest()->paginate(10);
-            $persons = Person::latest()->paginate(10);
-            return view('home', compact('user', 'interactions', 'persons'));
+            $people = null;
+            $interactions = null;
+            if ($user->can('see-all-people'))
+            {
+                $people = Person::orderBy('id', 'desc')->paginate(10);
+            }
+            else if ($user->can('see-new-people'))
+            {
+                $people = Person::orderBy('id', 'desc')->where('created_by', $user->id)->paginate(10);
+            }
+
+            if ($user->can('see-all-interactions'))
+            {
+                $interactions = Interaction::orderBy('id', 'desc')->paginate(10);
+            }
+            else if ($user->can('see-new-interactions'))
+            {
+                $interactions = Interaction::orderBy('id', 'desc')->where('user_id', $user->id)->paginate(10);
+            }
+
+            return view('home', compact('user', 'interactions', 'people'));
         }
         else if ($user->hasRole('explorer'))
         {
@@ -53,7 +71,7 @@ class HomeController extends Controller {
         }
         else if ($user->hasRole('new-user'))
         {
-            return view('person/create'); // En el futuro debería ser return view('home/homeNewUser');
+            return view('search/searchView'); // En el futuro debería ser return view('home/homeNewUser');
         }
 
         return "404";

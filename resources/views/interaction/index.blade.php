@@ -18,12 +18,12 @@
                             <div class="form-group">
                                 <table class="table table-striped">
                                     <thead>
-                                    <tr>
-                                        <th>Asistido</th>
-                                        <th>Descripción</th>
-                                        <th>Estado</th>
-                                        <th>Fecha</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Asistido</th>
+                                            <th>Descripción</th>
+                                            <th>Estado</th>
+                                            <th>Fecha</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($interactions as $interaction)
@@ -39,6 +39,20 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <table width="100%">
+                                    <tr>
+                                        <td>
+                                            <label>No hay ninguna interacción para mostrar.</label>
+                                        </td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>

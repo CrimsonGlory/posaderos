@@ -18,11 +18,11 @@
                             <div class="form-group">
                                 <table class="table table-striped">
                                     <thead>
-                                    <tr>
-                                        <th>Usuario</th>
-                                        <th>Correo electrónico</th>
-                                        <th>Tipo</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Usuario</th>
+                                            <th>Correo electrónico</th>
+                                            <th>Tipo</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($users as $user)
@@ -33,9 +33,7 @@
                                                     </a>
                                                 </th>
                                                 <th>{{$user->email}}</th>
-                                                @if (!(is_null($user->roles()->first())))
-                                                    <th>{{ $user->roles()->first()->display_name }}</th>
-                                                @endif
+                                                <th>{{ $user->roles()->first()->display_name }}</th>
                                             </tr>
                                         @endforeach
                                     </tbody>

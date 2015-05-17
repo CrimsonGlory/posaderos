@@ -10,7 +10,9 @@
                         <table width="100%">
                             <tr>
                                 <td><h4>{{ $person->name() }} </h4></td>
-                                <td align="right"><a class="btn btn-primary" href="{{ action('PersonController@edit', $person->id) }}" style="width:80px;">Editar</a></td>
+                                @if (Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id))
+                                    <td align="right"><a class="btn btn-primary" href="{{ action('PersonController@edit', $person->id) }}" style="width:80px;">Editar</a></td>
+                                @endif
                             </tr>
                         </table>
                     </div>
@@ -39,16 +41,20 @@
                                 </tr>
                                 <tr>
                                     <td align="center">
-                                        @if ($fileentries!=null && count($fileentries) != 0)
-                                            <a class="btn btn-link" href="{{ action("PersonController@photos",$person->id) }}">Ver fotos</a> |
-                                            <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i></a>
-                                        @else
+                                        @if ($fileentries != null && count($fileentries) != 0)
+                                            <a class="btn btn-link" href="{{ action("PersonController@photos",$person->id) }}">Ver fotos</a>
+                                            @if (Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id))
+                                                | <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i></a>
+                                            @endif
+                                         @elseif (Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id))
                                             <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i> Agregar foto</a>
-                                        @endif
+                                        @else
+                                            <br/>
+                                         @endif
                                     </td>
                                 </tr>
                             </table>
-			                @if ($person->dni!=null && $person->dni!=0)
+			                @if ($person->dni != null && $person->dni != 0)
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">DNI</label>
                                     <div class="col-md-6">
@@ -57,7 +63,7 @@
                                 </div>
 			                @endif
 
-			                @if ($person->birthdate!=null)
+			                @if ($person->birthdate != null)
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Fecha de nacimiento</label>
                                     <div class="col-md-6">
@@ -73,7 +79,7 @@
                                 </div>
                             </div>
 
-			                @if ($person->email!=null)
+			                @if ($person->email != null)
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Correo electrónico</label>
                                     <div class="col-md-6">
@@ -82,7 +88,7 @@
                                 </div>
 			                @endif
 
-			                @if ($person->address!=null)
+			                @if ($person->address != null)
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Dirección</label>
                                     <div class="col-md-6">
@@ -91,8 +97,7 @@
                                 </div>
 			                @endif
 
-
-					@if ($person->phone!=null)
+					@if ($person->phone != null)
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Teléfono</label>
                                     <div class="col-md-6">
@@ -101,7 +106,7 @@
                                 </div>
                                         @endif
 
-			                @if ($person->other!=null)
+			                @if ($person->other != null)
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Observaciones</label>
                                     <div class="col-md-6">
@@ -121,30 +126,34 @@
                                 </div>
                             @endif
 
-                            @if ($person->created_by != 0 && $person->updated_by != 0 )
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">Persona agregada por</label>
-                                    <div class="col-md-6">
-                                        <label class="form-control">
-                                            <a href="{{ action('UserController@show',$person->created_by) }}">
-                                                {{$person->creator->name}}
-                                            </a>
-                                            ({{$person->created_at}})
-                                        </label>
+                            @if ($person->created_by != 0 && $person->updated_by != 0)
+                                @if (Auth::user()->can('see-users') || $person->created_by == Auth::user()->id)
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Persona agregada por</label>
+                                        <div class="col-md-6">
+                                            <label class="form-control">
+                                                <a href="{{ action('UserController@show',$person->created_by) }}">
+                                                    {{ $person->creator->name }}
+                                                </a>
+                                                ({{ $person->created_at }})
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
 
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">Última actualización</label>
-                                    <div class="col-md-6">
-                                        <label class="form-control">
-                                            <a href="{{ action('UserController@show',$person->updated_by) }}">
-                                                {{$person->last_update_user->name}}
-                                            </a>
-                                            ({{$person->updated_at}})
-                                        </label>
+                                @if (Auth::user()->can('see-users') || $person->updated_by == Auth::user()->id)
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Última actualización</label>
+                                        <div class="col-md-6">
+                                            <label class="form-control">
+                                                <a href="{{ action('UserController@show',$person->updated_by) }}">
+                                                    {{ $person->last_update_user->name }}
+                                                </a>
+                                                ({{ $person->updated_at }})
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
  			                @endif
                         </form>
                     </div>
@@ -156,7 +165,9 @@
                         <table width="100%">
                             <tr>
                                 <td><h4>Últimas interacciones</h4></td>
-                                <td align="right"><a class="btn btn-primary" href="{{ url('person/'.$person->id.'/interaction/create') }}" style="width:80px;">Agregar</a></td>
+                                @if (Auth::user()->can('add-interaction'))
+                                    <td align="right"><a class="btn btn-primary" href="{{ url('person/'.$person->id.'/interaction/create') }}" style="width:80px;">Agregar</a></td>
+                                @endif
                             </tr>
                         </table>
                     </div>
@@ -167,14 +178,16 @@
                                 <tr>
                                     <td width="120" align="middle">
                                         <label>{{ $interaction->date }}</label>
-                                        </br>
-                                        <label>
-                                            <small>
-                                                <a href="{{action("UserController@show",$interaction->user->id)}}">
-                                                    {{ $interaction->user->name }}
-                                                </a>
-                                            </small>
-                                        </label>
+                                        @if (Auth::user()->can('see-users') || $interaction->user->id == Auth::user()->id)
+                                            </br>
+                                            <label>
+                                                <small>
+                                                    <a href="{{action("UserController@show",$interaction->user->id)}}">
+                                                        {{ $interaction->user->name }}
+                                                    </a>
+                                                </small>
+                                            </label>
+                                        @endif
                                     </td>
                                     <td align="left">
                                         <label>{{ $interaction->text }}</label>
@@ -185,7 +198,7 @@
                                         @else
                                             <label style="color:red">{{ trans('messages.'.$interaction->fixed) }}.</label>
                                         @endif
-                                        @if ( count($interaction->tagNames()) > 0)
+                                        @if (count($interaction->tagNames()) > 0)
                                             <label>Etiquetas: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label>
                                         @endif
                                     </td>
@@ -193,6 +206,20 @@
                                 </tr>
                             @endforeach
                         </table>
+                    @else
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <table width="100%">
+                                        <tr>
+                                            <td>
+                                                <label>No hay ninguna interacción para mostrar.</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     @endif
                 </div>
             </div>

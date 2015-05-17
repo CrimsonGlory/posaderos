@@ -6,6 +6,7 @@ use App\Http\Requests\CreatePersonRequest;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\Lib\Pagination\Pagination;
+use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\Request;
 
 use Illuminate\Http\Request as Request2;
@@ -35,7 +36,26 @@ class PersonController extends Controller {
 	 */
 	public function index(Request $request)
     {
-        $people = Person::orderBy('id', 'desc')->paginate(10);
+        $user = Auth::user();
+        if ($user == null)
+        {
+            return "404";
+        }
+
+        $people = null;
+        if ($user->can('see-all-people'))
+        {
+            $people = Person::orderBy('id', 'desc')->paginate(10);
+        }
+        else if ($user->can('see-new-people'))
+        {
+            $people = Person::orderBy('id', 'desc')->where('created_by', $user->id)->paginate(10);
+        }
+        else
+        {
+            return Redirect::back();
+        }
+
         $paginator = $this->pagination->set($people, $request->getBaseUrl());
 		return view('person.index', compact('people', 'paginator'));
 	}
@@ -47,7 +67,17 @@ class PersonController extends Controller {
 	 */
 	public function create()
 	{
-		return view('person.create');
+        $user = Auth::user();
+        if ($user == null)
+        {
+            return "404";
+        }
+
+        if ($user->can('add-person'))
+        {
+            return view('person.create');
+        }
+        return Redirect::back();
 	}
 
 	/**
@@ -61,8 +91,8 @@ class PersonController extends Controller {
 		$person = new Person;
 		$person->fill($input);
 		$request->replace(array('phone' => parse_phone($request->only('phone'))));
-		$person->created_by=Auth::id();
-		$person->updated_by=Auth::id();
+		$person->created_by = Auth::id();
+		$person->updated_by = Auth::id();
 
 		if($person->save())
         {
@@ -83,29 +113,46 @@ class PersonController extends Controller {
 	 */
 	public function show($id)
 	{
-		$person = Person::find($id);
-		if(is_null($person))
+        $user = Auth::user();
+        $person = Person::find($id);
+        if ($user == null || $person == null)
         {
-			return "404";
-		}
+            return "404";
+        }
 
-		$interactions = $person->interactions()->latest('id')->get();
-        $fileentries = $person->fileentries()->latest('id')->limit(10)->get();
-		return view('person.show',compact('person','interactions','fileentries'));
+        $interactions = null;
+        if ($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id))
+        {
+            if ($user->can('see-all-interactions'))
+            {
+                $interactions = $person->interactions()->latest('id')->limit(10)->get();
+            }
+            else if ($user->can('see-new-interactions'))
+            {
+                $interactions = $person->interactions()->where('user_id', $user->id)->latest('id')->limit(10)->get();
+            }
+            $fileentries = $person->fileentries()->latest('id')->limit(10)->get();
+            return view('person.show',compact('person','interactions','fileentries'));
+        }
+        return Redirect::back();
 	}
 
 
     public function photos($id)
     {
+        $user = Auth::user();
         $person = Person::find($id);
-
-        if(is_null($person))
+        if ($user == null || $person == null)
         {
             return "404";
         }
-        $interactions = $person->interactions()->latest('id')->get();
-        $fileentries = $person->fileentries()->get();
-        return view('person.photos',compact('person','interactions','fileentries'));
+
+        if ($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id))
+        {
+            $fileentries = $person->fileentries()->get();
+            return view('person.photos',compact('person','fileentries'));
+        }
+        return Redirect::back();
     }
 
 
@@ -117,12 +164,18 @@ class PersonController extends Controller {
 	 */
 	public function edit($id)
 	{
-		$person = Person::find($id);
-		if(is_null($person))
+        $user = Auth::user();
+        $person = Person::find($id);
+        if ($user == null || $person == null)
         {
-			return "404";
-		}
-		return view('person.edit',compact('person'));
+            return "404";
+        }
+
+        if ($user->can('edit-all-people') || ($user->can('edit-new-people') && $person->created_by == $user->id))
+        {
+            return view('person.edit',compact('person'));
+        }
+        return Redirect::back();
 	}
 
 	/**
@@ -134,9 +187,9 @@ class PersonController extends Controller {
 	public function update(CreatePersonRequest $request,$id)
 	{
 		$person = Person::findOrFail($id);
-		$tags=array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
+		$tags = array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
 		$person->retag($tags);
-		$person->updated_by=Auth::id();
+		$person->updated_by = Auth::id();
 		$request->replace(array('phone' => parse_phone($request->only('phone'))));
 		$person->update($request->all());
 
@@ -156,14 +209,15 @@ class PersonController extends Controller {
 		//
 	}
 
-	public function setAvatar(Request2 $request,$id){
-		$input=$request->all();
+	public function setAvatar(Request2 $request,$id)
+    {
+		$input = $request->all();
 		return $input;
 		$image=FileEntry::findOrFail($input->fileentry_id);
 		$person=Person::findOrFail($id);
 		$image->avatar_of()->save($person);
 		return redirect('person/'.$input->person_id);
-
 	}
 
 }
+

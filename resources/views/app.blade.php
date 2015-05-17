@@ -34,48 +34,58 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 @if (!Auth::guest())
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/person') }}">
-                                <i class="glyphicon glyphicon-user"></i>
-                                Asistidos
-                            </a>
-                        </li>
-                    </ul>
+                    @if (Auth::user()->can('see-all-people') || Auth::user()->can('see-new-people'))
+                        <ul class="nav navbar-nav">
+                            <li><a href="{{ url('/person') }}">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                    Asistidos
+                                </a>
+                            </li>
+                        </ul>
+                    @endif
 
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/interaction') }}">
-                                <i class="glyphicon glyphicon-edit"></i>
-                                Interacciones
-                            </a>
-                        </li>
-                    </ul>
+                    @if (Auth::user()->can('see-all-interactions') || Auth::user()->can('see-new-interactions'))
+                        <ul class="nav navbar-nav">
+                            <li><a href="{{ url('/interaction') }}">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                    Interacciones
+                                </a>
+                            </li>
+                        </ul>
+                    @endif
 
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="{{ url('/user') }}">
-                                <i class="glyphicon glyphicon-lock"></i>
-                                Usuarios
-                            </a>
-                        </li>
-                    </ul>
+                    @if (Auth::user()->can('see-users'))
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="{{ url('/user') }}">
+                                    <i class="glyphicon glyphicon-lock"></i>
+                                    Usuarios
+                                </a>
+                            </li>
+                        </ul>
+                    @endif
 
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="{{ action('PersonController@create') }}">
-                                <i class="glyphicon glyphicon-plus"></i>
-                                Nuevo asistido
-                            </a>
-                        </li>
-                    </ul>
+                    @if (Auth::user()->can('add-person'))
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="{{ action('PersonController@create') }}">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    Nuevo asistido
+                                </a>
+                            </li>
+                        </ul>
+                    @endif
 
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="{{ url('/search/searchView') }}">
-                                <i class="glyphicon glyphicon-search"></i>
-                                Buscar
-                            </a>
-                        </li>
-                    </ul>
+                    @if (Auth::user()->can('see-people-search-view') || Auth::user()->can('see-interactions-search-view') || Auth::user()->can('see-users-search-view'))
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="{{ url('/search/searchView') }}">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                    Buscar
+                                </a>
+                            </li>
+                        </ul>
+                    @endif
                 @endif
 
 				<ul class="nav navbar-nav navbar-right">
