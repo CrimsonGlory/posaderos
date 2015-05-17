@@ -17,7 +17,8 @@ use \Conner\Tagging\TaggableTrait;
         'dni',
         'gender',
         'address',
-        'other'
+        'other',
+	'phone'
 	];
 
     // Para que agregue la hora al guardar y no sólo el día

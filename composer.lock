@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "81255b3119afd4c1383fee8ffa4ac313",
+    "hash": "c84d38f9c3a29d8bf756c239280a6cc7",
     "packages": [
         {
             "name": "astroanu/laravel-image-cache",
@@ -712,6 +712,66 @@
             "time": "2014-09-09 13:34:57"
         },
         {
+            "name": "giggsey/libphonenumber-for-php",
+            "version": "7.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/giggsey/libphonenumber-for-php.git",
+                "reference": "7e49f5904a35cf7a5985de9df6397c296ea504f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/7e49f5904a35cf7a5985de9df6397c296ea504f1",
+                "reference": "7e49f5904a35cf7a5985de9df6397c296ea504f1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*"
+            },
+            "require-dev": {
+                "phing/phing": "~2.7",
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6",
+                "symfony/console": "~2.4"
+            },
+            "suggest": {
+                "ext-intl": "To use the geocoder and carrier mapping"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "libphonenumber": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Joshua Gigg",
+                    "email": "giggsey@gmail.com",
+                    "homepage": "http://giggsey.com/"
+                }
+            ],
+            "description": "PHP Port of Google's libphonenumber",
+            "homepage": "https://github.com/giggsey/libphonenumber-for-php",
+            "keywords": [
+                "geocoding",
+                "geolocation",
+                "libphonenumber",
+                "mobile",
+                "phonenumber",
+                "validation"
+            ],
+            "time": "2015-04-28 19:50:26"
+        },
+        {
             "name": "illuminate/html",
             "version": "v5.0.0",
             "source": {
@@ -816,16 +876,16 @@
         },
         {
             "name": "intervention/image",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "6626d7624ac0895137a38c123943afedd0827efc"
+                "reference": "79f0a35da7d4f75bb85d9c04513dd5929e21f75e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/6626d7624ac0895137a38c123943afedd0827efc",
-                "reference": "6626d7624ac0895137a38c123943afedd0827efc",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/79f0a35da7d4f75bb85d9c04513dd5929e21f75e",
+                "reference": "79f0a35da7d4f75bb85d9c04513dd5929e21f75e",
                 "shasum": ""
             },
             "require": {
@@ -868,7 +928,7 @@
                 "thumbnail",
                 "watermark"
             ],
-            "time": "2015-04-24 14:50:48"
+            "time": "2015-05-09 16:06:30"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -1131,16 +1191,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.0.28",
+            "version": "v5.0.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "06a09429322cf53e5bd4587db1060f02a291562e"
+                "reference": "db0a7400465df159ba8c6eaa954f97f50bc19687"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/06a09429322cf53e5bd4587db1060f02a291562e",
-                "reference": "06a09429322cf53e5bd4587db1060f02a291562e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/db0a7400465df159ba8c6eaa954f97f50bc19687",
+                "reference": "db0a7400465df159ba8c6eaa954f97f50bc19687",
                 "shasum": ""
             },
             "require": {
@@ -1253,7 +1313,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-04-21 01:44:32"
+            "time": "2015-05-11 22:15:00"
         },
         {
             "name": "league/flysystem",
@@ -1647,16 +1707,16 @@
         },
         {
             "name": "orchestra/support-providers",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/support-providers.git",
-                "reference": "b7e1371da17a665debbdfade390a458e427bf6cf"
+                "reference": "8f9b5ff07b6352f84495f51a8bc0a50f0c8cd1d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/support-providers/zipball/b7e1371da17a665debbdfade390a458e427bf6cf",
-                "reference": "b7e1371da17a665debbdfade390a458e427bf6cf",
+                "url": "https://api.github.com/repos/orchestral/support-providers/zipball/8f9b5ff07b6352f84495f51a8bc0a50f0c8cd1d4",
+                "reference": "8f9b5ff07b6352f84495f51a8bc0a50f0c8cd1d4",
                 "shasum": ""
             },
             "require": {
@@ -1697,7 +1757,58 @@
                 "orchestra-platform",
                 "orchestral"
             ],
-            "time": "2015-03-18 10:01:42"
+            "time": "2015-05-12 08:33:53"
+        },
+        {
+            "name": "propaganistas/laravel-phone",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Propaganistas/Laravel-Phone.git",
+                "reference": "0c88083895fcad5fb89a0fc4af7af1b9a890e169"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Propaganistas/Laravel-Phone/zipball/0c88083895fcad5fb89a0fc4af7af1b9a890e169",
+                "reference": "0c88083895fcad5fb89a0fc4af7af1b9a890e169",
+                "shasum": ""
+            },
+            "require": {
+                "giggsey/libphonenumber-for-php": "~7.0",
+                "illuminate/support": "~4.0|~5.0",
+                "illuminate/validation": "~4.0|~5.0",
+                "php": ">=5.4.0"
+            },
+            "suggest": {
+                "monarobase/country-list": "Adds a compatible (and fully translated) country list API."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Propaganistas\\LaravelPhone": "src/"
+                },
+                "files": [
+                    "helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Propaganistas",
+                    "email": "Propaganistas@users.noreply.github.com"
+                }
+            ],
+            "description": "Adds a phone validator to Laravel based on Google's libphonenumber API.",
+            "keywords": [
+                "laravel",
+                "libphonenumber",
+                "phone",
+                "validation"
+            ],
+            "time": "2015-05-09 18:53:06"
         },
         {
             "name": "psr/log",
@@ -1810,34 +1921,30 @@
         },
         {
             "name": "rtconner/laravel-tagging",
-            "version": "1.0.3",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rtconner/laravel-tagging.git",
-                "reference": "07c3ebf57f03619cb930203f4919b76bd6d91d18"
+                "reference": "924ebdc5e3e62a2d61c04b2d9f4dc9daf5374571"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rtconner/laravel-tagging/zipball/07c3ebf57f03619cb930203f4919b76bd6d91d18",
-                "reference": "07c3ebf57f03619cb930203f4919b76bd6d91d18",
+                "url": "https://api.github.com/repos/rtconner/laravel-tagging/zipball/924ebdc5e3e62a2d61c04b2d9f4dc9daf5374571",
+                "reference": "924ebdc5e3e62a2d61c04b2d9f4dc9daf5374571",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "~5.0",
-                "php": "~5.3"
+                "illuminate/database": "~5.0",
+                "illuminate/support": "~5.0",
+                "php": ">=5.3.0"
             },
             "require-dev": {
-                "doctrine/dbal": "~2.5",
-                "orchestra/testbench": "~3.0",
-                "phpseclib/phpseclib": ">=0.3.7",
+                "mockery/mockery": "~0.9",
                 "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "autoload": {
-                "classmap": [
-                    "migrations"
-                ],
-                "psr-0": {
+                "psr-4": {
                     "Conner\\Tagging\\": "src/"
                 }
             },
@@ -1863,7 +1970,7 @@
                 "tagging",
                 "tags"
             ],
-            "time": "2015-04-30 01:15:10"
+            "time": "2015-05-08 15:28:51"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2679,6 +2786,73 @@
                 "environment"
             ],
             "time": "2014-12-05 15:19:21"
+        },
+        {
+            "name": "zizaco/entrust",
+            "version": "dev-laravel-5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Zizaco/entrust.git",
+                "reference": "305916c40ed35dd6ebb81379db51ec582df19623"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/305916c40ed35dd6ebb81379db51ec582df19623",
+                "reference": "305916c40ed35dd6ebb81379db51ec582df19623",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "~5.0",
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "illuminate/database": "~5.0",
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "~4.1",
+                "sami/sami": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/commands"
+                ],
+                "psr-4": {
+                    "Zizaco\\Entrust\\": "src/Entrust/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrew Elkins",
+                    "homepage": "http://andrewelkins.com"
+                },
+                {
+                    "name": "Zizaco Zizuini",
+                    "email": "zizaco@gmail.com"
+                },
+                {
+                    "name": "Ben Batschelet",
+                    "homepage": "http://github.com/bbatsche"
+                },
+                {
+                    "name": "Michele Angioni",
+                    "email": "michele.angioni@gmail.com"
+                }
+            ],
+            "description": "This package provides a flexible way to add Role-based Permissions to Laravel",
+            "keywords": [
+                "acl",
+                "auth",
+                "illuminate",
+                "laravel",
+                "permission",
+                "roles"
+            ],
+            "time": "2015-03-20 15:05:21"
         }
     ],
     "packages-dev": [
@@ -3756,7 +3930,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "astroanu/laravel-image-cache": 20,
-        "laravel-5/pagination": 20
+        "laravel-5/pagination": 20,
+        "zizaco/entrust": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

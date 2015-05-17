@@ -36,6 +36,14 @@
                                 </div>
                             @endif
 
+			    <div class="form-group">
+                                <label class="col-md-4 control-label">Teléfono</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="phone" value="{{ $userShown->phone }}">
+                                    {{ $errors->first('phone') }}
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <table width="100%">
                                     <tr>

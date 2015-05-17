@@ -69,6 +69,13 @@
                                 </div>
                             </div>
 
+			    <div class="form-group">
+                                <label class="col-md-4 control-label">Teléfono</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="phone" value="{{ $person->phone }}">
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Observaciones</label>
                                 <div class="col-md-6">
