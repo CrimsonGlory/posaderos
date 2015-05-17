@@ -65,7 +65,10 @@ class FileEntryController extends Controller {
 		$message.=$entry->original_filename." OK. ";
             }else{ //Does not pass validation
                 $errors = $validator->errors();
-		$message.=$entry->original_filename.": ".implode(",",$errors->get("file")). ". ";
+		if($file)
+			$message.=$file->getClientOriginalName().": ".implode(",",$errors->get("file")). ". ";
+		else
+			$message.="No se adjuntó ningun archivo. ";
             }
 
         }
