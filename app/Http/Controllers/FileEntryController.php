@@ -16,11 +16,11 @@ use Intervention\Image\ImageManagerStatic as Image;
 class FileEntryController extends Controller {
 
     /**
-     * Display a listing of the resource.
+     * Show the form for creating a new resource.
      *
      * @return Response
      */
-    public function index($id)
+    public function create($id)
     {
         $uploadError = 0; //Se maneja desde App\Exceptions\Handler.php para los archivos que superan los 8 MB.
         $user = Auth::user();
@@ -32,7 +32,7 @@ class FileEntryController extends Controller {
         $person = Person::findOrFail($id);
         if ($user->can('edit-all-people') || ($user->can('edit-new-people') && $person->created_by == $user->id))
         {
-            return view('fileentries.index', compact('person','uploadError'));
+            return view('fileentries.create', compact('person','uploadError'));
         }
         return Redirect::back();
     }
