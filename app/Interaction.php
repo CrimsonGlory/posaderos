@@ -32,13 +32,14 @@ use \Conner\Tagging\TaggableTrait;
         $this->attributes['date'] = Carbon::createFromFormat('Y-m-d', $date);
     }
 
-    public function darAsistido()
+    public function getPerson()
     {
         $person = Person::find($this->person_id);
         if(is_null($person))
         {
             return "404";
         }
-        return $person->name();
+        return $person;
     }
+
 }

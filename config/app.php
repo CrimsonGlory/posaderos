@@ -135,7 +135,7 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
-	        'Illuminate\Html\HtmlServiceProvider',
+        'Illuminate\Html\HtmlServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -155,7 +155,8 @@ return [
         'App\Lib\Pagination\PaginationServiceProvider',
 		'Laracasts\Flash\FlashServiceProvider',
         'Zizaco\Entrust\EntrustServiceProvider',
-	 'Propaganistas\LaravelPhone\LaravelPhoneServiceProvider'
+	    'Propaganistas\LaravelPhone\LaravelPhoneServiceProvider',
+        'Jenssegers\Agent\AgentServiceProvider'
 
 	],
 
@@ -210,7 +211,8 @@ return [
 	    'TaggableTrait' => '\Conner\Tagging\TaggableTrait',
 	    'Image'         => 'Intervention\Image\Facades\Image',
 	    'Flash'         => 'Laracasts\Flash\Flash',
-        'Entrust'       => 'Zizaco\Entrust\EntrustFacade'
+        'Entrust'       => 'Zizaco\Entrust\EntrustFacade',
+        'Agent'         => 'Jenssegers\Agent\Facades\Agent'
 	],
 
 ];

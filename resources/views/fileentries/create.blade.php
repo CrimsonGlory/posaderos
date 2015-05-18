@@ -27,7 +27,7 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                             <div class="form-group" align="center">
-					 {!! Form::file('files[]', array('multiple'=>true)) !!}
+					            {!! Form::file('files[]', array('multiple'=>true)) !!}
                             </div>
                             {!! Form::hidden('person_id', $person->id) !!}
 

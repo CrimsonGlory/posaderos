@@ -45,23 +45,23 @@ class SearchController extends Controller {
 
         $data = array('toFind' => Input::get('toFind'),'keyWord' => Input::get('key'),'error' => 1);
         $interactions = NULL;
-        $persons = NULL;
+        $people = NULL;
         $users = NULL;
 
         if($data['toFind'] == "Asistidos")
         {
             if ($user->can('see-all-people'))
             {
-                $persons = Person::where('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
-                                   orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->limit(30)->get();
+                $people = Person::where('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
+                                  orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->limit(30)->get();
             }
             else if ($user->can('see-new-people'))
             {
-                $persons = Person::where('created_by', $user->id)->
-                                   where(function ($query) use($data){
+                $people = Person::where('created_by', $user->id)->
+                                  where(function ($query) use($data){
                                         $query->where('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
                                                 orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%');
-                                   })->limit(30)->get();
+                                  })->limit(30)->get();
             }
             $data['error'] = 0;
         }
@@ -87,7 +87,7 @@ class SearchController extends Controller {
             }
             $data['error'] = 0;
         }
-        return view('search.resultadoBusqueda', compact('data','persons','interactions','users'));
+        return view('search.resultadoBusqueda', compact('data','people','interactions','users'));
     }
 
 }
