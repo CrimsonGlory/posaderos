@@ -40,7 +40,11 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Tipo de usuario</label>
                                     <div class="col-md-6">
-                                        {!! Form::select('role', array('admin' => 'Administrador','posadero' => 'Posadero','explorer' => 'Explorador','new-user' => 'Nuevo usuario'), $userShown->roles()->first()->name, array('class' => 'form-control')) !!}
+                                        @if ($userShown->roles() != NULL && $userShown->roles()->first() != NULL)
+                                            {!! Form::select('role', array('admin'=>'Administrador','posadero'=>'Posadero','explorer'=>'Explorador','new-user'=>'Nuevo usuario'), $userShown->roles()->first()->name, array('class' => 'form-control')) !!}
+                                        @else
+                                            {!! Form::select('role', array('admin'=>'Administrador','posadero'=>'Posadero','explorer'=>'Explorador','new-user'=>'Nuevo usuario'), 'new-user', array('class' => 'form-control')) !!}
+                                        @endif
                                     </div>
                                 </div>
                             @endif
