@@ -9,7 +9,7 @@
                         <h4>Guardar foto de {{ $person->first_name }} {{ $person->last_name }}</h4>
                     </div>
                     <div class="panel-body">
-			@include('flash::message')
+			            @include('flash::message')
                         @if ($errors->any())
                             <ul class="alert alert-danger">
                                 @foreach ($errors->all() as $error)
