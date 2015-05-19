@@ -7,10 +7,10 @@
                         <thead>
                             <tr>
                                 <th>Foto</th>
-                                <th>Usuario</th>
+                                <th>Nombre</th>
                                 <th>Correo electrónico</th>
                                 <th>Teléfono</th>
-                                <th>Tipo</th>
+                                <th>Tipo de usuario</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,7 +46,7 @@
                         <thead>
                             <tr>
                                 <th>Foto</th>
-                                <th>Usuario</th>
+                                <th>Nombre</th>
                             </tr>
                         </thead>
                         <tbody>
