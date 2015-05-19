@@ -72,11 +72,15 @@ class FileEntryController extends Controller {
             }
         }
 
-        if(!isset($errors))
-            flash()->success($message);
-        else
-            flash()->error($message)->important();
-        return redirect('person/'.$person_id);
+
+	    if(!isset($errors)){
+            	flash()->success($message);
+        	return redirect('person/'.$person_id);
+	    }
+	    else{
+            	flash()->error($message)->important();
+		return redirect('person/'.$person_id.'/fileentries/photos');
+	    }
     }
 
     public function show($id)
