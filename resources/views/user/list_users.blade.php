@@ -26,7 +26,11 @@
                                     </th>
                                     <th>{{ $user->email }}</th>
                                     <th>{{ $user->phone }}</th>
+				    @if ($user->roles()!=NULL && $user->roles()->first()!=NULL)
                                     <th>{{ $user->roles()->first()->display_name }}</th>
+				    @else
+				    <th> - </th>
+				    @endif
                                 </tr>
                             @endforeach
                         </tbody>
