@@ -4,7 +4,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
 			        @include('flash::message')
                     <div class="panel-heading">
@@ -40,14 +40,15 @@
                                 </div>
                             </div>
 
-			    @if ($userShown->phone!=null)
-			    <div class="form-group">
-                                <label class="col-md-4 control-label">Teléfono</label>
-                                <div class="col-md-6">
-                                    <label class="form-control" name="phone">{{$userShown->phone}}</label>
-				</div>
-			   </div> 
-			    @endif
+			                @if ($userShown->phone != null)
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Teléfono</label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" name="phone">{{ $userShown->phone }}</label>
+                                    </div>
+                                </div>
+                            @endif
+
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Tipo de usuario</label>
                                 <div class="col-md-6">
@@ -60,20 +61,20 @@
             </div>
         </div>
     </div>
-    @if (count($userShown->people))
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel-group" id="personasCreadasPorUsuario" role="tablist" aria-multiselectable="false" style="min-width:500px;">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="PersonasCreadas">
-                        <table width="100%">
-                            <tr>
-                                <td><h4>Últimos asistidos dados de alta por {{ $userShown->name }}</h4></td>
-                            </tr>
-                        </table>
-                    </div>
-                    @include('list_people',['people' => $people])
+
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel-group" id="personasCreadasPorUsuario" role="tablist" aria-multiselectable="false">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="PersonasCreadas">
+                    <table width="100%">
+                        <tr>
+                            <td><h4>Últimos asistidos dados de alta por {{ $userShown->name }}</h4></td>
+                        </tr>
+                    </table>
                 </div>
+                @include('person.list_people',['people' => $people])
             </div>
         </div>
-    @endif
+    </div>
+
 @endsection

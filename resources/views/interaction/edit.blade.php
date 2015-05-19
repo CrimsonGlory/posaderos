@@ -18,46 +18,46 @@
                         @endif
 
                         {!! Form::model($interaction,['class' => 'form-horizontal', 'method' => 'PATCH', 'action' => ['InteractionController@update', $interaction->id]]) !!}
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Descripción</label>
-                            <div class="col-md-6">
-                                <textarea type="text" class="form-control" name="text" style="height:150px;" autofocus="true">{{ $interaction->text }}</textarea>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Descripción</label>
+                                <div class="col-md-6">
+                                    <textarea type="text" class="form-control" name="text" style="height:150px;" autofocus="true">{{ $interaction->text }}</textarea>
+                                </div>
                             </div>
-                        </div>
-                        {!! Form::hidden('person_id', $interaction->person_id) !!}
+                            {!! Form::hidden('person_id', $interaction->person_id) !!}
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Fecha</label>
-                            <div class="col-md-6">
-                                <input type="date" class="form-control" name="date" value="{{ $interaction->date }}">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Fecha</label>
+                                <div class="col-md-6">
+                                    <input type="date" class="form-control" name="date" value="{{ $interaction->date }}">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Etiquetas</label>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="tags" value="{{ implode(", ",$interaction->tagNames()) }}">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Etiquetas</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="tags" value="{{ implode(", ",$interaction->tagNames()) }}">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Estado de la interacción</label>
-                            <div class="col-md-6">
-                                {!! Form::select('fixed', array(0 => 'Pendiente', 1 => 'Finalizada'), $interaction->fixed, array('class' => 'form-control')) !!}
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Estado de la interacción</label>
+                                <div class="col-md-6">
+                                    {!! Form::select('fixed', array(0 => 'Pendiente', 1 => 'Finalizada'), $interaction->fixed, array('class' => 'form-control')) !!}
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <table width="100%">
-                                <tr>
-                                    <td align="right"><button type="submit" class="btn btn-primary form-control"  style="width:100px;">Guardar</button></td>
-                                    <td width="20"></td>
-                                    <td align="left"><a href="{{ action('PersonController@show', $interaction->person_id) }}" class="btn btn-primary" style="width:100px;">Cancelar</a></td>
-                                </tr>
-                            </table>
-                        </div>
+                            <div class="form-group">
+                                <table width="100%">
+                                    <tr>
+                                        <td align="right"><button type="submit" class="btn btn-primary form-control"  style="width:100px;">Guardar</button></td>
+                                        <td width="20"></td>
+                                        <td align="left"><a href="{{ action('PersonController@show', $interaction->person_id) }}" class="btn btn-primary" style="width:100px;">Cancelar</a></td>
+                                    </tr>
+                                </table>
+                            </div>
                         {!! Form::close() !!}
                     </div>
                 </div>

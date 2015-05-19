@@ -109,7 +109,7 @@ class InteractionController extends Controller {
             }
             catch (\Exception $e)
             {
-                flash()->error('No se pudo enviar el email notificando la derivación del asistido.');
+                flash()->error('No se pudo enviar el email notificando la derivación del asistido.')->important();
             }
         }
         else

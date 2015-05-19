@@ -39,40 +39,38 @@ class FileEntryController extends Controller {
     public function store(CreateFileEntryRequest $request)
     {
 
-	 $person_id = Request::input('person_id');
+        $person_id = Request::input('person_id');
         if($person_id == NULL)
         {
             abort("$person_id is NULL at FileEntryController@index");
         }
 
         $person = Person::findOrFail($person_id);
-	$message="";
-	foreach(Input::file('files') as $file){
+        $message="";
+        foreach(Input::file('files') as $file){
             $rules = array(
                 'file' => 'required|max:8000|mimes:jpg,jpeg,png'
             );
             $validator = \Validator::make(array('file'=> $file), $rules);
-            if($validator->passes()){
+            if($validator->passes())
+            {
                 $ext = $file->guessClientExtension(); // (Based on mime type)
-		$entry = new FileEntry();
-		$entry->upload($file);
-		$entry->save();
-	        if(count($person->fileentries) == 0)
-       		{
-	            $entry->avatar_of()->save($person);
-                }	
-		$person->fileentries()->save($entry);
-		$message.=$entry->original_filename." OK. ";
-            }else{ //Does not pass validation
-                $errors = $validator->errors();
-		if($file)
-			$message.=$file->getClientOriginalName().": ".implode(",",$errors->get("file")). ". ";
-		else
-			$message.="No se adjuntó ningun archivo. ";
+                $entry = new FileEntry();
+                $entry->upload($file);
+                $entry->save();
+                $entry->avatar_of()->save($person);
+                $person->fileentries()->save($entry);
+                $message.=$entry->original_filename." OK. ";
             }
-
+            else
+            { //Does not pass validation
+                $errors = $validator->errors();
+                if($file)
+                    $message.=$file->getClientOriginalName().": ".implode(",",$errors->get("file")). ". ";
+                else
+                    $message.="No se adjuntó ningun archivo. ";
+            }
         }
-
 
 
 	    if(!isset($errors)){
