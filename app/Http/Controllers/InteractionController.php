@@ -193,6 +193,10 @@ class InteractionController extends Controller {
         {
             $interaction->retag($tags);
         }
+        else
+        {
+            $interaction->untag();
+        }
 
         flash()->success("Interacción actualizada.");
         return redirect('person/'.$interaction->person_id);
