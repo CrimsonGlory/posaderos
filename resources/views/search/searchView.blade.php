@@ -22,14 +22,23 @@
                             $('.input-group #search_param').text(param);
                         });
                     });
+
                     function buscar(){
-                    var k = $('#keyWord').val();
-                    var tf = $('#search_param').text();
-                    $.get( "/search/search", { toFind: tf, key: k } )
-                      .done(function( data ) {
-                        $('#resultado').html("");
-                        $('#resultado').html(data);
-                      });
+                        var k = $('#keyWord').val();
+                        var tf = $('#search_param').text();
+                        $.get( "/search/search", { toFind: tf, key: k } )
+                                .done(function( data ) {
+                                    $('#resultado').html("");
+                                    $('#resultado').html(data);
+                                });
+                    }
+
+                    function enterPressAction(e){
+                        var code = (e.keyCode ? e.keyCode : e.which);
+                        //Enter keycode
+                        if(code == 13) {
+                            buscar();
+                        }
                     }
                 </script>
 
@@ -52,7 +61,7 @@
                             </ul>
                         </div>
                         <input type="hidden" name="search_param" value="Interaccion" id="search_param">
-                        <input type="text" id="keyWord" class="form-control" name="x" placeholder="buscar..." autofocus="true">
+                        <input type="text" id="keyWord" class="form-control" name="x" placeholder="buscar..." autofocus="true" onkeypress="enterPressAction(event)">
                         <span class="input-group-btn">
                             <button id="search" class="btn btn-default" type="button" onClick="buscar()"><span class="glyphicon glyphicon-search"></span></button>
                         </span>
