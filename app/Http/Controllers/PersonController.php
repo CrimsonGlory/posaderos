@@ -198,6 +198,10 @@ class PersonController extends Controller {
         {
             $person->retag($tags);
         }
+        else
+        {
+            $person->untag();
+        }
 
         flash()->success('Asistido actualizado.');
 		return redirect('person/'.$person->id);

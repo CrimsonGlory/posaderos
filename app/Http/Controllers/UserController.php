@@ -167,6 +167,10 @@ class UserController extends Controller {
         {
             $user->retag($tags);
         }
+        else
+        {
+            $user->untag();
+        }
 
 		flash()->success('Usuario actualizado.');
 		return redirect('user/'.$id);
