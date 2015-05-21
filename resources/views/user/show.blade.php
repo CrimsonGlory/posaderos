@@ -49,6 +49,17 @@
                                 </div>
                             @endif
 
+                            @if (count($userShown->tagNames()) > 0)
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Etiquetas</label>
+                                    <div class="col-md-6">
+                                        <label class="form-control">
+                                            @include('tag.list_tags',['tagNames' => $userShown->tagNames()])
+                                        </label>
+                                    </div>
+                                </div>
+                            @endif
+
                             @if ($userShown->roles() != NULL && $userShown->roles()->first() != NULL)
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Tipo de usuario</label>

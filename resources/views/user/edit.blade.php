@@ -36,6 +36,13 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Etiquetas</label>
+                                <div class="col-md-6">
+                                    {!! Form::select('tags[]', all_tags(), $userShown->tagNames(), ['id' => 'tags','class' => 'form-control','multiple']) !!}
+                                </div>
+                            </div>
+
                             @if ($userShown->id != Auth::user()->id)
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Tipo de usuario</label>
@@ -66,4 +73,11 @@
     </div>
 @endsection
 
+@section('footer')
+    <script>
+        $('#tags').select2();
+    </script>
+@endsection
+
 @stop
+

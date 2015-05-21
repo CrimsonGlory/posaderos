@@ -9,7 +9,8 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Gravatar;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
-	use Authenticatable, CanResetPassword, EntrustUserTrait;
+	use Authenticatable, CanResetPassword, EntrustUserTrait, \Conner\Tagging\TaggableTrait;
+
 	/**
 	 * The database table used by the model.
 	 *

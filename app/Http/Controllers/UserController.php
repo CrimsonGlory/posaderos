@@ -12,6 +12,7 @@ use Validator;
 use Illuminate\Http\Request;
 use Gravatar;
 use App\Lib\Pagination\Pagination;
+use Conner\Tagging\Tag;
 
 class UserController extends Controller {
 
@@ -73,7 +74,7 @@ class UserController extends Controller {
             'name' => array('required', 'min:1')
         );
 		$this->validate($request,$rules);
-	$request->replace(array('phone' => parse_phone($request->only('phone'))));
+	    $request->replace(array('phone' => parse_phone($request->only('phone'))));
         $input = $request->all();
         $user = new User;
         $user->fill($input);
@@ -155,7 +156,8 @@ class UserController extends Controller {
 
         $user->name = $request->name;
         $user->email = $request->email;
-	$user->phone = parse_phone($request->phone);
+	    $user->phone = parse_phone($request->phone);
+        $user->retag($request->tags);
 
         if ($newRole != null)
         {
