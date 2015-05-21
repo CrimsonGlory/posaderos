@@ -14,22 +14,7 @@
                 </div>
 
                 @include('user.list_users',['users' => $users])
-
-                @if ($paginator->hasPrevPage || $paginator->hasNextPage)
-                    <div class="panel-body">
-                        <table width="100%">
-                            <tr>
-                                <td align="right">
-                                    <nav>
-                                        <ul class="pagination">
-                                            {!! $paginator->renderBootstrap('<', '>') !!}
-                                        </ul>
-                                    </nav>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                @endif
+                @include('paginator',['paginator' => $paginator])
             </div>
         </div>
     </div>

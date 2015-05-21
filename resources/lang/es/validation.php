@@ -47,12 +47,12 @@ return [
 		"string"  => "El campo :attribute no debe ser mayor a :max caracteres.",
 		"array"   => "El campo :attribute no debe tener más de :max items.",
 	],
-	"mimes"                => "El campo :attribute debe ser un archivo de tipo: :values.",
+	"mimes"                => "El campo :attribute debe ser un archivo de tipo: :values",
 	"min"                  => [
 		"numeric" => "El campo :attribute debe ser al menos de :min.",
 		"file"    => "El campo :attribute debe ser al menos de :min kilobytes.",
 		"string"  => "El campo :attribute debe ser al menos de :min caracteres.",
-		"array"   => "El campo :attribute debe tener al menos :min items.",
+		"array"   => "El campo :attribute debe tener al menos :min items",
 	],
 	"not_in"               => "El campo  :attribute elegido es inválido.",
 	"numeric"              => "El campo :attribute debe ser un número.",
@@ -62,7 +62,7 @@ return [
 	"required_with"        => "El campo :attribute es requerido cuando :values está presente.",
 	"required_with_all"    => "El campo :attribute es requerido cuando :values está presente.",
 	"required_without"     => "El campo :attribute es requerido cuando :values no está presente.",
-	"required_without_all" => "El campo :attribute es requerido cuando ninguno de los valores :values está presente.",
+	"required_without_all" => "El campo :attribute es requerido cuando ninguno de los valores :values están presentes.",
 	"same"                 => "El campo :attribute y :other deben coincidir.",
 	"size"                 => [
 		"numeric" => "El campo :attribute debe ser de :size.",

@@ -7,10 +7,10 @@
                         <thead>
                             <tr>
                                 <th>Foto</th>
-                                <th>Usuario</th>
+                                <th>Nombre</th>
                                 <th>Correo electrónico</th>
                                 <th>Teléfono</th>
-                                <th>Tipo</th>
+                                <th>Tipo de usuario</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,11 +26,11 @@
                                     </th>
                                     <th>{{ $user->email }}</th>
                                     <th>{{ $user->phone }}</th>
-				    @if ($user->roles()!=NULL && $user->roles()->first()!=NULL)
-                                    <th>{{ $user->roles()->first()->display_name }}</th>
-				    @else
-				    <th> - </th>
-				    @endif
+                                    @if ($user->roles() != NULL && $user->roles()->first() != NULL)
+                                        <th>{{ $user->roles()->first()->display_name }}</th>
+                                    @else
+                                        <th> - </th>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
@@ -46,7 +46,7 @@
                         <thead>
                             <tr>
                                 <th>Foto</th>
-                                <th>Usuario</th>
+                                <th>Nombre</th>
                             </tr>
                         </thead>
                         <tbody>

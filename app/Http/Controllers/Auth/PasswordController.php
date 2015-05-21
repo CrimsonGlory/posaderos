@@ -35,4 +35,9 @@ class PasswordController extends Controller {
 		$this->middleware('guest');
 	}
 
+    protected function getEmailSubject()
+    {
+        return isset($this->subject) ? $this->subject : 'Link para cambiar la contraseña';
+    }
+
 }

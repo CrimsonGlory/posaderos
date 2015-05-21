@@ -58,15 +58,13 @@
                         @foreach ($interactions as $interaction)
                             <tr>
                                 <th scope="row">
-                                    @if ($interaction->getPerson()->get_avatar != null)
-                                        <a href="{{ action('PersonController@show',$interaction->getPerson()->id) }}">
-                                            <img src="{{ action("FileEntryController@show",$person->get_avatar) }}" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
-                                        </a>
-                                    @else
-                                        <a href="{{ action('PersonController@show',$interaction->getPerson()->id) }}">
+                                    <a href="{{ action('PersonController@show',$interaction->getPerson()->id) }}">
+                                        @if ($interaction->getPerson()->get_avatar != null)
+                                            <img src="{{ action("FileEntryController@show",$interaction->getPerson()->get_avatar) }}" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
+                                        @else
                                             <img src="{{ asset("no-photo.png") }}" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
-                                        </a>
-                                    @endif
+                                        @endif
+                                    </a>
                                 </th>
                                 <th>{{ $interaction->text }}</th>
                                 <th>

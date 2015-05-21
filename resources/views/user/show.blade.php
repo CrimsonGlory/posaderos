@@ -49,12 +49,14 @@
                                 </div>
                             @endif
 
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Tipo de usuario</label>
-                                <div class="col-md-6">
-                                    <label class="form-control" name="rol">{{ $userShown->roles()->first()->display_name }}</label>
+                            @if ($userShown->roles() != NULL && $userShown->roles()->first() != NULL)
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Tipo de usuario</label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" name="rol">{{ $userShown->roles()->first()->display_name }}</label>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </form>
                     </div>
                 </div>
