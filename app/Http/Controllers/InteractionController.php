@@ -184,8 +184,7 @@ class InteractionController extends Controller {
         $interaction->date = $request->date;
         $interaction->fixed = $request->fixed;
         $interaction->update();
-        $tags = array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
-        $interaction->retag($tags);
+        $interaction->retag($request->tags);
 
         flash()->success("Interacción actualizada.");
         return redirect('person/'.$interaction->person_id);

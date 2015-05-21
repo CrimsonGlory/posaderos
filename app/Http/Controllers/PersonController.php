@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Illuminate\Http\Request as Request2;
 //use Illuminate\Http\Response;
-
+use Conner\Tagging\Tag;
 
 class PersonController extends Controller {
 
@@ -187,8 +187,7 @@ class PersonController extends Controller {
 	public function update(CreatePersonRequest $request,$id)
 	{
 		$person = Person::findOrFail($id);
-		$tags = array_filter(array_map('trim',explode(",",trim($request->tags))));//Create an array to tags + trim whitespaces
-		$person->retag($tags);
+		$person->retag($request->tags);
 		$person->updated_by = Auth::id();
 		$request->replace(array('phone' => parse_phone($request->only('phone'))));
 		$person->update($request->all());
