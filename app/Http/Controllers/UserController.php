@@ -143,7 +143,7 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update(UserRequest $request,$id)
+	public function update(UserRequest $request, $id)
 	{
         $rules = array(
             'name' => array('required', 'min:1'),
@@ -152,19 +152,18 @@ class UserController extends Controller {
 		$this->validate($request,$rules);
 
 		$user = User::findOrFail($id);
+        $tags = $request->tags;
         $newRole = DB::table('roles')->where('name', $request->role)->first();
-
         $user->name = $request->name;
         $user->email = $request->email;
 	    $user->phone = parse_phone($request->phone);
-        $user->retag($request->tags);
-
         if ($newRole != null)
         {
             $roleKey = (array)$newRole->id;
             $user->roles()->sync($roleKey);
         }
 		$user->update();
+        $user->retag($tags);
         
 		flash()->success('Usuario actualizado.');
 		return redirect('user/'.$id);

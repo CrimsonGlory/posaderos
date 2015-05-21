@@ -86,15 +86,16 @@ class InteractionController extends Controller {
      */
     public function store(CreateInteractionRequest $request)
     {
-        $destinationMail = $request->destination;
         $person = Person::find($request->person_id);
-
         $input = $request->all();
         $interaction = new Interaction;
+        $destinationMail = $request->destination;
+        $tags = $request->tags;
         $interaction->fill($input);
         $interaction->fixed = 0;
         $interaction->user_id = Auth::id();
         $success = $interaction->save();
+        $interaction->retag($tags);
 
         if ($destinationMail != null && $person != null)
         {
@@ -177,14 +178,15 @@ class InteractionController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function update(CreateInteractionRequest $request,$id)
+    public function update(CreateInteractionRequest $request, $id)
     {
         $interaction = Interaction::findorFail($id);
+        $tags = $request->tags;
         $interaction->text = $request->text;
         $interaction->date = $request->date;
         $interaction->fixed = $request->fixed;
         $interaction->update();
-        $interaction->retag($request->tags);
+        $interaction->retag($tags);
 
         flash()->success("Interacción actualizada.");
         return redirect('person/'.$interaction->person_id);

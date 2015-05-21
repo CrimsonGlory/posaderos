@@ -7,8 +7,10 @@ use App\FileEntry;
 use App\User;
 
 class Person extends Model {
-use \Conner\Tagging\TaggableTrait;
+    use \Conner\Tagging\TaggableTrait;
+
     protected $table = 'people';
+
     protected $fillable = [
         'first_name',
         'last_name',
@@ -18,7 +20,7 @@ use \Conner\Tagging\TaggableTrait;
         'gender',
         'address',
         'other',
-	'phone'
+	    'phone'
 	];
 
     // Para que agregue la hora al guardar y no sólo el día

@@ -35,6 +35,13 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-4 control-label">Etiquetas</label>
+                                <div class="col-md-6">
+                                    {!! Form::select('tags[]', all_tags(), '', ['id' => 'tags','class' => 'form-control','multiple']) !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-md-4 control-label">Derivar a</label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="destination" placeholder="alguien@ejemplo.com">
@@ -56,6 +63,12 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('footer')
+    <script>
+        $('#tags').select2();
+    </script>
 @endsection
 
 @stop

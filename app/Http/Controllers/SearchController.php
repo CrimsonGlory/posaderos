@@ -53,7 +53,8 @@ class SearchController extends Controller {
             if ($user->can('see-all-people'))
             {
                 $people = Person::where('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
-                                  orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->limit(30)->get();
+                                  orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->
+                                  orderBy('id', 'desc')->limit(30)->get();
             }
             else if ($user->can('see-new-people'))
             {
@@ -61,7 +62,7 @@ class SearchController extends Controller {
                                   where(function ($query) use($data){
                                         $query->where('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
                                                 orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%');
-                                  })->limit(30)->get();
+                                  })->orderBy('id', 'desc')->limit(30)->get();
             }
             $data['error'] = 0;
         }
@@ -69,12 +70,13 @@ class SearchController extends Controller {
         {
             if ($user->can('see-all-interactions'))
             {
-                $interactions = Interaction::where('text', 'LIKE', '%'.$data['keyWord'].'%')->limit(30)->get();
+                $interactions = Interaction::where('text', 'LIKE', '%'.$data['keyWord'].'%')->orderBy('id', 'desc')->limit(30)->get();
             }
             else if ($user->can('see-new-interactions'))
             {
                 $interactions = Interaction::where('user_id', $user->id)->
-                                             where('text', 'LIKE', '%'.$data['keyWord'].'%')->limit(30)->get();
+                                             where('text', 'LIKE', '%'.$data['keyWord'].'%')->
+                                             orderBy('id', 'desc')->limit(30)->get();
             }
             $data['error'] = 0;
         }
@@ -83,7 +85,8 @@ class SearchController extends Controller {
             if ($user->can('see-users'))
             {
                 $users = User::where('name', 'LIKE', '%'.$data['keyWord'].'%')->
-                               orWhere('email', 'LIKE', '%'.$data['keyWord'].'%')->limit(30)->get();
+                               orWhere('email', 'LIKE', '%'.$data['keyWord'].'%')->
+                               orderBy('id', 'desc')->limit(30)->get();
             }
             $data['error'] = 0;
         }

@@ -64,10 +64,11 @@
         </div>
     </div>
 @endsection
+
 @section('footer')
-<script>
-$('#tags').select2();
-</script>
+    <script>
+        $('#tags').select2();
+    </script>
 @endsection
-@
+
 @stop

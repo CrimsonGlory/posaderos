@@ -8,10 +8,7 @@ use Auth;
 use App\Lib\Pagination\Pagination;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\Request;
-
 use Illuminate\Http\Request as Request2;
-//use Illuminate\Http\Response;
-use Conner\Tagging\Tag;
 
 class PersonController extends Controller {
 
@@ -89,12 +86,15 @@ class PersonController extends Controller {
 	{
 		$input = $request->all();
 		$person = new Person;
+        $tags = $request->tags;
 		$person->fill($input);
 		$request->replace(array('phone' => parse_phone($request->only('phone'))));
 		$person->created_by = Auth::id();
 		$person->updated_by = Auth::id();
+        $success = $person->save();
+        $person->retag($tags);
 
-		if($person->save())
+		if($success)
         {
 			flash()->success('Asistido creado.');
 		}
@@ -184,13 +184,14 @@ class PersonController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update(CreatePersonRequest $request,$id)
+	public function update(CreatePersonRequest $request, $id)
 	{
 		$person = Person::findOrFail($id);
-		$person->retag($request->tags);
+        $tags = $request->tags;
 		$person->updated_by = Auth::id();
 		$request->replace(array('phone' => parse_phone($request->only('phone'))));
 		$person->update($request->all());
+        $person->retag($tags);
 
         flash()->success('Asistido actualizado.');
 		return redirect('person/'.$person->id);

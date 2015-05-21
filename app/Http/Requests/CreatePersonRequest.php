@@ -23,9 +23,9 @@ class CreatePersonRequest extends Request {
 	{
 		return [
 			'first_name' => 'required|min:2',
-	            'gender' => 'required',
+            'gender' => 'required',
 		    'dni' => 'integer',
-       		     'birthdate' => 'date',
+            'birthdate' => 'date',
 			'phone' => 'regex:/[0-9 -_.+]{8,27}/'
 		];
 	}

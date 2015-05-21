@@ -73,6 +73,20 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-4 control-label">Teléfono</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Etiquetas</label>
+                                <div class="col-md-6">
+                                    {!! Form::select('tags[]', all_tags(), '', ['id' => 'tags','class' => 'form-control','multiple']) !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-md-4 control-label">Observaciones</label>
                                 <div class="col-md-6">
                                     <textarea type="text" class="form-control" name="other" value="{{ old('other') }}"></textarea>
@@ -94,6 +108,12 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('footer')
+    <script>
+        $('#tags').select2();
+    </script>
 @endsection
 
 @stop
