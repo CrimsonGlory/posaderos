@@ -95,7 +95,10 @@ class InteractionController extends Controller {
         $interaction->fixed = 0;
         $interaction->user_id = Auth::id();
         $success = $interaction->save();
-        $interaction->retag($tags);
+        if ($tags != null)
+        {
+            $interaction->retag($tags);
+        }
 
         if ($destinationMail != null && $person != null)
         {
@@ -186,7 +189,10 @@ class InteractionController extends Controller {
         $interaction->date = $request->date;
         $interaction->fixed = $request->fixed;
         $interaction->update();
-        $interaction->retag($tags);
+        if ($tags != null)
+        {
+            $interaction->retag($tags);
+        }
 
         flash()->success("Interacción actualizada.");
         return redirect('person/'.$interaction->person_id);

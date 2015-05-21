@@ -92,7 +92,10 @@ class PersonController extends Controller {
 		$person->created_by = Auth::id();
 		$person->updated_by = Auth::id();
         $success = $person->save();
-        $person->retag($tags);
+        if ($tags != null)
+        {
+            $person->retag($tags);
+        }
 
 		if($success)
         {
@@ -191,7 +194,10 @@ class PersonController extends Controller {
 		$person->updated_by = Auth::id();
 		$request->replace(array('phone' => parse_phone($request->only('phone'))));
 		$person->update($request->all());
-        $person->retag($tags);
+        if ($tags != null)
+        {
+            $person->retag($tags);
+        }
 
         flash()->success('Asistido actualizado.');
 		return redirect('person/'.$person->id);

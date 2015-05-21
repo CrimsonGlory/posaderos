@@ -163,8 +163,11 @@ class UserController extends Controller {
             $user->roles()->sync($roleKey);
         }
 		$user->update();
-        $user->retag($tags);
-        
+        if ($tags != null)
+        {
+            $user->retag($tags);
+        }
+
 		flash()->success('Usuario actualizado.');
 		return redirect('user/'.$id);
 	}
