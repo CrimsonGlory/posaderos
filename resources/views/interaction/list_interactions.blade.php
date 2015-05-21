@@ -43,7 +43,7 @@
             </div>
         </div>
     @else
-        <div id="collapseOne" class="panel-collapse collapse in">
+        <div id="collapseTwo" class="panel-collapse collapse in">
             <div class="panel-body">
                 <div class="form-group">
                     <table class="table table-striped">
@@ -81,7 +81,7 @@
         </div>
     @endif
 @else
-    <div id="collapseTwo" class="panel-collapse collapse in">
+    <div id="collapseThree" class="panel-collapse collapse in">
         <div class="panel-body">
             <div class="form-group">
                 <table width="100%">

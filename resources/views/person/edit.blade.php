@@ -86,7 +86,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Etiquetas</label>
                                 <div class="col-md-6">
-				    {!! Form::select('tags[]',all_tags(),$person->tagNames(),['id' => 'tags','class' => 'form-control','multiple']) !!}
+				                    {!! Form::select('tags[]', all_tags(), $person->tagNames(), ['id' => 'tags','class' => 'form-control','multiple']) !!}
                                 </div>
                             </div>
 

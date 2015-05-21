@@ -37,10 +37,10 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Etiquetas</label>
                                 <div class="col-md-6">
-{!! Form::select('tags[]',all_tags(),$interaction->tagNames(),['id' => 'tags','class' => 'form-control','multiple']) !!}
- 
+                                    {!! Form::select('tags[]', all_tags(), $interaction->tagNames(), ['id' => 'tags','class' => 'form-control','multiple']) !!}
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Estado de la interacción</label>
                                 <div class="col-md-6">
