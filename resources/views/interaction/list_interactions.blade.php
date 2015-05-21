@@ -9,8 +9,9 @@
                             <th>Foto</th>
                             <th>Asistido</th>
                             <th>Descripción</th>
-                            <th>Estado</th>
                             <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Etiquetas</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -29,12 +30,19 @@
                                     </a>
                                 </th>
                                 <th>{{ $interaction->text }}</th>
+                                <th>{{$interaction->date}}</th>
                                 <th>
                                     <a href="{{ action("InteractionController@edit",$interaction) }}">
                                         {{ trans('messages.'.$interaction->fixed) }}
                                     </a>
                                 </th>
-                                <th>{{$interaction->date}}</th>
+                                @if (count($interaction->tagNames()) > 0)
+                                    <th>
+                                        @include('tag.list_tags',['tagNames' => $interaction->tagNames()])
+                                    </th>
+                                @else
+                                    <th></th>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>

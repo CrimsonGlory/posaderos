@@ -11,6 +11,7 @@
                                 <th>Correo electrónico</th>
                                 <th>Teléfono</th>
                                 <th>Tipo de usuario</th>
+                                <th>Etiquetas</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,7 +30,14 @@
                                     @if ($user->roles() != NULL && $user->roles()->first() != NULL)
                                         <th>{{ $user->roles()->first()->display_name }}</th>
                                     @else
-                                        <th> - </th>
+                                        <th></th>
+                                    @endif
+                                    @if (count($user->tagNames()) > 0)
+                                        <th>
+                                            @include('tag.list_tags',['tagNames' => $user->tagNames()])
+                                        </th>
+                                    @else
+                                        <th></th>
                                     @endif
                                 </tr>
                             @endforeach

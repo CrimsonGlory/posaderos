@@ -12,7 +12,7 @@
                                 <th>Género</th>
                                 <th>Dirección</th>
                                 <th>Teléfono</th>
-                                <th>Otros</th>
+                                <th>Etiquetas</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,7 +36,13 @@
                                 </th>
                                 <th>{{$person->address}}</th>
                                 <th>{{$person->phone}}</th>
-                                <th>{{$person->other}}</th>
+                                @if (count($person->tagNames()) > 0)
+                                    <th>
+                                        @include('tag.list_tags',['tagNames' => $person->tagNames()])
+                                    </th>
+                                @else
+                                    <th></th>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>
