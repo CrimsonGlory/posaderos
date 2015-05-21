@@ -19,7 +19,6 @@
 
                         {!! Form::model($interaction,['class' => 'form-horizontal', 'method' => 'PATCH', 'action' => ['InteractionController@update', $interaction->id]]) !!}
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Descripción</label>
                                 <div class="col-md-6">
@@ -38,10 +37,10 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Etiquetas</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="tags" value="{{ implode(", ",$interaction->tagNames()) }}">
+{!! Form::select('tags[]',all_tags(),$interaction->tagNames(),['id' => 'tags','class' => 'form-control','multiple']) !!}
+ 
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Estado de la interacción</label>
                                 <div class="col-md-6">
@@ -57,13 +56,18 @@
                                         <td align="left"><a href="{{ action('PersonController@show', $interaction->person_id) }}" class="btn btn-primary" style="width:100px;">Cancelar</a></td>
                                     </tr>
                                 </table>
-                            </div>
-                        {!! Form::close() !!}
+                            </div> 
+                        {!! Form::close() !!} 
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
+@section('footer')
+<script>
+$('#tags').select2();
+</script>
+@endsection
+@
 @stop

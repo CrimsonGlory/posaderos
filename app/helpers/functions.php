@@ -4,6 +4,9 @@
  * to +54 9 11 xxxx xxxx (for celphones) 
  * or +54 11 xxxx xxxx 
  */
+use App\Person;
+use Conner\Tagging\Tag;
+
 function parse_phone($phone){
 	if(is_array($phone) && count($phone)==1)
 		$phone=array_values($phone)[0];
@@ -26,6 +29,11 @@ function parse_phone($phone){
 		return phone_format($clean,'AR');
 	}
 	return $clean;
+}
+
+//Returns an array with all the tag names
+function all_tags(){ // e.g. [ "tag1" => "tag1", "tag2" => "tag2" ]
+return 	$tags=Tag::lists('name','name'); // all tags
 }
 
 ?>

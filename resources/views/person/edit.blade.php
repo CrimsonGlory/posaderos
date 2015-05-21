@@ -86,7 +86,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Etiquetas</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="tags" value="{{ implode(", ",$person->tagNames() ) }}">
+				    {!! Form::select('tags[]',all_tags(),$person->tagNames(),['id' => 'tags','class' => 'form-control','multiple']) !!}
                                 </div>
                             </div>
 
@@ -106,5 +106,9 @@
         </div>
     </div>
 @endsection
-
+@section('footer')
+<script>
+$('#tags').select2();
+</script>
+@endsection
 @stop
