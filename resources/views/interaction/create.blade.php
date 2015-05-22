@@ -66,9 +66,7 @@
 @endsection
 
 @section('footer')
-    <script>
-        $('#tags').select2();
-    </script>
+@include('tag.select2')
 @endsection
 
 @stop

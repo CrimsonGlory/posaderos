@@ -174,12 +174,17 @@ class UserRolesAndPermissionsSeeder extends Seeder {
         $editNewInteractions->display_name = 'Editar nuevas interacciones'; // optional
         $editNewInteractions->description  = 'Editar sólo las interacciones creadas por el usuario.'; // optional
         $editNewInteractions->save();
-
+	
+	$createTags = new Permission();
+	$createTags->name = 'create-tags':
+	$createTags->display_name = 'Crear nuevos tags';
+	$createTags->description = 'Crear nuevos tags';
+	$createTags->save();
         // Add Permisions to Roles
         $admin->attachPermissions(array($seeUsersSearchView, $seeUsers, $editUsers,
                                         $seeTags, $editTags, $addTag,
                                         $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
-                                        $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
+                                        $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions,$createTags));
 
         $posadero->attachPermissions(array($seeUsersSearchView, $seeUsers,
                                            $seeTags, $editTags, $addTag,

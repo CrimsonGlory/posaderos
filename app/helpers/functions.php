@@ -36,4 +36,16 @@ function all_tags(){ // e.g. [ "tag1" => "tag1", "tag2" => "tag2" ]
 return 	$tags=Tag::lists('name','name'); // all tags
 }
 
+//Returns true if an array has tags that doesn't exist.
+function any_new_tag($tags){
+	foreach($tags as $tag){
+		if( Tag::where("name",$tag)->count()==0 )
+			return true;
+	}
+	return false;
+}
+
+function allowed_to_tag($user,$tags){
+	return (any_new_tag($tags) && $user->can('create-tags')  || !any_new_tag($tags) );
+}
 ?>

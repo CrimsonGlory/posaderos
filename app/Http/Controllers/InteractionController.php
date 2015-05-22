@@ -95,7 +95,7 @@ class InteractionController extends Controller {
         $interaction->fixed = 0;
         $interaction->user_id = Auth::id();
         $success = $interaction->save();
-        if ($tags != null)
+        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
         {
             $interaction->retag($tags);
         }
@@ -189,7 +189,7 @@ class InteractionController extends Controller {
         $interaction->date = $request->date;
         $interaction->fixed = $request->fixed;
         $interaction->update();
-        if ($tags != null)
+        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
         {
             $interaction->retag($tags);
         }
