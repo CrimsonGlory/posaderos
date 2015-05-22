@@ -84,13 +84,14 @@ class PersonController extends Controller {
 	 */
 	public function store(CreatePersonRequest $request)
 	{
-		$input = $request->all();
-		$person = new Person;
+        $person = new Person;
         $tags = $request->tags;
-		$person->fill($input);
-		$request->replace(array('phone' => parse_phone($request->only('phone'))));
-		$person->created_by = Auth::id();
-		$person->updated_by = Auth::id();
+        $input = $request->all();
+        $person->fill($input);
+        $request->replace(array('phone' => parse_phone($request->only('phone'))));
+        $person->phone = $request->phone;
+        $person->created_by = Auth::id();
+        $person->updated_by = Auth::id();
         $success = $person->save();
         if ($tags != null && allowed_to_tag(Auth::user(),$tags))
         {
@@ -191,9 +192,12 @@ class PersonController extends Controller {
 	{
 		$person = Person::findOrFail($id);
         $tags = $request->tags;
-		$person->updated_by = Auth::id();
-		$request->replace(array('phone' => parse_phone($request->only('phone'))));
-		$person->update($request->all());
+        $input = $request->all();
+        $person->fill($input);
+        $request->replace(array('phone' => parse_phone($request->only('phone'))));
+        $person->phone = $request->phone;
+        $person->updated_by = Auth::id();
+        $person->update();
         if ($tags != null && allowed_to_tag(Auth::user(),$tags))
         {
             $person->retag($tags);
