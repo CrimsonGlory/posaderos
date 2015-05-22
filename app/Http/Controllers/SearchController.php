@@ -6,6 +6,7 @@ use App\Person;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Input;
+use DB;
 
 class SearchController extends Controller {
 
@@ -43,25 +44,35 @@ class SearchController extends Controller {
             return "404";
         }
 
-        $data = array('toFind' => Input::get('toFind'),'keyWord' => Input::get('key'),'error' => 1);
+        $data = array('toFind' => Input::get('toFind'),'keyWord' => trim(Input::get('key')),'error' => 1);
         $interactions = NULL;
         $people = NULL;
         $users = NULL;
 
         if($data['toFind'] == "Asistidos")
         {
-            if ($user->can('see-all-people'))
+	    if($data['keyWord'] ==  preg_replace("/[^0-9,.-_ +]/", "", $data['keyWord'])){ //phone or dni
+		$number=preg_replace("/[^0-9]/","",$data['keyWord']);
+		$people = Person::where('dni','=',$number)->
+				  orWhere('phone','=',parse_phone($number))->
+				  orderBy('id','desc')->limit(30)->get();
+	    }
+            else if ($user->can('see-all-people'))
             {
-                $people = Person::where('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
+                $people = Person::where(DB::raw('concat_ws(\' \',first_name,last_name)'),'LIKE','%'.$data['keyWord'].'%')->
+				  orWhere('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
                                   orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->
+				  orWhere('address','LIKE','%'.$data['keyWord'].'%')->
                                   orderBy('id', 'desc')->limit(30)->get();
             }
             else if ($user->can('see-new-people'))
             {
                 $people = Person::where('created_by', $user->id)->
                                   where(function ($query) use($data){
-                                        $query->where('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
-                                                orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%');
+                                        $query->where(DB::raw('concat_ws(\' \',first_name,last_name)'),'LIKE','%'.$data['keyWord'].'%')->
+	                                  orWhere('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
+	                                  orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->
+       		                           orWhere('address','LIKE','%'.$data['keyWord'].'%');
                                   })->orderBy('id', 'desc')->limit(30)->get();
             }
             $data['error'] = 0;
