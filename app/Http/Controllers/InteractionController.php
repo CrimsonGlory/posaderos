@@ -5,9 +5,11 @@ use App\Http\Requests\CreateInteractionRequest;
 use App\Http\Controllers\Controller;
 use App\Person;
 use App\Interaction;
+use App\User;
 use Illuminate\Http\Request;
 use Auth;
 use App\Lib\Pagination\Pagination;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 
@@ -95,28 +97,41 @@ class InteractionController extends Controller {
         $interaction->fixed = 0;
         $interaction->user_id = Auth::id();
         $success = $interaction->save();
-        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
-        {
-            $interaction->retag($tags);
-        }
+        $seEnviaronMails = false;
 
+        // El usuario puede elegir un correo electrónico para enviar el mail de derivación
         if ($destinationMail != null && $person != null)
         {
-            $data = array('destination' => $destinationMail, 'asistido' => $person->name());
+            $seEnviaronMails = true;
             try
             {
-                Mail::send('emails.alert', $data, function($message) use($data)
-                {
-                    $message->to($data['destination'])->subject('Nueva derivación');
-                });
-                flash()->success('Se ha enviado un email notificando la derivación del asistido.');
+                sendMail($destinationMail,$person);
+                flash()->success('Se ha enviado un mail notificando la derivación del asistido.');
             }
             catch (\Exception $e)
             {
-                flash()->error('No se pudo enviar el email notificando la derivación del asistido.')->important();
+                flash()->error('No se pudo enviar el mail notificando la derivación del asistido.')->important();
             }
         }
-        else
+
+        // Si hay tags se envian mails a todos los usuarios que tengan alguno de los tags seleccionados
+        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
+        {
+            $seEnviaronMails = true;
+            $interaction->retag($tags);
+            try
+            {
+                sendMailToUsers($tags,$person);
+                flash()->success('Se han enviado los mails notificando la derivación del asistido.');
+            }
+            catch (\Exception $e)
+            {
+                flash()->error('No se han podido enviar los mails notificando la derivación del asistido.')->important();
+            }
+
+        }
+
+        if (!($seEnviaronMails))
         {
             if ($success)
             {
@@ -127,6 +142,7 @@ class InteractionController extends Controller {
                 flash()->error('Error al intentar crear la interacción.');
             }
         }
+
         return redirect('person/'.$interaction->person_id);
     }
 
