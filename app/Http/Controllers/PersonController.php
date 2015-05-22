@@ -92,7 +92,7 @@ class PersonController extends Controller {
 		$person->created_by = Auth::id();
 		$person->updated_by = Auth::id();
         $success = $person->save();
-        if ($tags != null)
+        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
         {
             $person->retag($tags);
         }
@@ -194,7 +194,7 @@ class PersonController extends Controller {
 		$person->updated_by = Auth::id();
 		$request->replace(array('phone' => parse_phone($request->only('phone'))));
 		$person->update($request->all());
-        if ($tags != null)
+        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
         {
             $person->retag($tags);
         }
