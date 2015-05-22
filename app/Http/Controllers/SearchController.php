@@ -58,8 +58,7 @@ class SearchController extends Controller {
                     if($data['keyWord'] ==  preg_replace("/[^0-9,.-_ +]/", "", $data['keyWord'])) // phone or dni
                     {
                         $number = preg_replace("/[^0-9]/","",$data['keyWord']);
-                        $people = Person::where(DB::raw('concat_ws(\' \',dni)'),'LIKE','%'.$data['keyWord'].'%')->
-                                          orWhere('dni','LIKE',$number)->
+                        $people = Person::where('dni','LIKE','%'.$number.'%')->
                                           orWhere('phone','=',parse_phone($number))->
                                           orderBy('id','desc')->limit(30)->get();
                     }
