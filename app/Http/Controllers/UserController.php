@@ -163,7 +163,7 @@ class UserController extends Controller {
             $user->roles()->sync($roleKey);
         }
 		$user->update();
-        if ($tags != null)
+        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
         {
             $user->retag($tags);
         }

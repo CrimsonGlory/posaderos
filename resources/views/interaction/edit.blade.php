@@ -66,7 +66,7 @@
 @endsection
 
 @section('footer')
-@include('tag.select2')
+    @include('tag.select2')
 @endsection
 
 @stop
