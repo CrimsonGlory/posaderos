@@ -79,9 +79,8 @@ class SearchController extends Controller {
                         $number = preg_replace("/[^0-9]/","",$data['keyWord']);
                         $people = Person::where('created_by', $user->id)->
                                           where(function ($query) use($data, $number){
-                                              $query->where(DB::raw('concat_ws(\' \',dni)'),'LIKE','%'.$data['keyWord'].'%')->
-                                              orWhere('dni','LIKE',$number)->
-                                              orWhere('phone','=',parse_phone($number));
+                                              $query->where('dni','LIKE','%'.$number.'%')->
+                                                      orWhere('phone','=',parse_phone($number));
                                           })->orderBy('id','desc')->limit(30)->get();
                     }
                     else // first_name, last_name or address
@@ -89,9 +88,9 @@ class SearchController extends Controller {
                         $people = Person::where('created_by', $user->id)->
                                           where(function ($query) use($data){
                                               $query->where(DB::raw('concat_ws(\' \',first_name,last_name)'),'LIKE','%'.$data['keyWord'].'%')->
-                                              orWhere('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
-                                              orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->
-                                              orWhere('address','LIKE','%'.$data['keyWord'].'%');
+                                                      orWhere('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
+                                                      orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->
+                                                      orWhere('address','LIKE','%'.$data['keyWord'].'%');
                                           })->orderBy('id', 'desc')->limit(30)->get();
                     }
                 }
