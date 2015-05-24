@@ -21,6 +21,14 @@ class SearchController extends Controller {
         $this->middleware('auth');
 	}
 
+	private function get_tags_from_query($query){
+       		 if(preg_match_all('/#\S+/',$query,$tags)){
+       		         return str_replace('#','',$tags[0]);
+       		 }
+       		 return NULL;
+  	 }
+ 
+
     public function searchView()
     {
         $user = Auth::user();
@@ -40,88 +48,88 @@ class SearchController extends Controller {
     {
         $user = Auth::user();
         if ($user == null)
-        {
-            return "404";
-        }
+            return "401";
 
         $data = array('toFind' => Input::get('toFind'),'keyWord' => trim(Input::get('key')),'error' => 1);
+	$q = $data['keyWord'];
+	$tags = $this->get_tags_from_query($q);
+	$q = $this->clean_tags($q);
         $interactions = NULL;
         $people = NULL;
         $users = NULL;
 
-        if ($data['keyWord'] != '')
-        {
-            if($data['toFind'] == "Asistidos")
-            {
-                if ($user->can('see-all-people'))
-                {
-                    if($data['keyWord'] ==  preg_replace("/[^0-9,.-_ +]/", "", $data['keyWord'])) // phone or dni
-                    {
-                        $number = preg_replace("/[^0-9]/","",$data['keyWord']);
-                        $people = Person::where('dni','LIKE','%'.$number.'%')->
-                                          orWhere('phone','=',parse_phone($number))->
-                                          orderBy('id','desc')->limit(30)->get();
-                    }
-                    else // first_name, last_name or address
-                    {
-                        $people = Person::where(DB::raw('concat_ws(\' \',first_name,last_name)'),'LIKE','%'.$data['keyWord'].'%')->
-                                          orWhere('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
-                                          orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->
-                                          orWhere('address','LIKE','%'.$data['keyWord'].'%')->
-                                          orderBy('id', 'desc')->limit(30)->get();
-                    }
+        if ($q == '' && count($tags) == 0 )
+		return view('search.resultadoBusqueda', compact('data','people','interactions','users'));
 
-                }
-                else if ($user->can('see-new-people'))
+        if($q!='' && $q == preg_replace('/[^0-9,.-_ +]/', '', $q)) //phone or dni
+               $number = preg_replace('/[^0-9]/','',$q); 
+
+	switch($data['toFind']){
+        case "Asistidos":
+                if ($user->can('see-new-people'))
                 {
-                    if($data['keyWord'] ==  preg_replace("/[^0-9,.-_ +]/", "", $data['keyWord'])) // phone or dni
+                    if(isset($number)) 
                     {
-                        $number = preg_replace("/[^0-9]/","",$data['keyWord']);
-                        $people = Person::where('created_by', $user->id)->
-                                          where(function ($query) use($data, $number){
-                                              $query->where('dni','LIKE','%'.$number.'%')->
-                                                      orWhere('phone','=',parse_phone($number));
-                                          })->orderBy('id','desc')->limit(30)->get();
+                        $builder = Person::where('dni','LIKE', "%$number%")->
+                                          orWhere('phone','=',parse_phone($number));
                     }
                     else // first_name, last_name or address
                     {
-                        $people = Person::where('created_by', $user->id)->
-                                          where(function ($query) use($data){
-                                              $query->where(DB::raw('concat_ws(\' \',first_name,last_name)'),'LIKE','%'.$data['keyWord'].'%')->
-                                                      orWhere('first_name', 'LIKE', '%'.$data['keyWord'].'%')->
-                                                      orWhere('last_name', 'LIKE', '%'.$data['keyWord'].'%')->
-                                                      orWhere('address','LIKE','%'.$data['keyWord'].'%');
-                                          })->orderBy('id', 'desc')->limit(30)->get();
+                        $builder = Person::whereNested(function($sql) use($q){
+					$sql->where(DB::raw('concat_ws(\' \',first_name,last_name)'),'LIKE',"%$q%");
+                                        $sql->orWhere('first_name', 'LIKE',"%$q%");
+                                        $sql->orWhere('last_name', 'LIKE',"%$q%");
+                                        $sql->orWhere('address','LIKE',"%$q%");
+					  });
                     }
+		    if (!$user->can('see-all-people'))
+			$builder = $builder->where('created_by',$user->id);
                 }
-                $data['error'] = 0;
-            }
-            else if($data['toFind'] == "Interacciones")
-            {
-                if ($user->can('see-all-interactions'))
+           break;
+ 
+           case "Interacciones":
+                if ($user->can('see-new-interactions'))
                 {
-                    $interactions = Interaction::where('text', 'LIKE', '%'.$data['keyWord'].'%')->orderBy('id', 'desc')->limit(30)->get();
+                    $builder = Interaction::where('text', 'LIKE', "%$q%");
+                    if (!$user->can('see-all-interactions')) //if the user can't see all people
+                    	$builder = $builder->where('user_id', $user->id);
                 }
-                else if ($user->can('see-new-interactions'))
-                {
-                    $interactions = Interaction::where('user_id', $user->id)->
-                    where('text', 'LIKE', '%'.$data['keyWord'].'%')->
-                    orderBy('id', 'desc')->limit(30)->get();
-                }
-                $data['error'] = 0;
-            }
-            else if($data['toFind'] == "Usuarios")
-            {
+           break; 
+
+           case "Usuarios": 
                 if ($user->can('see-users'))
                 {
-                    $users = User::where('name', 'LIKE', '%'.$data['keyWord'].'%')->
-                    orWhere('email', 'LIKE', '%'.$data['keyWord'].'%')->
-                    orderBy('id', 'desc')->limit(30)->get();
+                    $builder = User::where('name', 'LIKE', "%$q%")->
+                    orWhere('email', 'LIKE', "%$q%");
                 }
-                $data['error'] = 0;
-            }
+           break; 
+	   default:
+ 	   break; 
         }
+	if(count($tags)>0){
+		$builder=$builder->withAllTags($tags);
+	}
+ 	$results=$builder->orderBy('id','desc')->limit(30)->get();	
+   	if($results){
+		$data['error'] = 0;
+	}
+	switch($data['toFind']){
+		case 'Asistidos':
+			$people = $results;
+		break;
+		case 'Interacciones':
+			$interactions = $results;
+		break;
+		case 'Usuarios':
+			$users = $results;
+		break;
+	}
         return view('search.resultadoBusqueda', compact('data','people','interactions','users'));
-    }
+    } 
+
+   private function clean_tags($input){
+	$tmp=preg_replace('/#\S+/','',$input); //saco los tags
+	return trim(preg_replace('/\s+/',' ',$tmp));// saco los espacios que quedaron de más
+   }
 
 }
