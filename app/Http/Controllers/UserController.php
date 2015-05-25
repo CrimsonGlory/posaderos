@@ -1,13 +1,16 @@
 <?php namespace App\Http\Controllers;
 
+use App\Person;
 use App\User;
 use App\Http\Requests;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Input;
+use PhpParser\Node\Expr\Array_;
 use Validator;
 use Illuminate\Http\Request;
 use Gravatar;
@@ -186,5 +189,23 @@ class UserController extends Controller {
 	{
 		//
 	}
+
+    public function favorites($id, \Symfony\Component\HttpFoundation\Request $request)
+    {
+        $user = Auth::user();
+        $userShown = User::find($id);
+        if ($user == null || $userShown == null)
+        {
+            return "404";
+        }
+
+        if ($userShown->id == $user->id)
+        {
+            $people = Person::whereLiked($userShown->id)->orderBy('id', 'desc')->paginate(10);
+            $paginator = $this->pagination->set($people, $request->getBaseUrl());
+            return view('user.favorites', compact('userShown','people','paginator'));
+        }
+        return Redirect::back();
+    }
 
 }

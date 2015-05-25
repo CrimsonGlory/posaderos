@@ -233,5 +233,31 @@ class PersonController extends Controller {
 		return redirect('person/'.$input->person_id);
 	}
 
+    public function addFavorite($id)
+    {
+        $user = Auth::user();
+        $person = Person::find($id);
+        if ($user == null || $person == null)
+        {
+            return "404";
+        }
+        $person->like($user->id);
+        flash()->success('Se agregó el asistido a su lista de favoritos.');
+        return Redirect::back();
+    }
+
+    public function removeFavorite($id)
+    {
+        $user = Auth::user();
+        $person = Person::find($id);
+        if ($user == null || $person == null)
+        {
+            return "404";
+        }
+        $person->unlike($user->id);
+        flash()->warning('Se quitó el asistido de su lista de favoritos.');
+        return Redirect::back();
+    }
+
 }
 

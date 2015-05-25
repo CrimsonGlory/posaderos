@@ -112,6 +112,12 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="{{ action('UserController@favorites', Auth::user()->id) }}">
+                                        <i class="glyphicon glyphicon-star"></i>
+                                        Favoritos
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="{{ url('/auth/logout') }}">
                                         <i class="glyphicon glyphicon-log-out"></i>
                                         Logout
