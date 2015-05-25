@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c1502ff23930877c404f3222582edb71",
+    "hash": "8dd2db1f1f7986955e6635dbed6afc95",
     "packages": [
         {
             "name": "astroanu/laravel-image-cache",

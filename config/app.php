@@ -156,7 +156,8 @@ return [
 		'Laracasts\Flash\FlashServiceProvider',
         'Zizaco\Entrust\EntrustServiceProvider',
 	    'Propaganistas\LaravelPhone\LaravelPhoneServiceProvider',
-        'Jenssegers\Agent\AgentServiceProvider'
+        'Jenssegers\Agent\AgentServiceProvider',
+	    'Orchestra\Imagine\ImagineServiceProvider',
 
 	],
 
@@ -212,7 +213,8 @@ return [
 	    'Image'         => 'Intervention\Image\Facades\Image',
 	    'Flash'         => 'Laracasts\Flash\Flash',
         'Entrust'       => 'Zizaco\Entrust\EntrustFacade',
-        'Agent'         => 'Jenssegers\Agent\Facades\Agent'
+        'Agent'         => 'Jenssegers\Agent\Facades\Agent',
+   'Imagine' => 'Orchestra\Imagine\Facade',
 	],
 
 ];
