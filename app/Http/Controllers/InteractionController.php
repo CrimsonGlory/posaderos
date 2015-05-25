@@ -118,7 +118,7 @@ class InteractionController extends Controller {
         if ($tags != null && allowed_to_tag(Auth::user(),$tags))
         {
             $seEnviaronMails = true;
-            $interaction->retag($tags);
+            $interaction->retag(str_replace('#','',$tags));
             try
             {
                 sendMailToUsers($tags,$person);
@@ -207,7 +207,7 @@ class InteractionController extends Controller {
         $interaction->update();
         if ($tags != null && allowed_to_tag(Auth::user(),$tags))
         {
-            $interaction->retag($tags);
+            $interaction->retag(str_replace('#','',$tags));
         }
         else
         {
