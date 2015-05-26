@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\Lib\Pagination\Pagination;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Illuminate\Http\Request as Request2;
 
@@ -237,12 +238,13 @@ class PersonController extends Controller {
     {
         $user = Auth::user();
         $person = Person::find($id);
-        if ($user == null || $person == null)
+        $token = csrf_token();
+        if ($user == null || $person == null || Session::token() != $token)
         {
             return "404";
         }
 
-        if ($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id))
+        if (($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id)))
         {
             $person->like($user->id);
             flash()->success('Se agregó el asistido a su lista de favoritos.');
@@ -254,7 +256,8 @@ class PersonController extends Controller {
     {
         $user = Auth::user();
         $person = Person::find($id);
-        if ($user == null || $person == null)
+        $token = csrf_token();
+        if ($user == null || $person == null || Session::token() != $token)
         {
             return "404";
         }
