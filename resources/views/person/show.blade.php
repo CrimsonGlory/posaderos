@@ -19,7 +19,7 @@
                                                     </a>
                                                 @else
                                                     <a class="btn btn-success" href="{{ action('PersonController@removeFavorite', $person->id) }}" title="Quitar de favoritos">
-                                                        <i class="glyphicon glyphicon-star"></i>
+                                                        <i class="glyphicon glyphicon-star-empty"></i>
                                                     </a>
                                                 @endif
                                             </td>
