@@ -241,8 +241,12 @@ class PersonController extends Controller {
         {
             return "404";
         }
-        $person->like($user->id);
-        flash()->success('Se agregó el asistido a su lista de favoritos.');
+
+        if ($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id))
+        {
+            $person->like($user->id);
+            flash()->success('Se agregó el asistido a su lista de favoritos.');
+        }
         return Redirect::back();
     }
 
@@ -254,8 +258,12 @@ class PersonController extends Controller {
         {
             return "404";
         }
-        $person->unlike($user->id);
-        flash()->warning('Se quitó el asistido de su lista de favoritos.');
+
+        if ($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id))
+        {
+            $person->unlike($user->id);
+            flash()->warning('Se quitó el asistido de su lista de favoritos.');
+        }
         return Redirect::back();
     }
 
