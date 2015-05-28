@@ -5,7 +5,23 @@
         </ul>
     </div>
 @elseif (!is_null($people))
-    @include('person.list_people',['people' => $people])
+    @if (count($people) > 0)
+        @include('person.list_people',['people' => $people])
+    @else
+        <div id="collapseThree" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="form-group">
+                    <div>No se han encontrado asistidos que coincidan con tu búsqueda.</div>
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-primary" href="{{ action('PersonController@create') }}">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        Agregar asistido
+                    </a>
+                </div>
+            </div>
+        </div>
+    @endif
 @elseif (!is_null($interactions))
     @include('interaction.list_interactions',['interactions' => $interactions])
 @elseif (!is_null($users))

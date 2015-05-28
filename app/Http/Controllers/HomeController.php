@@ -63,15 +63,11 @@ class HomeController extends Controller {
                 $interactions = Interaction::orderBy('id', 'desc')->where('user_id', $user->id)->paginate(10);
             }
 
-            return view('home', compact('user', 'interactions', 'people'));
+            return view('home', compact('user','people','interactions'));
         }
-        else if ($user->hasRole('explorer'))
+        else if ($user->hasRole('explorer') || $user->hasRole('new-user'))
         {
-            return view('search/searchView'); // En el futuro debería ser return view('home/homeExplorer');
-        }
-        else if ($user->hasRole('new-user'))
-        {
-            return view('search/searchView'); // En el futuro debería ser return view('home/homeNewUser');
+            return view('search/searchView');
         }
 
         return "404";

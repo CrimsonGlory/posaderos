@@ -95,7 +95,7 @@
                 <table width="100%">
                     <tr>
                         <td>
-                            <label>No hay ninguna interacción para mostrar.</label>
+                            <div>No hay ninguna interacción para mostrar.</div>
                         </td>
                     </tr>
                 </table>
