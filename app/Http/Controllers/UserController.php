@@ -27,6 +27,7 @@ class UserController extends Controller {
     public function __construct(Pagination $pagination)
     {
         $this->middleware('auth');
+	$this->middleware('cleanfields', ['only' => ['update', 'store']]);
         $this->pagination = $pagination;
     }
 
