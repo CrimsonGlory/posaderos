@@ -89,18 +89,21 @@ class InteractionController extends Controller {
     public function store(CreateInteractionRequest $request)
     {
         $person = Person::find($request->person_id);
-        $input = $request->all();
         $interaction = new Interaction;
-        $destinationMail = $request->destination;
         $tags = $request->tags;
+        $destinationMail = $request->destination;
+        $input = $request->all();
         $interaction->fill($input);
-        $interaction->fixed = 0;
         $interaction->user_id = Auth::id();
         $success = $interaction->save();
         $seEnviaronMails = false;
+        if (!is_null($tags))
+        {
+            $interaction->retag(str_replace('#','',$tags));
+        }
 
         // El usuario puede elegir un correo electrónico para enviar el mail de derivación
-        if (!is_null($destinationMail) && !is_null($person))
+        if ($destinationMail != '' && !is_null($person))
         {
             $seEnviaronMails = true;
             try
@@ -115,10 +118,9 @@ class InteractionController extends Controller {
         }
 
         // Si hay tags se envian mails a todos los usuarios que tengan alguno de los tags seleccionados
-        if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
+        if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags) && !$interaction->fixed && !$seEnviaronMails)
         {
             $seEnviaronMails = true;
-            $interaction->retag(str_replace('#','',$tags));
             try
             {
                 sendMailToUsers($tags,$person);
@@ -131,7 +133,7 @@ class InteractionController extends Controller {
 
         }
 
-        if (!($seEnviaronMails))
+        if (!$seEnviaronMails)
         {
             if ($success)
             {
@@ -201,9 +203,8 @@ class InteractionController extends Controller {
     {
         $interaction = Interaction::findorFail($id);
         $tags = $request->tags;
-        $interaction->text = $request->text;
-        $interaction->date = $request->date;
-        $interaction->fixed = $request->fixed;
+        $input = $request->all();
+        $interaction->fill($input);
         $interaction->update();
         if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {

@@ -19,18 +19,26 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('person/'.$person->id.'/interaction') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
+                            {!! Form::hidden('person_id', $person->id) !!}
+
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Descripción</label>
                                 <div class="col-md-6">
                                     <textarea type="text" class="form-control" name="text" style="height:150px;" autofocus="true"></textarea>
                                 </div>
                             </div>
-                            {!! Form::hidden('person_id', $person->id) !!}
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Fecha</label>
                                 <div class="col-md-6">
                                     <input type="date" class="form-control" name="date" value="{{ date('Y-m-d') }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Estado de la interacción</label>
+                                <div class="col-md-6">
+                                    {!! Form::select('fixed', array(0 => 'Pendiente', 1 => 'Finalizada'), 0, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
 
@@ -42,7 +50,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Derivar a</label>
+                                <label class="col-md-4 control-label">Derivación particular</label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="destination" placeholder="alguien@ejemplo.com">
                                 </div>

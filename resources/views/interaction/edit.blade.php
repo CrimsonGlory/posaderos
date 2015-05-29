@@ -19,13 +19,15 @@
 
                         {!! Form::model($interaction,['class' => 'form-horizontal', 'method' => 'PATCH', 'action' => ['InteractionController@update', $interaction->id]]) !!}
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                            {!! Form::hidden('person_id', $interaction->person_id) !!}
+
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Descripción</label>
                                 <div class="col-md-6">
                                     <textarea type="text" class="form-control" name="text" style="height:150px;" autofocus="true">{{ $interaction->text }}</textarea>
                                 </div>
                             </div>
-                            {!! Form::hidden('person_id', $interaction->person_id) !!}
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Fecha</label>
@@ -35,16 +37,16 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Etiquetas</label>
+                                <label class="col-md-4 control-label">Estado de la interacción</label>
                                 <div class="col-md-6">
-                                    {!! Form::select('tags[]', all_tags(), $interaction->tagNames(), ['id' => 'tags','class' => 'form-control','multiple']) !!}
+                                    {!! Form::select('fixed', array(0 => 'Pendiente', 1 => 'Finalizada'), $interaction->fixed, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Estado de la interacción</label>
+                                <label class="col-md-4 control-label">Etiquetas</label>
                                 <div class="col-md-6">
-                                    {!! Form::select('fixed', array(0 => 'Pendiente', 1 => 'Finalizada'), $interaction->fixed, array('class' => 'form-control')) !!}
+                                    {!! Form::select('tags[]', all_tags(), $interaction->tagNames(), ['id' => 'tags','class' => 'form-control','multiple']) !!}
                                 </div>
                             </div>
 
