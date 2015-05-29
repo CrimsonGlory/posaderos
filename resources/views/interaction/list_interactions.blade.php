@@ -74,7 +74,13 @@
                                         @endif
                                     </a>
                                 </th>
-                                <th>{{ $interaction->text }}</th>
+                                <th>
+                                    @if (strlen($interaction->text) > 30)
+                                        {{ substr($interaction->text, 0, 29) }}...
+                                    @else
+                                        {{ $interaction->text }}
+                                    @endif
+                                </th>
                                 <th>
                                     <a href="{{ action("InteractionController@edit",$interaction) }}">
                                         {{ trans('messages.'.$interaction->fixed) }}
