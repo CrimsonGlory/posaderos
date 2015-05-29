@@ -8,10 +8,10 @@
     @if (count($people) > 0)
         @include('person.list_people',['people' => $people])
     @else
-        <div id="collapseThree" class="panel-collapse collapse in">
+        <div class="panel-collapse collapse in">
             <div class="panel-body">
                 <div class="form-group">
-                    <div>No se han encontrado asistidos que coincidan con tu búsqueda.</div>
+                    <div>No se han encontrado asistidos que coincidan con su búsqueda.</div>
                 </div>
                 <div class="form-group">
                     <a class="btn btn-primary" href="{{ action('PersonController@create') }}">

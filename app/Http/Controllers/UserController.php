@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Interaction;
 use App\Person;
 use App\User;
 use App\Http\Requests;
@@ -204,6 +205,31 @@ class UserController extends Controller {
             $people = Person::whereLiked($userShown->id)->orderBy('id', 'desc')->paginate(10);
             $paginator = $this->pagination->set($people, $request->getBaseUrl());
             return view('user.favorites', compact('userShown','people','paginator'));
+        }
+        return Redirect::back();
+    }
+
+    public function derivations($id, \Symfony\Component\HttpFoundation\Request $request)
+    {
+        $user = Auth::user();
+        $userShown = User::find($id);
+        if ($user == null || $userShown == null)
+        {
+            return "404";
+        }
+
+        if ($userShown->id == $user->id && ($userShown->hasRole('admin') || $userShown->hasRole('posadero') || $userShown->hasRole('explorer')))
+        {
+            if ($userShown->hasRole('admin'))
+            {
+                $interactions = Interaction::where('fixed', '=', 0)->orderBy('id', 'desc')->paginate(10);
+            }
+            else
+            {
+                $interactions = Interaction::withAnyTag($userShown->tagNames())->where('fixed', '=', 0)->orderBy('id', 'desc')->paginate(10);
+            }
+            $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
+            return view('derivations', compact('userShown','interactions','paginator'));
         }
         return Redirect::back();
     }

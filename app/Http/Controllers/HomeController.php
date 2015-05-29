@@ -4,8 +4,12 @@ use App\User;
 use App\Interaction;
 use App\Person;
 use Auth;
+use App\Lib\Pagination\Pagination;
+use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends Controller {
+
+    private $pagination;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -23,9 +27,10 @@ class HomeController extends Controller {
 	 *
 	 * @return void
 	 */
-	public function __construct()
+	public function __construct(Pagination $pagination)
 	{
 		$this->middleware('auth');
+        $this->pagination = $pagination;
 	}
 
 	/**
@@ -33,7 +38,7 @@ class HomeController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
         $user = Auth::user();
         if(is_null($user))
@@ -41,29 +46,18 @@ class HomeController extends Controller {
             return "404";
         }
 
-        if ($user->hasRole('admin') || $user->hasRole('posadero'))
+        if ($user->hasRole('admin'))
         {
-            $people = null;
-            $interactions = null;
-            if ($user->can('see-all-people'))
-            {
-                $people = Person::orderBy('id', 'desc')->paginate(10);
-            }
-            else if ($user->can('see-new-people'))
-            {
-                $people = Person::orderBy('id', 'desc')->where('created_by', $user->id)->paginate(10);
-            }
-
-            if ($user->can('see-all-interactions'))
-            {
-                $interactions = Interaction::orderBy('id', 'desc')->paginate(10);
-            }
-            else if ($user->can('see-new-interactions'))
-            {
-                $interactions = Interaction::orderBy('id', 'desc')->where('user_id', $user->id)->paginate(10);
-            }
-
+            $people = Person::orderBy('id', 'desc')->paginate(10);
+            $interactions = Interaction::orderBy('id', 'desc')->paginate(10);
             return view('home', compact('user','people','interactions'));
+        }
+        else if ($user->hasRole('posadero'))
+        {
+            $userShown = $user;
+            $interactions = Interaction::withAnyTag($user->tagNames())->where('fixed', '=', 0)->orderBy('id', 'desc')->paginate(10);
+            $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
+            return view('derivations', compact('userShown','interactions','paginator'));
         }
         else if ($user->hasRole('explorer') || $user->hasRole('new-user'))
         {

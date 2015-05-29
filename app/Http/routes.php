@@ -27,6 +27,7 @@ Route::get('search/searchView','SearchController@searchView');
 Route::resource('person','PersonController');
 Route::resource('interaction','InteractionController');
 Route::get('user/{id}/favorites','UserController@favorites');
+Route::get('user/{id}/derivations','UserController@derivations');
 Route::resource('user','UserController');
 Route::get('tag','TagController@index');
 Route::get('tag/{name}','TagController@show');
