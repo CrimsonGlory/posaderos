@@ -42,7 +42,7 @@ class UserController extends Controller {
 	public function index(\Symfony\Component\HttpFoundation\Request $request)
 	{
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -104,7 +104,7 @@ class UserController extends Controller {
 	{
         $user = Auth::user();
         $userShown = User::find($id);
-        if ($user == null || $userShown == null)
+        if (is_null($user) || is_null($userShown))
         {
             return "404";
         }
@@ -128,7 +128,7 @@ class UserController extends Controller {
 	{
         $user = Auth::user();
         $userShown = User::find($id);
-        if ($user == null || $userShown == null)
+        if (is_null($user) || is_null($userShown))
         {
             return "404";
         }
@@ -161,13 +161,13 @@ class UserController extends Controller {
         $user->name = $request->name;
         $user->email = $request->email;
 	    $user->phone = parse_phone($request->phone);
-        if ($newRole != null)
+        if (!is_null($newRole))
         {
             $roleKey = (array)$newRole->id;
             $user->roles()->sync($roleKey);
         }
 		$user->update();
-        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
+        if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
             $user->retag(str_replace('#','',$tags));
         }
@@ -195,7 +195,7 @@ class UserController extends Controller {
     {
         $user = Auth::user();
         $userShown = User::find($id);
-        if ($user == null || $userShown == null)
+        if (is_null($user) || is_null($userShown))
         {
             return "404";
         }
@@ -213,7 +213,7 @@ class UserController extends Controller {
     {
         $user = Auth::user();
         $userShown = User::find($id);
-        if ($user == null || $userShown == null)
+        if (is_null($user) || is_null($userShown))
         {
             return "404";
         }

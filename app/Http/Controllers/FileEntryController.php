@@ -27,7 +27,7 @@ class FileEntryController extends Controller {
     {
         $uploadError = 0; //Se maneja desde App\Exceptions\Handler.php para los archivos que superan los 8 MB.
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -42,9 +42,8 @@ class FileEntryController extends Controller {
 
     public function store(CreateFileEntryRequest $request)
     {
-
         $person_id = Request::input('person_id');
-        if($person_id == NULL)
+        if(is_null($person_id))
         {
             abort("$person_id is NULL at FileEntryController@index");
         }
@@ -91,43 +90,54 @@ class FileEntryController extends Controller {
     public function show($id)
     {
         $file = FileEntry::find($id);
+        if (is_null($file))
+        {
+            return "404";
+        }
         $filename = $file->filename;
         $image = Image::make("../storage/app/assets/fileentries/$filename");
         return $image->response();
     }
-   public function showThumb($size,$id)
+   public function showThumb($size, $id)
    {
-	if($size!=50 && $size!=150)
-		return "invalid size";
-	$img = FileEntry::findOrFail($id);
-	if(substr($img->mime, 0, 5) != 'image') {
-		return "not an image";
-	}
-	if(count($img)==0)
-		return "404";
-	$filename = $img->filename;
-	$path = "../storage/app/assets/fileentries/";
-	$path_parts = pathinfo($path.$filename);	
-	$thumb_path=$path.$path_parts['filename'].".thumb".$size.".".$path_parts['extension'];
-	if (!File::exists($thumb_path))
-		$this->create_thumbnail($path,$path_parts['filename'],$path_parts['extension'],$size);
-	$result =  Image::make($thumb_path);
-	return $result->response();
+       if ($size != 50 && $size != 150)
+       {
+           return "invalid size";
+       }
 
+       $img = FileEntry::findOrFail($id);
+       if(substr($img->mime, 0, 5) != 'image')
+       {
+           return "not an image";
+       }
+       if(count($img) == 0)
+       {
+           return "404";
+       }
 
+       $filename = $img->filename;
+       $path = "../storage/app/assets/fileentries/";
+       $path_parts = pathinfo($path.$filename);
+       $thumb_path = $path.$path_parts['filename'].".thumb".$size.".".$path_parts['extension'];
+       if (!File::exists($thumb_path))
+       {
+           $this->create_thumbnail($path,$path_parts['filename'],$path_parts['extension'],$size);
+       }
+       $result = Image::make($thumb_path);
+       return $result->response();
    }
 
    private function create_thumbnail($path, $filename, $extension,$pixelsize)
    {
-    $width  = $pixelsize;
-    $height = $pixelsize;
-    $mode   = ImageInterface::THUMBNAIL_OUTBOUND;
-    $size   = new Box($width, $height);
+       $width  = $pixelsize;
+       $height = $pixelsize;
+       $mode   = ImageInterface::THUMBNAIL_OUTBOUND;
+       $size   = new Box($width, $height);
 
-    $thumbnail   = Imagine::open($path.$filename.".".$extension)->thumbnail($size, $mode);
-    $destination = "{$filename}.thumb$pixelsize.{$extension}";
+       $thumbnail   = Imagine::open($path.$filename.".".$extension)->thumbnail($size, $mode);
+       $destination = "{$filename}.thumb$pixelsize.{$extension}";
 
-    $thumbnail->save("{$path}/{$destination}");
+       $thumbnail->save("{$path}/{$destination}");
    }
 
 }

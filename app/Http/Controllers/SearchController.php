@@ -24,7 +24,7 @@ class SearchController extends Controller {
     public function searchView()
     {
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -39,7 +39,7 @@ class SearchController extends Controller {
     public function search()
     {
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -53,10 +53,14 @@ class SearchController extends Controller {
         $users = NULL;
 
         if ($q == '' && count($tags) == 0)
+        {
             return view('search.resultadoBusqueda', compact('data','people','interactions','users'));
+        }
 
-        if($q!='' && $q == preg_replace('/[^0-9,.-_ +]/', '', $q)) //phone or dni
+        if ($q != '' && $q == preg_replace('/[^0-9,.-_ +]/', '', $q)) //phone or dni
+        {
             $number = preg_replace('/[^0-9]/','',$q);
+        }
 
         switch($data['toFind'])
         {
@@ -87,7 +91,9 @@ class SearchController extends Controller {
                 {
                     $builder = Interaction::where('text', 'LIKE', "%$q%");
                     if (!$user->can('see-all-interactions')) //if the user can't see all people
+                    {
                         $builder = $builder->where('user_id', $user->id);
+                    }
                 }
                 break;
 
@@ -106,6 +112,7 @@ class SearchController extends Controller {
         {
             $builder = $builder->withAllTags($tags);
         }
+
         $results = $builder->orderBy('id','desc')->limit(30)->get();
         if($results)
         {

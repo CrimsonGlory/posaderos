@@ -35,7 +35,7 @@ class PersonController extends Controller {
 	public function index(Request $request)
     {
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -66,7 +66,7 @@ class PersonController extends Controller {
 	public function create()
 	{
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -94,7 +94,7 @@ class PersonController extends Controller {
         $person->created_by = Auth::id();
         $person->updated_by = Auth::id();
         $success = $person->save();
-        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
+        if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
             $person->retag(str_replace('#','',$tags));
         }
@@ -120,7 +120,7 @@ class PersonController extends Controller {
 	{
         $user = Auth::user();
         $person = Person::find($id);
-        if ($user == null || $person == null)
+        if (is_null($user) || is_null($person))
         {
             return "404";
         }
@@ -147,7 +147,7 @@ class PersonController extends Controller {
     {
         $user = Auth::user();
         $person = Person::find($id);
-        if ($user == null || $person == null)
+        if (is_null($user) || is_null($person))
         {
             return "404";
         }
@@ -171,7 +171,7 @@ class PersonController extends Controller {
 	{
         $user = Auth::user();
         $person = Person::find($id);
-        if ($user == null || $person == null)
+        if (is_null($user) || is_null($person))
         {
             return "404";
         }
@@ -199,7 +199,7 @@ class PersonController extends Controller {
         $person->phone = $request->phone;
         $person->updated_by = Auth::id();
         $person->update();
-        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
+        if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
             $person->retag(str_replace('#','',$tags));
         }
@@ -238,8 +238,7 @@ class PersonController extends Controller {
     {
         $user = Auth::user();
         $person = Person::find($id);
-        $token = csrf_token();
-        if ($user == null || $person == null || Session::token() != $token)
+        if (is_null($user) || is_null($person) || Session::token() != csrf_token())
         {
             return "404";
         }
@@ -256,8 +255,7 @@ class PersonController extends Controller {
     {
         $user = Auth::user();
         $person = Person::find($id);
-        $token = csrf_token();
-        if ($user == null || $person == null || Session::token() != $token)
+        if (is_null($user) || is_null($person) || Session::token() != csrf_token())
         {
             return "404";
         }
