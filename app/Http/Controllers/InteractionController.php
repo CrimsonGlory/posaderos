@@ -26,6 +26,7 @@ class InteractionController extends Controller {
     public function __construct(Pagination $pagination)
     {
         $this->middleware('auth');
+	$this->middleware('cleanfields',['only' => ['store','update']]);
         $this->pagination = $pagination;
     }
 
@@ -99,7 +100,7 @@ class InteractionController extends Controller {
         $seEnviaronMails = false;
         if (!is_null($tags))
         {
-            $interaction->retag(str_replace('#','',$tags));
+            $interaction->retag($tags);
         }
 
         // El usuario puede elegir un correo electrónico para enviar el mail de derivación
@@ -208,7 +209,7 @@ class InteractionController extends Controller {
         $interaction->update();
         if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
-            $interaction->retag(str_replace('#','',$tags));
+            $interaction->retag($tags);
         }
         else
         {

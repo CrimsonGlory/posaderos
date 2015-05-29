@@ -170,7 +170,7 @@ class UserController extends Controller {
 		$user->update();
         if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
-            $user->retag(str_replace('#','',$tags));
+            $user->retag($tags);
         }
         else
         {

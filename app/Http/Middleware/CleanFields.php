@@ -28,6 +28,9 @@ class CleanFields {
 		if($request->name != NULL){
                         $request->merge(array('name' => $this->clean($request->name)));
                 }
+		if($request->tags != NULL){
+			$request->merge(array('tags' => str_replace('#','',$request->tags)));
+		}
 		return $next($request);
 	}
 	private function clean($string){

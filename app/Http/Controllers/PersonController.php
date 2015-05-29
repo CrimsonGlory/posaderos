@@ -97,7 +97,7 @@ class PersonController extends Controller {
         $success = $person->save();
         if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
-            $person->retag(str_replace('#','',$tags));
+            $person->retag($tags);
         }
 
 		if($success)
@@ -202,7 +202,7 @@ class PersonController extends Controller {
         $person->update();
         if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
-            $person->retag(str_replace('#','',$tags));
+            $person->retag($tags);
         }
         else
         {
