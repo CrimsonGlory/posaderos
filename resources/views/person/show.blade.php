@@ -211,8 +211,12 @@
                                         @endif
                                     </td>
                                     <td align="left">
-                                        <label>{{ $interaction->text }}</label>
-                                        </br>
+                                        @if (!Agent::isDesktop() && strlen($interaction->text) > 30)
+                                            <label>{{ substr($interaction->text, 0, 29) }}...</label>
+                                        @else
+                                            <label>{{ $interaction->text }}</label>
+                                        @endif
+                                        <br/>
                                         <label>Estado: </label>
                                         @if ($interaction->fixed)
                                             <label style="color:green">{{ trans('messages.'.$interaction->fixed) }}.</label>
