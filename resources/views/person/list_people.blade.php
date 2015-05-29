@@ -93,7 +93,7 @@
                 <table width="100%">
                     <tr>
                         <td>
-                            <label>No hay ningún asistido para mostrar.</label>
+                            <div>No hay ningún asistido para mostrar.</div>
                         </td>
                     </tr>
                 </table>

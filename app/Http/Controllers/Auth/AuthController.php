@@ -54,7 +54,7 @@ class AuthController extends Controller {
         // Se le agrega al usuario el rol new-user
         $authUser = Auth::user();
         $roleNewUser = DB::table('roles')->where('name', 'new-user')->first();
-        if ($authUser != null && $roleNewUser != null)
+        if (!is_null($authUser) && !is_null($roleNewUser))
         {
             $authUser->attachRole($roleNewUser->id);
         }

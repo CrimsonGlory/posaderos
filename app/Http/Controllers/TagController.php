@@ -32,7 +32,7 @@ class TagController extends Controller {
 	public function index()
 	{
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -53,7 +53,7 @@ class TagController extends Controller {
 	public function create($id)
 	{
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -84,7 +84,7 @@ class TagController extends Controller {
 	public function show($name)
 	{
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -125,7 +125,7 @@ class TagController extends Controller {
 	public function edit($id)
 	{
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }

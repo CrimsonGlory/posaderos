@@ -74,7 +74,13 @@
                                         @endif
                                     </a>
                                 </th>
-                                <th>{{ $interaction->text }}</th>
+                                <th>
+                                    @if (strlen($interaction->text) > 30)
+                                        {{ substr($interaction->text, 0, 29) }}...
+                                    @else
+                                        {{ $interaction->text }}
+                                    @endif
+                                </th>
                                 <th>
                                     <a href="{{ action("InteractionController@edit",$interaction) }}">
                                         {{ trans('messages.'.$interaction->fixed) }}
@@ -95,7 +101,7 @@
                 <table width="100%">
                     <tr>
                         <td>
-                            <label>No hay ninguna interacción para mostrar.</label>
+                            <div>No hay ninguna interacción para mostrar.</div>
                         </td>
                     </tr>
                 </table>

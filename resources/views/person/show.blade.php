@@ -9,9 +9,30 @@
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
-                                <td><h4>{{ $person->name() }} </h4></td>
+                                <td align="left">
+                                    <table id="favoritos">
+                                        <tr>
+                                            <td width="50px;">
+                                                @if (!($person->liked(Auth::user()->id)))
+                                                    <a class="btn btn-warning" href="{{ action('PersonController@addFavorite', $person->id) }}" title="Agregar a favoritos">
+                                                        <i class="glyphicon glyphicon-star"></i>
+                                                    </a>
+                                                @else
+                                                    <a class="btn btn-success" href="{{ action('PersonController@removeFavorite', $person->id) }}" title="Quitar de favoritos">
+                                                        <i class="glyphicon glyphicon-star-empty"></i>
+                                                    </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <h4>{{ $person->name() }}</h4>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
                                 @if (Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id))
-                                    <td align="right"><a class="btn btn-primary" href="{{ action('PersonController@edit', $person->id) }}" style="width:80px;">Editar</a></td>
+                                    <td align="right">
+                                        <a class="btn btn-primary" href="{{ action('PersonController@edit', $person->id) }}" style="width:80px;">Editar</a>
+                                    </td>
                                 @endif
                             </tr>
                         </table>
@@ -190,8 +211,12 @@
                                         @endif
                                     </td>
                                     <td align="left">
-                                        <label>{{ $interaction->text }}</label>
-                                        </br>
+                                        @if (!Agent::isDesktop() && strlen($interaction->text) > 30)
+                                            <label>{{ substr($interaction->text, 0, 29) }}...</label>
+                                        @else
+                                            <label>{{ $interaction->text }}</label>
+                                        @endif
+                                        <br/>
                                         <label>Estado: </label>
                                         @if ($interaction->fixed)
                                             <label style="color:green">{{ trans('messages.'.$interaction->fixed) }}.</label>

@@ -111,6 +111,20 @@
                                         Editar cuenta
                                     </a>
                                 </li>
+                                @if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('posadero') || Auth::user()->hasRole('explorer'))
+                                    <li>
+                                        <a href="{{ action('UserController@derivations', Auth::user()->id) }}">
+                                            <i class="glyphicon glyphicon-bell"></i>
+                                            Derivaciones
+                                        </a>
+                                    </li>
+                                @endif
+                                <li>
+                                    <a href="{{ action('UserController@favorites', Auth::user()->id) }}">
+                                        <i class="glyphicon glyphicon-star"></i>
+                                        Favoritos
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="{{ url('/auth/logout') }}">
                                         <i class="glyphicon glyphicon-log-out"></i>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\Lib\Pagination\Pagination;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Illuminate\Http\Request as Request2;
 
@@ -35,7 +36,7 @@ class PersonController extends Controller {
 	public function index(Request $request)
     {
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -66,7 +67,7 @@ class PersonController extends Controller {
 	public function create()
 	{
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -94,9 +95,9 @@ class PersonController extends Controller {
         $person->created_by = Auth::id();
         $person->updated_by = Auth::id();
         $success = $person->save();
-        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
+        if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
-            $person->retag($tags);
+            $person->retag(str_replace('#','',$tags));
         }
 
 		if($success)
@@ -120,7 +121,7 @@ class PersonController extends Controller {
 	{
         $user = Auth::user();
         $person = Person::find($id);
-        if ($user == null || $person == null)
+        if (is_null($user) || is_null($person))
         {
             return "404";
         }
@@ -147,7 +148,7 @@ class PersonController extends Controller {
     {
         $user = Auth::user();
         $person = Person::find($id);
-        if ($user == null || $person == null)
+        if (is_null($user) || is_null($person))
         {
             return "404";
         }
@@ -171,7 +172,7 @@ class PersonController extends Controller {
 	{
         $user = Auth::user();
         $person = Person::find($id);
-        if ($user == null || $person == null)
+        if (is_null($user) || is_null($person))
         {
             return "404";
         }
@@ -199,9 +200,9 @@ class PersonController extends Controller {
         $person->phone = $request->phone;
         $person->updated_by = Auth::id();
         $person->update();
-        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
+        if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
-            $person->retag($tags);
+            $person->retag(str_replace('#','',$tags));
         }
         else
         {
@@ -233,6 +234,40 @@ class PersonController extends Controller {
 		$image->avatar_of()->save($person);
 		return redirect('person/'.$input->person_id);
 	}
+
+    public function addFavorite($id)
+    {
+        $user = Auth::user();
+        $person = Person::find($id);
+        if (is_null($user) || is_null($person) || Session::token() != csrf_token())
+        {
+            return "404";
+        }
+
+        if (($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id)))
+        {
+            $person->like($user->id);
+            flash()->success('Se agregó el asistido a su lista de favoritos.');
+        }
+        return Redirect::back();
+    }
+
+    public function removeFavorite($id)
+    {
+        $user = Auth::user();
+        $person = Person::find($id);
+        if (is_null($user) || is_null($person) || Session::token() != csrf_token())
+        {
+            return "404";
+        }
+
+        if ($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id))
+        {
+            $person->unlike($user->id);
+            flash()->warning('Se quitó el asistido de su lista de favoritos.');
+        }
+        return Redirect::back();
+    }
 
 }
 

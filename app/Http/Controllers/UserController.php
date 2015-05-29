@@ -1,13 +1,17 @@
 <?php namespace App\Http\Controllers;
 
+use App\Interaction;
+use App\Person;
 use App\User;
 use App\Http\Requests;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Input;
+use PhpParser\Node\Expr\Array_;
 use Validator;
 use Illuminate\Http\Request;
 use Gravatar;
@@ -39,7 +43,7 @@ class UserController extends Controller {
 	public function index(\Symfony\Component\HttpFoundation\Request $request)
 	{
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -101,7 +105,7 @@ class UserController extends Controller {
 	{
         $user = Auth::user();
         $userShown = User::find($id);
-        if ($user == null || $userShown == null)
+        if (is_null($user) || is_null($userShown))
         {
             return "404";
         }
@@ -125,7 +129,7 @@ class UserController extends Controller {
 	{
         $user = Auth::user();
         $userShown = User::find($id);
-        if ($user == null || $userShown == null)
+        if (is_null($user) || is_null($userShown))
         {
             return "404";
         }
@@ -158,15 +162,15 @@ class UserController extends Controller {
         $user->name = $request->name;
         $user->email = $request->email;
 	    $user->phone = parse_phone($request->phone);
-        if ($newRole != null)
+        if (!is_null($newRole))
         {
             $roleKey = (array)$newRole->id;
             $user->roles()->sync($roleKey);
         }
 		$user->update();
-        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
+        if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
-            $user->retag($tags);
+            $user->retag(str_replace('#','',$tags));
         }
         else
         {
@@ -187,5 +191,48 @@ class UserController extends Controller {
 	{
 		//
 	}
+
+    public function favorites($id, \Symfony\Component\HttpFoundation\Request $request)
+    {
+        $user = Auth::user();
+        $userShown = User::find($id);
+        if (is_null($user) || is_null($userShown))
+        {
+            return "404";
+        }
+
+        if ($userShown->id == $user->id)
+        {
+            $people = Person::whereLiked($userShown->id)->orderBy('id', 'desc')->paginate(10);
+            $paginator = $this->pagination->set($people, $request->getBaseUrl());
+            return view('user.favorites', compact('userShown','people','paginator'));
+        }
+        return Redirect::back();
+    }
+
+    public function derivations($id, \Symfony\Component\HttpFoundation\Request $request)
+    {
+        $user = Auth::user();
+        $userShown = User::find($id);
+        if (is_null($user) || is_null($userShown))
+        {
+            return "404";
+        }
+
+        if ($userShown->id == $user->id && ($userShown->hasRole('admin') || $userShown->hasRole('posadero') || $userShown->hasRole('explorer')))
+        {
+            if ($userShown->hasRole('admin'))
+            {
+                $interactions = Interaction::where('fixed', '=', 0)->orderBy('id', 'desc')->paginate(10);
+            }
+            else
+            {
+                $interactions = Interaction::withAnyTag($userShown->tagNames())->where('fixed', '=', 0)->orderBy('id', 'desc')->paginate(10);
+            }
+            $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
+            return view('derivations', compact('userShown','interactions','paginator'));
+        }
+        return Redirect::back();
+    }
 
 }

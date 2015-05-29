@@ -83,7 +83,7 @@
                 <table width="100%">
                     <tr>
                         <td>
-                            <label>No hay ningún usuario para mostrar.</label>
+                            <div>No hay ningún usuario para mostrar.</div>
                         </td>
                     </tr>
                 </table>

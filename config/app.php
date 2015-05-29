@@ -158,6 +158,7 @@ return [
 	    'Propaganistas\LaravelPhone\LaravelPhoneServiceProvider',
         'Jenssegers\Agent\AgentServiceProvider',
 	    'Orchestra\Imagine\ImagineServiceProvider',
+        'Conner\Likeable\LikeableServiceProvider'
 
 	],
 

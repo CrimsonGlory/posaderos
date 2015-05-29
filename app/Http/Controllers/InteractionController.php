@@ -37,7 +37,7 @@ class InteractionController extends Controller {
     public function index(\Symfony\Component\HttpFoundation\Request $request)
     {
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -68,7 +68,7 @@ class InteractionController extends Controller {
     public function create($id)
     {
         $user = Auth::user();
-        if ($user == null)
+        if (is_null($user))
         {
             return "404";
         }
@@ -100,7 +100,7 @@ class InteractionController extends Controller {
         $seEnviaronMails = false;
 
         // El usuario puede elegir un correo electrónico para enviar el mail de derivación
-        if ($destinationMail != null && $person != null)
+        if (!is_null($destinationMail) && !is_null($person))
         {
             $seEnviaronMails = true;
             try
@@ -115,10 +115,10 @@ class InteractionController extends Controller {
         }
 
         // Si hay tags se envian mails a todos los usuarios que tengan alguno de los tags seleccionados
-        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
+        if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
             $seEnviaronMails = true;
-            $interaction->retag($tags);
+            $interaction->retag(str_replace('#','',$tags));
             try
             {
                 sendMailToUsers($tags,$person);
@@ -156,7 +156,7 @@ class InteractionController extends Controller {
     {
         $user = Auth::user();
         $interaction = Interaction::find($id);
-        if ($user == null || $interaction == null)
+        if (is_null($user) || is_null($interaction))
         {
             return "404";
         }
@@ -178,7 +178,7 @@ class InteractionController extends Controller {
     {
         $user = Auth::user();
         $interaction = Interaction::find($id);
-        if($user == null || $interaction == null)
+        if(is_null($user) || is_null($interaction))
         {
             return "404";
         }
@@ -205,9 +205,9 @@ class InteractionController extends Controller {
         $interaction->date = $request->date;
         $interaction->fixed = $request->fixed;
         $interaction->update();
-        if ($tags != null && allowed_to_tag(Auth::user(),$tags))
+        if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
-            $interaction->retag($tags);
+            $interaction->retag(str_replace('#','',$tags));
         }
         else
         {

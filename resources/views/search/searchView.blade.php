@@ -15,7 +15,7 @@
                 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
                 <script>
                     $(document).ready(function(e){
-                        $('.search-panel .dropdown-menu').find('a').click(function(e) {
+                        $('.search-panel .dropdown-menu').find('a').click(function(e){
                             e.preventDefault();
                             var param = $(this).text();
                             $('.search-panel span#search_concept').text(param);
@@ -26,7 +26,10 @@
                     function buscar(){
                         var k = $('#keyWord').val();
                         var tf = $('#search_param').text();
-                        $.get( "/search/search", { toFind: tf, key: k } )
+                        if(document.getElementById('search_concept').textContent == 'Asistidos'){
+                            tf = 'Asistidos';
+                        }
+                        $.get("/search/search", { toFind: tf, key: k })
                                 .done(function( data ) {
                                     $('#resultado').html("");
                                     $('#resultado').html(data);
@@ -46,7 +49,12 @@
                     <div class="input-group">
                         <div class="input-group-btn search-panel" role="search">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span id="search_concept">¿Búsqueda?</span> <span class="caret"></span>
+                                @if (Auth::user()->can('see-people-search-view'))
+                                    <span id="search_concept">Asistidos</span>
+                                @else
+                                    <span id="search_concept">¿Búsqueda?</span>
+                                @endif
+                                <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 @if (Auth::user()->can('see-people-search-view'))
@@ -60,7 +68,7 @@
                                 @endif
                             </ul>
                         </div>
-                        <input type="hidden" name="search_param" value="Interaccion" id="search_param">
+                        <input type="hidden" name="search_param" id="search_param">
                         <input type="text" id="keyWord" class="form-control" name="x" placeholder="buscar..." autofocus="true" onkeypress="enterPressAction(event)">
                         <span class="input-group-btn">
                             <button id="search" class="btn btn-default" type="button" onClick="buscar()"><span class="glyphicon glyphicon-search"></span></button>

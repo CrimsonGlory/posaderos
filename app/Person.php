@@ -7,8 +7,8 @@ use App\FileEntry;
 use App\User;
 
 class Person extends Model {
-    use \Conner\Tagging\TaggableTrait;
-
+    use \Conner\Tagging\TaggableTrait, \Conner\Likeable\LikeableTrait;
+    
     protected $table = 'people';
 
     protected $fillable = [
