@@ -14,7 +14,7 @@
                     <div>No se han encontrado asistidos que coincidan con su búsqueda.</div>
                 </div>
                 <div class="form-group">
-                    <a class="btn btn-primary" href="{{ action('PersonController@create') }}">
+                    <a class="btn btn-primary" onclick="createPersonWithParam()">
                         <i class="glyphicon glyphicon-plus"></i>
                         Agregar asistido
                     </a>

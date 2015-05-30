@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Nombre</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="first_name" autofocus="true">
+                                    <input type="text" class="form-control" name="first_name" value="{{ $firstName }}" autofocus="true">
                                 </div>
                             </div>
 
@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">DNI</label>
                                 <div class="col-md-6">
-                                    <input type="number" class="form-control" name="dni" value="{{ old('dni') }}">
+                                    <input type="number" class="form-control" name="dni" value="{{ $dni }}">
                                 </div>
                             </div>
 

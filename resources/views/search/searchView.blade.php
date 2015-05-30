@@ -30,7 +30,7 @@
                             tf = 'Asistidos';
                         }
                         $.get("/search/search", { toFind: tf, key: k })
-                                .done(function( data ) {
+                                .done(function(data){
                                     $('#resultado').html("");
                                     $('#resultado').html(data);
                                 });
@@ -39,9 +39,14 @@
                     function enterPressAction(e){
                         var code = (e.keyCode ? e.keyCode : e.which);
                         //Enter keycode
-                        if(code == 13) {
+                        if(code == 13){
                             buscar();
                         }
+                    }
+
+                    function createPersonWithParam(){
+                        $param = document.getElementById('keyWord').value;
+                        window.location.href = window.location.protocol + '//' + window.location.host + '/person/create?param=' + $param;
                     }
                 </script>
 

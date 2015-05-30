@@ -74,7 +74,21 @@ class PersonController extends Controller {
 
         if ($user->can('add-person'))
         {
-            return view('person.create');
+            $firstName = null;
+            $dni = null;
+            if ($_REQUEST != null)
+            {
+                $param = $_REQUEST['param'];
+                if ($param == preg_replace('/[^0-9,.\-_ +]/', '', $param))
+                {
+                    $dni = strtr($param, array(' ' => '', ',' => '', '.' => '', '-' => '', '_' => '', '+' => ''));
+                }
+                else
+                {
+                    $firstName = $param;
+                }
+            }
+            return view('person.create', compact('firstName','dni'));
         }
         return Redirect::back();
 	}
