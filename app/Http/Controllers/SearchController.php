@@ -57,9 +57,9 @@ class SearchController extends Controller {
             return view('search.resultadoBusqueda', compact('data','people','interactions','users'));
         }
 
-        if ($q != '' && $q == preg_replace('/[^0-9,.-_ +]/', '', $q)) //phone or dni
+        if ($q != '' && $q == preg_replace('/[^0-9,.\-_ +]/', '', $q)) //phone or dni
         {
-            $number = preg_replace('/[^0-9]/','',$q);
+            $number = preg_replace('/[^0-9]/','',$q);dd("es numero");
         }
 
         switch($data['toFind'])
