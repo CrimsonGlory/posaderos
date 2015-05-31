@@ -37,7 +37,7 @@
                                         <i class="glyphicon glyphicon-chevron-left"></i>
                                     </button>
                                 </td>
-                                <td align="middle">
+                                <!--<td align="middle">
                                     {!! Form::open(['name'=>'id','class' => 'reset-this', 'method'=> 'POST', 'action' => ['PersonController@setAvatar',$person->id]]) !!}
                                         <input type="hidden" name="fileentry_id"  value="">
                                         <button type="button submit" class="btn btn-default setavatar">
@@ -45,7 +45,7 @@
                                             Usar como perfil
                                         </button>
                                     {!! Form::close() !!}
-                                </td>
+                                </td>-->
                                 <td align="right">
                                     <button type="button" class="btn btn-primary next">
                                         <i class="glyphicon glyphicon-chevron-right"></i>
