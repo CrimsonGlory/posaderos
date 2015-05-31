@@ -228,7 +228,19 @@ class InteractionController extends Controller {
      */
     public function destroy($id)
     {
-        //
+        $user = Auth::user();
+        $interaction = Interaction::find($id);
+        if (is_null($user) || is_null($interaction))
+        {
+            return "404";
+        }
+
+        if ($user->hasRole('admin'))
+        {
+            $interaction->delete();
+            flash()->success("Interacción eliminada.");
+        }
+        return Redirect::back();
     }
 
 }

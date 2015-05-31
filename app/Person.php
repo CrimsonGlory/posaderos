@@ -5,9 +5,10 @@ use Illuminate\Database\Eloquent\Model;
 use App\Interaction;
 use App\FileEntry;
 use App\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Person extends Model {
-    use \Conner\Tagging\TaggableTrait, \Conner\Likeable\LikeableTrait;
+    use \Conner\Tagging\TaggableTrait, \Conner\Likeable\LikeableTrait, SoftDeletes;
     
     protected $table = 'people';
 

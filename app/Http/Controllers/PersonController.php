@@ -236,7 +236,24 @@ class PersonController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+        $user = Auth::user();
+        $person = Person::find($id);
+        if (is_null($user) || is_null($person))
+        {
+            return "404";
+        }
+
+        if ($user->hasRole('admin'))
+        {
+            foreach ($person->interactions()->get() as $interaction)
+            {
+                $interaction->delete();
+            }
+            $person->delete();
+            flash()->success('Asistido eliminado.');
+            return redirect('person');
+        }
+        return Redirect::back();
 	}
 
 	public function setAvatar(Request2 $request,$id)

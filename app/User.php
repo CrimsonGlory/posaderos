@@ -5,11 +5,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Gravatar;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
-	use Authenticatable, CanResetPassword, EntrustUserTrait, \Conner\Tagging\TaggableTrait;
+	use Authenticatable, CanResetPassword, EntrustUserTrait, \Conner\Tagging\TaggableTrait, SoftDeletes;
 
 	/**
 	 * The database table used by the model.

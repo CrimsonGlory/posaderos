@@ -29,9 +29,29 @@
                                         </tr>
                                     </table>
                                 </td>
-                                @if (Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id))
+                                @if ((Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id)) || (Auth::user()->hasRole('admin')))
                                     <td align="right">
-                                        <a class="btn btn-primary" href="{{ action('PersonController@edit', $person->id) }}" style="width:80px;">Editar</a>
+                                        <table>
+                                            <tr>
+                                                @if (Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id))
+                                                    <td align="right">
+                                                        <a class="btn btn-primary" href="{{ action('PersonController@edit', $person->id) }}">
+                                                            <i class="glyphicon glyphicon-pencil"></i>
+                                                        </a>
+                                                    </td>
+                                                @endif
+                                                @if (Auth::user()->hasRole('admin'))
+                                                    <td style="width:5px;"></td>
+                                                    {!! Form::open(array('route' => array('person.destroy', $person->id), 'method' => 'delete')) !!}
+                                                        <td align="right">
+                                                            <button type="submit" class="btn btn-danger">
+                                                                <i class="glyphicon glyphicon-remove"></i>
+                                                            </button>
+                                                        </td>
+                                                    {!! Form::close() !!}
+                                                @endif
+                                            </tr>
+                                        </table>
                                     </td>
                                 @endif
                             </tr>
@@ -187,7 +207,7 @@
                             <tr>
                                 <td><h4>Últimas interacciones</h4></td>
                                 @if (Auth::user()->can('add-interaction'))
-                                    <td align="right"><a class="btn btn-primary" href="{{ url('person/'.$person->id.'/interaction/create') }}" style="width:80px;">Agregar</a></td>
+                                    <td align="right"><a class="btn btn-primary" href="{{ url('person/'.$person->id.'/interaction/create') }}" style="width:85px;">Agregar</a></td>
                                 @endif
                             </tr>
                         </table>
@@ -227,7 +247,28 @@
                                             <label>Etiquetas: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label>
                                         @endif
                                     </td>
-                                    <td width="80" align="center"><a class="btn btn-link" href="{{ action("InteractionController@edit",$interaction) }}">Editar</a></td>
+                                    <td align="right">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <a class="btn btn-primary" href="{{ action("InteractionController@edit",$interaction) }}">
+                                                        <i class="glyphicon glyphicon-pencil"></i>
+                                                    </a>
+                                                </td>
+                                                @if (Auth::user()->hasRole('admin'))
+                                                    <td style="width:5px;"></td>
+                                                    <td>
+                                                        {!! Form::open(array('route' => array('interaction.destroy', $interaction->id), 'method' => 'delete')) !!}
+                                                            <button type="submit" class="btn btn-danger">
+                                                                <i class="glyphicon glyphicon-remove"></i>
+                                                            </button>
+                                                        {!! Form::close() !!}
+                                                    </td>
+                                                @endif
+                                                <td style="width:5px;"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                             @endforeach
                         </table>

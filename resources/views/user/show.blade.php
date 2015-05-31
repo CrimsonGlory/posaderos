@@ -11,8 +11,30 @@
                         <table width="100%">
                             <tr>
                                 <td><h4>{{ $userShown->name }}</h4></td>
-                                @if (Auth::user()->can('edit-users') || $userShown->id == Auth::user()->id)
-                                    <td align="right"><a class="btn btn-primary" href="{{ action('UserController@edit',$userShown) }}" style="width:80px;">Editar</a></td>
+                                @if (Auth::user()->can('edit-users') || $userShown->id == Auth::user()->id || Auth::user()->hasRole('admin'))
+                                    <td align="right">
+                                        <table>
+                                            <tr>
+                                                @if (Auth::user()->can('edit-users') || $userShown->id == Auth::user()->id)
+                                                    <td>
+                                                        <a class="btn btn-primary" href="{{ action('UserController@edit',$userShown) }}">
+                                                            <i class="glyphicon glyphicon-pencil"></i>
+                                                        </a>
+                                                    </td>
+                                                @endif
+                                                @if (Auth::user()->hasRole('admin') && $userShown->id != Auth::user()->id)
+                                                    <td style="width:5px;"></td>
+                                                    {!! Form::open(array('route' => array('user.destroy', $userShown->id), 'method' => 'delete')) !!}
+                                                        <td align="right">
+                                                            <button type="submit" class="btn btn-danger">
+                                                                <i class="glyphicon glyphicon-remove"></i>
+                                                            </button>
+                                                        </td>
+                                                    {!! Form::close() !!}
+                                                @endif
+                                            </tr>
+                                        </table>
+                                    </td>
                                 @endif
                             </tr>
                         </table>

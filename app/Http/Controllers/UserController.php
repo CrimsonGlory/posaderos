@@ -189,7 +189,28 @@ class UserController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+        $user = Auth::user();
+        $userShown = User::find($id);
+        if (is_null($user) || is_null($userShown))
+        {
+            return "404";
+        }
+
+        if ($user->hasRole('admin') && $user->id != $userShown->id)
+        {
+            foreach ($userShown->people()->get() as $person)
+            {
+                foreach ($person->interactions()->get() as $interaction)
+                {
+                    $interaction->delete();
+                }
+                $person->delete();
+            }
+            $userShown->delete();
+            flash()->success('Usuario eliminado.');
+            return redirect('user');
+        }
+        return Redirect::back();
 	}
 
     public function favorites($id, \Symfony\Component\HttpFoundation\Request $request)
