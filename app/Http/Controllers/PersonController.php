@@ -270,7 +270,7 @@ class PersonController extends Controller {
     {
         $user = Auth::user();
         $person = Person::find($id);
-        if (is_null($user) || is_null($person) || Session::token() != csrf_token())
+        if (is_null($user) || is_null($person))
         {
             return "404";
         }
@@ -287,7 +287,7 @@ class PersonController extends Controller {
     {
         $user = Auth::user();
         $person = Person::find($id);
-        if (is_null($user) || is_null($person) || Session::token() != csrf_token())
+        if (is_null($user) || is_null($person))
         {
             return "404";
         }

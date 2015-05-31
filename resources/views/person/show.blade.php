@@ -14,13 +14,17 @@
                                         <tr>
                                             <td width="50px;">
                                                 @if (!($person->liked(Auth::user()->id)))
-                                                    <a class="btn btn-warning" href="{{ action('PersonController@addFavorite', $person->id) }}" title="Agregar a favoritos">
-                                                        <i class="glyphicon glyphicon-star"></i>
-                                                    </a>
+                                                    {!! Form::open(array('method' => 'POST', 'action' => array('PersonController@addFavorite', $person->id))) !!}
+                                                        <button class="btn btn-warning" type="submit" title="Agregar a favoritos">
+                                                            <i class="glyphicon glyphicon-star"></i>
+                                                        </button>
+                                                    {!! Form::close() !!}
                                                 @else
-                                                    <a class="btn btn-success" href="{{ action('PersonController@removeFavorite', $person->id) }}" title="Quitar de favoritos">
-                                                        <i class="glyphicon glyphicon-star-empty"></i>
-                                                    </a>
+                                                    {!! Form::open(array('method' => 'POST', 'action' => array('PersonController@removeFavorite', $person->id))) !!}
+                                                        <button class="btn btn-success" type="submit" title="Quitar de favoritos">
+                                                            <i class="glyphicon glyphicon-star-empty"></i>
+                                                        </button>
+                                                    {!! Form::close() !!}
                                                 @endif
                                             </td>
                                             <td>
