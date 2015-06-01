@@ -279,6 +279,7 @@ class PersonController extends Controller {
         {
             $person->like($user->id);
             flash()->success('Se agregó el asistido a su lista de favoritos.');
+            return redirect('person/'.$person->id);
         }
         return Redirect::back();
     }
@@ -296,6 +297,7 @@ class PersonController extends Controller {
         {
             $person->unlike($user->id);
             flash()->warning('Se quitó el asistido de su lista de favoritos.');
+            return redirect('person/'.$person->id);
         }
         return Redirect::back();
     }
