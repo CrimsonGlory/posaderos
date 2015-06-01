@@ -9,7 +9,7 @@
                                 <th>Foto</th>
                                 <th>Nombre</th>
                                 <th>DNI</th>
-                                <th>Género</th>
+                                <th>Edad</th>
                                 <th>Dirección</th>
                                 <th>Teléfono</th>
                                 <th>Etiquetas</th>
@@ -32,7 +32,10 @@
                                 </th>
                                 <th>{{$person->dni}}</th>
                                 <th>
-                                    {{trans('messages.'.$person->gender)}}
+                                    @if ($person->birthdate != null)
+                                            {{date_diff(date_create($person->birthdate), date_create('today'))->y}}
+                                            años
+                                    @endif
                                 </th>
                                 <th>{{$person->address}}</th>
                                 <th>{{$person->phone}}</th>
