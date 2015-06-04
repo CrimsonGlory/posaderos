@@ -112,7 +112,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Fecha de nacimiento</label>
                                     <div class="col-md-6">
-                                        <label  class="form-control" name="birthdate">{{ $person->birthdate }}</label>
+                                        <label  class="form-control" name="birthdate">{{ date("d/m/Y", strtotime($person->birthdate)) }}</label>
                                     </div>
                                 </div>
 			                @endif
@@ -222,7 +222,7 @@
                             @foreach ($interactions as $interaction)
                                 <tr>
                                     <td width="120" align="middle">
-                                        <label>{{ $interaction->date }}</label>
+                                        <label>{{ date("d/m/Y", strtotime($interaction->date)) }}</label>
                                         @if (Auth::user()->can('see-users') || $interaction->user->id == Auth::user()->id)
                                             </br>
                                             <label>

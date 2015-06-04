@@ -30,7 +30,7 @@
                                     </a>
                                 </th>
                                 <th>{{ $interaction->text }}</th>
-                                <th>{{$interaction->date}}</th>
+                                <th>{{ date("d/m/Y", strtotime($interaction->date)) }}</th>
                                 <th>
                                     <a href="{{ action("InteractionController@edit",$interaction) }}">
                                         {{ trans('messages.'.$interaction->fixed) }}

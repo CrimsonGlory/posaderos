@@ -63,7 +63,7 @@
                     <tbody>
                         @foreach($people as $person)
                             <tr>
-                                <td style="border-bottom:1px solid black;">{{ date("Y-m-d", strtotime($person->created_at)) }}</td>
+                                <td style="border-bottom:1px solid black;">{{ date("d/m/Y", strtotime($person->created_at)) }}</td>
                                 <td style="border-bottom:1px solid black;">{{ $person->name() }}</td>
                                 <td style="border-bottom:1px solid black;">{{ $person->dni }}</td>
                                 <td style="border-bottom:1px solid black;">

@@ -47,7 +47,7 @@
                     <tbody>
                         @foreach($users as $user)
                             <tr>
-                                <td style="border-bottom:1px solid black;">{{ date("Y-m-d", strtotime($user->created_at)) }}</td>
+                                <td style="border-bottom:1px solid black;">{{ date("d/m/Y", strtotime($user->created_at)) }}</td>
                                 <td style="border-bottom:1px solid black;">{{ $user->name }}</td>
                                 <td style="border-bottom:1px solid black;">{{ $user->email }}</td>
                                 <td style="border-bottom:1px solid black;">{{ $user->phone }}</td>

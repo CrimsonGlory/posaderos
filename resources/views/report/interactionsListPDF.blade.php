@@ -62,7 +62,7 @@
                     <tbody>
                         @foreach($interactions as $interaction)
                             <tr>
-                                <td style="border-bottom:1px solid black;">{{ $interaction->date }}</td>
+                                <td style="border-bottom:1px solid black;">{{ date("d/m/Y", strtotime($interaction->date)) }}</td>
                                 <td style="border-bottom:1px solid black;">{{ getPersonName($interaction->person_id) }}</td>
                                 <td style="border-bottom:1px solid black;">{{ $interaction->text }}</td>
                                 <td style="border-bottom:1px solid black;">{{ trans('messages.'.$interaction->fixed) }}</td>
