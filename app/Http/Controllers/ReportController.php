@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateReportRequest;
 use App\Http\Requests\Request;
 use App\Interaction;
+use App\Person;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -40,16 +41,16 @@ class ReportController extends Controller {
         $fixed = $request->fixed;
         $tags = $request->tags;
 
-        $builder = Interaction::where('date', '>=', $fromDate)->where('date', '<=', $toDate);
+        $builder = Interaction::where('date', '>=', $request->fromDate." 00:00:00")->where('date', '<=', $request->toDate." 23:59:59");
 
         // Filtros
-        if (count($users) > 0)
-        {
-            $builder = $builder->whereIn('user_id', $users);
-        }
         if ($fixed != -1)
         {
             $builder = $builder->where('fixed', $fixed);
+        }
+        if (count($users) > 0)
+        {
+            $builder = $builder->whereIn('user_id', $users);
         }
         if (count($tags) > 0)
         {
@@ -60,9 +61,62 @@ class ReportController extends Controller {
         $fromDate = date("d/m/Y", strtotime($fromDate));
         $toDate = date("d/m/Y", strtotime($toDate));
 
-        $pdf = PDF::loadView('report.interactionsListPDF', array(), compact('interactions', 'users', 'fixed', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
+        $pdf = PDF::loadView('report.interactionsListPDF', array(), compact('interactions', 'fixed', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
         return $pdf->download('ListadoDeInteracciones.pdf');
     }
 
-}
+    public function peopleList()
+    {
+        $user = Auth::user();
+        if (is_null($user))
+        {
+            return "404";
+        }
 
+        if ($user->hasRole('admin'))
+        {
+            return view('report.peopleList');
+        }
+        return redirect('home');
+    }
+
+    public function downloadPeopleList(CreateReportRequest $request)
+    {
+        $rules = array(
+            'fromDate' => array('required', 'date'),
+            'toDate' => array('required', 'date'),
+        );
+        $this->validate($request,$rules);
+
+        // Campos
+        $fromDate = $request->fromDate;
+        $toDate = $request->toDate;
+        $gender = $request->gender;
+        $users = $request->users;
+        $tags = $request->tags;
+
+        $builder = Person::where('created_at', '>=', $request->fromDate." 00:00:00")->where('created_at', '<=', $request->toDate." 23:59:59");
+
+        // Filtros
+        if ($gender != 'select')
+        {
+            $builder = $builder->where('gender', $gender);
+        }
+        if (count($users) > 0)
+        {
+            $builder = $builder->whereIn('created_by', $users);
+        }
+        if (count($tags) > 0)
+        {
+            $builder = $builder->withAnyTag($tags);
+        }
+
+        $people = $builder->orderBy('id','desc')->get();
+        $fromDate = date("d/m/Y", strtotime($fromDate));
+        $toDate = date("d/m/Y", strtotime($toDate));
+
+        $pdf = PDF::loadView('report.peopleListPDF', array(), compact('people', 'gender', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
+        return $pdf->download('ListadoDeAsistidos.pdf');
+    }
+
+}

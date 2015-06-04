@@ -75,6 +75,11 @@
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
+                                        <a href="{{ action('ReportController@peopleList') }}">
+                                            Listado de asistidos
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="{{ action('ReportController@interactionsList') }}">
                                             Listado de interacciones
                                         </a>

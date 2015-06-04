@@ -1,8 +1,8 @@
-@if ($interactions != null && count($interactions) > 0)
+@if ($people != null && count($people) > 0)
     <div class="panel-collapse collapse in">
         <div class="panel-body">
             <div class="form-group">
-                <h1 align="center">Listado de interacciones</h1>
+                <h1 align="center">Listado de asistidos</h1>
                 <table style="width:100%">
                     <tr>
                         <td style="width:50%">
@@ -17,14 +17,14 @@
                 <table style="width:100%">
                     <tr>
                         <td style="width:50%">
-                            @if ($fixed != -1)
-                                <label style="font:bold;">Estado de la interacción:</label>
-                                {{ trans('messages.'.$fixed) }}
+                            @if ($gender != 'select')
+                                <label style="font:bold;">Sexo:</label>
+                                {{ trans('messages.'.$gender) }}
                             @endif
                         </td>
                         <td style="width:50%">
                             @if ($users != null && count($users) > 0)
-                                <label style="font:bold;">Creadas por:</label>
+                                <label style="font:bold;">Creados por:</label>
                                 @foreach($users as $idUser)
                                     {{ getUserName($idUser) }},
                                 @endforeach
@@ -53,23 +53,30 @@
                         <tr>
                             <td style="font:bold; border-bottom:1px solid black;">Fecha</td>
                             <td style="font:bold; border-bottom:1px solid black;">Asistido</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Descripción</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Estado</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Creada por</td>
+                            <td style="font:bold; border-bottom:1px solid black;">DNI</td>
+                            <td style="font:bold; border-bottom:1px solid black;">Edad</td>
+                            <td style="font:bold; border-bottom:1px solid black;">Dirección</td>
+                            <td style="font:bold; border-bottom:1px solid black;">Creado por</td>
                             <td style="font:bold; border-bottom:1px solid black;">Etiquetas</td>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($interactions as $interaction)
+                        @foreach($people as $person)
                             <tr>
-                                <td style="border-bottom:1px solid black;">{{ $interaction->date }}</td>
-                                <td style="border-bottom:1px solid black;">{{ getPersonName($interaction->person_id) }}</td>
-                                <td style="border-bottom:1px solid black;">{{ $interaction->text }}</td>
-                                <td style="border-bottom:1px solid black;">{{ trans('messages.'.$interaction->fixed) }}</td>
-                                <td style="border-bottom:1px solid black;">{{ getUserName($interaction->user_id) }}</td>
+                                <td style="border-bottom:1px solid black;">{{ date("Y-m-d", strtotime($person->created_at)) }}</td>
+                                <td style="border-bottom:1px solid black;">{{ $person->name() }}</td>
+                                <td style="border-bottom:1px solid black;">{{ $person->dni }}</td>
                                 <td style="border-bottom:1px solid black;">
-                                    @if (count($interaction->tagNames()) > 0)
-                                        @foreach ($interaction->tagNames() as $tag)
+                                    @if ($person->birthdate != null)
+                                        {{date_diff(date_create($person->birthdate), date_create('today'))->y}}
+                                        años
+                                    @endif
+                                </td>
+                                <td style="border-bottom:1px solid black;">{{ $person->address }}</td>
+                                <td style="border-bottom:1px solid black;">{{ getUserName($person->created_by) }}</td>
+                                <td style="border-bottom:1px solid black;">
+                                    @if (count($person->tagNames()) > 0)
+                                        @foreach ($person->tagNames() as $tag)
                                             {{ $tag }},
                                         @endforeach
                                     @endif
@@ -89,13 +96,13 @@
                     <tr>
                         <td>
                             <div>
-                                No hay ninguna interacción para mostrar desde el {{ $fromDate }} hasta el {{ $toDate }}
-                                @if ($fixed != -1)
-                                    con estado
-                                    {{ trans('messages.'.$fixed) }}
+                                No hay ningún asistido para mostrar desde el {{ $fromDate }} hasta el {{ $toDate }}
+                                @if ($gender != 'select')
+                                    de sexo
+                                    {{ trans('messages.'.$gender) }}
                                 @endif
                                 @if ($users != null && count($users) > 0)
-                                    creadas por:
+                                    creados por:
                                     @foreach($users as $idUser)
                                         {{ getUserName($idUser) }},
                                     @endforeach
