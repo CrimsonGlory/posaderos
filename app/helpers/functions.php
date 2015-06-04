@@ -41,7 +41,7 @@ function parse_phone($phone)
 // Returns an array with all the tag names
 function all_tags() // e.g. [ "tag1" => "tag1", "tag2" => "tag2" ]
 {
-    return 	$tags=Tag::lists('name','name'); // all tags
+    return $tags = Tag::lists('name','name'); // all tags
 }
 
 // Returns true if an array has tags that doesn't exist.
@@ -88,6 +88,32 @@ function sendMail($destinationMail,$person){
             $message->to($data['destination'])->subject('Nueva derivación');
         });
     }
+}
+
+// Returns an array with all the user names
+function all_users() // e.g. [ "user1" => "idUser1", "user2" => "idUser2" ]
+{
+    return $users = User::lists('name','id'); // all users
+}
+
+function getUserName($id)
+{
+    $user = User::find($id);
+    if ($user != null)
+    {
+        return $user->name;
+    }
+    return "";
+}
+
+function getPersonName($id)
+{
+    $person = Person::find($id);
+    if ($person != null)
+    {
+        return $person->name();
+    }
+    return "";
 }
 
 ?>

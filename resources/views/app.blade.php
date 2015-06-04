@@ -65,6 +65,25 @@
                         </ul>
                     @endif
 
+                    @if (Auth::user()->hasRole('admin') && Agent::isDesktop())
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <i class="glyphicon glyphicon-list"></i>
+                                    Listados
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ action('ReportController@peopleBetweenDays') }}">
+                                            Interacciones con asistidos
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    @endif
+
                     @if (Auth::user()->can('add-person'))
                         <ul class="nav navbar-nav">
                             <li>

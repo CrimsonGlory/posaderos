@@ -158,7 +158,8 @@ return [
 	    'Propaganistas\LaravelPhone\LaravelPhoneServiceProvider',
         'Jenssegers\Agent\AgentServiceProvider',
 	    'Orchestra\Imagine\ImagineServiceProvider',
-        'Conner\Likeable\LikeableServiceProvider'
+        'Conner\Likeable\LikeableServiceProvider',
+        'Barryvdh\DomPDF\ServiceProvider'
 
 	],
 
@@ -215,7 +216,7 @@ return [
 	    'Flash'         => 'Laracasts\Flash\Flash',
         'Entrust'       => 'Zizaco\Entrust\EntrustFacade',
         'Agent'         => 'Jenssegers\Agent\Facades\Agent',
-   'Imagine' => 'Orchestra\Imagine\Facade',
+        'Imagine'       => 'Orchestra\Imagine\Facade'
 	],
 
 ];
