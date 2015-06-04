@@ -90,10 +90,20 @@
                         <td>
                             <div>
                                 No hay ninguna interacción para mostrar desde el {{ $fromDate }} hasta el {{ $toDate }}
+                                @if ($fixed != -1)
+                                    con estado
+                                    {{ trans('messages.'.$fixed) }}
+                                @endif
                                 @if ($users != null && count($users) > 0)
                                     creadas por:
                                     @foreach($users as $idUser)
                                         {{ getUserName($idUser) }},
+                                    @endforeach
+                                @endif
+                                @if ($tags != null && count($tags) > 0)
+                                    con etiquetas:
+                                    @foreach($tags as $tag)
+                                        {{ $tag }},
                                     @endforeach
                                 @endif
                             </div>
