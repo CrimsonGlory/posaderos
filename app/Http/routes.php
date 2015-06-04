@@ -34,8 +34,8 @@ Route::get('tag/{name}','TagController@show');
 Route::get('file/{id}','FileEntryController@show');
 Route::get('photo/{size}/{id}','FileEntryController@showThumb');
 Route::get('photo/{id}','FileEntryController@show');
-Route::get('report/peopleBetweenDays','ReportController@peopleBetweenDays');
-Route::post('report/downloadPeopleBetweenDays','ReportController@downloadPeopleBetweenDays');
+Route::get('report/interactionsList','ReportController@interactionsList');
+Route::post('report/downloadInteractionsList','ReportController@downloadInteractionsList');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

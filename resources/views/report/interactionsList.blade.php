@@ -6,7 +6,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4>Listado de interacciones con asistidos</h4>
+                        <h4>Listado de interacciones</h4>
                     </div>
                     <div class="panel-body">
                         @if ($errors->any())
@@ -17,7 +17,7 @@
                             </ul>
                         @endif
 
-                        {!! Form::open(array('method' => 'POST', 'class' => 'form-horizontal', 'action' => array('ReportController@downloadPeopleBetweenDays'))) !!}
+                        {!! Form::open(array('method' => 'POST', 'class' => 'form-horizontal', 'action' => array('ReportController@downloadInteractionsList'))) !!}
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Desde fecha</label>
                                 <div class="col-md-6">

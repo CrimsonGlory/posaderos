@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class ReportController extends Controller {
 
-    public function peopleBetweenDays()
+    public function interactionsList()
     {
         $user = Auth::user();
         if (is_null($user))
@@ -20,12 +20,12 @@ class ReportController extends Controller {
 
         if ($user->hasRole('admin'))
         {
-            return view('report.peopleBetweenDays');
+            return view('report.interactionsList');
         }
         return redirect('home');
     }
 
-    public function downloadPeopleBetweenDays(CreateReportRequest $request)
+    public function downloadInteractionsList(CreateReportRequest $request)
     {
         $rules = array(
             'fromDate' => array('required', 'date'),
@@ -60,8 +60,8 @@ class ReportController extends Controller {
         $fromDate = date("d/m/Y", strtotime($fromDate));
         $toDate = date("d/m/Y", strtotime($toDate));
 
-        $pdf = PDF::loadView('report.peopleBetweenDaysPDF', array(), compact('interactions', 'users', 'fixed', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
-        return $pdf->download('InteraccionesConAsistidos.pdf');
+        $pdf = PDF::loadView('report.interactionsListPDF', array(), compact('interactions', 'users', 'fixed', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
+        return $pdf->download('ListadoDeInteracciones.pdf');
     }
 
 }

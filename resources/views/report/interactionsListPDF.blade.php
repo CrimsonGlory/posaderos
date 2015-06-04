@@ -2,7 +2,7 @@
     <div class="panel-collapse collapse in">
         <div class="panel-body">
             <div class="form-group">
-                <h1 align="center">Listado de interacciones con asistidos</h1>
+                <h1 align="center">Listado de interacciones</h1>
                 <table style="width:100%">
                     <tr>
                         <td style="width:50%">

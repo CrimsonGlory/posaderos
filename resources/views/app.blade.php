@@ -75,8 +75,8 @@
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{ action('ReportController@peopleBetweenDays') }}">
-                                            Interacciones con asistidos
+                                        <a href="{{ action('ReportController@interactionsList') }}">
+                                            Listado de interacciones
                                         </a>
                                     </li>
                                 </ul>
