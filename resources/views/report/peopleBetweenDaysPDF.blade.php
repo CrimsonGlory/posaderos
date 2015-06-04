@@ -5,7 +5,7 @@
                 <h1 align="center">Listado de interacciones con asistidos</h1>
                 <table style="width:100%">
                     <tr>
-                        <td align="left" style="width:50%">
+                        <td style="width:50%">
                             <label style="font:bold;">Desde fecha:</label> {{ $fromDate }}
                         </td>
                         <td style="width:50%">
@@ -13,13 +13,40 @@
                         </td>
                     </tr>
                 </table>
-                @if ($users != null && count($users) > 0)
-                    <label style="font:bold;">Creadas por:</label>
-                    @foreach($users as $idUser)
-                        {{ getUserName($idUser) }},
-                    @endforeach
-                @endif
-                <br/><br/>
+
+                <table style="width:100%">
+                    <tr>
+                        <td style="width:50%">
+                            @if ($users != null && count($users) > 0)
+                                <label style="font:bold;">Creadas por:</label>
+                                @foreach($users as $idUser)
+                                    {{ getUserName($idUser) }},
+                                @endforeach
+                            @endif
+                        </td>
+                        <td style="width:50%">
+                            @if ($fixed != -1)
+                                <label style="font:bold;">Estado de la interacción:</label>
+                                {{ trans('messages.'.$fixed) }}
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="width:100%">
+                    <tr>
+                        <td style="width:50%">
+                            @if ($tags != null && count($tags) > 0)
+                                <label style="font:bold;">Etiquetas:</label>
+                                @foreach($tags as $tag)
+                                    {{ $tag }},
+                                @endforeach
+                            @endif
+                        </td>
+                        <td style="width:50%">
+                        </td>
+                    </tr>
+                </table>
 
                 <table class="table table-striped" cellpadding="2" cellspacing="1" width="100%">
                     <thead>

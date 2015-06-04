@@ -22,7 +22,7 @@ class ReportController extends Controller {
         {
             return view('report.peopleBetweenDays');
         }
-        Redirect::back();
+        return redirect('home');
     }
 
     public function downloadPeopleBetweenDays(CreateReportRequest $request)
@@ -60,7 +60,7 @@ class ReportController extends Controller {
         $fromDate = date("d/m/Y", strtotime($fromDate));
         $toDate = date("d/m/Y", strtotime($toDate));
 
-        $pdf = PDF::loadView('report.peopleBetweenDaysPDF', array(), compact('interactions', 'users', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
+        $pdf = PDF::loadView('report.peopleBetweenDaysPDF', array(), compact('interactions', 'users', 'fixed', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
         return $pdf->download('InteraccionesConAsistidos.pdf');
     }
 
