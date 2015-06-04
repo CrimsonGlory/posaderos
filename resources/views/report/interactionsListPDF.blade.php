@@ -89,7 +89,7 @@
                     <tr>
                         <td>
                             <div>
-                                No hay ninguna interacción para mostrar desde el {{ $fromDate }} hasta el {{ $toDate }}
+                                No hay ninguna interacción creada desde el {{ $fromDate }} hasta el {{ $toDate }}
                                 @if ($fixed != -1)
                                     con estado
                                     {{ trans('messages.'.$fixed) }}

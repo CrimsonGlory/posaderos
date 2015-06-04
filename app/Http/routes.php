@@ -35,8 +35,10 @@ Route::get('photo/{size}/{id}',                 'FileEntryController@showThumb')
 Route::get('photo/{id}',                        'FileEntryController@show');
 Route::get('report/peopleList',                 'ReportController@peopleList');
 Route::get('report/interactionsList',           'ReportController@interactionsList');
+Route::get('report/usersList',                  'ReportController@usersList');
 Route::post('report/downloadPeopleList',        'ReportController@downloadPeopleList');
 Route::post('report/downloadInteractionsList',  'ReportController@downloadInteractionsList');
+Route::post('report/downloadUsersList',         'ReportController@downloadUsersList');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

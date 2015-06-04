@@ -1,8 +1,8 @@
-@if ($people != null && count($people) > 0)
+@if ($users != null && count($users) > 0)
     <div class="panel-collapse collapse in">
         <div class="panel-body">
             <div class="form-group">
-                <h1 align="center">Listado de asistidos</h1>
+                <h1 align="center">Listado de usuarios</h1>
                 <table style="width:100%">
                     <tr>
                         <td style="width:50%">
@@ -17,24 +17,11 @@
                 <table style="width:100%">
                     <tr>
                         <td style="width:50%">
-                            @if ($gender != 'select')
-                                <label style="font:bold;">Sexo:</label>
-                                {{ trans('messages.'.$gender) }}
+                            @if ($role != 'select')
+                                <label style="font:bold;">Tipo de usuario:</label>
+                                {{ DB::table('roles')->where('name', $role)->first()->display_name }}
                             @endif
                         </td>
-                        <td style="width:50%">
-                            @if ($users != null && count($users) > 0)
-                                <label style="font:bold;">Creados por:</label>
-                                @foreach($users as $idUser)
-                                    {{ getUserName($idUser) }},
-                                @endforeach
-                            @endif
-                        </td>
-                    </tr>
-                </table>
-
-                <table style="width:100%">
-                    <tr>
                         <td style="width:50%">
                             @if ($tags != null && count($tags) > 0)
                                 <label style="font:bold;">Etiquetas:</label>
@@ -43,8 +30,6 @@
                                 @endforeach
                             @endif
                         </td>
-                        <td style="width:50%">
-                        </td>
                     </tr>
                 </table>
 
@@ -52,31 +37,28 @@
                     <thead>
                         <tr>
                             <td style="font:bold; border-bottom:1px solid black;">Fecha</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Asistido</td>
-                            <td style="font:bold; border-bottom:1px solid black;">DNI</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Edad</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Dirección</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Creado por</td>
+                            <td style="font:bold; border-bottom:1px solid black;">Nombre</td>
+                            <td style="font:bold; border-bottom:1px solid black;">Correo electrónico</td>
+                            <td style="font:bold; border-bottom:1px solid black;">Teléfono</td>
+                            <td style="font:bold; border-bottom:1px solid black;">Tipo de usuario</td>
                             <td style="font:bold; border-bottom:1px solid black;">Etiquetas</td>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($people as $person)
+                        @foreach($users as $user)
                             <tr>
-                                <td style="border-bottom:1px solid black;">{{ date("Y-m-d", strtotime($person->created_at)) }}</td>
-                                <td style="border-bottom:1px solid black;">{{ $person->name() }}</td>
-                                <td style="border-bottom:1px solid black;">{{ $person->dni }}</td>
+                                <td style="border-bottom:1px solid black;">{{ date("Y-m-d", strtotime($user->created_at)) }}</td>
+                                <td style="border-bottom:1px solid black;">{{ $user->name }}</td>
+                                <td style="border-bottom:1px solid black;">{{ $user->email }}</td>
+                                <td style="border-bottom:1px solid black;">{{ $user->phone }}</td>
                                 <td style="border-bottom:1px solid black;">
-                                    @if ($person->birthdate != null)
-                                        {{date_diff(date_create($person->birthdate), date_create('today'))->y}}
-                                        años
+                                    @if ($user->roles() != NULL && $user->roles()->first() != NULL)
+                                        {{ $user->roles()->first()->display_name }}
                                     @endif
                                 </td>
-                                <td style="border-bottom:1px solid black;">{{ $person->address }}</td>
-                                <td style="border-bottom:1px solid black;">{{ getUserName($person->created_by) }}</td>
                                 <td style="border-bottom:1px solid black;">
-                                    @if (count($person->tagNames()) > 0)
-                                        @foreach ($person->tagNames() as $tag)
+                                    @if (count($user->tagNames()) > 0)
+                                        @foreach ($user->tagNames() as $tag)
                                             {{ $tag }},
                                         @endforeach
                                     @endif
@@ -96,16 +78,10 @@
                     <tr>
                         <td>
                             <div>
-                                No hay ningún asistido creado desde el {{ $fromDate }} hasta el {{ $toDate }}
-                                @if ($gender != 'select')
-                                    de sexo
-                                    {{ trans('messages.'.$gender) }}
-                                @endif
-                                @if ($users != null && count($users) > 0)
-                                    creados por:
-                                    @foreach($users as $idUser)
-                                        {{ getUserName($idUser) }},
-                                    @endforeach
+                                No hay ningún usuario creado desde el {{ $fromDate }} hasta el {{ $toDate }}
+                                @if ($role != 'select')
+                                    con tipo de usuario
+                                    {{ DB::table('roles')->where('name', $role)->first()->display_name }}
                                 @endif
                                 @if ($tags != null && count($tags) > 0)
                                     con etiquetas:

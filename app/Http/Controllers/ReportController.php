@@ -5,11 +5,67 @@ use App\Http\Requests\CreateReportRequest;
 use App\Http\Requests\Request;
 use App\Interaction;
 use App\Person;
+use App\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Jenssegers\Agent\Facades\Agent;
 
 class ReportController extends Controller {
+
+    public function peopleList()
+    {
+        $user = Auth::user();
+        if (is_null($user))
+        {
+            return "404";
+        }
+
+        if ($user->hasRole('admin') && Agent::isDesktop())
+        {
+            return view('report.peopleList');
+        }
+        return redirect('home');
+    }
+
+    public function downloadPeopleList(CreateReportRequest $request)
+    {
+        $rules = array(
+            'fromDate' => array('required', 'date'),
+            'toDate' => array('required', 'date'),
+        );
+        $this->validate($request,$rules);
+
+        // Campos
+        $fromDate = $request->fromDate;
+        $toDate = $request->toDate;
+        $gender = $request->gender;
+        $users = $request->users;
+        $tags = $request->tags;
+
+        $builder = Person::where('created_at', '>=', $request->fromDate." 00:00:00")->where('created_at', '<=', $request->toDate." 23:59:59");
+
+        // Filtros
+        if ($gender != 'select')
+        {
+            $builder = $builder->where('gender', $gender);
+        }
+        if (count($users) > 0)
+        {
+            $builder = $builder->whereIn('created_by', $users);
+        }
+        if (count($tags) > 0)
+        {
+            $builder = $builder->withAnyTag($tags);
+        }
+
+        $people = $builder->orderBy('id','desc')->get();
+        $fromDate = date("d/m/Y", strtotime($fromDate));
+        $toDate = date("d/m/Y", strtotime($toDate));
+
+        $pdf = PDF::loadView('report.peopleListPDF', array(), compact('people', 'gender', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
+        return $pdf->download('ListadoDeAsistidos.pdf');
+    }
 
     public function interactionsList()
     {
@@ -19,7 +75,7 @@ class ReportController extends Controller {
             return "404";
         }
 
-        if ($user->hasRole('admin'))
+        if ($user->hasRole('admin') && Agent::isDesktop())
         {
             return view('report.interactionsList');
         }
@@ -65,7 +121,7 @@ class ReportController extends Controller {
         return $pdf->download('ListadoDeInteracciones.pdf');
     }
 
-    public function peopleList()
+    public function usersList()
     {
         $user = Auth::user();
         if (is_null($user))
@@ -73,14 +129,14 @@ class ReportController extends Controller {
             return "404";
         }
 
-        if ($user->hasRole('admin'))
+        if ($user->hasRole('admin') && Agent::isDesktop())
         {
-            return view('report.peopleList');
+            return view('report.usersList');
         }
         return redirect('home');
     }
 
-    public function downloadPeopleList(CreateReportRequest $request)
+    public function downloadUsersList(CreateReportRequest $request)
     {
         $rules = array(
             'fromDate' => array('required', 'date'),
@@ -91,32 +147,29 @@ class ReportController extends Controller {
         // Campos
         $fromDate = $request->fromDate;
         $toDate = $request->toDate;
-        $gender = $request->gender;
-        $users = $request->users;
+        $role = $request->role;
         $tags = $request->tags;
 
-        $builder = Person::where('created_at', '>=', $request->fromDate." 00:00:00")->where('created_at', '<=', $request->toDate." 23:59:59");
+        $builder = User::where('created_at', '>=', $request->fromDate." 00:00:00")->where('created_at', '<=', $request->toDate." 23:59:59");
 
         // Filtros
-        if ($gender != 'select')
+        if ($role != 'select')
         {
-            $builder = $builder->where('gender', $gender);
-        }
-        if (count($users) > 0)
-        {
-            $builder = $builder->whereIn('created_by', $users);
+            $builder = $builder->whereHas('roles', function($q) use($role){
+                                     $q->where('name', $role);
+                                 });
         }
         if (count($tags) > 0)
         {
             $builder = $builder->withAnyTag($tags);
         }
 
-        $people = $builder->orderBy('id','desc')->get();
+        $users = $builder->orderBy('id','desc')->get();
         $fromDate = date("d/m/Y", strtotime($fromDate));
         $toDate = date("d/m/Y", strtotime($toDate));
 
-        $pdf = PDF::loadView('report.peopleListPDF', array(), compact('people', 'gender', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
-        return $pdf->download('ListadoDeAsistidos.pdf');
+        $pdf = PDF::loadView('report.usersListPDF', array(), compact('users', 'role', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
+        return $pdf->download('ListadoDeUsuarios.pdf');
     }
 
 }

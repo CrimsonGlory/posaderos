@@ -84,6 +84,11 @@
                                             Listado de interacciones
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="{{ action('ReportController@usersList') }}">
+                                            Listado de usuarios
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
