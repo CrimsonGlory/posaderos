@@ -42,6 +42,7 @@ class ReportController extends Controller {
         $gender = $request->gender;
         $users = $request->users;
         $tags = $request->tags;
+        $exportTypes = $request->exportTypes;
 
         $builder = Person::where('created_at', '>=', $request->fromDate." 00:00:00")->where('created_at', '<=', $request->toDate." 23:59:59");
 
@@ -60,11 +61,20 @@ class ReportController extends Controller {
         }
 
         $people = $builder->orderBy('id','desc')->get();
-        $fromDate = date("d/m/Y", strtotime($fromDate));
-        $toDate = date("d/m/Y", strtotime($toDate));
 
-        $pdf = PDF::loadView('report.peopleListPDF', array(), compact('people', 'gender', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
-        return $pdf->download('ListadoDeAsistidos.pdf');
+        if ($exportTypes == 'pdf')
+        {
+            $fromDate = date("d/m/Y", strtotime($fromDate));
+            $toDate = date("d/m/Y", strtotime($toDate));
+
+            $pdf = PDF::loadView('report.peopleListPDF', array(), compact('people', 'gender', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
+            return $pdf->download('ListadoDeAsistidos.pdf');
+        }
+        else if ($exportTypes == 'csv')
+        {
+            return createPeopleCSVFile($people);
+        }
+        return view('report.peopleList');
     }
 
     public function interactionsList()
@@ -93,9 +103,11 @@ class ReportController extends Controller {
         // Campos
         $fromDate = $request->fromDate;
         $toDate = $request->toDate;
+        $people = $request->people;
         $users = $request->users;
         $fixed = $request->fixed;
         $tags = $request->tags;
+        $exportTypes = $request->exportTypes;
 
         $builder = Interaction::where('date', '>=', $request->fromDate." 00:00:00")->where('date', '<=', $request->toDate." 23:59:59");
 
@@ -103,6 +115,10 @@ class ReportController extends Controller {
         if ($fixed != -1)
         {
             $builder = $builder->where('fixed', $fixed);
+        }
+        if (count($people) > 0)
+        {
+            $builder = $builder->whereIn('person_id', $people);
         }
         if (count($users) > 0)
         {
@@ -114,11 +130,20 @@ class ReportController extends Controller {
         }
 
         $interactions = $builder->orderBy('id','desc')->get();
-        $fromDate = date("d/m/Y", strtotime($fromDate));
-        $toDate = date("d/m/Y", strtotime($toDate));
 
-        $pdf = PDF::loadView('report.interactionsListPDF', array(), compact('interactions', 'fixed', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
-        return $pdf->download('ListadoDeInteracciones.pdf');
+        if ($exportTypes == 'pdf')
+        {
+            $fromDate = date("d/m/Y", strtotime($fromDate));
+            $toDate = date("d/m/Y", strtotime($toDate));
+
+            $pdf = PDF::loadView('report.interactionsListPDF', array(), compact('interactions', 'fixed', 'people', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
+            return $pdf->download('ListadoDeInteracciones.pdf');
+        }
+        else if ($exportTypes == 'csv')
+        {
+            return createInteractionsCSVFile($interactions);
+        }
+        return view('report.interactionsList');
     }
 
     public function usersList()
@@ -149,6 +174,7 @@ class ReportController extends Controller {
         $toDate = $request->toDate;
         $role = $request->role;
         $tags = $request->tags;
+        $exportTypes = $request->exportTypes;
 
         $builder = User::where('created_at', '>=', $request->fromDate." 00:00:00")->where('created_at', '<=', $request->toDate." 23:59:59");
 
@@ -165,11 +191,20 @@ class ReportController extends Controller {
         }
 
         $users = $builder->orderBy('id','desc')->get();
-        $fromDate = date("d/m/Y", strtotime($fromDate));
-        $toDate = date("d/m/Y", strtotime($toDate));
 
-        $pdf = PDF::loadView('report.usersListPDF', array(), compact('users', 'role', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
-        return $pdf->download('ListadoDeUsuarios.pdf');
+        if ($exportTypes == 'pdf')
+        {
+            $fromDate = date("d/m/Y", strtotime($fromDate));
+            $toDate = date("d/m/Y", strtotime($toDate));
+
+            $pdf = PDF::loadView('report.usersListPDF', array(), compact('users', 'role', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
+            return $pdf->download('ListadoDeUsuarios.pdf');
+        }
+        else if ($exportTypes == 'csv')
+        {
+            return createUsersCSVFile($users);
+        }
+        return view('report.usersList');
     }
 
 }

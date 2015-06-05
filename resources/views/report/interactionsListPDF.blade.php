@@ -23,10 +23,10 @@
                             @endif
                         </td>
                         <td style="width:50%">
-                            @if ($users != null && count($users) > 0)
-                                <label style="font:bold;">Creadas por:</label>
-                                @foreach($users as $idUser)
-                                    {{ getUserName($idUser) }},
+                            @if ($people != null && count($people) > 0)
+                                <label style="font:bold;">Asistido:</label>
+                                @foreach($people as $idPerson)
+                                    {{ getPersonName($idPerson) }},
                                 @endforeach
                             @endif
                         </td>
@@ -36,14 +36,20 @@
                 <table style="width:100%">
                     <tr>
                         <td style="width:50%">
+                            @if ($users != null && count($users) > 0)
+                                <label style="font:bold;">Creadas por:</label>
+                                @foreach($users as $idUser)
+                                    {{ getUserName($idUser) }},
+                                @endforeach
+                            @endif
+                        </td>
+                        <td style="width:50%">
                             @if ($tags != null && count($tags) > 0)
                                 <label style="font:bold;">Etiquetas:</label>
                                 @foreach($tags as $tag)
                                     {{ $tag }},
                                 @endforeach
                             @endif
-                        </td>
-                        <td style="width:50%">
                         </td>
                     </tr>
                 </table>
@@ -93,6 +99,12 @@
                                 @if ($fixed != -1)
                                     con estado
                                     {{ trans('messages.'.$fixed) }}
+                                @endif
+                                @if ($people != null && count($people) > 0)
+                                    para asistido:
+                                    @foreach($people as $idPerson)
+                                        {{ getPersonName($idPerson) }},
+                                    @endforeach
                                 @endif
                                 @if ($users != null && count($users) > 0)
                                     creadas por:

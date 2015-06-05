@@ -96,6 +96,14 @@ function all_users() // e.g. [ "user1" => "idUser1", "user2" => "idUser2" ]
     return $users = User::lists('name','id'); // all users
 }
 
+// Returns an array with all the people names
+function all_people() // e.g. [ "person1" => "idUser1", "person2" => "idUser2" ]
+{
+    return $people = Person::select('id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'))
+                                    ->orderBy('last_name')
+                                    ->lists('full_name', 'id');
+}
+
 function getUserName($id)
 {
     $user = User::find($id);
@@ -114,6 +122,93 @@ function getPersonName($id)
         return $person->name();
     }
     return "";
+}
+
+function createPeopleCSVFile($people)
+{
+    if ($people != null)
+    {
+        $output = "Fecha,Asistido,DNI,Edad,Direccion,Creado por,Etiquetas";
+        foreach ($people as $person)
+        {
+            $bithdate = "";
+            if ($person->birthdate != null)
+            {
+                $bithdate = date_diff(date_create($person->birthdate), date_create('today'))->y." anios";
+            }
+
+            $output = $output."\n".
+                      date("d/m/Y", strtotime($person->created_at)).",".
+                      $person->name().",".
+                      $person->dni.",".
+                      $bithdate.",".
+                      $person->address.",".
+                      getUserName($person->created_by).",".
+                      implode(' ', $person->tagNames());
+        }
+
+        $headers = array(
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="ListadoDeAsistidos.csv"',
+        );
+
+        return Response::make($output, 200, $headers);
+    }
+}
+
+function createInteractionsCSVFile($interactions)
+{
+    if ($interactions != null)
+    {
+        $output = "Fecha,Asistido,Descripcion,Estado,Creada por,Etiquetas";
+        foreach ($interactions as $interaction)
+        {
+            $output = $output."\n".
+                      date("d/m/Y", strtotime($interaction->date)).",".
+                      getPersonName($interaction->person_id).",".
+                      $interaction->text.",".
+                      trans('messages.'.$interaction->fixed).",".
+                      getUserName($interaction->user_id).",".
+                      implode(' ', $interaction->tagNames());
+        }
+
+        $headers = array(
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="ListadoDeInteracciones.csv"',
+        );
+
+        return Response::make($output, 200, $headers);
+    }
+}
+
+function createUsersCSVFile($users)
+{
+    if ($users != null)
+    {
+        $output = "Fecha,Nombre,Correo electronico,Telefono,Tipo de usuario,Etiquetas";
+        foreach ($users as $user)
+        {
+            $role = "";
+            if ($user->roles() != NULL && $user->roles()->first() != NULL)
+            {
+                $role = $user->roles()->first()->display_name;
+            }
+            $output = $output."\n".
+                      date("d/m/Y", strtotime($user->created_at)).",".
+                      $user->name.",".
+                      $user->email.",".
+                      $user->phone.",".
+                      $role.",".
+                      implode(' ', $user->tagNames());
+        }
+
+        $headers = array(
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="ListadoDeUsuarios.csv"',
+        );
+
+        return Response::make($output, 200, $headers);
+    }
 }
 
 ?>

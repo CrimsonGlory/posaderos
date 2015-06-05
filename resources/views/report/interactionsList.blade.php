@@ -40,6 +40,13 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-4 control-label">Interacciones con asistido</label>
+                                <div class="col-md-6">
+                                    {!! Form::select('people[]', all_people(), '', ['id' => 'people','class' => 'form-control','multiple']) !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-md-4 control-label">Interacciones creadas por</label>
                                 <div class="col-md-6">
                                     {!! Form::select('users[]', all_users(), '', ['id' => 'users','class' => 'form-control','multiple']) !!}
@@ -52,6 +59,8 @@
                                     {!! Form::select('tags[]', all_tags(), '', ['id' => 'tags','class' => 'form-control','multiple']) !!}
                                 </div>
                             </div>
+
+                            @include('report/exportTypes')
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
@@ -70,6 +79,7 @@
 @endsection
 
 @section('footer')
+    @include('person.select2List')
     @include('user.select2List')
     @include('tag.select2List')
 @endsection
