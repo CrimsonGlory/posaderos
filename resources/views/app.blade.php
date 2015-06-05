@@ -29,7 +29,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="{{ url('/') }}">Posaderos</a>
+				<a class="navbar-brand" href="{{ url('/') }}">{{ trans('messages.posaderos') }}</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -38,7 +38,7 @@
                         <ul class="nav navbar-nav">
                             <li><a href="{{ url('/person') }}">
                                     <i class="glyphicon glyphicon-user"></i>
-                                    Asistidos
+                                    {{ trans('messages.people') }}
                                 </a>
                             </li>
                         </ul>
@@ -48,7 +48,7 @@
                         <ul class="nav navbar-nav">
                             <li><a href="{{ url('/interaction') }}">
                                     <i class="glyphicon glyphicon-edit"></i>
-                                    Interacciones
+                                    {{ trans('messages.interactions') }}
                                 </a>
                             </li>
                         </ul>
@@ -59,7 +59,7 @@
                             <li>
                                 <a href="{{ url('/user') }}">
                                     <i class="glyphicon glyphicon-lock"></i>
-                                    Usuarios
+                                    {{ trans('messages.users') }}
                                 </a>
                             </li>
                         </ul>
@@ -70,23 +70,23 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="glyphicon glyphicon-list"></i>
-                                    Listados
+                                    {{ trans('messages.reports') }}
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <a href="{{ action('ReportController@peopleList') }}">
-                                            Listado de asistidos
+                                            {{ trans('messages.peopleReport') }}
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ action('ReportController@interactionsList') }}">
-                                            Listado de interacciones
+                                            {{ trans('messages.interactionsReport') }}
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ action('ReportController@usersList') }}">
-                                            Listado de usuarios
+                                            {{ trans('messages.usersReport') }}
                                         </a>
                                     </li>
                                 </ul>
@@ -99,7 +99,7 @@
                             <li>
                                 <a href="{{ action('PersonController@create') }}">
                                     <i class="glyphicon glyphicon-plus"></i>
-                                    Nuevo asistido
+                                    {{ trans('messages.newPerson') }}
                                 </a>
                             </li>
                         </ul>
@@ -110,7 +110,7 @@
                             <li>
                                 <a href="{{ url('/search/searchView') }}">
                                     <i class="glyphicon glyphicon-search"></i>
-                                    Buscar
+                                    {{ trans('messages.find') }}
                                 </a>
                             </li>
                         </ul>
@@ -119,8 +119,8 @@
 
 				<ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
-                        <li><a href="{{ url('/auth/login') }}">Login</a></li>
-                        <li><a href="{{ url('/auth/register') }}">Regístrate</a></li>
+                        <li><a href="{{ url('/auth/login') }}">{{ trans('messages.login') }}</a></li>
+                        <li><a href="{{ url('/auth/register') }}">{{ trans('messages.register') }}</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -131,33 +131,33 @@
                                 <li>
                                     <a href="{{ action('UserController@show',Auth::user()->id) }}">
                                         <i class="glyphicon glyphicon-home"></i>
-                                        Mi perfil
+                                        {{ trans('messages.myProfile') }}
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ action('UserController@edit', Auth::user()->id) }}">
                                         <i class="glyphicon glyphicon-cog"></i>
-                                        Editar cuenta
+                                        {{ trans('messages.editAccount') }}
                                     </a>
                                 </li>
                                 @if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('posadero') || Auth::user()->hasRole('explorer'))
                                     <li>
                                         <a href="{{ action('UserController@derivations', Auth::user()->id) }}">
                                             <i class="glyphicon glyphicon-bell"></i>
-                                            Derivaciones
+                                            {{ trans('messages.derivations') }}
                                         </a>
                                     </li>
                                 @endif
                                 <li>
                                     <a href="{{ action('UserController@favorites', Auth::user()->id) }}">
                                         <i class="glyphicon glyphicon-star"></i>
-                                        Favoritos
+                                        {{ trans('messages.favorites') }}
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ url('/auth/logout') }}">
                                         <i class="glyphicon glyphicon-log-out"></i>
-                                        Logout
+                                        {{ trans('messages.logout') }}
                                     </a>
                                 </li>
                             </ul>

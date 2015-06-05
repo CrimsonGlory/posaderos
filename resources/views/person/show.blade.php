@@ -15,13 +15,13 @@
                                             <td width="50px;">
                                                 @if (!($person->liked(Auth::user()->id)))
                                                     {!! Form::open(array('method' => 'POST', 'action' => array('PersonController@addFavorite', $person->id))) !!}
-                                                        <button class="btn btn-warning" type="submit" title="Agregar a favoritos">
+                                                        <button class="btn btn-warning" type="submit" title="{{ trans('messages.addToFavorites') }}">
                                                             <i class="glyphicon glyphicon-star"></i>
                                                         </button>
                                                     {!! Form::close() !!}
                                                 @else
                                                     {!! Form::open(array('method' => 'POST', 'action' => array('PersonController@removeFavorite', $person->id))) !!}
-                                                        <button class="btn btn-success" type="submit" title="Quitar de favoritos">
+                                                        <button class="btn btn-success" type="submit" title="{{ trans('messages.removeFromFavorites') }}">
                                                             <i class="glyphicon glyphicon-star-empty"></i>
                                                         </button>
                                                     {!! Form::close() !!}
@@ -87,12 +87,12 @@
                                 <tr>
                                     <td align="center">
                                         @if ($fileentries != null && count($fileentries) != 0)
-                                            <a class="btn btn-link" href="{{ action("PersonController@photos",$person->id) }}">Ver fotos</a>
+                                            <a class="btn btn-link" href="{{ action("PersonController@photos",$person->id) }}">{{ trans('messages.seePhotos') }}</a>
                                             @if (Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id))
                                                 | <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i></a>
                                             @endif
                                          @elseif (Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id))
-                                            <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i> Agregar foto</a>
+                                            <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i> {{ trans('messages.addPhoto') }}</a>
                                         @else
                                             <br/>
                                          @endif
@@ -101,7 +101,7 @@
                             </table>
 			                @if ($person->dni != null && $person->dni != 0)
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">DNI</label>
+                                    <label class="col-md-4 control-label">{{ trans('messages.dni') }}</label>
                                     <div class="col-md-6">
                                         <label class="form-control" name="dni">{{ $person->dni }}</label>
                                     </div>
@@ -110,7 +110,7 @@
 
 			                @if ($person->birthdate != null)
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">Fecha de nacimiento</label>
+                                    <label class="col-md-4 control-label">{{ trans('messages.birthdate') }}</label>
                                     <div class="col-md-6">
                                         <label  class="form-control" name="birthdate">{{ date("d/m/Y", strtotime($person->birthdate)) }}</label>
                                     </div>
@@ -118,7 +118,7 @@
 			                @endif
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Sexo</label>
+                                <label class="col-md-4 control-label">{{ trans('messages.gender') }}</label>
                                 <div class="col-md-6">
                                     <label class="form-control" name="gender">{{ trans('messages.'.$person->gender) }}</label>
                                 </div>
@@ -126,7 +126,7 @@
 
 			                @if ($person->email != null)
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">Correo electrónico</label>
+                                    <label class="col-md-4 control-label">{{ trans('messages.email') }}</label>
                                     <div class="col-md-6">
                                         <label class="form-control" name="email">{{ $person->email }}</label>
                                     </div>
@@ -135,7 +135,7 @@
 
 			                @if ($person->address != null)
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">Dirección</label>
+                                    <label class="col-md-4 control-label">{{ trans('messages.address') }}</label>
                                     <div class="col-md-6">
                                         <label class="form-control" name="address">{{ $person->address }}</label>
                                     </div>
@@ -144,7 +144,7 @@
 
 					        @if ($person->phone != null)
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">Teléfono</label>
+                                    <label class="col-md-4 control-label">{{ trans('messages.phone') }}</label>
                                     <div class="col-md-6">
                                         <label class="form-control" name="phone">{{ $person->phone }}</label>
                                     </div>
@@ -153,7 +153,7 @@
 
 			                @if ($person->other != null)
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">Observaciones</label>
+                                    <label class="col-md-4 control-label">{{ trans('messages.observations') }}</label>
                                     <div class="col-md-6">
                                         <label class="form-control" style="height: 50px;" name="other">{{ $person->other }}</label>
                                     </div>
@@ -162,7 +162,7 @@
 
                             @if (count($person->tagNames()) > 0)
                                  <div class="form-group">
-                                    <label class="col-md-4 control-label">Etiquetas</label>
+                                    <label class="col-md-4 control-label">{{ trans('messages.tags') }}</label>
                                     <div class="col-md-6">
                                         <label class="form-control">
                                             @include('tag.list_tags',['tagNames' => $person->tagNames()])
@@ -174,7 +174,7 @@
                             @if ($person->created_by != 0 && $person->updated_by != 0)
                                 @if (Auth::user()->can('see-users') || $person->created_by == Auth::user()->id)
                                     <div class="form-group">
-                                        <label class="col-md-4 control-label">Persona agregada por</label>
+                                        <label class="col-md-4 control-label">{{ trans('messages.personAddedBy') }}</label>
                                         <div class="col-md-6">
                                             <label class="form-control">
                                                 <a href="{{ action('UserController@show',$person->created_by) }}">
@@ -188,7 +188,7 @@
 
                                 @if (Auth::user()->can('see-users') || $person->updated_by == Auth::user()->id)
                                     <div class="form-group">
-                                        <label class="col-md-4 control-label">Última actualización</label>
+                                        <label class="col-md-4 control-label">{{ trans('messages.lastUpdate') }}</label>
                                         <div class="col-md-6">
                                             <label class="form-control">
                                                 <a href="{{ action('UserController@show',$person->updated_by) }}">
@@ -209,9 +209,9 @@
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
-                                <td><h4>Últimas interacciones</h4></td>
+                                <td><h4>{{ trans('messages.lastInteractions') }}</h4></td>
                                 @if (Auth::user()->can('add-interaction'))
-                                    <td align="right"><a class="btn btn-primary" href="{{ url('person/'.$person->id.'/interaction/create') }}" style="width:85px;">Agregar</a></td>
+                                    <td align="right"><a class="btn btn-primary" href="{{ url('person/'.$person->id.'/interaction/create') }}" style="width:85px;">{{ trans('messages.add') }}</a></td>
                                 @endif
                             </tr>
                         </table>
@@ -241,14 +241,14 @@
                                             <label>{{ $interaction->text }}</label>
                                         @endif
                                         <br/>
-                                        <label>Estado: </label>
+                                        <label>{{ trans('messages.state') }}:</label>
                                         @if ($interaction->fixed)
                                             <label style="color:green">{{ trans('messages.'.$interaction->fixed) }}.</label>
                                         @else
                                             <label style="color:red">{{ trans('messages.'.$interaction->fixed) }}.</label>
                                         @endif
                                         @if (count($interaction->tagNames()) > 0)
-                                            <label>Etiquetas: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label>
+                                            <label>{{ trans('messages.tags') }}: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label>
                                         @endif
                                     </td>
                                     <td align="right">
@@ -283,7 +283,7 @@
                                     <table width="100%">
                                         <tr>
                                             <td>
-                                                <label>No hay ninguna interacción para mostrar.</label>
+                                                <label>{{ trans('messages.noInteractions') }}</label>
                                             </td>
                                         </tr>
                                     </table>
@@ -296,5 +296,3 @@
         </div>
     </div>
 @endsection
-
-@stop

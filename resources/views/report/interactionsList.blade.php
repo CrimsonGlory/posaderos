@@ -6,7 +6,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4>Listado de interacciones</h4>
+                        <h4>{{ trans('messages.interactionsList') }}</h4>
                     </div>
                     <div class="panel-body">
                         @if ($errors->any())
@@ -19,42 +19,42 @@
 
                         {!! Form::open(array('method' => 'POST', 'class' => 'form-horizontal', 'action' => array('ReportController@downloadInteractionsList'))) !!}
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Desde fecha</label>
+                                <label class="col-md-4 control-label">{{ trans('messages.fromDate') }}</label>
                                 <div class="col-md-6">
                                     <input type="date" class="form-control" name="fromDate" value="{{ date('Y-m-01') }}" autofocus="true">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Hasta fecha</label>
+                                <label class="col-md-4 control-label">{{ trans('messages.toDate') }}</label>
                                 <div class="col-md-6">
                                     <input type="date" class="form-control" name="toDate" value="{{ date("Y-m-t", strtotime(date('Y-m-d'))) }}">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Estado de la interacción</label>
+                                <label class="col-md-4 control-label">{{ trans('messages.interactionState') }}</label>
                                 <div class="col-md-6">
-                                    {!! Form::select('fixed', array(-1 => '- Seleccionar -', 0 => 'Pendiente', 1 => 'Finalizada'), -1, array('class' => 'form-control')) !!}
+                                    {!! Form::select('fixed', array(-1 => trans('messages.select'), 0 => trans('messages.pending'), 1 => trans('messages.finished')), -1, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Interacciones con asistido</label>
+                                <label class="col-md-4 control-label">{{ trans('messages.interactionsWith') }}</label>
                                 <div class="col-md-6">
                                     {!! Form::select('people[]', all_people(), '', ['id' => 'people','class' => 'form-control','multiple']) !!}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Interacciones creadas por</label>
+                                <label class="col-md-4 control-label">{{ trans('messages.interactionsCreatedBy') }}</label>
                                 <div class="col-md-6">
                                     {!! Form::select('users[]', all_users(), '', ['id' => 'users','class' => 'form-control','multiple']) !!}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Etiquetas</label>
+                                <label class="col-md-4 control-label">{{ trans('messages.tags') }}</label>
                                 <div class="col-md-6">
                                     {!! Form::select('tags[]', all_tags(), '', ['id' => 'tags','class' => 'form-control','multiple']) !!}
                                 </div>
@@ -66,7 +66,7 @@
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="glyphicon glyphicon-download-alt"></i>
-                                        Descargar
+                                        {{ trans('messages.download') }}
                                     </button>
                                 </div>
                             </div>
@@ -83,5 +83,3 @@
     @include('user.select2List')
     @include('tag.select2List')
 @endsection
-
-@stop

@@ -2,14 +2,14 @@
     <div class="panel-collapse collapse in">
         <div class="panel-body">
             <div class="form-group">
-                <h1 align="center">Listado de usuarios</h1>
+                <h1 align="center">{{ trans('messages.usersList') }}</h1>
                 <table style="width:100%">
                     <tr>
                         <td style="width:50%">
-                            <label style="font:bold;">Desde fecha:</label> {{ $fromDate }}
+                            <label style="font:bold;">{{ trans('messages.fromDate') }}:</label> {{ $fromDate }}
                         </td>
                         <td style="width:50%">
-                            <label style="font:bold;">Hasta fecha:</label> {{ $toDate }}
+                            <label style="font:bold;">{{ trans('messages.toDate') }}:</label> {{ $toDate }}
                         </td>
                     </tr>
                 </table>
@@ -18,13 +18,13 @@
                     <tr>
                         <td style="width:50%">
                             @if ($role != 'select')
-                                <label style="font:bold;">Tipo de usuario:</label>
+                                <label style="font:bold;">{{ trans('messages.userRole') }}:</label>
                                 {{ DB::table('roles')->where('name', $role)->first()->display_name }}
                             @endif
                         </td>
                         <td style="width:50%">
                             @if ($tags != null && count($tags) > 0)
-                                <label style="font:bold;">Etiquetas:</label>
+                                <label style="font:bold;">{{ trans('messages.tags') }}:</label>
                                 @foreach($tags as $tag)
                                     {{ $tag }},
                                 @endforeach
@@ -36,12 +36,12 @@
                 <table class="table table-striped" cellpadding="2" cellspacing="1" width="100%">
                     <thead>
                         <tr>
-                            <td style="font:bold; border-bottom:1px solid black;">Fecha</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Nombre</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Correo electrónico</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Teléfono</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Tipo de usuario</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Etiquetas</td>
+                            <td style="font:bold; border-bottom:1px solid black;">{{ trans('messages.date') }}</td>
+                            <td style="font:bold; border-bottom:1px solid black;">{{ trans('messages.firstName') }}</td>
+                            <td style="font:bold; border-bottom:1px solid black;">{{ trans('messages.email') }}</td>
+                            <td style="font:bold; border-bottom:1px solid black;">{{ trans('messages.phone') }}</td>
+                            <td style="font:bold; border-bottom:1px solid black;">{{ trans('messages.userRole') }}</td>
+                            <td style="font:bold; border-bottom:1px solid black;">{{ trans('messages.tags') }}</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,24 +71,14 @@
         </div>
     </div>
 @else
-    <div id="collapseThree" class="panel-collapse collapse in">
+    <div class="panel-collapse collapse in">
         <div class="panel-body">
             <div class="form-group">
                 <table width="100%">
                     <tr>
                         <td>
                             <div>
-                                No hay ningún usuario creado desde el {{ $fromDate }} hasta el {{ $toDate }}
-                                @if ($role != 'select')
-                                    con tipo de usuario
-                                    {{ DB::table('roles')->where('name', $role)->first()->display_name }}
-                                @endif
-                                @if ($tags != null && count($tags) > 0)
-                                    con etiquetas:
-                                    @foreach($tags as $tag)
-                                        {{ $tag }},
-                                    @endforeach
-                                @endif
+                                {{ trans('messages.noUsers') }}
                             </div>
                         </td>
                     </tr>
@@ -97,4 +87,3 @@
         </div>
     </div>
 @endif
-

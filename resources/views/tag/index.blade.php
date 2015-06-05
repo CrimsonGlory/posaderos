@@ -9,7 +9,7 @@
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
-                                <td><h4>Etiquetas</h4></td>
+                                <td><h4>{{ trans('messages.tags') }}</h4></td>
                             </tr>
                         </table>
                     </div>

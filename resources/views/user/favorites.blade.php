@@ -8,7 +8,7 @@
                 <div class="panel-heading" role="tab">
                     <table width="100%">
                         <tr>
-                            <td><h4>{{ $userShown->name }} - Favoritos</h4></td>
+                            <td><h4>{{ $userShown->name }} - {{ trans('messages.favorites') }}</h4></td>
                         </tr>
                     </table>
                 </div>

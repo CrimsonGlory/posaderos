@@ -6,7 +6,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4>Listado de usuarios</h4>
+                        <h4>{{ trans('messages.usersList') }}</h4>
                     </div>
                     <div class="panel-body">
                         @if ($errors->any())
@@ -19,28 +19,28 @@
 
                         {!! Form::open(array('method' => 'POST', 'class' => 'form-horizontal', 'action' => array('ReportController@downloadUsersList'))) !!}
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Desde fecha</label>
+                                <label class="col-md-4 control-label">{{ trans('messages.fromDate') }}</label>
                                 <div class="col-md-6">
                                     <input type="date" class="form-control" name="fromDate" value="{{ date('Y-m-01') }}" autofocus="true">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Hasta fecha</label>
+                                <label class="col-md-4 control-label">{{ trans('messages.toDate') }}</label>
                                 <div class="col-md-6">
                                     <input type="date" class="form-control" name="toDate" value="{{ date("Y-m-t", strtotime(date('Y-m-d'))) }}">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Tipo de usuario</label>
+                                <label class="col-md-4 control-label">{{ trans('messages.userRole') }}</label>
                                 <div class="col-md-6">
-                                    {!! Form::select('role', array('select'=>'- Seleccionar -','admin'=>'Administrador','posadero'=>'Posadero','explorer'=>'Explorador','new-user'=>'Nuevo usuario'), 'select', array('class' => 'form-control')) !!}
+                                    {!! Form::select('role', array('select' => trans('messages.select'), 'admin' => trans('messages.admin'), 'posadero' => trans('messages.posadero'), 'explorer' => trans('messages.explorer'), 'new-user' => trans('messages.newUser')), 'select', array('class' => 'form-control')) !!}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Etiquetas</label>
+                                <label class="col-md-4 control-label">{{ trans('messages.tags') }}</label>
                                 <div class="col-md-6">
                                     {!! Form::select('tags[]', all_tags(), '', ['id' => 'tags','class' => 'form-control','multiple']) !!}
                                 </div>
@@ -52,7 +52,7 @@
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="glyphicon glyphicon-download-alt"></i>
-                                        Descargar
+                                        {{ trans('messages.download') }}
                                     </button>
                                 </div>
                             </div>
@@ -67,5 +67,3 @@
 @section('footer')
     @include('tag.select2List')
 @endsection
-
-@stop

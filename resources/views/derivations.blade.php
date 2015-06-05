@@ -10,9 +10,9 @@
                         <tr>
                             <td>
                                 @if (Auth::user()->hasRole('admin'))
-                                    <h4>Derivaciones pendientes</h4>
+                                    <h4>{{ trans('messages.pendingDerivations') }}</h4>
                                 @else
-                                    <h4>{{ $userShown->name }} - Derivaciones pendientes</h4>
+                                    <h4>{{ $userShown->name }} - {{ trans('messages.pendingDerivations') }}</h4>
                                 @endif
                             </td>
                         </tr>

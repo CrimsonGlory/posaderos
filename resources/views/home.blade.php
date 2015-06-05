@@ -8,7 +8,7 @@
                 <div class="panel-heading" role="tab" id="UltimasPersonas">
                     <h4>
                         <a class="panel-title" data-toggle="collapse" data-parent="#ultimasPersonasAgregadas" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Últimos 10 asistidos agregados
+                            {{ trans('messages.lastPeopleAdded') }}
                         </a>
                     </h4>
                 </div>
@@ -21,7 +21,7 @@
                 <div class="panel-heading" role="tab" id="UltimasInteracciones">
                     <h4>
                         <a class="panel-title" data-toggle="collapse" data-parent="#ultimasInteraccionesAgregadas" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                            Últimas 10 interacciones agregadas
+                            {{ trans('messages.lastInteractionsAdded') }}
                         </a>
                     </h4>
                 </div>

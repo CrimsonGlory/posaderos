@@ -56,7 +56,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Correo electrónico</label>
+                                <label class="col-md-4 control-label">{{ trans('messages.email') }}</label>
                                 <div class="col-md-6">
                                     <label class="form-control" name="email">{{ $userShown->email }}</label>
                                 </div>
@@ -64,7 +64,7 @@
 
 			                @if ($userShown->phone != null)
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">Teléfono</label>
+                                    <label class="col-md-4 control-label">{{ trans('messages.phone') }}</label>
                                     <div class="col-md-6">
                                         <label class="form-control" name="phone">{{ $userShown->phone }}</label>
                                     </div>
@@ -73,7 +73,7 @@
 
                             @if (count($userShown->tagNames()) > 0)
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">Etiquetas</label>
+                                    <label class="col-md-4 control-label">{{ trans('messages.tags') }}</label>
                                     <div class="col-md-6">
                                         <label class="form-control">
                                             @include('tag.list_tags',['tagNames' => $userShown->tagNames()])
@@ -84,7 +84,7 @@
 
                             @if ($userShown->roles() != NULL && $userShown->roles()->first() != NULL)
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">Tipo de usuario</label>
+                                    <label class="col-md-4 control-label">{{ trans('messages.userRole') }}</label>
                                     <div class="col-md-6">
                                         <label class="form-control" name="rol">{{ $userShown->roles()->first()->display_name }}</label>
                                     </div>
@@ -103,7 +103,7 @@
                 <div class="panel-heading" role="tab" id="PersonasCreadas">
                     <table width="100%">
                         <tr>
-                            <td><h4>Últimos asistidos dados de alta por {{ $userShown->name }}</h4></td>
+                            <td><h4>{{ trans('messages.lastPeopleAddedBy') }} {{ $userShown->name }}</h4></td>
                         </tr>
                     </table>
                 </div>

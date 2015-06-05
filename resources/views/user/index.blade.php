@@ -9,7 +9,9 @@
                 <div class="panel-heading" role="tab">
                     <table width="100%">
                         <tr>
-                            <td><h4>Usuarios</h4></td>
+                            <td>
+                                <h4>{{ trans('messages.users') }}</h4>
+                            </td>
                         </tr>
                     </table>
                 </div>

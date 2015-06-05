@@ -1,17 +1,17 @@
 @if (count($users))
     @if (Agent::isDesktop())
-        <div id="collapseOne" class="panel-collapse collapse in">
+        <div id="collapseThree" class="panel-collapse collapse in">
             <div class="panel-body">
                 <div class="form-group">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Foto</th>
-                                <th>Nombre</th>
-                                <th>Correo electrónico</th>
-                                <th>Teléfono</th>
-                                <th>Tipo de usuario</th>
-                                <th>Etiquetas</th>
+                                <th>{{ trans('messages.photo') }}</th>
+                                <th>{{ trans('messages.firstName') }}</th>
+                                <th>{{ trans('messages.email') }}</th>
+                                <th>{{ trans('messages.phone') }}</th>
+                                <th>{{ trans('messages.userRole') }}</th>
+                                <th>{{ trans('messages.tags') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -27,11 +27,11 @@
                                     </th>
                                     <th>{{ $user->email }}</th>
                                     <th>{{ $user->phone }}</th>
-                                    @if ($user->roles() != NULL && $user->roles()->first() != NULL)
-                                        <th>{{ $user->roles()->first()->display_name }}</th>
-                                    @else
-                                        <th></th>
-                                    @endif
+                                    <th>
+                                        @if ($user->roles() != NULL && $user->roles()->first() != NULL)
+                                            {{ $user->roles()->first()->display_name }}
+                                        @endif
+                                    </th>
                                     @if (count($user->tagNames()) > 0)
                                         <th>
                                             @include('tag.list_tags',['tagNames' => $user->tagNames()])
@@ -47,14 +47,14 @@
             </div>
         </div>
     @else
-        <div id="collapseTwo" class="panel-collapse collapse in">
+        <div id="collapseThree" class="panel-collapse collapse in">
             <div class="panel-body">
                 <div class="form-group">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Foto</th>
-                                <th>Nombre</th>
+                                <th>{{ trans('messages.photo') }}</th>
+                                <th>{{ trans('messages.firstName') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,7 +83,7 @@
                 <table width="100%">
                     <tr>
                         <td>
-                            <div>No hay ningún usuario para mostrar.</div>
+                            <div>{{ trans('messages.noUsers') }}</div>
                         </td>
                     </tr>
                 </table>

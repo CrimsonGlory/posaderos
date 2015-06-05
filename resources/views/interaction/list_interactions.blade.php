@@ -1,17 +1,17 @@
 @if (count($interactions))
     @if (Agent::isDesktop())
-        <div id="collapseOne" class="panel-collapse collapse in">
+        <div id="collapseTwo" class="panel-collapse collapse in">
             <div class="panel-body">
                 <div class="form-group">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Foto</th>
-                            <th>Asistido</th>
-                            <th>Descripción</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                            <th>Etiquetas</th>
+                            <th>{{ trans('messages.photo') }}</th>
+                            <th>{{ trans('messages.person') }}</th>
+                            <th>{{ trans('messages.description') }}</th>
+                            <th>{{ trans('messages.date') }}</th>
+                            <th>{{ trans('messages.state') }}</th>
+                            <th>{{ trans('messages.tags') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -36,13 +36,11 @@
                                         {{ trans('messages.'.$interaction->fixed) }}
                                     </a>
                                 </th>
-                                @if (count($interaction->tagNames()) > 0)
-                                    <th>
+                                <th>
+                                    @if (count($interaction->tagNames()) > 0)
                                         @include('tag.list_tags',['tagNames' => $interaction->tagNames()])
-                                    </th>
-                                @else
-                                    <th></th>
-                                @endif
+                                    @endif
+                                </th>
                             </tr>
                         @endforeach
                         </tbody>
@@ -57,9 +55,9 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Foto</th>
-                            <th>Descripción</th>
-                            <th>Estado</th>
+                            <th>{{ trans('messages.photo') }}</th>
+                            <th>{{ trans('messages.description') }}</th>
+                            <th>{{ trans('messages.state') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -95,13 +93,13 @@
         </div>
     @endif
 @else
-    <div id="collapseThree" class="panel-collapse collapse in">
+    <div id="collapseTwo" class="panel-collapse collapse in">
         <div class="panel-body">
             <div class="form-group">
                 <table width="100%">
                     <tr>
                         <td>
-                            <div>No hay ninguna interacción para mostrar.</div>
+                            <div>{{ trans('messages.noInteractions') }}</div>
                         </td>
                     </tr>
                 </table>

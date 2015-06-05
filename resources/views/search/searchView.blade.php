@@ -7,7 +7,7 @@
                 <div class="panel-heading" role="tab">
                     <table width="100%">
                         <tr>
-                            <td><h4>Búsqueda avanzada</h4></td>
+                            <td><h4>{{ trans('messages.advancedSearch') }}</h4></td>
                         </tr>
                     </table>
                 </div>
@@ -55,26 +55,26 @@
                         <div class="input-group-btn search-panel" role="search">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 @if (Auth::user()->can('see-people-search-view'))
-                                    <span id="search_concept">Asistidos</span>
+                                    <span id="search_concept">{{ trans('messages.people') }}</span>
                                 @else
-                                    <span id="search_concept">¿Búsqueda?</span>
+                                    <span id="search_concept">{{ trans('messages.search') }}</span>
                                 @endif
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 @if (Auth::user()->can('see-people-search-view'))
-                                    <li><a href="#person">Asistidos</a></li>
+                                    <li><a href="#person">{{ trans('messages.people') }}</a></li>
                                 @endif
                                 @if (Auth::user()->can('see-interactions-search-view'))
-                                    <li><a href="#interaction">Interacciones</a></li>
+                                    <li><a href="#interaction">{{ trans('messages.interactions') }}</a></li>
                                 @endif
                                 @if (Auth::user()->can('see-users-search-view'))
-                                    <li><a href="#user">Usuarios</a></li>
+                                    <li><a href="#user">{{ trans('messages.users') }}</a></li>
                                 @endif
                             </ul>
                         </div>
                         <input type="hidden" name="search_param" id="search_param">
-                        <input type="text" id="keyWord" class="form-control" name="x" placeholder="buscar..." autofocus="true" onkeypress="enterPressAction(event)">
+                        <input type="text" id="keyWord" class="form-control" name="x" placeholder="{{ trans('messages.find') }}..." autofocus="true" onkeypress="enterPressAction(event)">
                         <span class="input-group-btn">
                             <button id="search" class="btn btn-default" type="button" onClick="buscar()"><span class="glyphicon glyphicon-search"></span></button>
                         </span>

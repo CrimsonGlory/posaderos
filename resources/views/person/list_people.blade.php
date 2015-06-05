@@ -6,13 +6,13 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Foto</th>
-                                <th>Nombre</th>
-                                <th>DNI</th>
-                                <th>Edad</th>
-                                <th>Dirección</th>
-                                <th>Teléfono</th>
-                                <th>Etiquetas</th>
+                                <th>{{ trans('messages.photo') }}</th>
+                                <th>{{ trans('messages.firstName') }}</th>
+                                <th>{{ trans('messages.dni') }}</th>
+                                <th>{{ trans('messages.age') }}</th>
+                                <th>{{ trans('messages.address') }}</th>
+                                <th>{{ trans('messages.phone') }}</th>
+                                <th>{{ trans('messages.tags') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,19 +33,17 @@
                                 <th>{{$person->dni}}</th>
                                 <th>
                                     @if ($person->birthdate != null)
-                                            {{date_diff(date_create($person->birthdate), date_create('today'))->y}}
-                                            años
+                                        {{date_diff(date_create($person->birthdate), date_create('today'))->y}}
+                                        {{ trans('messages.years') }}
                                     @endif
                                 </th>
                                 <th>{{$person->address}}</th>
                                 <th>{{$person->phone}}</th>
-                                @if (count($person->tagNames()) > 0)
-                                    <th>
+                                <th>
+                                    @if (count($person->tagNames()) > 0)
                                         @include('tag.list_tags',['tagNames' => $person->tagNames()])
-                                    </th>
-                                @else
-                                    <th></th>
-                                @endif
+                                    @endif
+                                </th>
                             </tr>
                         @endforeach
                         </tbody>
@@ -54,15 +52,15 @@
             </div>
         </div>
     @else
-        <div id="collapseTwo" class="panel-collapse collapse in">
+        <div id="collapseOne" class="panel-collapse collapse in">
             <div class="panel-body">
                 <div class="form-group">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Foto</th>
-                                <th>Nombre</th>
-                                <th>DNI</th>
+                                <th>{{ trans('messages.photo') }}</th>
+                                <th>{{ trans('messages.firstName') }}</th>
+                                <th>{{ trans('messages.dni') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,13 +88,13 @@
         </div>
     @endif
 @else
-    <div id="collapseThree" class="panel-collapse collapse in">
+    <div id="collapseOne" class="panel-collapse collapse in">
         <div class="panel-body">
             <div class="form-group">
                 <table width="100%">
                     <tr>
                         <td>
-                            <div>No hay ningún asistido para mostrar.</div>
+                            <div>{{ trans('messages.noPeople') }}</div>
                         </td>
                     </tr>
                 </table>

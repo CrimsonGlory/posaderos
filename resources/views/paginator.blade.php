@@ -5,7 +5,7 @@
                 <td align="right">
                     <nav>
                         <ul class="pagination">
-                            {!! $paginator->renderBootstrap('<', '>') !!}
+                            {!! $paginator->renderBootstrap(trans('messages.prev'), trans('messages.next')) !!}
                         </ul>
                     </nav>
                 </td>

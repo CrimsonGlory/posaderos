@@ -6,7 +6,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4>Guardar foto de {{ $person->first_name }} {{ $person->last_name }}</h4>
+                        <h4>{{ trans('messages.savePhotoOf') }} {{ $person->first_name }} {{ $person->last_name }}</h4>
                     </div>
                     <div class="panel-body">
 			            @include('flash::message')
@@ -20,7 +20,7 @@
 
                         @if (Session::get('uploadError'))
                             <ul class="alert alert-danger">
-                                <li>El campo filename no puede ser superior a 8 MB.</li>
+                                <li>{{ trans('messages.maxSizeFile') }}</li>
                             </ul>
                         @endif
 
@@ -35,9 +35,9 @@
                             <div class="form-group">
                                 <table width="100%">
                                     <tr>
-                                        <td align="right"><button type="submit" class="btn btn-primary form-control"  style="width:100px;">Guardar</button></td>
+                                        <td align="right"><button type="submit" class="btn btn-primary form-control"  style="width:100px;">{{ trans('messages.save') }}</button></td>
                                         <td width="20"></td>
-                                        <td align="left"><a href="{{ action('PersonController@show', $person->id) }}" class="btn btn-primary" style="width:100px;">Cancelar</a></td>
+                                        <td align="left"><a href="{{ action('PersonController@show', $person->id) }}" class="btn btn-primary" style="width:100px;">{{ trans('messages.cancel') }}</a></td>
                                     </tr>
                                 </table>
                             </div>
@@ -48,5 +48,3 @@
         </div>
     </div>
 @endsection
-
-@stop

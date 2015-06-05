@@ -2,14 +2,14 @@
     <div class="panel-collapse collapse in">
         <div class="panel-body">
             <div class="form-group">
-                <h1 align="center">Listado de asistidos</h1>
+                <h1 align="center">{{ trans('messages.peopleList') }}</h1>
                 <table style="width:100%">
                     <tr>
                         <td style="width:50%">
-                            <label style="font:bold;">Desde fecha:</label> {{ $fromDate }}
+                            <label style="font:bold;">{{ trans('messages.fromDate') }}:</label> {{ $fromDate }}
                         </td>
                         <td style="width:50%">
-                            <label style="font:bold;">Hasta fecha:</label> {{ $toDate }}
+                            <label style="font:bold;">{{ trans('messages.toDate') }}:</label> {{ $toDate }}
                         </td>
                     </tr>
                 </table>
@@ -18,13 +18,13 @@
                     <tr>
                         <td style="width:50%">
                             @if ($gender != 'select')
-                                <label style="font:bold;">Sexo:</label>
+                                <label style="font:bold;">{{ trans('messages.gender') }}:</label>
                                 {{ trans('messages.'.$gender) }}
                             @endif
                         </td>
                         <td style="width:50%">
                             @if ($users != null && count($users) > 0)
-                                <label style="font:bold;">Creados por:</label>
+                                <label style="font:bold;">{{ trans('messages.createdBy') }}:</label>
                                 @foreach($users as $idUser)
                                     {{ getUserName($idUser) }},
                                 @endforeach
@@ -37,7 +37,7 @@
                     <tr>
                         <td style="width:50%">
                             @if ($tags != null && count($tags) > 0)
-                                <label style="font:bold;">Etiquetas:</label>
+                                <label style="font:bold;">{{ trans('messages.tags') }}:</label>
                                 @foreach($tags as $tag)
                                     {{ $tag }},
                                 @endforeach
@@ -51,13 +51,13 @@
                 <table class="table table-striped" cellpadding="2" cellspacing="1" width="100%">
                     <thead>
                         <tr>
-                            <td style="font:bold; border-bottom:1px solid black;">Fecha</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Asistido</td>
-                            <td style="font:bold; border-bottom:1px solid black;">DNI</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Edad</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Dirección</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Creado por</td>
-                            <td style="font:bold; border-bottom:1px solid black;">Etiquetas</td>
+                            <td style="font:bold; border-bottom:1px solid black;">{{ trans('messages.date') }}</td>
+                            <td style="font:bold; border-bottom:1px solid black;">{{ trans('messages.person') }}</td>
+                            <td style="font:bold; border-bottom:1px solid black;">{{ trans('messages.dni') }}</td>
+                            <td style="font:bold; border-bottom:1px solid black;">{{ trans('messages.age') }}</td>
+                            <td style="font:bold; border-bottom:1px solid black;">{{ trans('messages.address') }}</td>
+                            <td style="font:bold; border-bottom:1px solid black;">{{ trans('messages.createdBy') }}</td>
+                            <td style="font:bold; border-bottom:1px solid black;">{{ trans('messages.tags') }}</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,30 +89,14 @@
         </div>
     </div>
 @else
-    <div id="collapseThree" class="panel-collapse collapse in">
+    <div class="panel-collapse collapse in">
         <div class="panel-body">
             <div class="form-group">
                 <table width="100%">
                     <tr>
                         <td>
                             <div>
-                                No hay ningún asistido creado desde el {{ $fromDate }} hasta el {{ $toDate }}
-                                @if ($gender != 'select')
-                                    de sexo
-                                    {{ trans('messages.'.$gender) }}
-                                @endif
-                                @if ($users != null && count($users) > 0)
-                                    creados por:
-                                    @foreach($users as $idUser)
-                                        {{ getUserName($idUser) }},
-                                    @endforeach
-                                @endif
-                                @if ($tags != null && count($tags) > 0)
-                                    con etiquetas:
-                                    @foreach($tags as $tag)
-                                        {{ $tag }},
-                                    @endforeach
-                                @endif
+                                {{ trans('messages.noPeople') }}
                             </div>
                         </td>
                     </tr>
@@ -121,4 +105,3 @@
         </div>
     </div>
 @endif
-

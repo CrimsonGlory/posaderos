@@ -9,8 +9,8 @@
                 <div class="panel-heading" role="tab">
                     <table width="100%">
                         <tr>
-                            <td><h4>Asistidos</h4></td>
-                            <td align="right"><a class="btn btn-primary" href="{{ action('PersonController@create') }}" style="width:80px;">Agregar</a></td>
+                            <td><h4>{{ trans('messages.people') }}</h4></td>
+                            <td align="right"><a class="btn btn-primary" href="{{ action('PersonController@create') }}" style="width:80px;">{{ trans('messages.add') }}</a></td>
                         </tr>
                     </table>
                 </div>

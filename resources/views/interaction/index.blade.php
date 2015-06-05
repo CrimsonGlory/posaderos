@@ -8,7 +8,7 @@
                 <div class="panel-heading" role="tab">
                     <table width="100%">
                         <tr>
-                            <td><h4>Interacciones</h4></td>
+                            <td><h4>{{ trans('messages.interactions') }}</h4></td>
                         </tr>
                     </table>
                 </div>
