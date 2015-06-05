@@ -62,20 +62,20 @@ function allowed_to_tag($user,$tags)
 
 function sendMailToUsers($tags,$person)
 {
-    $users = User::get();
-    if ($users != null && $tags != null && $person != null)
+    if ($tags != null && $person != null)
     {
-        $asistido = array('asistido' => $person->name());
-        Mail::send('emails.alert', $asistido, function($message) use($users,$tags)
+        $users = User::withAnyTag($tags)->get();
+        if ($users != null && count($users) > 0)
         {
-            foreach ($users as $user)
+            $data = array('asistido' => $person->name());
+            Mail::raw('Se le ha derivado al asistido '.$data['asistido'].'.', function($message) use ($users,$data)
             {
-                if (array_intersect($user->tagNames(),$tags))
+                foreach ($users as $user)
                 {
                     $message->to($user->email)->subject('Nueva derivación');
                 }
-            }
-        });
+            });
+        }
     }
 }
 
@@ -83,7 +83,7 @@ function sendMail($destinationMail,$person){
     if ($destinationMail != null && $person != null)
     {
         $data = array('destination' => $destinationMail, 'asistido' => $person->name());
-        Mail::send('emails.alert', $data, function($message) use($data)
+        Mail::raw('Se le ha derivado al asistido '.$data['asistido'].'.', function($message) use ($data)
         {
             $message->to($data['destination'])->subject('Nueva derivación');
         });
