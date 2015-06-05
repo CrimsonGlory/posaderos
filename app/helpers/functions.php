@@ -100,7 +100,7 @@ function all_users() // e.g. [ "user1" => "idUser1", "user2" => "idUser2" ]
 function all_people() // e.g. [ "person1" => "idUser1", "person2" => "idUser2" ]
 {
     return $people = Person::select('id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'))
-                                    ->orderBy('last_name')
+                                    ->orderBy('first_name')
                                     ->lists('full_name', 'id');
 }
 
@@ -124,7 +124,7 @@ function getPersonName($id)
     return "";
 }
 
-function createPeopleCSVFile($people)
+function downloadPeopleCSVFile($people)
 {
     if ($people != null)
     {
@@ -156,7 +156,7 @@ function createPeopleCSVFile($people)
     }
 }
 
-function createInteractionsCSVFile($interactions)
+function downloadInteractionsCSVFile($interactions)
 {
     if ($interactions != null)
     {
@@ -181,7 +181,7 @@ function createInteractionsCSVFile($interactions)
     }
 }
 
-function createUsersCSVFile($users)
+function downloadUsersCSVFile($users)
 {
     if ($users != null)
     {

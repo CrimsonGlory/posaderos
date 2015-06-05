@@ -72,7 +72,7 @@ class ReportController extends Controller {
         }
         else if ($exportTypes == 'csv')
         {
-            return createPeopleCSVFile($people);
+            return downloadPeopleCSVFile($people);
         }
         return view('report.peopleList');
     }
@@ -141,7 +141,7 @@ class ReportController extends Controller {
         }
         else if ($exportTypes == 'csv')
         {
-            return createInteractionsCSVFile($interactions);
+            return downloadInteractionsCSVFile($interactions);
         }
         return view('report.interactionsList');
     }
@@ -202,7 +202,7 @@ class ReportController extends Controller {
         }
         else if ($exportTypes == 'csv')
         {
-            return createUsersCSVFile($users);
+            return downloadUsersCSVFile($users);
         }
         return view('report.usersList');
     }
