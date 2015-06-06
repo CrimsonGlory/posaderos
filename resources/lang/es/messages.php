@@ -27,6 +27,7 @@ return [
     'register'                  => 'Registrar',
     'myProfile'                 => 'Mi perfil',
     'editAccount'               => 'Editar cuenta',
+    'changePassword'            => 'Cambiar contraseña',
     'derivations'               => 'Derivaciones',
     'favorites'                 => 'Favoritos',
     'login'                     => 'Login',
@@ -143,9 +144,14 @@ return [
     // Users
     'updateUser'                => 'Actualizar usuario',
     'lastPeopleAddedBy'         => 'Últimos asistidos dados de alta por',
+    'currentPassword'           => 'Contraseña actual',
+    'newPassword'               => 'Nueva contraseña',
 
 
     /* Labels de los controllers */
+
+    // AuthController
+    'credentialsError'          => 'Estas credenciales no coinciden con nuestros registros.',
 
     // PasswordController
     'sendPasswordLink'          => 'Link para cambiar la contraseña',
@@ -181,6 +187,8 @@ return [
     'userFailed'                => 'Error al intentar crear el usuario.',
     'userUpdated'               => 'Usuario actualizado',
     'userDeleted'               => 'Usuario eliminado.',
+    'oldPasswordMatch'          => 'La contraseña actual es incorrecta.',
+    'passwordUpdated'           => 'Contraseña actualizada',
 
     /* Helpers */
 

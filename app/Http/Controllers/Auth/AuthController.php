@@ -62,4 +62,9 @@ class AuthController extends Controller {
         return redirect($this->redirectPath());
     }
 
+    protected function getFailedLoginMessage()
+    {
+        return trans('messages.credentialsError');
+    }
+
 }

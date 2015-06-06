@@ -39,6 +39,8 @@ Route::get('report/usersList',                  'ReportController@usersList');
 Route::post('report/downloadPeopleList',        'ReportController@downloadPeopleList');
 Route::post('report/downloadInteractionsList',  'ReportController@downloadInteractionsList');
 Route::post('report/downloadUsersList',         'ReportController@downloadUsersList');
+Route::get('user/{id}/changePassword',          'UserController@changePassword');
+Route::post('user/{id}',                        'UserController@storePassword');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

@@ -135,9 +135,9 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ action('UserController@edit', Auth::user()->id) }}">
+                                    <a href="{{ action('UserController@changePassword', Auth::user()->id) }}">
                                         <i class="glyphicon glyphicon-cog"></i>
-                                        {{ trans('messages.editAccount') }}
+                                        {{ trans('messages.changePassword') }}
                                     </a>
                                 </li>
                                 @if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('posadero') || Auth::user()->hasRole('explorer'))

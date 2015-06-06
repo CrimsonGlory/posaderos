@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 use PhpParser\Node\Expr\Array_;
@@ -207,6 +208,7 @@ class UserController extends Controller {
                 $person->delete();
             }
             $userShown->delete();
+
             flash()->success(trans('messages.userDeleted'));
             return redirect('user');
         }
@@ -254,6 +256,44 @@ class UserController extends Controller {
             return view('derivations', compact('userShown','interactions','paginator'));
         }
         return Redirect::back();
+    }
+
+    public function changePassword($id)
+    {
+        $user = Auth::user();
+        $userShown = User::find($id);
+        if (is_null($user) || is_null($userShown))
+        {
+            return "404";
+        }
+
+        if ($userShown->id == $user->id)
+        {
+            return view('user.changePassword',compact('userShown'));
+        }
+        return Redirect::back();
+    }
+
+    public function storePassword(UserRequest $request, $id)
+    {
+        $userShown = User::findOrFail($id);
+        if (!Hash::check($request->old_password, $userShown->password))
+        {
+            return Redirect::back()->withErrors(trans('messages.oldPasswordMatch'));
+        }
+
+        $rules = array(
+
+            'new_password' => array('required', 'min:6'),
+            'confirm_password' => array('required', 'same:new_password'),
+        );
+        $this->validate($request,$rules);
+
+        $userShown->password = Hash::make($request->new_password);
+        $userShown->update();
+
+        flash()->success(trans('messages.passwordUpdated'));
+        return redirect('user/'.$id);
     }
 
 }
