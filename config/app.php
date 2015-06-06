@@ -159,7 +159,8 @@ return [
         'Jenssegers\Agent\AgentServiceProvider',
 	    'Orchestra\Imagine\ImagineServiceProvider',
         'Conner\Likeable\LikeableServiceProvider',
-        'Barryvdh\DomPDF\ServiceProvider'
+        'Barryvdh\DomPDF\ServiceProvider',
+        'Maatwebsite\Excel\ExcelServiceProvider'
 
 	],
 

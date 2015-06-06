@@ -124,91 +124,9 @@ function getPersonName($id)
     return "";
 }
 
-function downloadPeopleCSVFile($people)
+function removeSpecialCharactersCSV($text)
 {
-    if ($people != null)
-    {
-        $output = trans('messages.date').','.trans('messages.person').','.trans('messages.dni').','.trans('messages.age').','.trans('messages.address').','.trans('messages.createdBy').','.trans('messages.tags');
-        foreach ($people as $person)
-        {
-            $bithdate = "";
-            if ($person->birthdate != null)
-            {
-                $bithdate = date_diff(date_create($person->birthdate), date_create('today'))->y." anios";
-            }
-
-            $output = $output."\n".
-                      date("d/m/Y", strtotime($person->created_at)).",".
-                      $person->name().",".
-                      $person->dni.",".
-                      $bithdate.",".
-                      $person->address.",".
-                      getUserName($person->created_by).",".
-                      implode(' ', $person->tagNames());
-        }
-
-        $headers = array(
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="'.trans('messages.peopleReportName').'.csv"',
-        );
-
-        return Response::make($output, 200, $headers);
-    }
-}
-
-function downloadInteractionsCSVFile($interactions)
-{
-    if ($interactions != null)
-    {
-        $output = trans('messages.date').','.trans('messages.person').','.trans('messages.description').','.trans('messages.state').','.trans('messages.createdBy').','.trans('messages.tags');
-        foreach ($interactions as $interaction)
-        {
-            $output = $output."\n".
-                      date("d/m/Y", strtotime($interaction->date)).",".
-                      getPersonName($interaction->person_id).",".
-                      $interaction->text.",".
-                      trans('messages.'.$interaction->fixed).",".
-                      getUserName($interaction->user_id).",".
-                      implode(' ', $interaction->tagNames());
-        }
-
-        $headers = array(
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="'.trans('messages.interactionsReportName').'.csv"',
-        );
-
-        return Response::make($output, 200, $headers);
-    }
-}
-
-function downloadUsersCSVFile($users)
-{
-    if ($users != null)
-    {
-        $output = trans('messages.date').','.trans('messages.firstName').','.trans('messages.email').','.trans('messages.phone').','.trans('messages.userRole').','.trans('messages.tags');
-        foreach ($users as $user)
-        {
-            $role = "";
-            if ($user->roles() != NULL && $user->roles()->first() != NULL)
-            {
-                $role = $user->roles()->first()->display_name;
-            }
-            $output = $output."\n".
-                      date("d/m/Y", strtotime($user->created_at)).",".
-                      $user->name.",".
-                      $user->email.",".
-                      $user->phone.",".
-                      $role.",".
-                      implode(' ', $user->tagNames());
-        }
-
-        $headers = array(
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="'.trans('messages.usersReportName').'.csv"',
-        );
-
-        return Response::make($output, 200, $headers);
-    }
+    return strtr($text, array(',' => '', '"' => '', '\\' => '', '/' => ''));
 }
 
 ?>
