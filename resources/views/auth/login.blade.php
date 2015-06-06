@@ -48,7 +48,7 @@
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">{{ trans('messages.enter') }}</button>
 
-                                    <a class="btn btn-link" href="{{ url('/password/email') }}">{{ trans('messages.forget') }}</a>
+                                    <!--<a class="btn btn-link" href="{{ url('/password/email') }}">{{ trans('messages.forget') }}</a>-->
                                 </div>
                             </div>
                         </form>
