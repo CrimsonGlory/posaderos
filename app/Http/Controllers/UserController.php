@@ -86,11 +86,11 @@ class UserController extends Controller {
 
         if($user->save())
         {
-            flash()->success('Usuario creado.');
+            flash()->success(trans('messages.userCreated'));
         }
         else
         {
-            flash()->error('Error al intentar crear el usuario.');
+            flash()->error(trans('messages.userFailed'));
         }
 		return redirect('user');
 	}
@@ -177,7 +177,7 @@ class UserController extends Controller {
             $user->untag();
         }
 
-		flash()->success('Usuario actualizado.');
+		flash()->success(trans('messages.userUpdated'));
 		return redirect('user/'.$id);
 	}
 
@@ -207,7 +207,7 @@ class UserController extends Controller {
                 $person->delete();
             }
             $userShown->delete();
-            flash()->success('Usuario eliminado.');
+            flash()->success(trans('messages.userDeleted'));
             return redirect('user');
         }
         return Redirect::back();

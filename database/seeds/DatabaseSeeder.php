@@ -55,7 +55,7 @@ class UserRolesAndPermissionsSeeder extends Seeder {
 
         $explorer = new Role();
         $explorer->name         = 'explorer';
-        $explorer->display_name = 'Explorador'; // optional
+        $explorer->display_name = 'Samaritano'; // optional
         $explorer->description  = 'Usuario explorador con acceso a las páginas de asistidos e interacciones.'; // optional
         $explorer->save();
 

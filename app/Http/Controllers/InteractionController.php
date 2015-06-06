@@ -110,11 +110,11 @@ class InteractionController extends Controller {
             try
             {
                 sendMail($destinationMail,$person);
-                flash()->success('Se ha enviado un mail notificando la derivación del asistido.');
+                flash()->success(trans('messages.mailSuccess'));
             }
             catch (\Exception $e)
             {
-                flash()->error('No se pudo enviar el mail notificando la derivación del asistido.')->important();
+                flash()->error(trans('messages.mailFailed'))->important();
             }
         }
 
@@ -125,11 +125,11 @@ class InteractionController extends Controller {
             try
             {
                 sendMailToUsers($tags,$person);
-                flash()->success('Se han enviado los mails notificando la derivación del asistido.');
+                flash()->success(trans('messages.mailsSuccess'));
             }
             catch (\Exception $e)
             {
-                flash()->error('No se han podido enviar los mails notificando la derivación del asistido.')->important();
+                flash()->error(trans('messages.mailsFailed'))->important();
             }
 
         }
@@ -138,11 +138,11 @@ class InteractionController extends Controller {
         {
             if ($success)
             {
-                flash()->success('Interacción creada.');
+                flash()->success(trans('messages.interactionCreated'));
             }
             else
             {
-                flash()->error('Error al intentar crear la interacción.');
+                flash()->error(trans('messages.interactionFailed'));
             }
         }
 
@@ -216,7 +216,7 @@ class InteractionController extends Controller {
             $interaction->untag();
         }
 
-        flash()->success("Interacción actualizada.");
+        flash()->success(trans('messages.interactionUpdated'));
         return redirect('person/'.$interaction->person_id);
     }
 
@@ -238,7 +238,7 @@ class InteractionController extends Controller {
         if ($user->hasRole('admin'))
         {
             $interaction->delete();
-            flash()->success("Interacción eliminada.");
+            flash()->success(trans('messages.interactionDeleted'));
         }
         return Redirect::back();
     }

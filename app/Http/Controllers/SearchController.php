@@ -54,7 +54,7 @@ class SearchController extends Controller {
 
         if ($q == '' && count($tags) == 0)
         {
-            return view('search.resultadoBusqueda', compact('data','people','interactions','users'));
+            return view('search.searchResults', compact('data','people','interactions','users'));
         }
 
         if ($q != '' && $q == preg_replace('/[^0-9,.\-_ +]/', '', $q)) //phone or dni
@@ -120,17 +120,17 @@ class SearchController extends Controller {
         }
         switch($data['toFind'])
         {
-            case 'Asistidos':
+            case trans('messages.people'):
                 $people = $results;
                 break;
-            case 'Interacciones':
+            case trans('messages.interactions'):
                 $interactions = $results;
                 break;
-            case 'Usuarios':
+            case trans('messages.users'):
                 $users = $results;
                 break;
         }
-        return view('search.resultadoBusqueda', compact('data','people','interactions','users'));
+        return view('search.searchResults', compact('data','people','interactions','users'));
     }
 
     /* Funciones privadas */

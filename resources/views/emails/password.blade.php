@@ -1,1 +1,1 @@
-Haga click aquí para cambiar su contraseña: {{ url('password/reset/'.$token) }}
+{{ trans('messages.restorePasswordContent') }} {{ url('password/reset/'.$token) }}

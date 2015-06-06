@@ -67,12 +67,12 @@ function sendMailToUsers($tags,$person)
         $users = User::withAnyTag($tags)->get();
         if ($users != null && count($users) > 0)
         {
-            $data = array('asistido' => $person->name());
-            Mail::raw('Se le ha derivado al asistido '.$data['asistido'].'.', function($message) use ($users,$data)
+            $data = array('person' => $person->name());
+            Mail::raw(trans('messages.derivationMailContent').$data['person'].'.', function($message) use ($users,$data)
             {
                 foreach ($users as $user)
                 {
-                    $message->to($user->email)->subject('Nueva derivación');
+                    $message->to($user->email)->subject(trans('messages.newDerivation'));
                 }
             });
         }
@@ -82,10 +82,10 @@ function sendMailToUsers($tags,$person)
 function sendMail($destinationMail,$person){
     if ($destinationMail != null && $person != null)
     {
-        $data = array('destination' => $destinationMail, 'asistido' => $person->name());
-        Mail::raw('Se le ha derivado al asistido '.$data['asistido'].'.', function($message) use ($data)
+        $data = array('destination' => $destinationMail, 'person' => $person->name());
+        Mail::raw(trans('messages.derivationMailContent').$data['person'].'.', function($message) use ($data)
         {
-            $message->to($data['destination'])->subject('Nueva derivación');
+            $message->to($data['destination'])->subject(trans('messages.newDerivation'));
         });
     }
 }
@@ -128,7 +128,7 @@ function downloadPeopleCSVFile($people)
 {
     if ($people != null)
     {
-        $output = "Fecha,Asistido,DNI,Edad,Direccion,Creado por,Etiquetas";
+        $output = trans('messages.date').','.trans('messages.person').','.trans('messages.dni').','.trans('messages.age').','.trans('messages.address').','.trans('messages.createdBy').','.trans('messages.tags');
         foreach ($people as $person)
         {
             $bithdate = "";
@@ -149,7 +149,7 @@ function downloadPeopleCSVFile($people)
 
         $headers = array(
             'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="ListadoDeAsistidos.csv"',
+            'Content-Disposition' => 'attachment; filename="'.trans('messages.peopleReportName').'.csv"',
         );
 
         return Response::make($output, 200, $headers);
@@ -160,7 +160,7 @@ function downloadInteractionsCSVFile($interactions)
 {
     if ($interactions != null)
     {
-        $output = "Fecha,Asistido,Descripcion,Estado,Creada por,Etiquetas";
+        $output = trans('messages.date').','.trans('messages.person').','.trans('messages.description').','.trans('messages.state').','.trans('messages.createdBy').','.trans('messages.tags');
         foreach ($interactions as $interaction)
         {
             $output = $output."\n".
@@ -174,7 +174,7 @@ function downloadInteractionsCSVFile($interactions)
 
         $headers = array(
             'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="ListadoDeInteracciones.csv"',
+            'Content-Disposition' => 'attachment; filename="'.trans('messages.interactionsReportName').'.csv"',
         );
 
         return Response::make($output, 200, $headers);
@@ -185,7 +185,7 @@ function downloadUsersCSVFile($users)
 {
     if ($users != null)
     {
-        $output = "Fecha,Nombre,Correo electronico,Telefono,Tipo de usuario,Etiquetas";
+        $output = trans('messages.date').','.trans('messages.firstName').','.trans('messages.email').','.trans('messages.phone').','.trans('messages.userRole').','.trans('messages.tags');
         foreach ($users as $user)
         {
             $role = "";
@@ -204,7 +204,7 @@ function downloadUsersCSVFile($users)
 
         $headers = array(
             'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="ListadoDeUsuarios.csv"',
+            'Content-Disposition' => 'attachment; filename="'.trans('messages.usersReportName').'.csv"',
         );
 
         return Response::make($output, 200, $headers);

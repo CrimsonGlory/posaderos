@@ -71,7 +71,7 @@ class FileEntryController extends Controller {
                 if($file)
                     $message.=$file->getClientOriginalName().": ".implode(",",$errors->get("file")). ". ";
                 else
-                    $message.="No se adjuntó ningun archivo. ";
+                    $message.=trans('messages.noAttachment');
             }
         }
 
@@ -98,47 +98,47 @@ class FileEntryController extends Controller {
         $image = Image::make("../storage/app/assets/fileentries/$filename");
         return $image->response();
     }
-   public function showThumb($size, $id)
-   {
-       if ($size != 50 && $size != 150)
-       {
-           return "invalid size";
-       }
 
-       $img = FileEntry::findOrFail($id);
-       if(substr($img->mime, 0, 5) != 'image')
-       {
-           return "not an image";
-       }
-       if(count($img) == 0)
-       {
-           return "404";
-       }
+    public function showThumb($size, $id)
+    {
+        if ($size != 50 && $size != 150)
+        {
+            return "invalid size";
+        }
 
-       $filename = $img->filename;
-       $path = "../storage/app/assets/fileentries/";
-       $path_parts = pathinfo($path.$filename);
-       $thumb_path = $path.$path_parts['filename'].".thumb".$size.".".$path_parts['extension'];
-       if (!File::exists($thumb_path))
-       {
-           $this->create_thumbnail($path,$path_parts['filename'],$path_parts['extension'],$size);
-       }
-       $result = Image::make($thumb_path);
-       return $result->response();
-   }
+        $img = FileEntry::findOrFail($id);
+        if(substr($img->mime, 0, 5) != 'image')
+        {
+            return "not an image";
+        }
+        if(count($img) == 0)
+        {
+            return "404";
+        }
 
-   private function create_thumbnail($path, $filename, $extension,$pixelsize)
-   {
-       $width  = $pixelsize;
-       $height = $pixelsize;
-       $mode   = ImageInterface::THUMBNAIL_OUTBOUND;
-       $size   = new Box($width, $height);
+        $filename = $img->filename;
+        $path = "../storage/app/assets/fileentries/";
+        $path_parts = pathinfo($path.$filename);
+        $thumb_path = $path.$path_parts['filename'].".thumb".$size.".".$path_parts['extension'];
+        if (!File::exists($thumb_path))
+        {
+            $this->create_thumbnail($path,$path_parts['filename'],$path_parts['extension'],$size);
+        }
+        $result = Image::make($thumb_path);
+        return $result->response();
+    }
 
-       $thumbnail   = Imagine::open($path.$filename.".".$extension)->thumbnail($size, $mode);
-       $destination = "{$filename}.thumb$pixelsize.{$extension}";
+    private function create_thumbnail($path, $filename, $extension,$pixelsize)
+    {
+        $width  = $pixelsize;
+        $height = $pixelsize;
+        $mode   = ImageInterface::THUMBNAIL_OUTBOUND;
+        $size   = new Box($width, $height);
 
-       $thumbnail->save("{$path}/{$destination}");
-   }
+        $thumbnail   = Imagine::open($path.$filename.".".$extension)->thumbnail($size, $mode);
+        $destination = "{$filename}.thumb$pixelsize.{$extension}";
+
+        $thumbnail->save("{$path}/{$destination}");
+    }
 
 }
-

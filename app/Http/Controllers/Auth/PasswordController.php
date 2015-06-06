@@ -37,7 +37,7 @@ class PasswordController extends Controller {
 
     protected function getEmailSubject()
     {
-        return isset($this->subject) ? $this->subject : 'Link para cambiar la contraseña';
+        return isset($this->subject) ? $this->subject : trans('messages.sendPasswordLink');
     }
 
 }

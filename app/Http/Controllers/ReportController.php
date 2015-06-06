@@ -68,7 +68,7 @@ class ReportController extends Controller {
             $toDate = date("d/m/Y", strtotime($toDate));
 
             $pdf = PDF::loadView('report.peopleListPDF', array(), compact('people', 'gender', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
-            return $pdf->download('ListadoDeAsistidos.pdf');
+            return $pdf->download(trans('messages.peopleReportName').'.pdf');
         }
         else if ($exportTypes == 'csv')
         {
@@ -137,7 +137,7 @@ class ReportController extends Controller {
             $toDate = date("d/m/Y", strtotime($toDate));
 
             $pdf = PDF::loadView('report.interactionsListPDF', array(), compact('interactions', 'fixed', 'people', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
-            return $pdf->download('ListadoDeInteracciones.pdf');
+            return $pdf->download(trans('messages.interactionsReportName').'.pdf');
         }
         else if ($exportTypes == 'csv')
         {
@@ -198,7 +198,7 @@ class ReportController extends Controller {
             $toDate = date("d/m/Y", strtotime($toDate));
 
             $pdf = PDF::loadView('report.usersListPDF', array(), compact('users', 'role', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
-            return $pdf->download('ListadoDeUsuarios.pdf');
+            return $pdf->download(trans('messages.usersReportName').'.pdf');
         }
         else if ($exportTypes == 'csv')
         {

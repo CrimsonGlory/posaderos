@@ -116,11 +116,11 @@ class PersonController extends Controller {
 
 		if($success)
         {
-			flash()->success('Asistido creado.');
+			flash()->success(trans('messages.personCreated'));
 		}
 		else
         {
-			flash()->error('Error al intentar crear el asistido.');
+			flash()->error(trans('messages.personFailed'));
 		}
         return redirect('person/'.$person->id);
 	}
@@ -223,7 +223,7 @@ class PersonController extends Controller {
             $person->untag();
         }
 
-        flash()->success('Asistido actualizado.');
+        flash()->success(trans('messages.personUpdated'));
 		return redirect('person/'.$person->id);
 
 	}
@@ -250,7 +250,7 @@ class PersonController extends Controller {
                 $interaction->delete();
             }
             $person->delete();
-            flash()->success('Asistido eliminado.');
+            flash()->success(trans('messages.personDeleted'));
             return redirect('person');
         }
         return Redirect::back();
@@ -278,7 +278,7 @@ class PersonController extends Controller {
         if (($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id)))
         {
             $person->like($user->id);
-            flash()->success('Se agregó el asistido a su lista de favoritos.');
+            flash()->success(trans('messages.favoriteAdded'));
             return redirect('person/'.$person->id);
         }
         return Redirect::back();
@@ -296,7 +296,7 @@ class PersonController extends Controller {
         if ($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id))
         {
             $person->unlike($user->id);
-            flash()->warning('Se quitó el asistido de su lista de favoritos.');
+            flash()->warning(trans('messages.favoriteRemoved'));
             return redirect('person/'.$person->id);
         }
         return Redirect::back();
