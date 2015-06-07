@@ -113,8 +113,10 @@ return [
 
     // Reports
     'exportType'                => 'Tipo de exportación',
-    'pdfFormat'                 => 'Formato PDF',
     'csvFormat'                 => 'Formato CSV',
+    'pdfFormat'                 => 'Formato PDF',
+    'xlsFormat'                 => 'Formato XLS',
+    'xlsxFormat'                => 'Formato XLSX',
     'interactionsList'          => 'Listado de interacciones',
     'fromDate'                  => 'Desde fecha',
     'toDate'                    => 'Hasta fecha',

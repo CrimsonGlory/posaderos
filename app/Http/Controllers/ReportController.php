@@ -43,7 +43,7 @@ class ReportController extends Controller {
         $gender = $request->gender;
         $users = $request->users;
         $tags = $request->tags;
-        $exportTypes = $request->exportTypes;
+        $exportType = $request->exportType;
 
         $builder = Person::where('created_at', '>=', $request->fromDate." 00:00:00")->where('created_at', '<=', $request->toDate." 23:59:59");
 
@@ -63,7 +63,7 @@ class ReportController extends Controller {
 
         $people = $builder->orderBy('id','desc')->get();
 
-        if ($exportTypes == 'pdf')
+        if ($exportType == 'pdf')
         {
             $fromDate = date("d/m/Y", strtotime($fromDate));
             $toDate = date("d/m/Y", strtotime($toDate));
@@ -71,21 +71,30 @@ class ReportController extends Controller {
             $pdf = PDF::loadView('report.peopleListPDF', array(), compact('people', 'gender', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
             return $pdf->download(trans('messages.peopleReportName').'.pdf');
         }
-        else if ($exportTypes == 'csv')
+        else if ($exportType == 'csv' || $exportType == 'xls' || $exportType == 'xlsx')
         {
-            Excel::create(trans('messages.peopleReportName'), function($excel) use($people)
+            Excel::create(trans('messages.peopleReportName'), function($excel) use($people,$exportType)
             {
-                $excel->sheet(trans('messages.peopleReportName'), function($sheet) use($people)
+                $excel->sheet(trans('messages.peopleReportName'), function($sheet) use($people,$exportType)
                 {
+                    $dateTitle = trans('messages.date');
+                    if ($exportType == 'csv')
+                    {
+                        $dateTitle = '"'.$dateTitle.'"';
+                    }
                     $sheet->appendRow(array(
-                        '"'.trans('messages.date').'"', trans('messages.person'), trans('messages.dni'), trans('messages.age'), trans('messages.address'), trans('messages.createdBy'), trans('messages.tags')
+                        $dateTitle, trans('messages.person'), trans('messages.dni'), trans('messages.age'), trans('messages.address'), trans('messages.createdBy'), trans('messages.tags')
                     ));
                     foreach ($people as $person)
                     {
-                        $date       = '"'.date('d/m/Y', strtotime($person->created_at)).'"';
+                        $date       = date('d/m/Y', strtotime($person->created_at));
+                        if ($exportType == 'csv')
+                        {
+                            $date = '"'.$date.'"';
+                        }
                         $name       = removeSpecialCharactersCSV($person->name());
                         $dni        = $person->dni;
-                        $bithdate   = "";
+                        $bithdate   = '';
                         if ($person->birthdate != null)
                         {
                             $bithdate = date_diff(date_create($person->birthdate), date_create('today'))->y." ".trans('messages.years');
@@ -97,7 +106,7 @@ class ReportController extends Controller {
                         $sheet->appendRow(array($date, $name, $dni, $bithdate, $address, $user, $tags));
                     }
                 });
-            })->download('csv');
+            })->download($exportType);
         }
         return view('report.peopleList');
     }
@@ -132,7 +141,7 @@ class ReportController extends Controller {
         $users = $request->users;
         $fixed = $request->fixed;
         $tags = $request->tags;
-        $exportTypes = $request->exportTypes;
+        $exportType = $request->exportType;
 
         $builder = Interaction::where('date', '>=', $request->fromDate." 00:00:00")->where('date', '<=', $request->toDate." 23:59:59");
 
@@ -156,7 +165,7 @@ class ReportController extends Controller {
 
         $interactions = $builder->orderBy('id','desc')->get();
 
-        if ($exportTypes == 'pdf')
+        if ($exportType == 'pdf')
         {
             $fromDate = date("d/m/Y", strtotime($fromDate));
             $toDate = date("d/m/Y", strtotime($toDate));
@@ -164,18 +173,27 @@ class ReportController extends Controller {
             $pdf = PDF::loadView('report.interactionsListPDF', array(), compact('interactions', 'fixed', 'people', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
             return $pdf->download(trans('messages.interactionsReportName').'.pdf');
         }
-        else if ($exportTypes == 'csv')
+        else if ($exportType == 'csv' || $exportType == 'xls' || $exportType == 'xlsx')
         {
-            Excel::create(trans('messages.interactionsReportName'), function($excel) use($interactions)
+            Excel::create(trans('messages.interactionsReportName'), function($excel) use($interactions,$exportType)
             {
-                $excel->sheet(trans('messages.interactionsReportName'), function($sheet) use($interactions)
+                $excel->sheet(trans('messages.interactionsReportName'), function($sheet) use($interactions,$exportType)
                 {
+                    $dateTitle = trans('messages.date');
+                    if ($exportType == 'csv')
+                    {
+                        $dateTitle = '"'.$dateTitle.'"';
+                    }
                     $sheet->appendRow(array(
-                        '"'.trans('messages.date').'"', trans('messages.person'), trans('messages.description'), trans('messages.state'), trans('messages.createdBy'), trans('messages.tags')
+                        $dateTitle, trans('messages.person'), trans('messages.description'), trans('messages.state'), trans('messages.createdBy'), trans('messages.tags')
                     ));
                     foreach ($interactions as $interaction)
                     {
-                        $date        = '"'.date('d/m/Y', strtotime($interaction->date)).'"';
+                        $date        = date('d/m/Y', strtotime($interaction->date));
+                        if ($exportType == 'csv')
+                        {
+                            $date = '"'.$date.'"';
+                        }
                         $person      = removeSpecialCharactersCSV(getPersonName($interaction->person_id));
                         $description = removeSpecialCharactersCSV($interaction->text);
                         $state       = trans('messages.'.$interaction->fixed);
@@ -185,7 +203,7 @@ class ReportController extends Controller {
                         $sheet->appendRow(array($date, $person, $description, $state, $user, $tags));
                     }
                 });
-            })->download('csv');
+            })->download($exportType);
         }
         return view('report.interactionsList');
     }
@@ -218,7 +236,7 @@ class ReportController extends Controller {
         $toDate = $request->toDate;
         $role = $request->role;
         $tags = $request->tags;
-        $exportTypes = $request->exportTypes;
+        $exportType = $request->exportType;
 
         $builder = User::where('created_at', '>=', $request->fromDate." 00:00:00")->where('created_at', '<=', $request->toDate." 23:59:59");
 
@@ -236,7 +254,7 @@ class ReportController extends Controller {
 
         $users = $builder->orderBy('id','desc')->get();
 
-        if ($exportTypes == 'pdf')
+        if ($exportType == 'pdf')
         {
             $fromDate = date("d/m/Y", strtotime($fromDate));
             $toDate = date("d/m/Y", strtotime($toDate));
@@ -244,22 +262,31 @@ class ReportController extends Controller {
             $pdf = PDF::loadView('report.usersListPDF', array(), compact('users', 'role', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
             return $pdf->download(trans('messages.usersReportName').'.pdf');
         }
-        else if ($exportTypes == 'csv')
+        else if ($exportType == 'csv' || $exportType == 'xls' || $exportType == 'xlsx')
         {
-            Excel::create(trans('messages.usersReportName'), function($excel) use($users)
+            Excel::create(trans('messages.usersReportName'), function($excel) use($users,$exportType)
             {
-                $excel->sheet(trans('messages.usersReportName'), function($sheet) use($users)
+                $excel->sheet(trans('messages.usersReportName'), function($sheet) use($users,$exportType)
                 {
+                    $dateTitle = trans('messages.date');
+                    if ($exportType == 'csv')
+                    {
+                        $dateTitle = '"'.$dateTitle.'"';
+                    }
                     $sheet->appendRow(array(
-                        '"'.trans('messages.date').'"', trans('messages.firstName'), trans('messages.email'), trans('messages.phone'), trans('messages.userRole'), trans('messages.tags')
+                        $dateTitle, trans('messages.firstName'), trans('messages.email'), trans('messages.phone'), trans('messages.userRole'), trans('messages.tags')
                     ));
                     foreach ($users as $user)
                     {
-                        $date   = '"'.date('d/m/Y', strtotime($user->created_at)).'"';
+                        $date   = date('d/m/Y', strtotime($user->created_at));
+                        if ($exportType == 'csv')
+                        {
+                            $date = '"'.$date.'"';
+                        }
                         $name   = removeSpecialCharactersCSV($user->name);
                         $email  = removeSpecialCharactersCSV($user->email);
                         $phone  = $user->phone;
-                        $role   = "";
+                        $role   = '';
                         if ($user->roles() != NULL && $user->roles()->first() != NULL)
                         {
                             $role = $user->roles()->first()->display_name;
@@ -269,7 +296,7 @@ class ReportController extends Controller {
                         $sheet->appendRow(array($date, $name, $email, $phone, $role, $tags));
                     }
                 });
-            })->download('csv');
+            })->download($exportType);
         }
         return view('report.usersList');
     }

@@ -283,7 +283,6 @@ class UserController extends Controller {
         }
 
         $rules = array(
-
             'new_password' => array('required', 'min:6'),
             'confirm_password' => array('required', 'same:new_password'),
         );
