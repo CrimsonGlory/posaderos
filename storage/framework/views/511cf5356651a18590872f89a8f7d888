@@ -1,0 +1,83 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><?php echo e(trans('messages.peopleList')); ?></h4>
+                    </div>
+                    <div class="panel-body">
+                        <?php if($errors->any()): ?>
+                            <ul class="alert alert-danger">
+                                <?php foreach($errors->all() as $error): ?>
+                                    <li><?php echo e($error); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+
+                        <?php echo Form::open(array('method' => 'POST', 'class' => 'form-horizontal', 'action' => array('ReportController@downloadPeopleList'))); ?>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.fromDate')); ?></label>
+                                <div class="col-md-6">
+                                    <input type="date" class="form-control" name="fromDate" value="<?php echo e(date('Y-m-01')); ?>" autofocus="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.toDate')); ?></label>
+                                <div class="col-md-6">
+                                    <input type="date" class="form-control" name="toDate" value="<?php echo e(date("Y-m-t", strtotime(date('Y-m-d')))); ?>">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.gender')); ?></label>
+                                <div class="col-md-6">
+                                    <?php echo Form::select('gender', array('select' => trans('messages.select'), 'male' => trans('messages.male'), 'female' => trans('messages.female')), 'select', array('class' => 'form-control')); ?>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.peopleCreatedBy')); ?></label>
+                                <div class="col-md-6">
+                                    <?php echo Form::select('users[]', all_users(), '', ['id' => 'users','class' => 'form-control','multiple']); ?>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.tags')); ?></label>
+                                <div class="col-md-6">
+                                    <?php echo Form::select('tags[]', all_tags(), '', ['id' => 'tags','class' => 'form-control','multiple']); ?>
+
+                                </div>
+                            </div>
+
+                            <?php echo $__env->make('report/exportTypes', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="glyphicon glyphicon-download-alt"></i>
+                                        <?php echo e(trans('messages.download')); ?>
+
+                                    </button>
+                                </div>
+                            </div>
+                        <?php echo Form::close(); ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footer'); ?>
+    <?php echo $__env->make('user.select2List', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo $__env->make('tag.select2List', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

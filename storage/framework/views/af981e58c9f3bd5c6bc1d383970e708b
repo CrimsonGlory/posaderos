@@ -1,0 +1,10 @@
+<script>
+    $('#tags').select2({
+    placeholder: 'Elegir etiquetas',
+    <?php if(Auth::user()->can('create-tags')): ?>
+            tags: true
+    <?php else: ?>
+            tags: false
+    <?php endif; ?>
+    });
+</script>

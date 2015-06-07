@@ -1,0 +1,113 @@
+<?php if(count($interactions)): ?>
+    <?php if(Agent::isDesktop()): ?>
+        <div id="collapseTwo" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="form-group">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th><?php echo e(trans('messages.photo')); ?></th>
+                            <th><?php echo e(trans('messages.person')); ?></th>
+                            <th><?php echo e(trans('messages.description')); ?></th>
+                            <th><?php echo e(trans('messages.date')); ?></th>
+                            <th><?php echo e(trans('messages.state')); ?></th>
+                            <th><?php echo e(trans('messages.tags')); ?></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($interactions as $interaction): ?>
+                            <tr>
+                                <th scope="row">
+                                    <?php if($interaction->getPerson()->get_avatar != null): ?>
+                                        <img src="<?php echo e(action("FileEntryController@show",$interaction->getPerson()->get_avatar)); ?>" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
+                                    <?php else: ?>
+                                        <img src="<?php echo e(asset("no-photo.png")); ?>" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
+                                    <?php endif; ?>
+                                </th>
+                                <th>
+                                    <a href="<?php echo e(action('PersonController@show', $interaction->person_id)); ?>">
+                                        <?php echo e($interaction->person->first_name); ?> <?php echo e($interaction->person->last_name); ?>
+
+                                    </a>
+                                </th>
+                                <th><?php echo e($interaction->text); ?></th>
+                                <th><?php echo e(date("d/m/Y", strtotime($interaction->date))); ?></th>
+                                <th>
+                                    <a href="<?php echo e(action("InteractionController@edit",$interaction)); ?>">
+                                        <?php echo e(trans('messages.'.$interaction->fixed)); ?>
+
+                                    </a>
+                                </th>
+                                <th>
+                                    <?php if(count($interaction->tagNames()) > 0): ?>
+                                        <?php echo $__env->make('tag.list_tags',['tagNames' => $interaction->tagNames()], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                    <?php endif; ?>
+                                </th>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <?php else: ?>
+        <div id="collapseTwo" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="form-group">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th><?php echo e(trans('messages.photo')); ?></th>
+                            <th><?php echo e(trans('messages.description')); ?></th>
+                            <th><?php echo e(trans('messages.state')); ?></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($interactions as $interaction): ?>
+                            <tr>
+                                <th scope="row">
+                                    <a href="<?php echo e(action('PersonController@show',$interaction->getPerson()->id)); ?>">
+                                        <?php if($interaction->getPerson()->get_avatar != null): ?>
+                                            <img src="<?php echo e(action("FileEntryController@show",$interaction->getPerson()->get_avatar)); ?>" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
+                                        <?php else: ?>
+                                            <img src="<?php echo e(asset("no-photo.png")); ?>" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
+                                        <?php endif; ?>
+                                    </a>
+                                </th>
+                                <th>
+                                    <?php if(strlen($interaction->text) > 30): ?>
+                                        <?php echo e(substr($interaction->text, 0, 29)); ?>...
+                                    <?php else: ?>
+                                        <?php echo e($interaction->text); ?>
+
+                                    <?php endif; ?>
+                                </th>
+                                <th>
+                                    <a href="<?php echo e(action("InteractionController@edit",$interaction)); ?>">
+                                        <?php echo e(trans('messages.'.$interaction->fixed)); ?>
+
+                                    </a>
+                                </th>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php else: ?>
+    <div id="collapseTwo" class="panel-collapse collapse in">
+        <div class="panel-body">
+            <div class="form-group">
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <div><?php echo e(trans('messages.noInteractions')); ?></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

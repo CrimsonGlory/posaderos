@@ -1,0 +1,86 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><?php echo e(trans('messages.updateUser')); ?></h4>
+                    </div>
+                    <div class="panel-body">
+                        <?php echo Form::model($userShown, ['class' => 'form-horizontal', 'method'=> 'PATCH', 'action' => ['UserController@update',$userShown->id]]); ?>
+
+                            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.firstName')); ?></label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="name" value="<?php echo e($userShown->name); ?>" autofocus="true">
+                                    <?php echo e($errors->first('name')); ?>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.email')); ?></label>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" name="email" value="<?php echo e($userShown->email); ?>">
+                                    <?php echo e($errors->first('email')); ?>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.phone')); ?></label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="phone" value="<?php echo e($userShown->phone); ?>">
+                                    <?php echo e($errors->first('phone')); ?>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.tags')); ?></label>
+                                <div class="col-md-6">
+                                    <?php echo Form::select('tags[]', all_tags(), $userShown->tagNames(), ['id' => 'tags','class' => 'form-control','multiple']); ?>
+
+                                </div>
+                            </div>
+
+                            <?php if($userShown->id != Auth::user()->id): ?>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"><?php echo e(trans('messages.userRole')); ?></label>
+                                    <div class="col-md-6">
+                                        <?php if($userShown->roles() != NULL && $userShown->roles()->first() != NULL): ?>
+                                            <?php echo Form::select('role', array('admin' => trans('messages.admin'), 'posadero' => trans('messages.posadero'), 'explorer' => trans('messages.explorer'), 'new-user' => trans('messages.newUser')), $userShown->roles()->first()->name, array('class' => 'form-control')); ?>
+
+                                        <?php else: ?>
+                                            <?php echo Form::select('role', array('admin' => trans('messages.admin'), 'posadero' => trans('messages.posadero'), 'explorer' => trans('messages.explorer'), 'new-user' => trans('messages.newUser')), 'new-user', array('class' => 'form-control')); ?>
+
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                            <div class="form-group">
+                                <table width="100%">
+                                    <tr>
+                                        <td align="right"><button type="submit" class="btn btn-primary" style="width:100px;"><?php echo e(trans('messages.save')); ?></button></td>
+                                        <td width="20"></td>
+                                        <td align="left"><a href="<?php echo e(action('UserController@show', $userShown->id)); ?>" class="btn btn-primary" style="width:100px;"><?php echo e(trans('messages.cancel')); ?></a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        <?php echo Form::close(); ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footer'); ?>
+    <?php echo $__env->make('tag.select2', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

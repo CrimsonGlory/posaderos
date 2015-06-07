@@ -1,0 +1,117 @@
+<?php $__env->startSection('content'); ?>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-default">
+			        <?php echo $__env->make('flash::message', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    <div class="panel-heading">
+                        <table width="100%">
+                            <tr>
+                                <td><h4><?php echo e($userShown->name); ?></h4></td>
+                                <?php if(Auth::user()->can('edit-users') || $userShown->id == Auth::user()->id || Auth::user()->hasRole('admin')): ?>
+                                    <td align="right">
+                                        <table>
+                                            <tr>
+                                                <?php if(Auth::user()->can('edit-users') || $userShown->id == Auth::user()->id): ?>
+                                                    <td>
+                                                        <a class="btn btn-primary" href="<?php echo e(action('UserController@edit',$userShown)); ?>">
+                                                            <i class="glyphicon glyphicon-pencil"></i>
+                                                        </a>
+                                                    </td>
+                                                <?php endif; ?>
+                                                <?php if(Auth::user()->hasRole('admin') && $userShown->id != Auth::user()->id): ?>
+                                                    <td style="width:5px;"></td>
+                                                    <?php echo Form::open(array('route' => array('user.destroy', $userShown->id), 'method' => 'delete')); ?>
+
+                                                        <td align="right">
+                                                            <button type="submit" class="btn btn-danger">
+                                                                <i class="glyphicon glyphicon-remove"></i>
+                                                            </button>
+                                                        </td>
+                                                    <?php echo Form::close(); ?>
+
+                                                <?php endif; ?>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                <?php endif; ?>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="panel-body">
+                        <?php if($errors->any()): ?>
+                            <ul class="alert alert-danger">
+                                <?php foreach($errors->all() as $error): ?>
+                                    <li><?php echo e($error); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+
+                        <form class="form-horizontal" role="form" action="<?php echo e(url('person')); ?>">
+                            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+
+                            <div class="form-group" align="center">
+                                <img src="<?php echo e($gravatar); ?>" alt="" onerror="this.src='<?php echo e(asset("no-photo.png")); ?>';" class="img-circle" style="max-width:150px; max-height:150px;">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.email')); ?></label>
+                                <div class="col-md-6">
+                                    <label class="form-control" name="email"><?php echo e($userShown->email); ?></label>
+                                </div>
+                            </div>
+
+			                <?php if($userShown->phone != null): ?>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"><?php echo e(trans('messages.phone')); ?></label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" name="phone"><?php echo e($userShown->phone); ?></label>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if(count($userShown->tagNames()) > 0): ?>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"><?php echo e(trans('messages.tags')); ?></label>
+                                    <div class="col-md-6">
+                                        <label class="form-control">
+                                            <?php echo $__env->make('tag.list_tags',['tagNames' => $userShown->tagNames()], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                        </label>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if($userShown->roles() != NULL && $userShown->roles()->first() != NULL): ?>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"><?php echo e(trans('messages.userRole')); ?></label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" name="rol"><?php echo e($userShown->roles()->first()->display_name); ?></label>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel-group" id="personasCreadasPorUsuario" role="tablist" aria-multiselectable="false">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="PersonasCreadas">
+                    <table width="100%">
+                        <tr>
+                            <td><h4><?php echo e(trans('messages.lastPeopleAddedBy')); ?> <?php echo e($userShown->name); ?></h4></td>
+                        </tr>
+                    </table>
+                </div>
+                <?php echo $__env->make('person.list_people',['people' => $people], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            </div>
+        </div>
+    </div>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

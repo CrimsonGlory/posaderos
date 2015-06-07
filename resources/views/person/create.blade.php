@@ -1,6 +1,7 @@
 @extends('app')
 
 @section('content')
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -67,9 +68,28 @@
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.address') }}</label>
+                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Boton</button>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="address" value="{{ old('address') }}">
+                                    <input onclick="cargarDireccion()" type="text" class="form-control" name="address" value="{{ old('address') }}">
                                 </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                           
+                                           </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
                             </div>
 
                             <div class="form-group">

@@ -1,0 +1,30 @@
+{
+	"name": "orchestra/contracts",
+	"description": "Contracts for Orchestra Platform",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Mior Muhammad Zaki",
+			"email": "crynobone@gmail.com",
+			"homepage": "https://github.com/crynobone"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Orchestra\\Contracts\\": ""
+		}
+	},
+	"require": {
+		"php": ">=5.4.0",
+		"illuminate/contracts": "5.0.*"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "3.1-dev"
+		}
+	},
+	"support": {
+		"issues": "https://github.com/orchestral/kernel/issues"
+	},
+	"minimum-stability": "dev"
+}

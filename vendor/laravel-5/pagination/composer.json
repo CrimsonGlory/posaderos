@@ -1,0 +1,14 @@
+{
+    "name": "laravel-5/pagination",
+    "license": "MIT",
+    "description" : "Easy Pagination",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "authors": [
+        {
+            "name": "Franck Hernandez"
+        }
+    ]
+
+}

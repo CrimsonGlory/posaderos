@@ -1,0 +1,96 @@
+<?php if(count($users)): ?>
+    <?php if(Agent::isDesktop()): ?>
+        <div id="collapseThree" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="form-group">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><?php echo e(trans('messages.photo')); ?></th>
+                                <th><?php echo e(trans('messages.firstName')); ?></th>
+                                <th><?php echo e(trans('messages.email')); ?></th>
+                                <th><?php echo e(trans('messages.phone')); ?></th>
+                                <th><?php echo e(trans('messages.userRole')); ?></th>
+                                <th><?php echo e(trans('messages.tags')); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($users as $user): ?>
+                                <tr>
+                                    <th>
+                                        <img src="<?php echo e($user->gravatar()); ?>" alt="" onerror="this.src='<?php echo e(asset("no-photo.png")); ?>';" class="img-circle" style="max-width:50px; max-height:50px;">
+                                    </th>
+                                    <th>
+                                        <a href="<?php echo e(action('UserController@show', $user->id)); ?>">
+                                            <?php echo e($user->name); ?>
+
+                                        </a>
+                                    </th>
+                                    <th><?php echo e($user->email); ?></th>
+                                    <th><?php echo e($user->phone); ?></th>
+                                    <th>
+                                        <?php if($user->roles() != NULL && $user->roles()->first() != NULL): ?>
+                                            <?php echo e($user->roles()->first()->display_name); ?>
+
+                                        <?php endif; ?>
+                                    </th>
+                                    <?php if(count($user->tagNames()) > 0): ?>
+                                        <th>
+                                            <?php echo $__env->make('tag.list_tags',['tagNames' => $user->tagNames()], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                        </th>
+                                    <?php else: ?>
+                                        <th></th>
+                                    <?php endif; ?>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <?php else: ?>
+        <div id="collapseThree" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="form-group">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><?php echo e(trans('messages.photo')); ?></th>
+                                <th><?php echo e(trans('messages.firstName')); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($users as $user): ?>
+                                <tr>
+                                    <th>
+                                        <img src="<?php echo e($user->gravatar()); ?>" alt="" onerror="this.src='<?php echo e(asset("no-photo.png")); ?>';" class="img-circle" style="max-width:50px; max-height:50px;">
+                                    </th>
+                                    <th>
+                                        <a href="<?php echo e(action('UserController@show', $user->id)); ?>">
+                                            <?php echo e($user->name); ?>
+
+                                        </a>
+                                    </th>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php else: ?>
+    <div id="collapseThree" class="panel-collapse collapse in">
+        <div class="panel-body">
+            <div class="form-group">
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <div><?php echo e(trans('messages.noUsers')); ?></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

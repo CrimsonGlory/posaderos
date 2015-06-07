@@ -1,0 +1,309 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+			        <?php echo $__env->make('flash::message', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    <div class="panel-heading">
+                        <table width="100%">
+                            <tr>
+                                <td align="left">
+                                    <table id="favoritos">
+                                        <tr>
+                                            <td width="50px;">
+                                                <?php if(!($person->liked(Auth::user()->id))): ?>
+                                                    <?php echo Form::open(array('method' => 'POST', 'action' => array('PersonController@addFavorite', $person->id))); ?>
+
+                                                        <button class="btn btn-warning" type="submit" title="<?php echo e(trans('messages.addToFavorites')); ?>">
+                                                            <i class="glyphicon glyphicon-star"></i>
+                                                        </button>
+                                                    <?php echo Form::close(); ?>
+
+                                                <?php else: ?>
+                                                    <?php echo Form::open(array('method' => 'POST', 'action' => array('PersonController@removeFavorite', $person->id))); ?>
+
+                                                        <button class="btn btn-success" type="submit" title="<?php echo e(trans('messages.removeFromFavorites')); ?>">
+                                                            <i class="glyphicon glyphicon-star-empty"></i>
+                                                        </button>
+                                                    <?php echo Form::close(); ?>
+
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <h4><?php echo e($person->name()); ?></h4>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <?php if((Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id)) || (Auth::user()->hasRole('admin'))): ?>
+                                    <td align="right">
+                                        <table>
+                                            <tr>
+                                                <?php if(Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id)): ?>
+                                                    <td align="right">
+                                                        <a class="btn btn-primary" href="<?php echo e(action('PersonController@edit', $person->id)); ?>">
+                                                            <i class="glyphicon glyphicon-pencil"></i>
+                                                        </a>
+                                                    </td>
+                                                <?php endif; ?>
+                                                <?php if(Auth::user()->hasRole('admin')): ?>
+                                                    <td style="width:5px;"></td>
+                                                    <?php echo Form::open(array('route' => array('person.destroy', $person->id), 'method' => 'delete')); ?>
+
+                                                        <td align="right">
+                                                            <button type="submit" class="btn btn-danger">
+                                                                <i class="glyphicon glyphicon-remove"></i>
+                                                            </button>
+                                                        </td>
+                                                    <?php echo Form::close(); ?>
+
+                                                <?php endif; ?>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                <?php endif; ?>
+                            </tr>
+                        </table>
+                    </div>
+			
+                    <div class="panel-body">
+                        <?php if($errors->any()): ?>
+                            <ul class="alert alert-danger">
+                                <?php foreach($errors->all() as $error): ?>
+                                    <li><?php echo e($error); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+
+                        <form class="form-horizontal" role="form" action="<?php echo e(url('person')); ?>">
+                            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+
+                            <table align="center">
+                                <tr>
+                                    <td>
+                                        <?php if($person->get_avatar): ?>
+                                            <img src="<?php echo e(action("FileEntryController@showThumb",[150,$person->get_avatar->id ])); ?>" alt="" class="img-circle" style="max-width:150px; max-height:150px;"/>
+                                        <?php else: ?>
+                                            <img src="<?php echo e(asset("no-photo.png")); ?>" alt="" class="img-circle" style="max-width:150px; max-height:150px;"/>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <?php if($fileentries != null && count($fileentries) != 0): ?>
+                                            <a class="btn btn-link" href="<?php echo e(action("PersonController@photos",$person->id)); ?>"><?php echo e(trans('messages.seePhotos')); ?></a>
+                                            <?php if(Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id)): ?>
+                                                | <a class="btn btn-link" href="<?php echo e(url('person/'.$person->id.'/fileentries/photos')); ?>"><i class="glyphicon glyphicon-plus"></i></a>
+                                            <?php endif; ?>
+                                         <?php elseif(Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id)): ?>
+                                            <a class="btn btn-link" href="<?php echo e(url('person/'.$person->id.'/fileentries/photos')); ?>"><i class="glyphicon glyphicon-plus"></i> <?php echo e(trans('messages.addPhoto')); ?></a>
+                                        <?php else: ?>
+                                            <br/>
+                                         <?php endif; ?>
+                                    </td>
+                                </tr>
+                            </table>
+			                <?php if($person->dni != null && $person->dni != 0): ?>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"><?php echo e(trans('messages.dni')); ?></label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" name="dni"><?php echo e($person->dni); ?></label>
+                                    </div>
+                                </div>
+			                <?php endif; ?>
+
+			                <?php if($person->birthdate != null): ?>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"><?php echo e(trans('messages.birthdate')); ?></label>
+                                    <div class="col-md-6">
+                                        <label  class="form-control" name="birthdate"><?php echo e(date("d/m/Y", strtotime($person->birthdate))); ?></label>
+                                    </div>
+                                </div>
+			                <?php endif; ?>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.gender')); ?></label>
+                                <div class="col-md-6">
+                                    <label class="form-control" name="gender"><?php echo e(trans('messages.'.$person->gender)); ?></label>
+                                </div>
+                            </div>
+
+			                <?php if($person->email != null): ?>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"><?php echo e(trans('messages.email')); ?></label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" name="email"><?php echo e($person->email); ?></label>
+                                    </div>
+                                </div>
+			                <?php endif; ?>
+
+			                <?php if($person->address != null): ?>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"><?php echo e(trans('messages.address')); ?></label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" name="address"><?php echo e($person->address); ?></label>
+                                    </div>
+                                </div>
+			                <?php endif; ?>
+
+					        <?php if($person->phone != null): ?>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"><?php echo e(trans('messages.phone')); ?></label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" name="phone"><?php echo e($person->phone); ?></label>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+			                <?php if($person->other != null): ?>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"><?php echo e(trans('messages.observations')); ?></label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" style="height: 50px;" name="other"><?php echo e($person->other); ?></label>
+                                    </div>
+                                </div>
+			                <?php endif; ?>
+
+                            <?php if(count($person->tagNames()) > 0): ?>
+                                 <div class="form-group">
+                                    <label class="col-md-4 control-label"><?php echo e(trans('messages.tags')); ?></label>
+                                    <div class="col-md-6">
+                                        <label class="form-control">
+                                            <?php echo $__env->make('tag.list_tags',['tagNames' => $person->tagNames()], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                        </label>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if($person->created_by != 0 && $person->updated_by != 0): ?>
+                                <?php if(Auth::user()->can('see-users') || $person->created_by == Auth::user()->id): ?>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label"><?php echo e(trans('messages.personAddedBy')); ?></label>
+                                        <div class="col-md-6">
+                                            <label class="form-control">
+                                                <a href="<?php echo e(action('UserController@show',$person->created_by)); ?>">
+                                                    <?php echo e($person->creator->name); ?>
+
+                                                </a>
+                                                (<?php echo e($person->created_at); ?>)
+                                            </label>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if(Auth::user()->can('see-users') || $person->updated_by == Auth::user()->id): ?>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label"><?php echo e(trans('messages.lastUpdate')); ?></label>
+                                        <div class="col-md-6">
+                                            <label class="form-control">
+                                                <a href="<?php echo e(action('UserController@show',$person->updated_by)); ?>">
+                                                    <?php echo e($person->last_update_user->name); ?>
+
+                                                </a>
+                                                (<?php echo e($person->updated_at); ?>)
+                                            </label>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+ 			                <?php endif; ?>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <table width="100%">
+                            <tr>
+                                <td><h4><?php echo e(trans('messages.lastInteractions')); ?></h4></td>
+                                <?php if(Auth::user()->can('add-interaction')): ?>
+                                    <td align="right"><a class="btn btn-primary" href="<?php echo e(url('person/'.$person->id.'/interaction/create')); ?>" style="width:85px;"><?php echo e(trans('messages.add')); ?></a></td>
+                                <?php endif; ?>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <?php if(count($interactions) > 0): ?>
+                        <table width="100%" align="center" class="table table-striped">
+                            <?php foreach($interactions as $interaction): ?>
+                                <tr>
+                                    <td width="120" align="middle">
+                                        <label><?php echo e(date("d/m/Y", strtotime($interaction->date))); ?></label>
+                                        <?php if(Auth::user()->can('see-users') || $interaction->user->id == Auth::user()->id): ?>
+                                            </br>
+                                            <label>
+                                                <small>
+                                                    <a href="<?php echo e(action("UserController@show",$interaction->user->id)); ?>">
+                                                        <?php echo e($interaction->user->name); ?>
+
+                                                    </a>
+                                                </small>
+                                            </label>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td align="left">
+                                        <?php if(!Agent::isDesktop() && strlen($interaction->text) > 30): ?>
+                                            <label><?php echo e(substr($interaction->text, 0, 29)); ?>...</label>
+                                        <?php else: ?>
+                                            <label><?php echo e($interaction->text); ?></label>
+                                        <?php endif; ?>
+                                        <br/>
+                                        <label><?php echo e(trans('messages.state')); ?>:</label>
+                                        <?php if($interaction->fixed): ?>
+                                            <label style="color:green"><?php echo e(trans('messages.'.$interaction->fixed)); ?>.</label>
+                                        <?php else: ?>
+                                            <label style="color:red"><?php echo e(trans('messages.'.$interaction->fixed)); ?>.</label>
+                                        <?php endif; ?>
+                                        <?php if(count($interaction->tagNames()) > 0): ?>
+                                            <label><?php echo e(trans('messages.tags')); ?>: <?php echo $__env->make('tag.list_tags',['tagNames'=> $interaction->tagNames()], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?></label>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td align="right">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <a class="btn btn-primary" href="<?php echo e(action("InteractionController@edit",$interaction)); ?>">
+                                                        <i class="glyphicon glyphicon-pencil"></i>
+                                                    </a>
+                                                </td>
+                                                <?php if(Auth::user()->hasRole('admin')): ?>
+                                                    <td style="width:5px;"></td>
+                                                    <td>
+                                                        <?php echo Form::open(array('route' => array('interaction.destroy', $interaction->id), 'method' => 'delete')); ?>
+
+                                                            <button type="submit" class="btn btn-danger">
+                                                                <i class="glyphicon glyphicon-remove"></i>
+                                                            </button>
+                                                        <?php echo Form::close(); ?>
+
+                                                    </td>
+                                                <?php endif; ?>
+                                                <td style="width:5px;"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    <?php else: ?>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <table width="100%">
+                                        <tr>
+                                            <td>
+                                                <label><?php echo e(trans('messages.noInteractions')); ?></label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

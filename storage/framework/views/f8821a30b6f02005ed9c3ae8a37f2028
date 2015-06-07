@@ -1,0 +1,25 @@
+<?php $__env->startSection('content'); ?>
+
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel-group" role="tablist" aria-multiselectable="false">
+            <div class="panel panel-default">
+                <?php echo $__env->make('flash::message', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                <div class="panel-heading" role="tab">
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                <h4><?php echo e(trans('messages.users')); ?></h4>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <?php echo $__env->make('user.list_users',['users' => $users], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                <?php echo $__env->make('paginator',['paginator' => $paginator], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            </div>
+        </div>
+    </div>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

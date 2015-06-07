@@ -1,0 +1,6 @@
+<?php $tags=""; ?>
+<?php foreach($tagNames as $tag): ?>
+   <?php $tags.="<a href=\"".url('/tag/'.$tag)."\">".$tag."</a>, "; ?>
+<?php endforeach; ?>
+<?php echo rtrim($tags,", "); ?>
+

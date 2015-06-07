@@ -1,0 +1,76 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><?php echo e(trans('messages.updateInteractionWith')); ?> <?php echo e($person->first_name); ?> <?php echo e($person->last_name); ?></h4>
+                    </div>
+                    <div class="panel-body">
+                        <?php if($errors->any()): ?>
+                            <ul class="alert alert-danger">
+                                <?php foreach($errors->all() as $error): ?>
+                                    <li><?php echo e($error); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+
+                        <?php echo Form::model($interaction,['class' => 'form-horizontal', 'method' => 'PATCH', 'action' => ['InteractionController@update', $interaction->id]]); ?>
+
+                            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+
+                            <?php echo Form::hidden('person_id', $interaction->person_id); ?>
+
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.description')); ?></label>
+                                <div class="col-md-6">
+                                    <textarea type="text" class="form-control" name="text" style="height:150px;" autofocus="true"><?php echo e($interaction->text); ?></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.date')); ?></label>
+                                <div class="col-md-6">
+                                    <input type="date" class="form-control" name="date" value="<?php echo e($interaction->date); ?>">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.interactionState')); ?></label>
+                                <div class="col-md-6">
+                                    <?php echo Form::select('fixed', array(0 => trans('messages.pending'), 1 => trans('messages.finished')), $interaction->fixed, array('class' => 'form-control')); ?>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.tags')); ?></label>
+                                <div class="col-md-6">
+                                    <?php echo Form::select('tags[]', all_tags(), $interaction->tagNames(), ['id' => 'tags','class' => 'form-control','multiple']); ?>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <table width="100%">
+                                    <tr>
+                                        <td align="right"><button type="submit" class="btn btn-primary form-control"  style="width:100px;"><?php echo e(trans('messages.save')); ?></button></td>
+                                        <td width="20"></td>
+                                        <td align="left"><a href="<?php echo e(action('PersonController@show', $interaction->person_id)); ?>" class="btn btn-primary" style="width:100px;"><?php echo e(trans('messages.cancel')); ?></a></td>
+                                    </tr>
+                                </table>
+                            </div> 
+                        <?php echo Form::close(); ?> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footer'); ?>
+    <?php echo $__env->make('tag.select2', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

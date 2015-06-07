@@ -1,0 +1,35 @@
+<?php $__env->startSection('content'); ?>
+
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel-group" id="ultimasPersonasAgregadas" role="tablist" aria-multiselectable="false">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="UltimasPersonas">
+                    <h4>
+                        <a class="panel-title" data-toggle="collapse" data-parent="#ultimasPersonasAgregadas" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <?php echo e(trans('messages.lastPeopleAdded')); ?>
+
+                        </a>
+                    </h4>
+                </div>
+                <?php echo $__env->make('person.list_people',['people' => $people], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            </div>
+        </div>
+
+        <div class="panel-group" id="ultimasInteraccionesAgregadas" role="tablist" aria-multiselectable="false">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="UltimasInteracciones">
+                    <h4>
+                        <a class="panel-title" data-toggle="collapse" data-parent="#ultimasInteraccionesAgregadas" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            <?php echo e(trans('messages.lastInteractionsAdded')); ?>
+
+                        </a>
+                    </h4>
+                </div>
+                <?php echo $__env->make('interaction.list_interactions',['interactions' => $interactions], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            </div>
+        </div>
+    </div>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

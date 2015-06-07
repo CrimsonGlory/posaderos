@@ -1,0 +1,136 @@
+<?php $__env->startSection('content'); ?>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><?php echo e(trans('messages.savePerson')); ?></h4>
+                    </div>
+                    <div class="panel-body">
+                        <?php if($errors->any()): ?>
+                            <ul class="alert alert-danger">
+                                <?php foreach($errors->all() as $error): ?>
+                                    <li><?php echo e($error); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+
+                        <form class="form-horizontal" role="form" method="POST" action="<?php echo e(url('person')); ?>">
+                            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.firstName')); ?></label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="first_name" value="<?php echo e($firstName); ?>" autofocus="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.lastName')); ?></label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="last_name" value="<?php echo e(old('last_name')); ?>">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.dni')); ?></label>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" name="dni" value="<?php echo e($dni); ?>">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.birthdate')); ?></label>
+                                <div class="col-md-6">
+                                    <input type="date" class="form-control" name="birthdate" value="<?php echo e(date('Y-m-d')); ?>">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.gender')); ?></label>
+                                <div class="col-md-6">
+                                    <select name="gender" class="form-control">
+                                        <option value="male"><?php echo e(trans('messages.male')); ?></option>
+                                        <option value="female"><?php echo e(trans('messages.female')); ?></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.email')); ?></label>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" name="email" value="<?php echo e(old('email')); ?>">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.address')); ?></label>
+                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Boton</button>
+                                <div class="col-md-6">
+                                    <input onclick="cargarDireccion()" type="text" class="form-control" name="address" value="<?php echo e(old('address')); ?>">
+                                </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                           
+                                           </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.phone')); ?></label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="phone" value="<?php echo e(old('phone')); ?>">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.tags')); ?></label>
+                                <div class="col-md-6">
+                                    <?php echo Form::select('tags[]', all_tags(), '', ['id' => 'tags','class' => 'form-control','multiple']); ?>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><?php echo e(trans('messages.observations')); ?></label>
+                                <div class="col-md-6">
+                                    <textarea type="text" class="form-control" name="other" value="<?php echo e(old('other')); ?>"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <table width="100%">
+                                    <tr>
+                                        <td align="right"><button type="submit" class="btn btn-primary"  style="width:100px;"><?php echo e(trans('messages.save')); ?></button></td>
+                                        <td width="20"></td>
+                                        <td align="left"><a href="<?php echo e(action('PersonController@index')); ?>" class="btn btn-primary"  style="width:100px;"><?php echo e(trans('messages.cancel')); ?></a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footer'); ?>
+    <?php echo $__env->make('tag.select2', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -41,7 +41,8 @@ Route::post('report/downloadInteractionsList',  'ReportController@downloadIntera
 Route::post('report/downloadUsersList',         'ReportController@downloadUsersList');
 Route::get('user/{id}/changePassword',          'UserController@changePassword');
 Route::post('user/{id}',                        'UserController@storePassword');
-
+Route::resource('maps','MapsController');
+Route::resource('maps2','MapsController');
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

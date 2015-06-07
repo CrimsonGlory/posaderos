@@ -1,0 +1,110 @@
+<?php if($interactions != null && count($interactions) > 0): ?>
+    <div class="panel-collapse collapse in">
+        <div class="panel-body">
+            <div class="form-group">
+                <h1 align="center"><?php echo e(trans('messages.interactionsList')); ?></h1>
+                <table style="width:100%">
+                    <tr>
+                        <td style="width:50%">
+                            <label style="font:bold;"><?php echo e(trans('messages.fromDate')); ?>:</label> <?php echo e($fromDate); ?>
+
+                        </td>
+                        <td style="width:50%">
+                            <label style="font:bold;"><?php echo e(trans('messages.toDate')); ?>:</label> <?php echo e($toDate); ?>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="width:100%">
+                    <tr>
+                        <td style="width:50%">
+                            <?php if($fixed != -1): ?>
+                                <label style="font:bold;"><?php echo e(trans('messages.interactionState')); ?>:</label>
+                                <?php echo e(trans('messages.'.$fixed)); ?>
+
+                            <?php endif; ?>
+                        </td>
+                        <td style="width:50%">
+                            <?php if($people != null && count($people) > 0): ?>
+                                <label style="font:bold;"><?php echo e(trans('messages.person')); ?>:</label>
+                                <?php foreach($people as $idPerson): ?>
+                                    <?php echo e(getPersonName($idPerson)); ?>,
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="width:100%">
+                    <tr>
+                        <td style="width:50%">
+                            <?php if($users != null && count($users) > 0): ?>
+                                <label style="font:bold;"><?php echo e(trans('messages.createdBy')); ?>:</label>
+                                <?php foreach($users as $idUser): ?>
+                                    <?php echo e(getUserName($idUser)); ?>,
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </td>
+                        <td style="width:50%">
+                            <?php if($tags != null && count($tags) > 0): ?>
+                                <label style="font:bold;"><?php echo e(trans('messages.tags')); ?>:</label>
+                                <?php foreach($tags as $tag): ?>
+                                    <?php echo e($tag); ?>,
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table table-striped" cellpadding="2" cellspacing="1" width="100%">
+                    <thead>
+                        <tr>
+                            <td style="font:bold; border-bottom:1px solid black;"><?php echo e(trans('messages.date')); ?></td>
+                            <td style="font:bold; border-bottom:1px solid black;"><?php echo e(trans('messages.person')); ?></td>
+                            <td style="font:bold; border-bottom:1px solid black;"><?php echo e(trans('messages.description')); ?></td>
+                            <td style="font:bold; border-bottom:1px solid black;"><?php echo e(trans('messages.state')); ?></td>
+                            <td style="font:bold; border-bottom:1px solid black;"><?php echo e(trans('messages.createdBy')); ?></td>
+                            <td style="font:bold; border-bottom:1px solid black;"><?php echo e(trans('messages.tags')); ?></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($interactions as $interaction): ?>
+                            <tr>
+                                <td style="border-bottom:1px solid black;"><?php echo e(date("d/m/Y", strtotime($interaction->date))); ?></td>
+                                <td style="border-bottom:1px solid black;"><?php echo e(getPersonName($interaction->person_id)); ?></td>
+                                <td style="border-bottom:1px solid black;"><?php echo e($interaction->text); ?></td>
+                                <td style="border-bottom:1px solid black;"><?php echo e(trans('messages.'.$interaction->fixed)); ?></td>
+                                <td style="border-bottom:1px solid black;"><?php echo e(getUserName($interaction->user_id)); ?></td>
+                                <td style="border-bottom:1px solid black;">
+                                    <?php if(count($interaction->tagNames()) > 0): ?>
+                                        <?php foreach($interaction->tagNames() as $tag): ?>
+                                            <?php echo e($tag); ?>,
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="panel-collapse collapse in">
+        <div class="panel-body">
+            <div class="form-group">
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <div>
+                                <?php echo e(trans('messages.noInteractions')); ?>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

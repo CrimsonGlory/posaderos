@@ -1,0 +1,108 @@
+<?php if(count($people)): ?>
+    <?php if(Agent::isDesktop()): ?>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="form-group">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><?php echo e(trans('messages.photo')); ?></th>
+                                <th><?php echo e(trans('messages.firstName')); ?></th>
+                                <th><?php echo e(trans('messages.dni')); ?></th>
+                                <th><?php echo e(trans('messages.age')); ?></th>
+                                <th><?php echo e(trans('messages.address')); ?></th>
+                                <th><?php echo e(trans('messages.phone')); ?></th>
+                                <th><?php echo e(trans('messages.tags')); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($people as $person): ?>
+                            <tr>
+                                <th scope="row">
+                                    <?php if($person->get_avatar != null): ?>
+                                        <img src="<?php echo e(action("FileEntryController@showThumb",[50,$person->get_avatar])); ?>" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
+                                    <?php else: ?>
+                                        <img src="<?php echo e(asset("no-photo.png")); ?>" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
+                                    <?php endif; ?>
+                                </th>
+                                <th>
+                                    <a href="<?php echo e(action('PersonController@show',$person->id)); ?>">
+                                        <?php echo e($person->name()); ?>
+
+                                    </a>
+                                </th>
+                                <th><?php echo e($person->dni); ?></th>
+                                <th>
+                                    <?php if($person->birthdate != null): ?>
+                                        <?php echo e(date_diff(date_create($person->birthdate), date_create('today'))->y); ?>
+
+                                        <?php echo e(trans('messages.years')); ?>
+
+                                    <?php endif; ?>
+                                </th>
+                                <th><?php echo e($person->address); ?></th>
+                                <th><?php echo e($person->phone); ?></th>
+                                <th>
+                                    <?php if(count($person->tagNames()) > 0): ?>
+                                        <?php echo $__env->make('tag.list_tags',['tagNames' => $person->tagNames()], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                    <?php endif; ?>
+                                </th>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <?php else: ?>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="form-group">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><?php echo e(trans('messages.photo')); ?></th>
+                                <th><?php echo e(trans('messages.firstName')); ?></th>
+                                <th><?php echo e(trans('messages.dni')); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($people as $person): ?>
+                            <tr>
+                                <th scope="row">
+                                    <?php if($person->get_avatar != null): ?>
+                                        <img src="<?php echo e(action("FileEntryController@show",$person->get_avatar)); ?>" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
+                                    <?php else: ?>
+                                        <img src="<?php echo e(asset("no-photo.png")); ?>" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
+                                    <?php endif; ?>
+                                </th>
+                                <th>
+                                    <a href="<?php echo e(action('PersonController@show',$person->id)); ?>">
+                                        <?php echo e($person->name()); ?>
+
+                                    </a>
+                                </th>
+                                <th><?php echo e($person->dni); ?></th>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php else: ?>
+    <div id="collapseOne" class="panel-collapse collapse in">
+        <div class="panel-body">
+            <div class="form-group">
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <div><?php echo e(trans('messages.noPeople')); ?></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

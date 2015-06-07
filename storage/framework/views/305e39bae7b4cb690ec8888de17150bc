@@ -1,0 +1,30 @@
+<?php if($data['error'] == 1): ?>
+    <div class="panel-body">
+        <ul class="alert alert-danger">
+            <label><?php echo e(trans('messages.searchError')); ?></label>
+        </ul>
+    </div>
+<?php elseif(!is_null($people)): ?>
+    <?php if(count($people) > 0): ?>
+        <?php echo $__env->make('person.list_people',['people' => $people], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php else: ?>
+        <div class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="form-group">
+                    <div><?php echo e(trans('messages.noPeopleResults')); ?></div>
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-primary" onclick="createPersonWithParam()">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <?php echo e(trans('messages.addPerson')); ?>
+
+                    </a>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php elseif(!is_null($interactions)): ?>
+    <?php echo $__env->make('interaction.list_interactions',['interactions' => $interactions], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php elseif(!is_null($users)): ?>
+    <?php echo $__env->make('user.list_users',['users' => $users], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php endif; ?>
