@@ -121,15 +121,19 @@ class InteractionController extends Controller {
         // Si hay tags se envian mails a todos los usuarios que tengan alguno de los tags seleccionados
         if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags) && !$interaction->fixed && !$seEnviaronMails)
         {
-            $seEnviaronMails = true;
-            try
+            $users = User::withAnyTag($tags)->get();
+            if ($users != null && count($users) > 0)
             {
-                sendMailToUsers($tags,$person);
-                flash()->success(trans('messages.mailsSuccess'));
-            }
-            catch (\Exception $e)
-            {
-                flash()->error(trans('messages.mailsFailed'))->important();
+                $seEnviaronMails = true;
+                try
+                {
+                    sendMailToUsers($users,$person);
+                    flash()->success(trans('messages.mailsSuccess'));
+                }
+                catch (\Exception $e)
+                {
+                    flash()->error(trans('messages.mailsFailed'))->important();
+                }
             }
 
         }

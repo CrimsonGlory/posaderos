@@ -60,22 +60,18 @@ function allowed_to_tag($user,$tags)
 	return (any_new_tag($tags) && $user->can('create-tags') || !any_new_tag($tags));
 }
 
-function sendMailToUsers($tags,$person)
+function sendMailToUsers($users,$person)
 {
-    if ($tags != null && $person != null)
+    if ($users != null && count($users) > 0 && $person != null)
     {
-        $users = User::withAnyTag($tags)->get();
-        if ($users != null && count($users) > 0)
+        $data = array('person' => $person->name());
+        Mail::raw(trans('messages.derivationMailContent').$data['person'].'.', function($message) use ($users,$data)
         {
-            $data = array('person' => $person->name());
-            Mail::raw(trans('messages.derivationMailContent').$data['person'].'.', function($message) use ($users,$data)
+            foreach ($users as $user)
             {
-                foreach ($users as $user)
-                {
-                    $message->to($user->email)->subject(trans('messages.newDerivation'));
-                }
-            });
-        }
+                $message->to($user->email)->subject(trans('messages.newDerivation'));
+            }
+        });
     }
 }
 
