@@ -142,6 +142,10 @@ return [
 
     // Tags
     'lastPeople'                => 'Últimos asistidos',
+    'addTag'                    => 'Agregar etiqueta',
+    'editTag'                   => 'Actualizar etiqueta',
+    'tag'                       => 'Etiqueta',
+    'noTags'                    => 'No hay ninguna etiqueta para mostrar.',
 
     // Users
     'updateUser'                => 'Actualizar usuario',
@@ -184,10 +188,15 @@ return [
     'interactionsReportName'    => 'ListadoDeInteracciones',
     'usersReportName'           => 'ListadoDeUsuarios',
 
+    // TagController
+    'tagCreated'                => 'Etiqueta creada.',
+    'tagUpdated'                => 'Etiqueta actualizada.',
+    'tagDeleted'                => 'Etiqueta eliminada.',
+
     // UserController
     'userCreated'               => 'Usuario creado.',
     'userFailed'                => 'Error al intentar crear el usuario.',
-    'userUpdated'               => 'Usuario actualizado',
+    'userUpdated'               => 'Usuario actualizado.',
     'userDeleted'               => 'Usuario eliminado.',
     'oldPasswordMatch'          => 'La contraseña actual es incorrecta.',
     'passwordUpdated'           => 'Contraseña actualizada',

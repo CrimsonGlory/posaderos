@@ -175,28 +175,22 @@ class UserRolesAndPermissionsSeeder extends Seeder {
         $editNewInteractions->description  = 'Editar sólo las interacciones creadas por el usuario.'; // optional
         $editNewInteractions->save();
 
-        $createTags = new Permission();
-        $createTags->name = 'create-tags';
-        $createTags->display_name = 'Crear nuevos tags';
-        $createTags->description = 'Crear nuevos tags';
-        $createTags->save();
-
         // Add Permisions to Roles
         $admin->attachPermissions(array($seeUsersSearchView, $seeUsers, $editUsers,
-                                        $seeTags, $editTags, $addTag, $createTags,
+                                        $seeTags, $editTags, $addTag,
                                         $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
                                         $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
 
         $posadero->attachPermissions(array($seeUsersSearchView, $seeUsers,
-                                           $seeTags, $editTags, $addTag,
+                                           $seeTags,
                                            $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
                                            $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
 
-        $explorer->attachPermissions(array($seeTags, $editTags, $addTag,
+        $explorer->attachPermissions(array($seeTags,
                                            $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
                                            $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
 
-        $newUser->attachPermissions(array($seeTags, $editTags, $addTag,
+        $newUser->attachPermissions(array($seeTags,
                                           $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editNewPeople,
                                           $seeInteractionsSearchView, $seeNewInteractions, $addInteraction, $editNewInteractions));
 

@@ -149,6 +149,12 @@
                                     </li>
                                 @endif
                                 <li>
+                                    <a href="{{ action('TagController@index') }}">
+                                        <i class="glyphicon glyphicon-tag"></i>
+                                        {{ trans('messages.tags') }}
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="{{ action('UserController@favorites', Auth::user()->id) }}">
                                         <i class="glyphicon glyphicon-star"></i>
                                         {{ trans('messages.favorites') }}

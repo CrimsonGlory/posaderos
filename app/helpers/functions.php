@@ -41,7 +41,7 @@ function parse_phone($phone)
 // Returns an array with all the tag names
 function all_tags() // e.g. [ "tag1" => "tag1", "tag2" => "tag2" ]
 {
-    return $tags = Tag::lists('name','name'); // all tags
+    return Tag::orderBy('name')->lists('name', 'name');
 }
 
 // Returns true if an array has tags that doesn't exist.
@@ -57,7 +57,7 @@ function any_new_tag($tags)
 
 function allowed_to_tag($user,$tags)
 {
-	return (any_new_tag($tags) && $user->can('create-tags') || !any_new_tag($tags));
+	return (any_new_tag($tags) && $user->can('add-tag') || !any_new_tag($tags));
 }
 
 function sendMailToUsers($users,$person)
@@ -89,7 +89,7 @@ function sendMail($destinationMail,$person){
 // Returns an array with all the user names
 function all_users() // e.g. [ "user1" => "idUser1", "user2" => "idUser2" ]
 {
-    return $users = User::lists('name','id'); // all users
+    return $users = User::orderBy('name')->lists('name','id'); // all users
 }
 
 // Returns an array with all the people names
@@ -123,6 +123,13 @@ function getPersonName($id)
 function removeSpecialCharactersCSV($text)
 {
     return strtr($text, array(',' => '', '"' => '', '\\' => '', '/' => ''));
+}
+
+function removeAccents($text)
+{
+    $notAllowed = array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","À","Ã","Ì","Ò","Ù","Ã™","Ã ","Ã¨","Ã¬","Ã²","Ã¹","ç","Ç","Ã¢","ê","Ã®","Ã´","Ã»","Ã‚","ÃŠ","ÃŽ","Ã”","Ã›","ü","Ã¶","Ã–","Ã¯","Ã¤","«","Ò","Ã","Ã„","Ã‹");
+    $allowed = array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I","O","U","a","e","i","o","u","c","C","a","e","i","o","u","A","E","I","O","U","u","o","O","i","a","e","U","I","A","E");
+    return str_replace($notAllowed,$allowed,$text);
 }
 
 ?>

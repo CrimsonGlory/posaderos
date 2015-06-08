@@ -5,13 +5,19 @@ use App\Http\Requests\CreateInteractionRequest;
 use App\Http\Controllers\Controller;
 use App\Person;
 use App\Interaction;
+use App\User;
+use Conner\Tagging\Tag;
+use Conner\Tagging\TaggingUtil;
 use Illuminate\Http\Request;
 use \Conner\Tagging\TaggableTrait;
 use Conner\Tagging\Tagged;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Lib\Pagination\Pagination;
 
 class TagController extends Controller {
+
+    private $pagination;
 
     /**
      * Función para que verifique autenticación al ingresar a una página
@@ -19,9 +25,10 @@ class TagController extends Controller {
      * Si se pusiera $this->middleware('auth', ['only' => 'create']); sólo pide login para crear uno nuevo
      * Si se pusiera $this->middleware('auth', ['except' => 'create']); hace lo inverso al punto anterior
      */
-    public function __construct()
+    public function __construct(Pagination $pagination)
     {
         $this->middleware('auth');
+        $this->pagination = $pagination;
     }
 
 	/**
@@ -29,7 +36,7 @@ class TagController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(\Symfony\Component\HttpFoundation\Request $request)
 	{
         $user = Auth::user();
         if (is_null($user))
@@ -39,8 +46,9 @@ class TagController extends Controller {
 
         if ($user->can('see-tags'))
         {
-            $tags = Tagged::all()->groupBy('tag_slug')->keys()->toArray();
-            return view('tag.index',compact('tags'));
+            $tags = Tag::groupBy('name')->paginate(20);
+            $paginator = $this->pagination->set($tags, $request->getBaseUrl());
+            return view('tag.index',compact('tags','paginator'));
         }
 		return Redirect::back();
 	}
@@ -50,7 +58,7 @@ class TagController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create($id)
+	public function create()
 	{
         $user = Auth::user();
         if (is_null($user))
@@ -58,11 +66,11 @@ class TagController extends Controller {
             return "404";
         }
 
-        if ($user->can('add-tag'))
+        if ($user->hasRole('admin'))
         {
-            return "TagController@create pending";
+            return view('tag.addTag');
         }
-	    return Redirect::back();
+        return Redirect::back();
 	}
 
 	/**
@@ -70,9 +78,17 @@ class TagController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store(CreateInteractionRequest $request)
+	public function store(Request $request)
 	{
-	    return "TagController@store pending";
+        $rules = array(
+            'tag' => array('required'),
+        );
+        $this->validate($request,$rules);
+        $tag = array('name' => removeAccents(strtr(trim($request->tag), array(' ' => '-'))));
+        Tag::create($tag);
+
+        flash()->success(trans('messages.tagCreated'));
+        return redirect('tag');
 	}
 
 	/**
@@ -81,7 +97,7 @@ class TagController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($name)
+	public function show($tagName)
 	{
         $user = Auth::user();
         if (is_null($user))
@@ -89,29 +105,30 @@ class TagController extends Controller {
             return "404";
         }
 
-        $people = null;
-        $interactions = null;
-        if ($user->can('see-all-people'))
-        {
-            $people = Person::withAnyTag($name)->latest('id')->limit(10)->get();
-        }
-        else if ($user->can('see-new-people'))
-        {
-            $people = Person::withAnyTag($name)->where('created_by', $user->id)->latest('id')->limit(10)->get();
-        }
-
-        if ($user->can('see-all-interactions'))
-        {
-            $interactions = Interaction::withAnyTag($name)->latest('id')->limit(10)->get();
-        }
-        else if ($user->can('see-new-interactions'))
-        {
-            $interactions = Interaction::withAnyTag($name)->where('user_id', $user->id)->latest('id')->limit(10)->get();
-        }
-
         if ($user->can('see-tags'))
         {
-            return view('tag.show',compact('people','interactions','name'));
+            $people = null;
+            $interactions = null;
+
+            if ($user->can('see-all-people'))
+            {
+                $people = Person::withAnyTag($tagName)->latest('id')->limit(10)->get();
+            }
+            else if ($user->can('see-new-people'))
+            {
+                $people = Person::withAnyTag($tagName)->where('created_by', $user->id)->latest('id')->limit(10)->get();
+            }
+
+            if ($user->can('see-all-interactions'))
+            {
+                $interactions = Interaction::withAnyTag($tagName)->latest('id')->limit(10)->get();
+            }
+            else if ($user->can('see-new-interactions'))
+            {
+                $interactions = Interaction::withAnyTag($tagName)->where('user_id', $user->id)->latest('id')->limit(10)->get();
+            }
+
+            return view('tag.show',compact('tagName','people','interactions'));
         }
         return Redirect::back();
 	}
@@ -125,16 +142,17 @@ class TagController extends Controller {
 	public function edit($id)
 	{
         $user = Auth::user();
-        if (is_null($user))
+        $tag = Tag::find($id);
+        if (is_null($user) || is_null($tag))
         {
             return "404";
         }
 
-        if ($user->can('edit-tags'))
+        if ($user->hasRole('admin'))
         {
-            return "TagController@edit pending";
+            return view('tag.editTag', compact('tag'));
         }
-		return Redirect::back();
+        return Redirect::back();
 	}
 
 	/**
@@ -143,9 +161,44 @@ class TagController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update(CreateInteractionRequest $request,$id)
+	public function update(Request $request,$id)
 	{
-		return "TagController@update pending";
+        $tagToDelete = Tag::findOrFail($id);
+        $rules = array(
+            'tag' => array('required'),
+        );
+        $this->validate($request,$rules);
+
+        $oldTag = array(strtolower($tagToDelete->name));
+        $newTag = array(strtolower(removeAccents(strtr(trim($request->tag), array(' ' => '-')))));
+
+        if ($oldTag != $newTag)
+        {
+            $people = Person::withAnyTag($oldTag)->get();
+            foreach ($people as $person)
+            {
+                $tagNames = $person->tagSlugs();
+                $person->retag(array_merge(array_diff($tagNames, $oldTag),$newTag));
+            }
+
+            $interactions = Interaction::withAnyTag($oldTag)->get();
+            foreach ($interactions as $interaction)
+            {
+                $tagNames = $interaction->tagSlugs();
+                $interaction->retag(array_merge(array_diff($tagNames, $oldTag),$newTag));
+            }
+
+            $users = User::withAnyTag($oldTag)->get();
+            foreach ($users as $user)
+            {
+                $tagNames = $user->tagSlugs();
+                $user->retag(array_merge(array_diff($tagNames, $oldTag),$newTag));
+            }
+            $tagToDelete->delete();
+        }
+
+        flash()->success(trans('messages.tagUpdated'));
+        return redirect('tag');
 	}
 
 	/**
@@ -156,7 +209,45 @@ class TagController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+        $user = Auth::user();
+        $tag = Tag::find($id);
+        if (is_null($user) || is_null($tag))
+        {
+            return "404";
+        }
+
+        if ($user->hasRole('admin'))
+        {
+            $tagName = array(strtolower($tag->name));
+
+            $people = Person::withAnyTag($tag->name)->get();
+            foreach ($people as $person)
+            {
+                $tagNames = $person->tagSlugs();
+                $person->untag();
+                $person->retag(array_diff($tagNames, $tagName));
+            }
+
+            $interactions = Interaction::withAnyTag($tag->name)->get();
+            foreach ($interactions as $interaction)
+            {
+                $tagNames = $interaction->tagSlugs();
+                $interaction->retag(array_diff($tagNames, $tagName));
+            }
+
+            $users = User::withAnyTag($tag->name)->get();
+            foreach ($users as $user)
+            {
+                $tagNames = $user->tagSlugs();
+                $user->retag(array_diff($tagNames, $tagName));
+            }
+
+            $tag->delete();
+            flash()->success(trans('messages.tagDeleted'));
+            return redirect('tag');
+        }
+
+        return Redirect::back();
 	}
 
 }

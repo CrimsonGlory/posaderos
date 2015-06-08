@@ -9,7 +9,7 @@
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
-                                <td><h4>{{ ucfirst($name) }} - {{ trans('messages.lastPeople') }}</h4></td>
+                                <td><h4>{{ $tagName }} - {{ trans('messages.lastPeople') }}</h4></td>
                             </tr>
                         </table>
                     </div>
@@ -20,7 +20,7 @@
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
-                                <td><h4>{{ ucfirst($name) }} - {{ trans('messages.lastInteractions') }}</h4></td>
+                                <td><h4>{{ $tagName }} - {{ trans('messages.lastInteractions') }}</h4></td>
                             </tr>
                         </table>
                     </div>
