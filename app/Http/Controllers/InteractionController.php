@@ -89,13 +89,16 @@ class InteractionController extends Controller {
      */
     public function store(CreateInteractionRequest $request)
     {
-        $tags = $request->tags;
-        foreach ($tags as $tag)
+        $tagNames = $request->tags;
+        $tags = array();
+        foreach ($tagNames as $tagName)
         {
-            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tag))
+            $tagName = removeAccents(strtr(trim($tagName), array(' ' => '-')));
+            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tagName))
             {
                 return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
             }
+            array_push($tags,$tagName);
         }
 
         $person = Person::find($request->person_id);
@@ -217,13 +220,16 @@ class InteractionController extends Controller {
     {
         $interaction = Interaction::findorFail($id);
 
-        $tags = $request->tags;
-        foreach ($tags as $tag)
+        $tagNames = $request->tags;
+        $tags = array();
+        foreach ($tagNames as $tagName)
         {
-            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tag))
+            $tagName = removeAccents(strtr(trim($tagName), array(' ' => '-')));
+            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tagName))
             {
                 return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
             }
+            array_push($tags,$tagName);
         }
 
         $input = $request->all();

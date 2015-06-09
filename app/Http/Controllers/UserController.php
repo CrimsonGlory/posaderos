@@ -136,18 +136,21 @@ class UserController extends Controller {
 	public function update(UserRequest $request, $id)
 	{
         $rules = array(
-            'name' => array('required', 'min:1'),
-            'email' => array('required', 'min:1'),
+            'name' => array('required', 'min:2'),
+            'email' => array('required', 'email'),
         );
 		$this->validate($request,$rules);
 
-        $tags = $request->tags;
-        foreach ($tags as $tag)
+        $tagNames = $request->tags;
+        $tags = array();
+        foreach ($tagNames as $tagName)
         {
-            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tag))
+            $tagName = removeAccents(strtr(trim($tagName), array(' ' => '-')));
+            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tagName))
             {
                 return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
             }
+            array_push($tags,$tagName);
         }
 
 		$user = User::findOrFail($id);
