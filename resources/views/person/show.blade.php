@@ -221,7 +221,7 @@
                         <table width="100%" align="center" class="table table-striped">
                             @foreach ($interactions as $interaction)
                                 <tr>
-                                    <td width="120" align="middle">
+                                    <td align="middle">
                                         <label>{{ date("d/m/Y", strtotime($interaction->date)) }}</label>
                                         @if (Auth::user()->can('see-users') || $interaction->user->id == Auth::user()->id)
                                             </br>
@@ -248,25 +248,42 @@
                                             <label style="color:red">{{ trans('messages.'.$interaction->fixed) }}.</label>
                                         @endif
                                         @if (count($interaction->tagNames()) > 0)
+                                            <br/>
                                             <label>{{ trans('messages.tags') }}: @include('tag.list_tags',['tagNames'=> $interaction->tagNames()])</label>
                                         @endif
                                     </td>
                                     <td align="right">
                                         <table>
                                             <tr>
-                                                <td>
-                                                    <a class="btn btn-primary" href="{{ action("InteractionController@edit",$interaction) }}">
-                                                        <i class="glyphicon glyphicon-pencil"></i>
-                                                    </a>
-                                                </td>
-                                                @if (Auth::user()->hasRole('admin'))
-                                                    <td style="width:5px;"></td>
+                                                @if (Agent::isDesktop())
                                                     <td>
-                                                        {!! Form::open(array('route' => array('interaction.destroy', $interaction->id), 'method' => 'delete')) !!}
-                                                            <button type="submit" class="btn btn-danger">
-                                                                <i class="glyphicon glyphicon-remove"></i>
-                                                            </button>
-                                                        {!! Form::close() !!}
+                                                        <a class="btn btn-primary" href="{{ action("InteractionController@edit",$interaction) }}">
+                                                            <i class="glyphicon glyphicon-pencil"></i>
+                                                        </a>
+                                                    </td>
+                                                    @if (Auth::user()->hasRole('admin'))
+                                                        <td style="width:5px;"></td>
+                                                        <td>
+                                                            {!! Form::open(array('route' => array('interaction.destroy', $interaction->id), 'method' => 'delete')) !!}
+                                                                <button type="submit" class="btn btn-danger">
+                                                                    <i class="glyphicon glyphicon-remove"></i>
+                                                                </button>
+                                                            {!! Form::close() !!}
+                                                        </td>
+                                                    @endif
+                                                @else
+                                                    <td>
+                                                        <a class="btn btn-primary" href="{{ action("InteractionController@edit",$interaction) }}">
+                                                            <i class="glyphicon glyphicon-pencil"></i>
+                                                        </a>
+                                                        @if (Auth::user()->hasRole('admin'))
+                                                            <br/>
+                                                            {!! Form::open(array('route' => array('interaction.destroy', $interaction->id), 'method' => 'delete')) !!}
+                                                                <button type="submit" class="btn btn-danger">
+                                                                    <i class="glyphicon glyphicon-remove"></i>
+                                                                </button>
+                                                            {!! Form::close() !!}
+                                                        @endif
                                                     </td>
                                                 @endif
                                                 <td style="width:5px;"></td>
