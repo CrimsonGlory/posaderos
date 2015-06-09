@@ -100,8 +100,16 @@ class PersonController extends Controller {
 	 */
 	public function store(CreatePersonRequest $request)
 	{
-        $person = new Person;
         $tags = $request->tags;
+        foreach ($tags as $tag)
+        {
+            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tag))
+            {
+                return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
+            }
+        }
+
+        $person = new Person;
         $input = $request->all();
         $person->fill($input);
         $request->replace(array('phone' => parse_phone($request->only('phone'))));
@@ -109,6 +117,7 @@ class PersonController extends Controller {
         $person->created_by = Auth::id();
         $person->updated_by = Auth::id();
         $success = $person->save();
+
         if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
             $person->retag($tags);
@@ -207,13 +216,23 @@ class PersonController extends Controller {
 	public function update(CreatePersonRequest $request, $id)
 	{
 		$person = Person::findOrFail($id);
+
         $tags = $request->tags;
+        foreach ($tags as $tag)
+        {
+            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tag))
+            {
+                return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
+            }
+        }
+
         $input = $request->all();
         $person->fill($input);
         $request->replace(array('phone' => parse_phone($request->only('phone'))));
         $person->phone = $request->phone;
         $person->updated_by = Auth::id();
         $person->update();
+
         if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
             $person->retag($tags);

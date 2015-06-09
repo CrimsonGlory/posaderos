@@ -18,6 +18,8 @@
                         @endif
 
                         {!! Form::open(array('method' => 'POST', 'class' => 'form-horizontal', 'action' => array('UserController@storePassword', $userShown->id))) !!}
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.currentPassword') }}</label>
                                 <div class="col-md-6">

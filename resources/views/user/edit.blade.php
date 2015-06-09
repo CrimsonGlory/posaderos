@@ -9,6 +9,14 @@
                         <h4>{{ trans('messages.updateUser') }}</h4>
                     </div>
                     <div class="panel-body">
+                        @if ($errors->any())
+                            <ul class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+
                         {!! Form::model($userShown, ['class' => 'form-horizontal', 'method'=> 'PATCH', 'action' => ['UserController@update',$userShown->id]]) !!}
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -16,7 +24,6 @@
                                 <label class="col-md-4 control-label">{{ trans('messages.firstName') }}</label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="name" value="{{ $userShown->name }}" autofocus="true">
-                                    {{ $errors->first('name') }}
                                 </div>
                             </div>
 
@@ -24,7 +31,6 @@
                                 <label class="col-md-4 control-label">{{ trans('messages.email') }}</label>
                                 <div class="col-md-6">
                                     <input type="email" class="form-control" name="email" value="{{ $userShown->email }}">
-                                    {{ $errors->first('email') }}
                                 </div>
                             </div>
 
@@ -32,7 +38,6 @@
                                 <label class="col-md-4 control-label">{{ trans('messages.phone') }}</label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="phone" value="{{ $userShown->phone }}">
-                                    {{ $errors->first('phone') }}
                                 </div>
                             </div>
 

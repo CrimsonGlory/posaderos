@@ -89,14 +89,23 @@ class InteractionController extends Controller {
      */
     public function store(CreateInteractionRequest $request)
     {
+        $tags = $request->tags;
+        foreach ($tags as $tag)
+        {
+            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tag))
+            {
+                return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
+            }
+        }
+
         $person = Person::find($request->person_id);
         $interaction = new Interaction;
-        $tags = $request->tags;
         $destinationMail = $request->destination;
         $input = $request->all();
         $interaction->fill($input);
         $interaction->user_id = Auth::id();
         $success = $interaction->save();
+
         $seEnviaronMails = false;
         if (!is_null($tags))
         {
@@ -207,10 +216,20 @@ class InteractionController extends Controller {
     public function update(CreateInteractionRequest $request, $id)
     {
         $interaction = Interaction::findorFail($id);
+
         $tags = $request->tags;
+        foreach ($tags as $tag)
+        {
+            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tag))
+            {
+                return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
+            }
+        }
+
         $input = $request->all();
         $interaction->fill($input);
         $interaction->update();
+
         if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags))
         {
             $interaction->retag($tags);

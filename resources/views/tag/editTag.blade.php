@@ -18,6 +18,8 @@
                         @endif
 
                         {!! Form::model($tag, ['class' => 'form-horizontal', 'method'=> 'PATCH', 'action' => ['TagController@update', $tag->id]]) !!}
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.tag') }}</label>
                                 <div class="col-md-6">

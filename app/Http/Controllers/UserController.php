@@ -76,24 +76,8 @@ class UserController extends Controller {
 	 */
 	public function store(Request $request)
 	{
-		$rules = array(
-            'name' => array('required', 'min:1')
-        );
-		$this->validate($request,$rules);
-	    $request->replace(array('phone' => parse_phone($request->only('phone'))));
-        $input = $request->all();
-        $user = new User;
-        $user->fill($input);
-
-        if($user->save())
-        {
-            flash()->success(trans('messages.userCreated'));
-        }
-        else
-        {
-            flash()->error(trans('messages.userFailed'));
-        }
-		return redirect('user');
+        //En principio los users se crean a sí mismos cuando se registran en el sistema.
+        return "404";
 	}
 
 	/**
@@ -157,8 +141,16 @@ class UserController extends Controller {
         );
 		$this->validate($request,$rules);
 
-		$user = User::findOrFail($id);
         $tags = $request->tags;
+        foreach ($tags as $tag)
+        {
+            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tag))
+            {
+                return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
+            }
+        }
+
+		$user = User::findOrFail($id);
         $newRole = DB::table('roles')->where('name', $request->role)->first();
         $user->name = $request->name;
         $user->email = $request->email;

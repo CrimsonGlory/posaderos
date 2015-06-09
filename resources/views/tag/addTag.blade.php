@@ -18,6 +18,8 @@
                         @endif
 
                         {!! Form::open(array('method' => 'POST', 'class' => 'form-horizontal', 'action' => array('TagController@store'))) !!}
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.tag') }}</label>
                                 <div class="col-md-6">
