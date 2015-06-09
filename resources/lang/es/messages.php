@@ -192,6 +192,7 @@ return [
     'tagCreated'                => 'Etiqueta creada.',
     'tagUpdated'                => 'Etiqueta actualizada.',
     'tagDeleted'                => 'Etiqueta eliminada.',
+    'tagCharacterError'         => 'Las etiquetas sólo pueden contener letras, números o guiones.',
 
     // UserController
     'userCreated'               => 'Usuario creado.',

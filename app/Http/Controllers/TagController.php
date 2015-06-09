@@ -46,7 +46,7 @@ class TagController extends Controller {
 
         if ($user->can('see-tags'))
         {
-            $tags = Tag::groupBy('name')->paginate(20);
+            $tags = Tag::groupBy('name')->paginate(10);
             $paginator = $this->pagination->set($tags, $request->getBaseUrl());
             return view('tag.index',compact('tags','paginator'));
         }
@@ -84,7 +84,14 @@ class TagController extends Controller {
             'tag' => array('required'),
         );
         $this->validate($request,$rules);
-        $tag = array('name' => removeAccents(strtr(trim($request->tag), array(' ' => '-'))));
+
+        $tagName = removeAccents(strtr(trim($request->tag), array(' ' => '-')));
+        if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tagName))
+        {
+            return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
+        }
+
+        $tag = array('name' => $tagName);
         Tag::create($tag);
 
         flash()->success(trans('messages.tagCreated'));
@@ -169,8 +176,14 @@ class TagController extends Controller {
         );
         $this->validate($request,$rules);
 
+        $tagName = removeAccents(strtr(trim($request->tag), array(' ' => '-')));
+        if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tagName))
+        {
+            return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
+        }
+
         $oldTag = array(strtolower($tagToDelete->name));
-        $newTag = array(strtolower(removeAccents(strtr(trim($request->tag), array(' ' => '-')))));
+        $newTag = array(strtolower($tagName));
 
         if ($oldTag != $newTag)
         {
