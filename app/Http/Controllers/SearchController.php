@@ -113,7 +113,7 @@ class SearchController extends Controller {
             $builder = $builder->withAllTags($tags);
         }
 
-        $results = $builder->orderBy('id','desc')->limit(30)->get();
+        $results = $builder->orderBy('id','desc')->limit(10)->get();
         if($results)
         {
             $data['error'] = 0;

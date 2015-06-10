@@ -91,14 +91,17 @@ class InteractionController extends Controller {
     {
         $tagNames = $request->tags;
         $tags = array();
-        foreach ($tagNames as $tagName)
+        if ($tagNames != null)
         {
-            $tagName = removeAccents(strtr(trim($tagName), array(' ' => '-')));
-            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tagName))
+            foreach ($tagNames as $tagName)
             {
-                return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
+                $tagName = removeAccents(strtr(trim($tagName), array(' ' => '-')));
+                if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tagName))
+                {
+                    return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
+                }
+                array_push($tags, $tagName);
             }
-            array_push($tags,$tagName);
         }
 
         $person = Person::find($request->person_id);
@@ -222,14 +225,17 @@ class InteractionController extends Controller {
 
         $tagNames = $request->tags;
         $tags = array();
-        foreach ($tagNames as $tagName)
+        if ($tagNames != null)
         {
-            $tagName = removeAccents(strtr(trim($tagName), array(' ' => '-')));
-            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tagName))
+            foreach ($tagNames as $tagName)
             {
-                return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
+                $tagName = removeAccents(strtr(trim($tagName), array(' ' => '-')));
+                if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tagName))
+                {
+                    return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
+                }
+                array_push($tags,$tagName);
             }
-            array_push($tags,$tagName);
         }
 
         $input = $request->all();
