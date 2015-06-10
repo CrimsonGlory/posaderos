@@ -42,7 +42,7 @@ class PersonController extends Controller {
         }
 
         $people = null;
-        if ($user->can('see-all-people'))
+        if ($user->can('see-all-people') && !$user->hasRole('new-user'))
         {
             $people = Person::orderBy('id', 'desc')->paginate(10);
         }
