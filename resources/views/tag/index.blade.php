@@ -7,6 +7,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel-group" role="tablist" aria-multiselectable="false">
                     <div class="panel panel-default">
+                        <script src="{{ asset('js/confirmDelete.js') }}"></script>
                         @include('flash::message')
                         <div class="panel-heading">
                             <table width="100%">
@@ -45,9 +46,11 @@
                                                                             <i class="glyphicon glyphicon-pencil"></i>
                                                                         </a>
                                                                     </td>
-                                                                    <td style="width:5px;"></td>
                                                                     <td>
-                                                                        {!! Form::open(array('route' => array('tag.destroy', $tag->id), 'method' => 'delete')) !!}
+                                                                        <div style="width:5px;"></div>
+                                                                    </td>
+                                                                    <td>
+                                                                        {!! Form::open(array('route' => array('tag.destroy', $tag->id), 'method' => 'delete', 'onsubmit' => 'return confirmDeleteTag()')) !!}
                                                                         <button type="submit" class="btn btn-danger">
                                                                             <i class="glyphicon glyphicon-remove"></i>
                                                                         </button>

@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
+                    <script src="{{ asset('js/confirmDelete.js') }}"></script>
 			        @include('flash::message')
                     <div class="panel-heading">
                         <table width="100%">
@@ -45,8 +46,10 @@
                                                     </td>
                                                 @endif
                                                 @if (Auth::user()->hasRole('admin'))
-                                                    <td style="width:5px;"></td>
-                                                    {!! Form::open(array('route' => array('person.destroy', $person->id), 'method' => 'delete')) !!}
+                                                    <td>
+                                                        <div style="width:5px;"></div>
+                                                    </td>
+                                                    {!! Form::open(array('route' => array('person.destroy', $person->id), 'method' => 'delete', 'onsubmit' => 'return confirmDeletePerson()')) !!}
                                                         <td align="right">
                                                             <button type="submit" class="btn btn-danger">
                                                                 <i class="glyphicon glyphicon-remove"></i>
@@ -61,7 +64,7 @@
                             </tr>
                         </table>
                     </div>
-			
+
                     <div class="panel-body">
                         @if ($errors->any())
                             <ul class="alert alert-danger">
@@ -180,7 +183,7 @@
                                                 <a href="{{ action('UserController@show',$person->created_by) }}">
                                                     {{ $person->creator->name }}
                                                 </a>
-                                                ({{ $person->created_at }})
+                                                ({{ date("d/m/Y", strtotime($person->created_at)) }})
                                             </label>
                                         </div>
                                     </div>
@@ -194,7 +197,7 @@
                                                 <a href="{{ action('UserController@show',$person->updated_by) }}">
                                                     {{ $person->last_update_user->name }}
                                                 </a>
-                                                ({{ $person->updated_at }})
+                                                ({{ date("d/m/Y", strtotime($person->updated_at)) }})
                                             </label>
                                         </div>
                                     </div>
@@ -221,7 +224,7 @@
                         <table width="100%" align="center" class="table table-striped">
                             @foreach ($interactions as $interaction)
                                 <tr>
-                                    <td align="middle">
+                                    <td align="middle" @if(Agent::isDesktop())style="width:120px;"@endif>
                                         <label>{{ date("d/m/Y", strtotime($interaction->date)) }}</label>
                                         @if (Auth::user()->can('see-users') || $interaction->user->id == Auth::user()->id)
                                             </br>
@@ -264,7 +267,7 @@
                                                     @if (Auth::user()->hasRole('admin'))
                                                         <td style="width:5px;"></td>
                                                         <td>
-                                                            {!! Form::open(array('route' => array('interaction.destroy', $interaction->id), 'method' => 'delete')) !!}
+                                                            {!! Form::open(array('route' => array('interaction.destroy', $interaction->id), 'method' => 'delete', 'onsubmit' => 'return confirmDeleteInteraction()')) !!}
                                                                 <button type="submit" class="btn btn-danger">
                                                                     <i class="glyphicon glyphicon-remove"></i>
                                                                 </button>
@@ -277,8 +280,8 @@
                                                             <i class="glyphicon glyphicon-pencil"></i>
                                                         </a>
                                                         @if (Auth::user()->hasRole('admin'))
-                                                            <br/>
-                                                            {!! Form::open(array('route' => array('interaction.destroy', $interaction->id), 'method' => 'delete')) !!}
+                                                            <div style="font-size:0; height:5px;"></div>
+                                                            {!! Form::open(array('route' => array('interaction.destroy', $interaction->id), 'method' => 'delete', 'onsubmit' => 'return confirmDeleteInteraction()')) !!}
                                                                 <button type="submit" class="btn btn-danger">
                                                                     <i class="glyphicon glyphicon-remove"></i>
                                                                 </button>

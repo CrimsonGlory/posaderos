@@ -6,6 +6,7 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
+                    <script src="{{ asset('js/confirmDelete.js') }}"></script>
 			        @include('flash::message')
                     <div class="panel-heading">
                         <table width="100%">
@@ -23,8 +24,10 @@
                                                     </td>
                                                 @endif
                                                 @if (Auth::user()->hasRole('admin') && $userShown->id != Auth::user()->id)
-                                                    <td style="width:5px;"></td>
-                                                    {!! Form::open(array('route' => array('user.destroy', $userShown->id), 'method' => 'delete')) !!}
+                                                    <td>
+                                                        <div style="width:5px;"></div>
+                                                    </td>
+                                                    {!! Form::open(array('route' => array('user.destroy', $userShown->id), 'method' => 'delete', 'onsubmit' => 'return confirmDeleteUser()')) !!}
                                                         <td align="right">
                                                             <button type="submit" class="btn btn-danger">
                                                                 <i class="glyphicon glyphicon-remove"></i>
