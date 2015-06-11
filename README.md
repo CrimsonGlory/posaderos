@@ -1,9 +1,10 @@
 # Posaderos
 
 ### Docker
-Para usar Docker (requiere docker-compose)
+Para usar [Docker](http://www.docker.com) (requiere [docker-compose](https://docs.docker.com/compose/))
 ```sh
 #bajar la imagen de posaderos_web 
+wget "https://www.dropbox.com/s/wk2h7smvteptupv/posaderos_web_latest_image.tar?dl=0" -O posaderos_web_latest_image.tar
 docker load < posaderos_web_latest_image.tar 
 git clone https://github.com/CrimsonGlory/posaderos.git
 cd posaderos
