@@ -23,11 +23,11 @@
                         });
                     });
 
-                    function buscar(){
+                    function buscar(searchConcept){
                         var k = $('#keyWord').val();
                         var tf = $('#search_param').text();
-                        if(document.getElementById('search_concept').textContent == 'Asistidos'){
-                            tf = 'Asistidos';
+                        if(document.getElementById('search_concept').textContent == searchConcept){
+                            tf = searchConcept;
                         }
                         $.get("/search/search", { toFind: tf, key: k })
                                 .done(function(data){
@@ -36,11 +36,11 @@
                                 });
                     }
 
-                    function enterPressAction(e){
+                    function enterPressAction(e, searchConcept){
                         var code = (e.keyCode ? e.keyCode : e.which);
                         //Enter keycode
                         if(code == 13){
-                            buscar();
+                            buscar(searchConcept);
                         }
                     }
 
@@ -49,6 +49,10 @@
                         window.location.href = window.location.protocol + '//' + window.location.host + '/person/create?param=' + $param;
                     }
                 </script>
+
+                <?php
+                    $people = trans('messages.people');
+                ?>
 
                 <div class="panel-body">
                     <div class="input-group">
@@ -74,9 +78,9 @@
                             </ul>
                         </div>
                         <input type="hidden" name="search_param" id="search_param">
-                        <input type="text" id="keyWord" class="form-control" name="x" placeholder="{{ trans('messages.find') }}..." autofocus="true" onkeypress="enterPressAction(event)">
+                        <input type="text" id="keyWord" class="form-control" name="x" placeholder="{{ trans('messages.find') }}..." autofocus="true" onkeypress="enterPressAction(event, '<?php echo $people ?>')">
                         <span class="input-group-btn">
-                            <button id="search" class="btn btn-default" type="button" onClick="buscar()"><span class="glyphicon glyphicon-search"></span></button>
+                            <button id="search" class="btn btn-default" type="button" onClick="buscar('<?php echo $people ?>')"><span class="glyphicon glyphicon-search"></span></button>
                         </span>
                     </div>
                 </div>
