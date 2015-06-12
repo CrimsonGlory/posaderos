@@ -8,14 +8,8 @@ wget "https://www.dropbox.com/s/wk2h7smvteptupv/posaderos_web_latest_image.tar?d
 docker load < posaderos_web_latest_image.tar 
 git clone https://github.com/CrimsonGlory/posaderos.git
 cd posaderos
-mv env-sample .env
-composer update
-composer install
+mv env-docker .env
 docker-compose up
-#esperar a que descargue mysql:latest, arme los containers y los levante.
-#en otra terminal. ejecutar:
-docker exec -i -t posaderos_web_1 php artisan migrate
-docker exec -i -t posaderos_web_1 php artisan db:seed
 ```
 Ir a localhost:8888 y debería estar el sitio online.
 

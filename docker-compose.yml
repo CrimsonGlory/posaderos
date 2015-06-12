@@ -8,7 +8,7 @@ db:
 
 web:
   build: .
-  command: php -S 0.0.0.0:8888 -t /myapp/public
+  command: bash -c "echo updating composer... && composer --working-dir=/myapp update && echo installing dependencies.... && composer --working-dir=/myapp install && echo running migrations... &&  php /myapp/artisan --force migrate && echo db:seed..... && php /myapp/artisan --force db:seed && echo starting php server... &&  php -S 0.0.0.0:8888 -t /myapp/public"
   volumes:
     - .:/myapp
   ports:
