@@ -27,4 +27,28 @@ protected $filedir = 'fileentries';//used by larave-image-cache
     {
 	return $this->hasOne('App\Person','avatar','id');
     }
+    public function scopeImage($query)
+    {
+	return $query->whereNested(function($sql) {
+		$sql->where('mime','=','image/jpeg');
+		$sql->orWhere('mime','=','image/png');
+		$sql->orWhere('mime','=','image/gif');
+	});
+    }
+
+    public function isImage()
+    {
+//	return substr($this->mime, 0, 5) == 'image';
+	return in_array($this->mime,['image/jpeg','image/png','image/gif']);
+    }
+
+
+    public function scopeNotImage($query)
+    {
+        return $query->
+                where('mime','<>','image/jpeg')->
+                where('mime','<>','image/png')->
+                where('mime','<>','image/gif');
+    }
+
 }

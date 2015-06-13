@@ -110,6 +110,7 @@ return [
     'personAddedBy'             => 'Asistido agregado por',
     'lastUpdate'                => 'Última actualización',
     'lastInteractions'          => 'Últimas interacciones',
+    'files'                     => 'Archivos',
 
     // Reports
     'exportType'                => 'Tipo de exportación',

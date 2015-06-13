@@ -23,6 +23,7 @@ class FileEntryController extends Controller {
      *
      * @return Response
      */
+
     public function create($id)
     {
         $uploadError = 0; //Se maneja desde App\Exceptions\Handler.php para los archivos que superan los 8 MB.
@@ -40,6 +41,10 @@ class FileEntryController extends Controller {
         return Redirect::back();
     }
 
+    private function extension_is_valid($ext){
+	return in_array(strtolower($ext),['3gp','avi','bmp','csv','doc','docx','flac','gif','gz','gzip','jpeg','jpg','kml','kmz','m4a','mov','mp3','mp4','mpeg','mpg','odp','ods','odt','oga','ogg','ogv','pdf','png','pps','pptx','svg','swf','tar','text','tif','txt','wav','webm','wmv','xls','xlsx','xml','xsl','xsd','zip']);
+    }
+
     public function store(CreateFileEntryRequest $request)
     {
         $person_id = Request::input('person_id');
@@ -52,17 +57,20 @@ class FileEntryController extends Controller {
         $message="";
         foreach(Input::file('files') as $file){
             $rules = array(
-                'file' => 'required|max:8000|mimes:jpg,jpeg,png'
+                'file' => 'required|max:8000|mimes:3gp,avi,bmp,csv,doc,docx,flac,gif,gz,gzip,jpeg,jpg,kml,kmz,m4a,mov,mp3,mp4,mpeg,mpg,odp,ods,odt,oga,ogg,ogv,pdf,png,pps,pptx,svg,swf,tar,text,tif,txt,wav,webm,wmv,xls,xlsx,xml,xsl,xsd,zip'
             );
             $validator = \Validator::make(array('file'=> $file), $rules);
-            if($validator->passes())
+	    $ext = pathinfo($file->getClientOriginalName(),PATHINFO_EXTENSION);
+            if($validator->passes() && $this->extension_is_valid($ext))
             {
-                $ext = $file->guessClientExtension(); // (Based on mime type)
                 $entry = new FileEntry();
                 $entry->upload($file);
                 $entry->save();
-                $entry->avatar_of()->save($person);
-                $person->fileentries()->save($entry);
+		if($entry->isImage())
+		{
+                	$entry->avatar_of()->save($person);
+                }
+		$person->fileentries()->save($entry);
                 $message.=$entry->original_filename." OK. ";
             }
             else
@@ -95,8 +103,17 @@ class FileEntryController extends Controller {
             return "404";
         }
         $filename = $file->filename;
-        $image = Image::make("../storage/app/assets/fileentries/$filename");
-        return $image->response();
+	if($file->isImage())
+	{
+	        $image = Image::make("../storage/app/assets/fileentries/$filename");
+        	return $image->response();
+	}
+	else
+	{
+		$content = File::get("../storage/app/assets/fileentries/$filename");
+		return (new Response($content, 200))
+	              ->header('Content-Type', $file->mime);
+	}
     }
 
     public function showThumb($size, $id)

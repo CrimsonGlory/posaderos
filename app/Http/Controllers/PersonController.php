@@ -166,8 +166,9 @@ class PersonController extends Controller {
             {
                 $interactions = $person->interactions()->where('user_id', $user->id)->latest('id')->limit(10)->get();
             }
-            $fileentries = $person->fileentries()->latest('id')->limit(10)->get();
-            return view('person.show',compact('person','interactions','fileentries'));
+            $images_counter = $person->fileentries()->image()->count();
+	    $files = $person->fileentries()->notImage()->get();
+            return view('person.show',compact('person','interactions','images_counter','files'));
         }
         return Redirect::back();
 	}
@@ -184,8 +185,8 @@ class PersonController extends Controller {
 
         if ($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id))
         {
-            $fileentries = $person->fileentries()->get();
-            return view('person.photos',compact('person','fileentries'));
+            $images = $person->fileentries()->image()->get();
+            return view('person.photos',compact('person','images'));
         }
         return Redirect::back();
     }

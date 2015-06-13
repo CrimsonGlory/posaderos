@@ -60,9 +60,9 @@
     </div>
 
     <div id="links">
-        @foreach ($fileentries as $file)
-            <a href="/file/{{$file->id}}" title="" data-gallery>
-                <img src="/file/{{$file->id}}" alt=""  style="max-width:300px; max-height:300px;"/>
+        @foreach ($images as $image)
+            <a href="/file/{{$image->id}}" title="" data-gallery>
+                <img src="/file/{{$image->id}}" alt=""  style="max-width:300px; max-height:300px;"/>
             </a>
         @endforeach
     </div>
