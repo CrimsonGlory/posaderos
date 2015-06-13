@@ -166,8 +166,14 @@ class PersonController extends Controller {
             {
                 $interactions = $person->interactions()->where('user_id', $user->id)->latest('id')->limit(10)->get();
             }
+
             $images_counter = $person->fileentries()->image()->count();
-	    $files = $person->fileentries()->notImage()->get();
+	        $builder = $person->fileentries()->orderBy('id', 'desc')->notImage();
+            if (!$user->can('see-not-image-files'))
+            {
+                $builder = $builder->where('uploader_id', $user->id);
+            }
+            $files = $builder->get();
             return view('person.show',compact('person','interactions','images_counter','files'));
         }
         return Redirect::back();
@@ -335,4 +341,3 @@ class PersonController extends Controller {
     }
 
 }
-

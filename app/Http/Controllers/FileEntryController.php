@@ -41,10 +41,6 @@ class FileEntryController extends Controller {
         return Redirect::back();
     }
 
-    private function extension_is_valid($ext){
-	return in_array(strtolower($ext),['3gp','avi','bmp','csv','doc','docx','flac','gif','gz','gzip','jpeg','jpg','kml','kmz','m4a','mov','mp3','mp4','mpeg','mpg','odp','ods','odt','oga','ogg','ogv','pdf','png','pps','pptx','svg','swf','tar','text','tif','txt','wav','webm','wmv','xls','xlsx','xml','xsl','xsd','zip']);
-    }
-
     public function store(CreateFileEntryRequest $request)
     {
         $person_id = Request::input('person_id');
@@ -54,38 +50,46 @@ class FileEntryController extends Controller {
         }
 
         $person = Person::findOrFail($person_id);
-        $message="";
-        foreach(Input::file('files') as $file){
+        $files = Input::file('files');
+        $message = "";
+        foreach($files as $file)
+        {
             $rules = array(
                 'file' => 'required|max:8000|mimes:3gp,avi,bmp,csv,doc,docx,flac,gif,gz,gzip,jpeg,jpg,kml,kmz,m4a,mov,mp3,mp4,mpeg,mpg,odp,ods,odt,oga,ogg,ogv,pdf,png,pps,pptx,svg,swf,tar,text,tif,txt,wav,webm,wmv,xls,xlsx,xml,xsl,xsd,zip'
             );
             $validator = \Validator::make(array('file'=> $file), $rules);
-	    $ext = pathinfo($file->getClientOriginalName(),PATHINFO_EXTENSION);
+            $ext = pathinfo($file->getClientOriginalName(),PATHINFO_EXTENSION);
+
             if($validator->passes() && $this->extension_is_valid($ext))
             {
                 $entry = new FileEntry();
                 $entry->upload($file);
+                $entry->uploader_id = Auth::user()->id;
                 $entry->save();
-		if($entry->isImage())
-		{
-                	$entry->avatar_of()->save($person);
+                if($entry->isImage())
+                {
+                    $entry->avatar_of()->save($person);
                 }
-		$person->fileentries()->save($entry);
-                $message.=$entry->original_filename." OK. ";
+                $person->fileentries()->save($entry);
+                $message.= $entry->original_filename.', ';
             }
             else
             { //Does not pass validation
                 $errors = $validator->errors();
                 if($file)
-                    $message.=$file->getClientOriginalName().": ".implode(",",$errors->get("file")). ". ";
+                    $message.= $file->getClientOriginalName().": ".implode(",",$errors->get("file")).'.';
                 else
-                    $message.=trans('messages.noAttachment');
+                    $message.= trans('messages.noAttachment');
             }
         }
 
 	    if(!isset($errors))
         {
-            flash()->success($message);
+            $message = substr($message, 0, -2).' ';
+            if (count($files) == 1)
+                flash()->success($message.trans('messages.fileSaved'));
+            else
+                flash()->success($message.trans('messages.filesSaved'));
         	return redirect('person/'.$person_id);
 	    }
 	    else
@@ -102,18 +106,18 @@ class FileEntryController extends Controller {
         {
             return "404";
         }
+
         $filename = $file->filename;
-	if($file->isImage())
-	{
-	        $image = Image::make("../storage/app/assets/fileentries/$filename");
-        	return $image->response();
-	}
-	else
-	{
-		$content = File::get("../storage/app/assets/fileentries/$filename");
-		return (new Response($content, 200))
-	              ->header('Content-Type', $file->mime);
-	}
+        if($file->isImage())
+        {
+            $image = Image::make("../storage/app/assets/fileentries/$filename");
+            return $image->response();
+        }
+        else
+        {
+            $content = File::get("../storage/app/assets/fileentries/$filename");
+            return (new Response($content, 200))->header('Content-Type', $file->mime);
+        }
     }
 
     public function showThumb($size, $id)
@@ -156,6 +160,13 @@ class FileEntryController extends Controller {
         $destination = "{$filename}.thumb$pixelsize.{$extension}";
 
         $thumbnail->save("{$path}/{$destination}");
+    }
+
+    /* Funciones privadas */
+
+    private function extension_is_valid($ext)
+    {
+        return in_array(strtolower($ext),['3gp','avi','bmp','csv','doc','docx','flac','gif','gz','gzip','jpeg','jpg','kml','kmz','m4a','mov','mp3','mp4','mpeg','mpg','odp','ods','odt','oga','ogg','ogv','pdf','png','pps','pptx','svg','swf','tar','text','tif','txt','wav','webm','wmv','xls','xlsx','xml','xsl','xsd','zip']);
     }
 
 }

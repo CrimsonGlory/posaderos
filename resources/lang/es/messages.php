@@ -111,6 +111,7 @@ return [
     'lastUpdate'                => 'Última actualización',
     'lastInteractions'          => 'Últimas interacciones',
     'files'                     => 'Archivos',
+    'addFiles'                  => 'Agregar archivos',
 
     // Reports
     'exportType'                => 'Tipo de exportación',
@@ -165,6 +166,8 @@ return [
 
     // FileEntryController
     'noAttachment'              => 'No se adjuntó ningún archivo.',
+    'fileSaved'                 => 'se ha guardado con éxito.',
+    'filesSaved'                => 'se han guardado con éxito.',
 
     // InteractionController
     'mailSuccess'               => 'Se ha enviado un mail notificando la derivación del asistido.',

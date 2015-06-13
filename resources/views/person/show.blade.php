@@ -94,11 +94,11 @@
                                             @if (Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id))
                                                 | <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i></a>
                                             @endif
-                                         @elseif (Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id))
-                                            <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i> {{ trans('messages.addPhoto') }}</a>
+                                        @elseif (Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id))
+                                            <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i> {{ trans('messages.addFiles') }}</a>
                                         @else
                                             <br/>
-                                         @endif
+                                        @endif
                                     </td>
                                 </tr>
                             </table>
@@ -163,17 +163,6 @@
                                 </div>
 			                @endif
 
-					@if (count($files) > 0)
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">{{ trans('messages.files') }}</label>
-                                    <div class="col-md-6">
-					@foreach ($files as $file)
-                                        <label class="form-control" style="height: 50px;" name="file"><a href="{{action("FileEntryController@show",$file->id)}}">{{$file->original_filename}}</label></a>
-					@endforeach
-                                    </div>
-                                </div>
-                                        @endif
-
                             @if (count($person->tagNames()) > 0)
                                  <div class="form-group">
                                     <label class="col-md-4 control-label">{{ trans('messages.tags') }}</label>
@@ -214,6 +203,21 @@
                                     </div>
                                 @endif
  			                @endif
+
+                            @if (count($files) > 0)
+                                <?php $filesLabelHeight = 35 + (20 * (count($files) - 1)); ?>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">{{ trans('messages.files') }}</label>
+                                    <div class="col-md-6">
+                                        <label class="form-control" style="height: {{ $filesLabelHeight }}px">
+                                            @foreach ($files as $file)
+                                                <a href="{{action("FileEntryController@show",$file->id)}}">{{$file->original_filename}}</a>
+                                                <br/>
+                                            @endforeach
+                                        </label>
+                                    </div>
+                                </div>
+                            @endif
                         </form>
                     </div>
                 </div>

@@ -115,6 +115,12 @@ class UserRolesAndPermissionsSeeder extends Seeder {
         $editUsers->description  = 'Editar permisos de los usuarios existentes.'; // optional
         $editUsers->save();
 
+        $seeNotImageFiles = new Permission();
+        $seeNotImageFiles->name         = 'see-not-image-files';
+        $seeNotImageFiles->display_name = 'Ver archivos subidos'; // optional
+        $seeNotImageFiles->description  = 'Ver todos los archivos subidos.'; // optional
+        $seeNotImageFiles->save();
+
         $seeAllPeople = new Permission();
         $seeAllPeople->name         = 'see-all-people';
         $seeAllPeople->display_name = 'Ver asistidos'; // optional
@@ -177,12 +183,12 @@ class UserRolesAndPermissionsSeeder extends Seeder {
 
         // Add Permisions to Roles
         $admin->attachPermissions(array($seeUsersSearchView, $seeUsers, $editUsers,
-                                        $seeTags, $editTags, $addTag,
+                                        $seeTags, $editTags, $addTag, $seeNotImageFiles,
                                         $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
                                         $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
 
         $posadero->attachPermissions(array($seeUsersSearchView, $seeUsers,
-                                           $seeTags,
+                                           $seeTags, $seeNotImageFiles,
                                            $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
                                            $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
 

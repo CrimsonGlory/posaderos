@@ -41,17 +41,22 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function people()
     {
-	return $this->hasMany('App\Person','created_by');
+	    return $this->hasMany('App\Person','created_by');
     }
 
     public function last_updated()
     {
-	return $this->hasMany('App\Person','updated_by');
+	    return $this->hasMany('App\Person','updated_by');
     }
 
     public function gravatar()
     {
         return Gravatar::get($this->email);
+    }
+
+    public function fileentries()
+    {
+        return $this->hasMany('App\FileEntry','uploader_id');
     }
 
 }
