@@ -205,6 +205,10 @@ class UserController extends Controller {
                 }
                 $person->delete();
             }
+            foreach ($userShown->interactions()->get() as $interaction)
+            {
+                $interaction->delete();
+            }
             $userShown->delete();
 
             flash()->success(trans('messages.userDeleted'));
