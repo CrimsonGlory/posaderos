@@ -215,7 +215,7 @@ class UserController extends Controller {
             foreach ($people as $person)
             {
                 $person->updated_by = $person->created_by;
-                $person->save();
+                $person->update();
             }
 
             $userShown->delete();
