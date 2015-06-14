@@ -205,10 +205,19 @@ class UserController extends Controller {
                 }
                 $person->delete();
             }
+
             foreach ($userShown->interactions()->get() as $interaction)
             {
                 $interaction->delete();
             }
+
+            $people = Person::where('updated_by', $userShown->id)->get();
+            foreach ($people as $person)
+            {
+                $person->updated_by = $person->created_by;
+                $person->save();
+            }
+
             $userShown->delete();
 
             flash()->success(trans('messages.userDeleted'));
