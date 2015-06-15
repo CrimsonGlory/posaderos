@@ -174,7 +174,7 @@
                                 </div>
                             @endif
 
-                            @if ($person->created_by != 0 && $person->updated_by != 0)
+                            @if ($person->created_by != 0)
                                 @if (Auth::user()->can('see-users') || $person->created_by == Auth::user()->id)
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">{{ trans('messages.personAddedBy') }}</label>
@@ -188,7 +188,9 @@
                                         </div>
                                     </div>
                                 @endif
+                            @endif
 
+                            @if ($person->updated_by != 0 && \App\User::find($person->updated_by))
                                 @if (Auth::user()->can('see-users') || $person->updated_by == Auth::user()->id)
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">{{ trans('messages.lastUpdate') }}</label>
