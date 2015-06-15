@@ -66,7 +66,7 @@ class TagController extends Controller {
             return "404";
         }
 
-        if ($user->hasRole('admin'))
+        if ($user->can('add-tag'))
         {
             return view('tag.addTag');
         }
@@ -91,7 +91,7 @@ class TagController extends Controller {
             return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
         }
 
-        $tag = array('name' => $tagName);
+        $tag = array('name' => strtolower($tagName));
         Tag::create($tag);
 
         flash()->success(trans('messages.tagCreated'));
@@ -155,7 +155,7 @@ class TagController extends Controller {
             return "404";
         }
 
-        if ($user->hasRole('admin'))
+        if ($user->can('edit-tags'))
         {
             return view('tag.editTag', compact('tag'));
         }
@@ -233,7 +233,7 @@ class TagController extends Controller {
         {
             $tagName = array(strtolower($tag->name));
 
-            $people = Person::withAnyTag($tag->name)->get();
+            $people = Person::withAnyTag($tagName)->get();
             foreach ($people as $person)
             {
                 $tagNames = $person->tagSlugs();
@@ -241,14 +241,14 @@ class TagController extends Controller {
                 $person->retag(array_diff($tagNames, $tagName));
             }
 
-            $interactions = Interaction::withAnyTag($tag->name)->get();
+            $interactions = Interaction::withAnyTag($tagName)->get();
             foreach ($interactions as $interaction)
             {
                 $tagNames = $interaction->tagSlugs();
                 $interaction->retag(array_diff($tagNames, $tagName));
             }
 
-            $users = User::withAnyTag($tag->name)->get();
+            $users = User::withAnyTag($tagName)->get();
             foreach ($users as $user)
             {
                 $tagNames = $user->tagSlugs();
