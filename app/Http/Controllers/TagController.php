@@ -188,17 +188,17 @@ class TagController extends Controller {
             return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
         }
 
-        $repeatedTag = Tag::groupBy('name')->where('name', $tagName)->first();
-        if ($repeatedTag != null)
-        {
-            return Redirect::back()->withErrors(trans('messages.repeatedTag'));
-        }
-
         $oldTag = array(strtolower($tagToDelete->name));
         $newTag = array(strtolower($tagName));
 
         if ($oldTag != $newTag)
         {
+            $repeatedTag = Tag::groupBy('name')->where('name', $tagName)->first();
+            if ($repeatedTag != null)
+            {
+                return Redirect::back()->withErrors(trans('messages.repeatedTag'));
+            }
+
             $people = Person::withAnyTag($oldTag)->get();
             foreach ($people as $person)
             {
