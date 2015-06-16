@@ -78,7 +78,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">{{ trans('messages.tags') }}</label>
                                     <div class="col-md-6">
-                                        <label class="form-control">
+                                        <label class="form-control" style="overflow:auto;">
                                             @include('tag.list_tags',['tagNames' => $userShown->tagNames()])
                                         </label>
                                     </div>

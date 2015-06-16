@@ -59,37 +59,40 @@ class FileEntryController extends Controller {
                 'file' => 'required|max:8000|mimes:3gp,avi,bmp,csv,doc,docx,flac,gif,gz,gzip,jpeg,jpg,kml,kmz,m4a,mov,mp3,mp4,mpeg,mpg,odp,ods,odt,oga,ogg,ogv,pdf,png,pps,pptx,svg,swf,tar,text,tif,txt,wav,webm,wmv,xls,xlsx,xml,xsl,xsd,zip'
             );
             $validator = \Validator::make(array('file'=> $file), $rules);
-            $ext = pathinfo($file->getClientOriginalName(),PATHINFO_EXTENSION);
 
-            if($validator->passes() && $this->extension_is_valid($ext))
+            if ($validator->passes())
             {
-                $entry = new FileEntry();
-                $entry->upload($file);
-                $entry->uploader_id = Auth::user()->id;
-		$entry->size=$file->getClientSize();
-		$entry->md5 = '0';//para poderlo guardar. No logro obtener el md5 antes de guardarlo.
-                $entry->save();
-		$entry->md5 = md5_file($this->storage_path.$entry->filename);
-		$already_added=false;
-		$old_file = $this->find_duplicate($entry);
-		if(!is_null($old_file)) // if someone has the file
-		{
-			if($person->fileentries()->where('size','=',$entry->size)->where('md5','=',$entry->md5)->count() != 0 )//if current person already has the file
-			{
-				$already_added=true;
-			}
-			$this->hard_delete($entry);
-			$entry = $old_file;
-		}
-                if($entry->isImage())
+                $ext = pathinfo($file->getClientOriginalName(),PATHINFO_EXTENSION);
+                if ($this->extension_is_valid($ext))
                 {
-                    $entry->avatar_of()->save($person);
+                    $entry = new FileEntry();
+                    $entry->upload($file);
+                    $entry->uploader_id = Auth::user()->id;
+                    $entry->size = $file->getClientSize();
+                    $entry->md5 = '0';//para poderlo guardar. No logro obtener el md5 antes de guardarlo.
+                    $entry->save();
+                    $entry->md5 = md5_file($this->storage_path.$entry->filename);
+                    $already_added = false;
+                    $old_file = $this->find_duplicate($entry);
+                    if(!is_null($old_file)) // if someone has the file
+                    {
+                        if($person->fileentries()->where('size','=',$entry->size)->where('md5','=',$entry->md5)->count() != 0 )//if current person already has the file
+                        {
+                            $already_added = true;
+                        }
+                        $this->hard_delete($entry);
+                        $entry = $old_file;
+                    }
+                    if($entry->isImage())
+                    {
+                        $entry->avatar_of()->save($person);
+                    }
+                    if(!$already_added)
+                    {
+                        $person->fileentries()->save($entry);//add relationship
+                    }
+                    $message.= $entry->original_filename.', ';
                 }
-		if(!$already_added)
-		{
-	                $person->fileentries()->save($entry);//add relationship
-		}
-                $message.= $entry->original_filename.', ';
             }
             else
             { //Does not pass validation
@@ -151,7 +154,7 @@ class FileEntryController extends Controller {
             return "not an image";
         }
         if(count($img) == 0)
-	{
+	    {
             return "404";
         }
 

@@ -140,7 +140,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">{{ trans('messages.address') }}</label>
                                     <div class="col-md-6">
-                                        <label class="form-control" name="address">{{ $person->address }}</label>
+                                        <label class="form-control" name="address" style="overflow:auto;">{{ $person->address }}</label>
                                     </div>
                                 </div>
 			                @endif
@@ -158,7 +158,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">{{ trans('messages.observations') }}</label>
                                     <div class="col-md-6">
-                                        <label class="form-control" style="height: 50px;" name="other">{{ $person->other }}</label>
+                                        <label class="form-control" style="height: 50px; overflow:auto;" name="other">{{ $person->other }}</label>
                                     </div>
                                 </div>
 			                @endif
@@ -167,7 +167,7 @@
                                  <div class="form-group">
                                     <label class="col-md-4 control-label">{{ trans('messages.tags') }}</label>
                                     <div class="col-md-6">
-                                        <label class="form-control">
+                                        <label class="form-control" style="overflow:auto;">
                                             @include('tag.list_tags',['tagNames' => $person->tagNames()])
                                         </label>
                                     </div>
@@ -207,13 +207,13 @@
  			                @endif
 
                             @if (count($files) > 0)
-                                <?php $filesLabelHeight = 35 + (20 * (count($files) - 1)); ?>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">{{ trans('messages.files') }}</label>
                                     <div class="col-md-6">
-                                        <label class="form-control" style="height: {{ $filesLabelHeight }}px">
+                                        <label class="form-control" style="height:100px; overflow:auto;">
                                             @foreach ($files as $file)
                                                 <a href="{{action("FileEntryController@show",$file->id)}}">{{$file->original_filename}}</a>
+                                                <label>{{ humanReadableFileSize($file->size) }}</label>
                                                 <br/>
                                             @endforeach
                                         </label>
