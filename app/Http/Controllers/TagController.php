@@ -91,6 +91,12 @@ class TagController extends Controller {
             return Redirect::back()->withErrors(trans('messages.tagCharacterError'));
         }
 
+        $repeatedTag = Tag::groupBy('name')->where('name', $tagName)->first();
+        if ($repeatedTag != null)
+        {
+            return Redirect::back()->withErrors(trans('messages.repeatedTag'));
+        }
+
         $tag = array('name' => strtolower($tagName));
         Tag::create($tag);
 
@@ -187,6 +193,12 @@ class TagController extends Controller {
 
         if ($oldTag != $newTag)
         {
+            $repeatedTag = Tag::groupBy('name')->where('name', $tagName)->first();
+            if ($repeatedTag != null)
+            {
+                return Redirect::back()->withErrors(trans('messages.repeatedTag'));
+            }
+
             $people = Person::withAnyTag($oldTag)->get();
             foreach ($people as $person)
             {
