@@ -7,6 +7,7 @@ use App\Interaction;
 use App\User;
 use App\Role;
 use App\Permission;
+use Conner\Tagging\Tag;
 
 class DatabaseSeeder extends Seeder {
 
@@ -18,28 +19,39 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
 		Model::unguard();
-		$this->call('UserRolesAndPermissionsSeeder');
+        $this->call('DropDatabase');
+		$this->call('RolesAndPermissionsSeeder');
+        $this->call('TagsSeeder');
+        $this->call('UsersSeeder');
+        $this->call('PeopleSeeder');
+        $this->call('InteractionsSeeder');
+        $this->call('UsersFavoritesSeeder');
 	}
 }
 
+class DropDatabase extends Seeder {
 
-class UserRolesAndPermissionsSeeder extends Seeder {
-
-	public function run()
-	{
-		DB::table('fileentrieables')->delete();
-		DB::table('fileentries')->delete();
-		DB::table('interactions')->delete();
-		DB::table('people')->delete();
-		DB::table('users')->delete();
-		DB::table('password_resets')->delete();
-		DB::table('tagging_tagged')->delete();
-		DB::table('tagging_tags')->delete();
+    public function run()
+    {
+        DB::table('fileentrieables')->delete();
+        DB::table('fileentries')->delete();
+        DB::table('interactions')->delete();
+        DB::table('people')->delete();
+        DB::table('users')->delete();
+        DB::table('password_resets')->delete();
+        DB::table('tagging_tagged')->delete();
+        DB::table('tagging_tags')->delete();
         DB::table('permission_role')->delete();
         DB::table('permissions')->delete();
         DB::table('role_user')->delete();
         DB::table('roles')->delete();
+    }
+}
 
+class RolesAndPermissionsSeeder extends Seeder {
+
+	public function run()
+	{
         // Roles
         $admin = new Role();
         $admin->name         = 'admin';
@@ -199,158 +211,232 @@ class UserRolesAndPermissionsSeeder extends Seeder {
         $newUser->attachPermissions(array($seeTags,
                                           $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editNewPeople,
                                           $seeInteractionsSearchView, $seeNewInteractions, $addInteraction, $editNewInteractions));
-
-		// Users
-        $user0 = User::create(['name'=>'Administrador',
-                               'email'=>'lumencor.posaderos@gmail.com',
-                               'password'=>Hash::make('123456')]);
-        $user0->attachRole($admin);
-
-        $user1 = User::create(['name'=>'Luciano Delorenzi',
-                               'email'=>'lgdelorenzi@gmail.com',
-                               'password'=>Hash::make('123456')]);
-        $user1->attachRole($newUser);
-
-        $user2 = User::create(['name'=>'Enzo Sagretti',
-                               'email'=>'enzosagretti@gmail.com',
-                               'password'=>Hash::make('123456')]);
-        $user2->attachRole($explorer);
-
-        $user3 = User::create(['name'=>'Javier Bassi',
-                               'email'=>'javierbassi@gmail.com',
-                               'password'=>Hash::make('123456')]);
-        $user3->attachRole($admin);
-
-        $user4 = User::create(['name'=>'Agustin Puentes',
-                               'email'=>'aguspuentes@gmail.com',
-                               'password'=>Hash::make('123456')]);
-        $user4->attachRole($posadero);
-
-        // People
-		$person1 = new Person;
-		$person1->fill(['first_name'=>'Juan Román',
-                        'last_name'=>'Riquelme',
-			            'address'=>'Medrano 206',
-                        'gender'=>'Male']);
-		$person1->updated_by = $user1->id;
-		$person1->created_by = $user1->id;
-		$person1->save();
-
-		$person2 = new Person;
-		$person2->fill(['first_name'=>'Carlos',
-		                'last_name'=>'Navarro Montoya',
-			            'address'=>'Callao 102',
-                        'gender'=>'Male']);
-		$person2->updated_by = $user1->id;
-        $person2->created_by = $user1->id;
-		$person2->save();
-
-		$person3 = new Person;
-		$person3->fill(['first_name'=>'Carlos',
-		                'last_name'=>'Mac Allister',
-			            'address'=>'Maipu 1502',
-                        'gender'=>'Male']);
-		$person3->updated_by = $user1->id;
-        $person3->created_by = $user1->id;
-        $person3->save();
-
-		$person4 = new Person;
-		$person4->fill(['first_name'=>'Diego Armando',
-		                'last_name'=>'Maradona',
-			            'address'=>'Corrientes 503',
-                        'gender'=>'Male']);
-		$person4->updated_by = $user1->id;
-        $person4->created_by = $user1->id;
-        $person4->save();
-
-		$person5 = new Person;
-		$person5->fill(['first_name'=>'Valeria',
-		                'last_name'=>'Mazza',
-			            'address'=>'Callao 1231',
-                        'gender'=>'Female',
-			            'dni'=>12121212,
-                        'other'=>'Miente al dar el nombre.']);
-		$person5->updated_by = $user3->id;
-        $person5->created_by = $user3->id;
-        $person5->save();
-
-		$person6 = new Person;
-		$person6->fill(['first_name'=>'Ronaldinho',
-		                'last_name'=>'Gaucho',
-			            'address'=>'Av. Brasil 789',
-                        'gender'=>'Male',
-			            'dni'=>23232323,
-                        'other'=>'Futbolista']);
-		$person6->updated_by = $user1->id;
-        $person6->created_by = $user1->id;
-        $person6->save();
-
-		$person7 = new Person;
-		$person7->fill(['first_name'=>'Mark',
-		                'last_name'=>'Zuckerberg',
-			            'address'=>'Silicon Valley 123',
-                        'gender'=>'Male',
-			            'dni'=>34343434,
-                        'other'=>'Desarrollador']);
-		$person7->updated_by = $user1->id;
-        $person7->created_by = $user1->id;
-        $person7->save();
-
-		$person8 = new Person;
-		$person8->fill(['first_name'=>'Bill',
-		                'last_name'=>'Gates',
-			            'address'=>'Long and winding road 777',
-                        'gender'=>'Male',
-                        'dni'=>45454545,
-                        'other'=>'CEO']);
-		$person8->updated_by = $user2->id;
-        $person8->created_by = $user2->id;
-        $person8->save();
-
-		$person9 = new Person;
-		$person9->fill(['first_name'=>'Jorge',
-		                'last_name'=>'Rial',
-			            'address'=>'Callao 900',
-                        'gender'=>'Male',
-			            'dni'=>56565656,
-                        'other'=>'Actor']);
-		$person9->updated_by = $user1->id;
-        $person9->created_by = $user1->id;
-        $person9->save();
-		
-		//Interactions
-		$interaction1 = new Interaction(['text'=>'La persona recibió atención médica.',
-                                         'date'=>'2015-4-20',
-                                         'fixed' => 0]);
-		$interaction1->user_id = $user1->id;
-		$person1->interactions()->save($interaction1);
-        $interaction1->tag("jugador");
-
-		$interaction2 = new Interaction(['text'=>'Persona con necesidad de obtener documento nacional de identidad.',
-                                         'date'=>'2015-4-20',
-                                         'fixed' => 1]);
-		$interaction2->user_id = $user2->id;
-		$person2->interactions()->save($interaction2);
-
-		$interaction3 = new Interaction(['text'=>'La persona asistió a comedor comunitario.',
-                                         'date'=>'2015-4-20',
-                                         'fixed' => 0]);
-		$interaction3->user_id = $user1->id;
-		$person2->interactions()->save($interaction3);
-		$interaction3->tag("comida");
-
-		$interaction4 = new Interaction(['text'=>'Se le entregó ropa al asistido.',
-                                         'date'=>'2015-4-20',
-                                         'fixed' => 0]);
-		$interaction4->user_id = $user1->id;
-		$person3->interactions()->save($interaction4);
-
-		//Tags
-		$person1->tag("jugador");
-		$person2->tag("jugador");
-		$person3->tag("jugador");
-		$person4->tag("jugador");
-		$person4->tag("salud");
-		$person4->tag("comida");
 	}
+
+}
+
+class TagsSeeder extends Seeder {
+
+    public function run()
+    {
+        $faker = Faker\Factory::create(trans('messages.locale'));
+        for ($i = 0; $i < trans('messages.tagsSize'); $i++)
+        {
+            $tagName = strtolower(removeAccents(strtr(trim($faker->word), array(' ' => '-'))));
+            if (!preg_match('/^[a-zA-Z0-9-]+$/i', $tagName))
+            {
+                $i--;
+            }
+            else
+            {
+                $repeatedTag = Tag::groupBy('name')->where('name', $tagName)->first();
+                if ($repeatedTag != null)
+                {
+                    $i--;
+                }
+                else
+                {
+                    $tag = array('name' => $tagName);
+                    Tag::create($tag);
+                }
+            }
+        }
+    }
+
+}
+
+class UsersSeeder extends Seeder {
+
+    public function run()
+    {
+        // Roles
+        $admin    = Role::where('name', 'admin')->first();
+        $posadero = Role::where('name', 'posadero')->first();
+        $explorer = Role::where('name', 'explorer')->first();
+        $newUser  = Role::where('name', 'new-user')->first();
+
+        // Test users
+        $faker = Faker\Factory::create(trans('messages.locale'));
+        $user = User::create(['name'     => 'Admin',
+                              'email'    => 'admin@admin.com',
+                              'phone'    => ((bool)rand(0,1)? parse_phone('4'.$faker->numberBetween($min = 1000000, $max = 9999999)) : null),
+                              'password' => Hash::make('123456')]);
+        $user->attachRole($admin);
+        $tagsSize = rand(1,trans('messages.maxTagsForUsers'));
+        $tags = Tag::orderByRaw('RAND()')->take($tagsSize)->get();
+        $tagNames = array();
+        foreach ($tags as $tag)
+        {
+            array_push($tagNames, $tag->name);
+        }
+        $user->retag($tagNames);
+
+        $user = User::create(['name'     => 'Posadero',
+                              'email'    => 'posadero@posadero.com',
+                              'phone'    => ((bool)rand(0,1)? parse_phone('4'.$faker->numberBetween($min = 1000000, $max = 9999999)) : null),
+                              'password' => Hash::make('123456')]);
+        $user->attachRole($posadero);
+        $tagsSize = rand(1,trans('messages.maxTagsForUsers'));
+        $tags = Tag::orderByRaw('RAND()')->take($tagsSize)->get();
+        $tagNames = array();
+        foreach ($tags as $tag)
+        {
+            array_push($tagNames, $tag->name);
+        }
+        $user->retag($tagNames);
+
+        $user = User::create(['name'     => 'Samaritano',
+                              'email'    => 'samaritano@samaritano.com',
+                              'phone'    => ((bool)rand(0,1)? parse_phone('4'.$faker->numberBetween($min = 1000000, $max = 9999999)) : null),
+                              'password' => Hash::make('123456')]);
+        $user->attachRole($explorer);
+        $tagsSize = rand(1,trans('messages.maxTagsForUsers'));
+        $tags = Tag::orderByRaw('RAND()')->take($tagsSize)->get();
+        $tagNames = array();
+        foreach ($tags as $tag)
+        {
+            array_push($tagNames, $tag->name);
+        }
+        $user->retag($tagNames);
+
+        $user = User::create(['name'     => 'New User',
+                              'email'    => 'new-user@new-user.com',
+                              'phone'    => ((bool)rand(0,1)? parse_phone('4'.$faker->numberBetween($min = 1000000, $max = 9999999)) : null),
+                              'password' => Hash::make('123456')]);
+        $user->attachRole($newUser);
+        $tagsSize = rand(1,trans('messages.maxTagsForUsers'));
+        $tags = Tag::orderByRaw('RAND()')->take($tagsSize)->get();
+        $tagNames = array();
+        foreach ($tags as $tag)
+        {
+            array_push($tagNames, $tag->name);
+        }
+        $user->retag($tagNames);
+
+        // Random users
+        for ($i = 0; $i < trans('messages.usersSize'); $i++)
+        {
+            $user = User::create(['name'     => $faker->name,
+                                  'email'    => $faker->email,
+                                  'phone'    => ((bool)rand(0,1)? parse_phone('4'.$faker->numberBetween($min = 1000000, $max = 9999999)) : null),
+                                  'password' => Hash::make('123456')]);
+
+            $role = rand(1,3);
+            if ($role == 1)
+                $user->attachRole($posadero);
+            else if ($role == 2)
+                $user->attachRole($explorer);
+            else if ($role == 3)
+                $user->attachRole($newUser);
+
+            $tagsSize = rand(0,trans('messages.maxTagsForUsers'));
+            if ($tagsSize > 0)
+            {
+                $tags = Tag::orderByRaw('RAND()')->take($tagsSize)->get();
+                $tagNames = array();
+                foreach ($tags as $tag)
+                {
+                    array_push($tagNames, $tag->name);
+                }
+                $user->retag($tagNames);
+            }
+        }
+    }
+
+}
+
+class PeopleSeeder extends Seeder {
+
+    public function run()
+    {
+        $faker = Faker\Factory::create(trans('messages.locale'));
+        for ($i = 0; $i < trans('messages.peopleSize'); $i++)
+        {
+            $creatorUser = User::orderByRaw('RAND()')->first();
+            $updaterUser = User::orderByRaw('RAND()')->first();
+            $gender = ((bool)rand(0,1)? 'male' : 'female');
+
+            $person = Person::create(['first_name' => (($gender == 'male')? $faker->firstNameMale : $faker->firstNameFemale),
+                                      'last_name'  => $faker->lastName,
+                                      'gender'     => $gender,
+                                      'dni'        => $faker->numberBetween($min = 4000000, $max = 40000000),
+                                      'birthdate'  => ((bool)rand(0,1)? $faker->date($format = 'Y-m-d', $max = 'now') : null),
+                                      'address'    => ((bool)rand(0,1)? $faker->address : null),
+                                      'phone'      => ((bool)rand(0,1)? parse_phone('4'.$faker->numberBetween($min = 1000000, $max = 9999999)) : null),
+                                      'email'      => ((bool)rand(0,1)? $faker->email : null),
+                                      'other'      => ((bool)rand(0,1)? $faker->text($maxNbChars = 100) : null),
+                                      'created_by' => $creatorUser->id,
+                                      'updated_by' => $updaterUser->id]);
+
+            $tagsSize = rand(0,trans('messages.maxTagsForPeople'));
+            if ($tagsSize > 0)
+            {
+                $tags = Tag::orderByRaw('RAND()')->take($tagsSize)->get();
+                $tagNames = array();
+                foreach ($tags as $tag)
+                {
+                    array_push($tagNames, $tag->name);
+                }
+                $person->retag($tagNames);
+            }
+        }
+    }
+
+}
+
+class InteractionsSeeder extends Seeder {
+
+    public function run()
+    {
+        $faker = Faker\Factory::create(trans('messages.locale'));
+        $people = Person::get();
+        foreach($people as $person)
+        {
+            $interactionsSize = rand(0,trans('messages.maxSizeInteractions'));
+            for ($i = 0; $i < $interactionsSize; $i++)
+            {
+                $creatorUser = User::orderByRaw('RAND()')->first();
+
+                $interaction = Interaction::create(['person_id' => $person->id,
+                                                    'text'      => $faker->text($maxNbChars = 100),
+                                                    'date'      => $faker->dateTimeBetween($startDate = '-8 years', $endDate = 'now')->format('Y-m-d'),
+                                                    'fixed'     => (bool)rand(0,1),
+                                                    'user_id'   => $creatorUser->id]);
+
+                $tagsSize = rand(0,trans('messages.maxTagsForInteractions'));
+                if ($tagsSize > 0)
+                {
+                    $tags = Tag::orderByRaw('RAND()')->take($tagsSize)->get();
+                    $tagNames = array();
+                    foreach ($tags as $tag)
+                    {
+                        array_push($tagNames, $tag->name);
+                    }
+                    $interaction->retag($tagNames);
+                }
+            }
+        }
+    }
+
+}
+
+class UsersFavoritesSeeder extends Seeder {
+
+    public function run()
+    {
+        $users = User::get();
+        foreach($users as $user)
+        {
+            $favoritesSize = rand(0,trans('messages.maxFavoritesForUsers'));
+            if ($favoritesSize > 0)
+            {
+                $people = Person::orderByRaw('RAND()')->take($favoritesSize)->get();
+                foreach ($people as $person)
+                {
+                    $person->like($user->id);
+                }
+            }
+        }
+    }
+
 }

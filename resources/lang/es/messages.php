@@ -6,6 +6,18 @@ return [
 
     'welcome'                   => 'Bienvenido a nuestra aplicación',
 
+    /* Variables para Seeder */
+
+    'locale'                    => 'es_AR',
+    'tagsSize'                  => '25',
+    'usersSize'                 => '20',
+    'peopleSize'                => '120',
+    'maxSizeInteractions'       => '15',
+    'maxTagsForPeople'          => '5',
+    'maxTagsForUsers'           => '5',
+    'maxTagsForInteractions'    => '3',
+    'maxFavoritesForUsers'      => '20',
+
     /* Booleans */
 
     0                           => 'Pendiente',
@@ -197,6 +209,7 @@ return [
     'tagUpdated'                => 'Etiqueta actualizada.',
     'tagDeleted'                => 'Etiqueta eliminada.',
     'tagCharacterError'         => 'Las etiquetas sólo pueden contener letras, números o guiones.',
+    'repeatedTag'               => 'La etiqueta ya fue cargada en el sistema.',
 
     // UserController
     'userCreated'               => 'Usuario creado.',
