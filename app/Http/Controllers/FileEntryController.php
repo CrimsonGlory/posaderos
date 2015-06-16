@@ -187,26 +187,26 @@ class FileEntryController extends Controller {
         return in_array(strtolower($ext),['3gp','avi','bmp','csv','doc','docx','flac','gif','gz','gzip','jpeg','jpg','kml','kmz','m4a','mov','mp3','mp4','mpeg','mpg','odp','ods','odt','oga','ogg','ogv','pdf','png','pps','pptx','svg','swf','tar','text','tif','txt','wav','webm','wmv','xls','xlsx','xml','xsl','xsd','zip']);
     }
 
-   /*
-    * Returns duplicate file if it exists. NULL otherwise
-    */
+    /*
+     * Returns duplicate file if it exists. NULL otherwise
+     */
     private function find_duplicate($file)
     {
-	if (is_null($file))
+        if (is_null($file))
         {
-                return NULL;
+            return NULL;
         }
         return FileEntry::where('size','=',$file->size)->where('md5','=',$file->md5)->where('id','<>',$file->id)->first();
     }
 
     private function hard_delete($file)
     {
-	if (is_null($file))
-	{
-		return;
-	}
-	unlink($this->storage_path.$file->filename);
-	$file->delete();
+        if (is_null($file))
+        {
+            return;
+        }
+        unlink($this->storage_path.$file->filename);
+        $file->delete();
     }
 
 }

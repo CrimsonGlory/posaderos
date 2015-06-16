@@ -65,48 +65,64 @@ class ReportController extends Controller {
 
         if ($exportType == 'pdf')
         {
-            $fromDate = date("d/m/Y", strtotime($fromDate));
-            $toDate = date("d/m/Y", strtotime($toDate));
+            if (count($people) > trans('messages.maxRowsForPDF'))
+            {
+                flash()->error(trans('messages.reportLimitForPDF'));
+            }
+            else
+            {
+                ini_set('max_execution_time', 120); // 2 minutes
+                $fromDate = date("d/m/Y", strtotime($fromDate));
+                $toDate = date("d/m/Y", strtotime($toDate));
 
-            $pdf = PDF::loadView('report.peopleListPDF', array(), compact('people', 'gender', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
-            return $pdf->download(trans('messages.peopleReportName').'.pdf');
+                $pdf = PDF::loadView('report.peopleListPDF', array(), compact('people', 'gender', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
+                return $pdf->download(trans('messages.peopleReportName').'.pdf');
+            }
         }
         else if ($exportType == 'csv' || $exportType == 'xls' || $exportType == 'xlsx')
         {
-            Excel::create(trans('messages.peopleReportName'), function($excel) use($people,$exportType)
+            if (count($people) > trans('messages.maxRowsForExcel'))
             {
-                $excel->sheet(trans('messages.peopleReportName'), function($sheet) use($people,$exportType)
+                flash()->error(trans('messages.reportLimitForExcel'));
+            }
+            else
+            {
+                ini_set('max_execution_time', 120); // 2 minutes
+                Excel::create(trans('messages.peopleReportName'), function($excel) use($people,$exportType)
                 {
-                    $dateTitle = trans('messages.date');
-                    if ($exportType == 'csv')
+                    $excel->sheet(trans('messages.peopleReportName'), function($sheet) use($people,$exportType)
                     {
-                        $dateTitle = '"'.$dateTitle.'"';
-                    }
-                    $sheet->appendRow(array(
-                        $dateTitle, trans('messages.person'), trans('messages.dni'), trans('messages.age'), trans('messages.address'), trans('messages.createdBy'), trans('messages.tags')
-                    ));
-                    foreach ($people as $person)
-                    {
-                        $date       = date('d/m/Y', strtotime($person->created_at));
+                        $dateTitle = trans('messages.date');
                         if ($exportType == 'csv')
                         {
-                            $date = '"'.$date.'"';
+                            $dateTitle = '"'.$dateTitle.'"';
                         }
-                        $name       = removeSpecialCharactersCSV($person->name());
-                        $dni        = $person->dni;
-                        $bithdate   = '';
-                        if ($person->birthdate != null)
+                        $sheet->appendRow(array(
+                            $dateTitle, trans('messages.person'), trans('messages.dni'), trans('messages.age'), trans('messages.address'), trans('messages.createdBy'), trans('messages.tags')
+                        ));
+                        foreach ($people as $person)
                         {
-                            $bithdate = date_diff(date_create($person->birthdate), date_create('today'))->y." ".trans('messages.years');
-                        }
-                        $address    = removeSpecialCharactersCSV($person->address);
-                        $user       = removeSpecialCharactersCSV(getUserName($person->created_by));
-                        $tags       = removeSpecialCharactersCSV(implode(' ', $person->tagNames()));
+                            $date       = date('d/m/Y', strtotime($person->created_at));
+                            if ($exportType == 'csv')
+                            {
+                                $date = '"'.$date.'"';
+                            }
+                            $name       = removeSpecialCharactersCSV($person->name());
+                            $dni        = $person->dni;
+                            $bithdate   = '';
+                            if ($person->birthdate != null)
+                            {
+                                $bithdate = date_diff(date_create($person->birthdate), date_create('today'))->y." ".trans('messages.years');
+                            }
+                            $address    = removeSpecialCharactersCSV($person->address);
+                            $user       = removeSpecialCharactersCSV(getUserName($person->created_by));
+                            $tags       = removeSpecialCharactersCSV(implode(' ', $person->tagNames()));
 
-                        $sheet->appendRow(array($date, $name, $dni, $bithdate, $address, $user, $tags));
-                    }
-                });
-            })->download($exportType);
+                            $sheet->appendRow(array($date, $name, $dni, $bithdate, $address, $user, $tags));
+                        }
+                    });
+                })->download($exportType);
+            }
         }
         return view('report.peopleList');
     }
@@ -167,43 +183,61 @@ class ReportController extends Controller {
 
         if ($exportType == 'pdf')
         {
-            $fromDate = date("d/m/Y", strtotime($fromDate));
-            $toDate = date("d/m/Y", strtotime($toDate));
+            if (count($interactions) > trans('messages.maxRowsForPDF'))
+            {
+                flash()->error(trans('messages.reportLimitForPDF'));
+            }
+            else
+            {
+                ini_set('max_execution_time', 120); // 2 minutes
+                $fromDate = date("d/m/Y", strtotime($fromDate));
+                $toDate = date("d/m/Y", strtotime($toDate));
 
-            $pdf = PDF::loadView('report.interactionsListPDF', array(), compact('interactions', 'fixed', 'people', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
-            return $pdf->download(trans('messages.interactionsReportName').'.pdf');
+                $pdf = PDF::loadView('report.interactionsListPDF', array(), compact('interactions', 'fixed', 'people', 'users', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
+                return $pdf->download(trans('messages.interactionsReportName').'.pdf');
+            }
+
+
         }
         else if ($exportType == 'csv' || $exportType == 'xls' || $exportType == 'xlsx')
         {
-            Excel::create(trans('messages.interactionsReportName'), function($excel) use($interactions,$exportType)
+            if (count($interactions) > trans('messages.maxRowsForExcel'))
             {
-                $excel->sheet(trans('messages.interactionsReportName'), function($sheet) use($interactions,$exportType)
+                flash()->error(trans('messages.reportLimitForExcel'));
+            }
+            else
+            {
+                ini_set('max_execution_time', 120); // 2 minutes
+                Excel::create(trans('messages.interactionsReportName'), function($excel) use($interactions,$exportType)
                 {
-                    $dateTitle = trans('messages.date');
-                    if ($exportType == 'csv')
+                    $excel->sheet(trans('messages.interactionsReportName'), function($sheet) use($interactions,$exportType)
                     {
-                        $dateTitle = '"'.$dateTitle.'"';
-                    }
-                    $sheet->appendRow(array(
-                        $dateTitle, trans('messages.person'), trans('messages.description'), trans('messages.state'), trans('messages.createdBy'), trans('messages.tags')
-                    ));
-                    foreach ($interactions as $interaction)
-                    {
-                        $date        = date('d/m/Y', strtotime($interaction->date));
+                        $dateTitle = trans('messages.date');
                         if ($exportType == 'csv')
                         {
-                            $date = '"'.$date.'"';
+                            $dateTitle = '"'.$dateTitle.'"';
                         }
-                        $person      = removeSpecialCharactersCSV(getPersonName($interaction->person_id));
-                        $description = removeSpecialCharactersCSV($interaction->text);
-                        $state       = trans('messages.'.$interaction->fixed);
-                        $user        = removeSpecialCharactersCSV(getUserName($interaction->user_id));
-                        $tags        = removeSpecialCharactersCSV(implode(' ', $interaction->tagNames()));
+                        $sheet->appendRow(array(
+                            $dateTitle, trans('messages.person'), trans('messages.description'), trans('messages.state'), trans('messages.createdBy'), trans('messages.tags')
+                        ));
+                        foreach ($interactions as $interaction)
+                        {
+                            $date        = date('d/m/Y', strtotime($interaction->date));
+                            if ($exportType == 'csv')
+                            {
+                                $date = '"'.$date.'"';
+                            }
+                            $person      = removeSpecialCharactersCSV(getPersonName($interaction->person_id));
+                            $description = removeSpecialCharactersCSV($interaction->text);
+                            $state       = trans('messages.'.$interaction->fixed);
+                            $user        = removeSpecialCharactersCSV(getUserName($interaction->user_id));
+                            $tags        = removeSpecialCharactersCSV(implode(' ', $interaction->tagNames()));
 
-                        $sheet->appendRow(array($date, $person, $description, $state, $user, $tags));
-                    }
-                });
-            })->download($exportType);
+                            $sheet->appendRow(array($date, $person, $description, $state, $user, $tags));
+                        }
+                    });
+                })->download($exportType);
+            }
         }
         return view('report.interactionsList');
     }
@@ -256,47 +290,63 @@ class ReportController extends Controller {
 
         if ($exportType == 'pdf')
         {
-            $fromDate = date("d/m/Y", strtotime($fromDate));
-            $toDate = date("d/m/Y", strtotime($toDate));
+            if (count($users) > trans('messages.maxRowsForPDF'))
+            {
+                flash()->error(trans('messages.reportLimitForPDF'));
+            }
+            else
+            {
+                ini_set('max_execution_time', 120); // 2 minutes
+                $fromDate = date("d/m/Y", strtotime($fromDate));
+                $toDate = date("d/m/Y", strtotime($toDate));
 
-            $pdf = PDF::loadView('report.usersListPDF', array(), compact('users', 'role', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
-            return $pdf->download(trans('messages.usersReportName').'.pdf');
+                $pdf = PDF::loadView('report.usersListPDF', array(), compact('users', 'role', 'tags', 'fromDate','toDate'))->setPaper('A4')->setOrientation('landscape');
+                return $pdf->download(trans('messages.usersReportName').'.pdf');
+            }
         }
         else if ($exportType == 'csv' || $exportType == 'xls' || $exportType == 'xlsx')
         {
-            Excel::create(trans('messages.usersReportName'), function($excel) use($users,$exportType)
+            if (count($users) > trans('messages.maxRowsForExcel'))
             {
-                $excel->sheet(trans('messages.usersReportName'), function($sheet) use($users,$exportType)
+                flash()->error(trans('messages.reportLimitForExcel'));
+            }
+            else
+            {
+                ini_set('max_execution_time', 120); // 2 minutes
+                Excel::create(trans('messages.usersReportName'), function($excel) use($users,$exportType)
                 {
-                    $dateTitle = trans('messages.date');
-                    if ($exportType == 'csv')
+                    $excel->sheet(trans('messages.usersReportName'), function($sheet) use($users,$exportType)
                     {
-                        $dateTitle = '"'.$dateTitle.'"';
-                    }
-                    $sheet->appendRow(array(
-                        $dateTitle, trans('messages.firstName'), trans('messages.email'), trans('messages.phone'), trans('messages.userRole'), trans('messages.tags')
-                    ));
-                    foreach ($users as $user)
-                    {
-                        $date   = date('d/m/Y', strtotime($user->created_at));
+                        $dateTitle = trans('messages.date');
                         if ($exportType == 'csv')
                         {
-                            $date = '"'.$date.'"';
+                            $dateTitle = '"'.$dateTitle.'"';
                         }
-                        $name   = removeSpecialCharactersCSV($user->name);
-                        $email  = removeSpecialCharactersCSV($user->email);
-                        $phone  = $user->phone;
-                        $role   = '';
-                        if ($user->roles() != NULL && $user->roles()->first() != NULL)
+                        $sheet->appendRow(array(
+                            $dateTitle, trans('messages.firstName'), trans('messages.email'), trans('messages.phone'), trans('messages.userRole'), trans('messages.tags')
+                        ));
+                        foreach ($users as $user)
                         {
-                            $role = $user->roles()->first()->display_name;
-                        }
-                        $tags   = removeSpecialCharactersCSV(implode(' ', $user->tagNames()));
+                            $date   = date('d/m/Y', strtotime($user->created_at));
+                            if ($exportType == 'csv')
+                            {
+                                $date = '"'.$date.'"';
+                            }
+                            $name   = removeSpecialCharactersCSV($user->name);
+                            $email  = removeSpecialCharactersCSV($user->email);
+                            $phone  = $user->phone;
+                            $role   = '';
+                            if ($user->roles() != NULL && $user->roles()->first() != NULL)
+                            {
+                                $role = $user->roles()->first()->display_name;
+                            }
+                            $tags   = removeSpecialCharactersCSV(implode(' ', $user->tagNames()));
 
-                        $sheet->appendRow(array($date, $name, $email, $phone, $role, $tags));
-                    }
-                });
-            })->download($exportType);
+                            $sheet->appendRow(array($date, $name, $email, $phone, $role, $tags));
+                        }
+                    });
+                })->download($exportType);
+            }
         }
         return view('report.usersList');
     }

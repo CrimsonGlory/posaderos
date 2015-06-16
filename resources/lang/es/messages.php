@@ -203,6 +203,10 @@ return [
     'peopleReportName'          => 'ListadoDeAsistidos',
     'interactionsReportName'    => 'ListadoDeInteracciones',
     'usersReportName'           => 'ListadoDeUsuarios',
+    'maxRowsForPDF'             => '200',
+    'maxRowsForExcel'           => '1000',
+    'reportLimitForPDF'         => 'No se pudo generar el PDF porque el rango es demasiado amplio.',
+    'reportLimitForExcel'       => 'No se pudo generar el archivo porque el rango es demasiado amplio.',
 
     // TagController
     'tagCreated'                => 'Etiqueta creada.',
