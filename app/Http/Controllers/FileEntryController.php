@@ -17,6 +17,7 @@ use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 
 class FileEntryController extends Controller {
+    var $storage_path = '../storage/app/assets/fileentries/';
 
     /**
      * Show the form for creating a new resource.
@@ -65,12 +66,29 @@ class FileEntryController extends Controller {
                 $entry = new FileEntry();
                 $entry->upload($file);
                 $entry->uploader_id = Auth::user()->id;
+		$entry->size=$file->getClientSize();
+		$entry->md5 = '0';//para poderlo guardar. No logro obtener el md5 antes de guardarlo.
                 $entry->save();
+		$entry->md5 = md5_file($this->storage_path.$entry->filename);
+		$already_added=false;
+		$old_file = $this->find_duplicate($entry);
+		if(!is_null($old_file)) // if someone has the file
+		{
+			if($person->fileentries()->where('size','=',$entry->size)->where('md5','=',$entry->md5)->count() != 0 )//if current person already has the file
+			{
+				$already_added=true;
+			}
+			$this->hard_delete($entry);
+			$entry = $old_file;
+		}
                 if($entry->isImage())
                 {
                     $entry->avatar_of()->save($person);
                 }
-                $person->fileentries()->save($entry);
+		if(!$already_added)
+		{
+	                $person->fileentries()->save($entry);//add relationship
+		}
                 $message.= $entry->original_filename.', ';
             }
             else
@@ -110,12 +128,12 @@ class FileEntryController extends Controller {
         $filename = $file->filename;
         if($file->isImage())
         {
-            $image = Image::make("../storage/app/assets/fileentries/$filename");
+            $image = Image::make($this->storage_path.$filename);
             return $image->response();
         }
         else
         {
-            $content = File::get("../storage/app/assets/fileentries/$filename");
+            $content = File::get($this->storage_path.$filename);
             return (new Response($content, 200))->header('Content-Type', $file->mime);
         }
     }
@@ -133,12 +151,12 @@ class FileEntryController extends Controller {
             return "not an image";
         }
         if(count($img) == 0)
-        {
+	{
             return "404";
         }
 
         $filename = $img->filename;
-        $path = "../storage/app/assets/fileentries/";
+        $path = $this->storage_path;
         $path_parts = pathinfo($path.$filename);
         $thumb_path = $path.$path_parts['filename'].".thumb".$size.".".$path_parts['extension'];
         if (!File::exists($thumb_path))
@@ -167,6 +185,28 @@ class FileEntryController extends Controller {
     private function extension_is_valid($ext)
     {
         return in_array(strtolower($ext),['3gp','avi','bmp','csv','doc','docx','flac','gif','gz','gzip','jpeg','jpg','kml','kmz','m4a','mov','mp3','mp4','mpeg','mpg','odp','ods','odt','oga','ogg','ogv','pdf','png','pps','pptx','svg','swf','tar','text','tif','txt','wav','webm','wmv','xls','xlsx','xml','xsl','xsd','zip']);
+    }
+
+   /*
+    * Returns duplicate file if it exists. NULL otherwise
+    */
+    private function find_duplicate($file)
+    {
+	if (is_null($file))
+        {
+                return NULL;
+        }
+        return FileEntry::where('size','=',$file->size)->where('md5','=',$file->md5)->where('id','<>',$file->id)->first();
+    }
+
+    private function hard_delete($file)
+    {
+	if (is_null($file))
+	{
+		return;
+	}
+	unlink($this->storage_path.$file->filename);
+	$file->delete();
     }
 
 }
