@@ -8,6 +8,8 @@ use App\User;
 use App\Role;
 use App\Permission;
 use Conner\Tagging\Tag;
+use Illuminate\Database\Schema\Blueprint;
+
 
 class DatabaseSeeder extends Seeder {
 
@@ -33,6 +35,7 @@ class DropDatabase extends Seeder {
 
     public function run()
     {
+	Schema::table('people', function(Blueprint $table){ $table->dropForeign('people_avatar_foreign');});
         DB::table('fileentrieables')->delete();
         DB::table('fileentries')->delete();
         DB::table('interactions')->delete();
@@ -45,6 +48,8 @@ class DropDatabase extends Seeder {
         DB::table('permissions')->delete();
         DB::table('role_user')->delete();
         DB::table('roles')->delete();
+	Schema::table('people', function(Blueprint $table) {$table->foreign('avatar')->references('id')->on('fileentries');});
+
     }
 }
 
