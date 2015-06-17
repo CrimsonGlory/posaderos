@@ -141,9 +141,21 @@ class FileEntryController extends Controller {
         }
     }
 
-    public function showThumb($size, $id)
+    public function resize($size,$id)
     {
-        if ($size != 50 && $size != 150)
+	return $this->showWithSize($size,$id,false);
+    }
+
+    public function thumb($size,$id)
+    {
+	return $this->showWithSize($size,$id,true);
+    }
+
+    /* Funciones privadas */
+
+    private function showWithSize($size, $id,$outbound)
+    {
+        if (!is_numeric($size) || ($size != 50 && $size != 72 && $size != 150 && $size != 205 && $size != 320 && $size != 720))
         {
             return "invalid size";
         }
@@ -157,33 +169,47 @@ class FileEntryController extends Controller {
 	    {
             return "404";
         }
+	if($outbound)
+	{
+		$separator = "thumb";
+	}
+	else
+	{
+		$separator = "resize";
+	}
 
         $filename = $img->filename;
         $path = $this->storage_path;
-        $path_parts = pathinfo($path.$filename);
-        $thumb_path = $path.$path_parts['filename'].".thumb".$size.".".$path_parts['extension'];
-        if (!File::exists($thumb_path))
+	$original = $path.$filename;
+	$filename_without_extension = pathinfo($original)['filename'];
+	$extension = pathinfo($original)['extension'];
+        $destination = $path.$filename_without_extension.".$separator".$size.".".$extension;
+        if (!File::exists($destination))
         {
-            $this->create_thumbnail($path,$path_parts['filename'],$path_parts['extension'],$size);
+            $this->create_image($original,$destination,$size,$outbound);
         }
-        $result = Image::make($thumb_path);
+        $result = Image::make($destination);
         return $result->response();
     }
 
-    private function create_thumbnail($path, $filename, $extension,$pixelsize)
+    private function create_image($path_origin,$path_destination,$size,$outbound = true)
     {
-        $width  = $pixelsize;
-        $height = $pixelsize;
-        $mode   = ImageInterface::THUMBNAIL_OUTBOUND;
-        $size   = new Box($width, $height);
+        $width  = $size;
+        $height = $size;
+	if($outbound)
+	{
+	        $mode = ImageInterface::THUMBNAIL_OUTBOUND;
+	}
+	else
+	{
+		$mode = ImageInterface::THUMBNAIL_INSET;
+	}
+        $box   = new Box($width, $height);
 
-        $thumbnail   = Imagine::open($path.$filename.".".$extension)->thumbnail($size, $mode);
-        $destination = "{$filename}.thumb$pixelsize.{$extension}";
-
-        $thumbnail->save("{$path}/{$destination}");
+        $image   = Imagine::open($path_origin)->thumbnail($box, $mode);
+        $image->save($path_destination);
     }
 
-    /* Funciones privadas */
 
     private function extension_is_valid($ext)
     {

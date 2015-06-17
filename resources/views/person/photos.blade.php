@@ -60,9 +60,16 @@
     </div>
 
     <div id="links">
+	<?php if(Agent::isDesktop()){
+		$big = 720;
+		$thumb = 205;
+	}else{
+		$big = 320;
+		$thumb = 72;
+	} ?>
         @foreach ($images as $image)
-            <a href="/file/{{$image->id}}" title="" data-gallery>
-                <img src="/file/{{$image->id}}" alt=""  style="max-width:300px; max-height:300px;"/>
+            <a href="{{ action("FileEntryController@resize",[$big,$image->id]) }}" title="" data-gallery>
+                <img src="{{ action("FileEntryController@thumb",[$thumb,$image->id]) }}" alt=""  style="max-width:205px; max-height:205px;"/>
             </a>
         @endforeach
     </div>
