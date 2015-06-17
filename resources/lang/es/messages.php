@@ -177,9 +177,10 @@ return [
     'sendPasswordLink'          => 'Link para cambiar la contraseña',
 
     // FileEntryController
-    'noAttachment'              => 'No se adjuntó ningún archivo.',
+    'noAttachment'              => 'No se adjuntó ningún archivo',
     'fileSaved'                 => 'se ha guardado con éxito.',
     'filesSaved'                => 'se han guardado con éxito.',
+    'invalidExtension'          => 'no tiene una extensión válida',
 
     // InteractionController
     'mailSuccess'               => 'Se ha enviado un mail notificando la derivación del asistido.',

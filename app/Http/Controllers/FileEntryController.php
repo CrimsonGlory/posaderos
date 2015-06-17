@@ -52,7 +52,8 @@ class FileEntryController extends Controller {
 
         $person = Person::findOrFail($person_id);
         $files = Input::file('files');
-        $message = "";
+        $messageSuccess = '';
+        $messageErrors = '';
         foreach($files as $file)
         {
             $rules = array(
@@ -60,62 +61,76 @@ class FileEntryController extends Controller {
             );
             $validator = \Validator::make(array('file'=> $file), $rules);
 
-            if ($validator->passes())
+            $ext = (($file)? pathinfo($file->getClientOriginalName(),PATHINFO_EXTENSION) : null);
+            if ($validator->passes() && $this->extension_is_valid($ext))
             {
-                $ext = pathinfo($file->getClientOriginalName(),PATHINFO_EXTENSION);
-                if ($this->extension_is_valid($ext))
+                $entry = new FileEntry();
+                $entry->upload($file);
+                $entry->uploader_id = Auth::user()->id;
+                $entry->size = $file->getClientSize();
+                $entry->md5 = '0';//para poderlo guardar. No logro obtener el md5 antes de guardarlo.
+                $entry->save();
+                $entry->md5 = md5_file($this->storage_path.$entry->filename);
+                $already_added = false;
+                $old_file = $this->find_duplicate($entry);
+                if(!is_null($old_file)) // if someone has the file
                 {
-                    $entry = new FileEntry();
-                    $entry->upload($file);
-                    $entry->uploader_id = Auth::user()->id;
-                    $entry->size = $file->getClientSize();
-                    $entry->md5 = '0';//para poderlo guardar. No logro obtener el md5 antes de guardarlo.
-                    $entry->save();
-                    $entry->md5 = md5_file($this->storage_path.$entry->filename);
-                    $already_added = false;
-                    $old_file = $this->find_duplicate($entry);
-                    if(!is_null($old_file)) // if someone has the file
+                    if($person->fileentries()->where('size','=',$entry->size)->where('md5','=',$entry->md5)->count() != 0 )//if current person already has the file
                     {
-                        if($person->fileentries()->where('size','=',$entry->size)->where('md5','=',$entry->md5)->count() != 0 )//if current person already has the file
-                        {
-                            $already_added = true;
-                        }
-                        $this->hard_delete($entry);
-                        $entry = $old_file;
+                        $already_added = true;
                     }
-                    if($entry->isImage())
-                    {
-                        $entry->avatar_of()->save($person);
-                    }
-                    if(!$already_added)
-                    {
-                        $person->fileentries()->save($entry);//add relationship
-                    }
-                    $message.= $entry->original_filename.', ';
+                    $this->hard_delete($entry);
+                    $entry = $old_file;
                 }
+                if($entry->isImage())
+                {
+                    $entry->avatar_of()->save($person);
+                }
+                if(!$already_added)
+                {
+                    $person->fileentries()->save($entry);//add relationship
+                }
+                $messageSuccess.= $entry->original_filename.', ';
             }
             else
             { //Does not pass validation
                 $errors = $validator->errors();
                 if($file)
-                    $message.= $file->getClientOriginalName().": ".implode(",",$errors->get("file")).'.';
+                {
+                    if (!$this->extension_is_valid($ext))
+                        $messageErrors.= $file->getClientOriginalName().' '.trans('messages.invalidExtension').', ';
+                    else
+                        $messageErrors.= $file->getClientOriginalName().': '.implode(',',$errors->get("file")).', ';
+                }
                 else
-                    $message.= trans('messages.noAttachment');
+                {
+                    $messageErrors.= trans('messages.noAttachment').', ';
+                }
             }
         }
 
 	    if(!isset($errors))
         {
-            $message = substr($message, 0, -2).' ';
+            if (strlen($messageSuccess) > 2)
+            {
+                $messageSuccess = substr($messageSuccess, 0, -2).' ';
+            }
+
             if (count($files) == 1)
-                flash()->success($message.trans('messages.fileSaved'));
+                flash()->success($messageSuccess.trans('messages.fileSaved'));
             else
-                flash()->success($message.trans('messages.filesSaved'));
+                flash()->success($messageSuccess.trans('messages.filesSaved'));
+
         	return redirect('person/'.$person_id);
 	    }
 	    else
         {
-            flash()->error($message)->important();
+            if (strlen($messageErrors) > 2)
+            {
+                $messageErrors = substr($messageErrors, 0, -2).'.';
+            }
+
+            flash()->error($messageErrors)->important();
 		    return redirect('person/'.$person_id.'/fileentries/photos');
 	    }
     }
@@ -166,23 +181,23 @@ class FileEntryController extends Controller {
             return "not an image";
         }
         if(count($img) == 0)
-	    {
+        {
             return "404";
         }
-	if($outbound)
-	{
-		$separator = "thumb";
-	}
-	else
-	{
-		$separator = "resize";
-	}
+        if($outbound)
+        {
+            $separator = "thumb";
+        }
+        else
+        {
+            $separator = "resize";
+        }
 
         $filename = $img->filename;
         $path = $this->storage_path;
-	$original = $path.$filename;
-	$filename_without_extension = pathinfo($original)['filename'];
-	$extension = pathinfo($original)['extension'];
+        $original = $path.$filename;
+        $filename_without_extension = pathinfo($original)['filename'];
+        $extension = pathinfo($original)['extension'];
         $destination = $path.$filename_without_extension.".$separator".$size.".".$extension;
         if (!File::exists($destination))
         {
@@ -196,14 +211,14 @@ class FileEntryController extends Controller {
     {
         $width  = $size;
         $height = $size;
-	if($outbound)
-	{
-	        $mode = ImageInterface::THUMBNAIL_OUTBOUND;
-	}
-	else
-	{
-		$mode = ImageInterface::THUMBNAIL_INSET;
-	}
+        if($outbound)
+        {
+            $mode = ImageInterface::THUMBNAIL_OUTBOUND;
+        }
+        else
+        {
+            $mode = ImageInterface::THUMBNAIL_INSET;
+        }
         $box   = new Box($width, $height);
 
         $image   = Imagine::open($path_origin)->thumbnail($box, $mode);

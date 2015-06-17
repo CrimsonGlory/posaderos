@@ -31,7 +31,7 @@ Route::resource('user',                         'UserController');
 Route::resource('tag',                          'TagController');
 Route::get('file/{id}',                         'FileEntryController@show');
 Route::get('photo/thumb/{size}/{id}',           'FileEntryController@thumb');
-Route::get('photo/resize/{size}/{id}',		'FileEntryController@resize');
+Route::get('photo/resize/{size}/{id}',		    'FileEntryController@resize');
 Route::get('photo/{id}',                        'FileEntryController@show');
 Route::get('report/peopleList',                 'ReportController@peopleList');
 Route::get('report/interactionsList',           'ReportController@interactionsList');
