@@ -81,7 +81,7 @@
                                 <tr>
                                     <td>
                                         @if ($person->get_avatar)
-                                            <img src="{{ action("FileEntryController@showThumb",[150,$person->get_avatar->id ]) }}" alt="" class="img-circle" style="max-width:150px; max-height:150px;"/>
+                                            <img src="{{ action("FileEntryController@thumb",[150,$person->get_avatar->id ]) }}" alt="" class="img-circle" style="max-width:150px; max-height:150px;"/>
                                         @else
                                             <img src="{{ asset("no-photo.png") }}" alt="" class="img-circle" style="max-width:150px; max-height:150px;"/>
                                         @endif
