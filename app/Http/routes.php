@@ -11,6 +11,12 @@
 |
 */
 
+// Si la URL es inválida muestra error 404
+Route::any('/', function()
+{
+    return \Illuminate\Support\Facades\View::make('errors.404');
+});
+
 Route::get('/',                                 'HomeController@index');
 Route::get('home',                              'HomeController@index');
 Route::get('person/{id}/interaction/create',    'InteractionController@create');
@@ -46,4 +52,5 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
 

@@ -26,14 +26,14 @@ class SearchController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('see-people-search-view') || $user->can('see-interactions-search-view') || $user->can('see-users-search-view'))
         {
             return view('search.searchView');
         }
-        return Redirect::back();
+        abort(403);
     }
 
     public function search()
@@ -41,7 +41,7 @@ class SearchController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         $data = array('toFind' => Input::get('toFind'),'keyWord' => trim(Input::get('key')),'error' => 1);

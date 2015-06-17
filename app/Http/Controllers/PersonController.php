@@ -38,7 +38,7 @@ class PersonController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         $people = null;
@@ -52,7 +52,7 @@ class PersonController extends Controller {
         }
         else
         {
-            return Redirect::back();
+            abort(403);
         }
 
         $paginator = $this->pagination->set($people, $request->getBaseUrl());
@@ -69,7 +69,7 @@ class PersonController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('add-person'))
@@ -90,7 +90,7 @@ class PersonController extends Controller {
             }
             return view('person.create', compact('firstName','dni'));
         }
-        return Redirect::back();
+        abort(403);
 	}
 
 	/**
@@ -152,7 +152,7 @@ class PersonController extends Controller {
         $person = Person::find($id);
         if (is_null($user) || is_null($person))
         {
-            return "404";
+            abort(404);
         }
 
         $interactions = null;
@@ -176,9 +176,8 @@ class PersonController extends Controller {
             $files = $builder->get();
             return view('person.show',compact('person','interactions','images_counter','files'));
         }
-        return Redirect::back();
+        abort(403);
 	}
-
 
     public function photos($id)
     {
@@ -186,7 +185,7 @@ class PersonController extends Controller {
         $person = Person::find($id);
         if (is_null($user) || is_null($person))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id))
@@ -194,9 +193,8 @@ class PersonController extends Controller {
             $images = $person->fileentries()->image()->get();
             return view('person.photos',compact('person','images'));
         }
-        return Redirect::back();
+        abort(403);
     }
-
 
 	/**
 	 * Show the form for editing the specified resource.
@@ -210,14 +208,14 @@ class PersonController extends Controller {
         $person = Person::find($id);
         if (is_null($user) || is_null($person))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('edit-all-people') || ($user->can('edit-new-people') && $person->created_by == $user->id))
         {
             return view('person.edit',compact('person'));
         }
-        return Redirect::back();
+        abort(403);
 	}
 
 	/**
@@ -278,7 +276,7 @@ class PersonController extends Controller {
         $person = Person::find($id);
         if (is_null($user) || is_null($person))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->hasRole('admin'))
@@ -291,17 +289,17 @@ class PersonController extends Controller {
             flash()->success(trans('messages.personDeleted'));
             return redirect('person');
         }
-        return Redirect::back();
+        abort(403);
 	}
 
 	public function setAvatar(Request2 $request,$id)
     {
 		$input = $request->all();
 		return $input;
-		$image=FileEntry::findOrFail($input->fileentry_id);
-		$person=Person::findOrFail($id);
-		$image->avatar_of()->save($person);
-		return redirect('person/'.$input->person_id);
+		//$image=FileEntry::findOrFail($input->fileentry_id);
+		//$person=Person::findOrFail($id);
+		//$image->avatar_of()->save($person);
+		//return redirect('person/'.$input->person_id);
 	}
 
     public function addFavorite($id)
@@ -310,7 +308,7 @@ class PersonController extends Controller {
         $person = Person::find($id);
         if (is_null($user) || is_null($person))
         {
-            return "404";
+            abort(404);
         }
 
         if (($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id)))
@@ -319,7 +317,7 @@ class PersonController extends Controller {
             flash()->success(trans('messages.favoriteAdded'));
             return redirect('person/'.$person->id);
         }
-        return Redirect::back();
+        abort(403);
     }
 
     public function removeFavorite($id)
@@ -328,7 +326,7 @@ class PersonController extends Controller {
         $person = Person::find($id);
         if (is_null($user) || is_null($person))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('see-all-people') || ($user->can('see-new-people') && $person->created_by == $user->id))
@@ -337,7 +335,7 @@ class PersonController extends Controller {
             flash()->warning(trans('messages.favoriteRemoved'));
             return redirect('person/'.$person->id);
         }
-        return Redirect::back();
+        abort(403);
     }
 
 }

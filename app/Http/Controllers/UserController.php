@@ -46,7 +46,7 @@ class UserController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('see-users'))
@@ -55,7 +55,7 @@ class UserController extends Controller {
             $paginator = $this->pagination->set($users, $request->getBaseUrl());
             return view('user.index', compact('users', 'paginator'));
         }
-		return Redirect::back();
+        abort(403);
 	}
 
 	/**
@@ -66,7 +66,7 @@ class UserController extends Controller {
 	public function create()
 	{
         //En principio los users se crean a sí mismos cuando se registran en el sistema.
-        return "404";
+        abort(404);
 	}
 
 	/**
@@ -77,7 +77,7 @@ class UserController extends Controller {
 	public function store(Request $request)
 	{
         //En principio los users se crean a sí mismos cuando se registran en el sistema.
-        return "404";
+        abort(404);
 	}
 
 	/**
@@ -92,7 +92,7 @@ class UserController extends Controller {
         $userShown = User::find($id);
         if (is_null($user) || is_null($userShown))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('see-users') || $userShown->id == $user->id)
@@ -101,7 +101,7 @@ class UserController extends Controller {
             $people = $userShown->people()->latest('id')->limit(10)->get();
             return view('user.show',compact('userShown','gravatar','people'));
         }
-		return Redirect::back();
+        abort(403);
 	}
 
 	/**
@@ -116,7 +116,7 @@ class UserController extends Controller {
         $userShown = User::find($id);
         if (is_null($user) || is_null($userShown))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('edit-users') || $userShown->id == $user->id)
@@ -124,7 +124,7 @@ class UserController extends Controller {
             $gravatar = Gravatar::get($userShown->email);
             return view('user.edit',compact('userShown','gravatar'));
         }
-        return Redirect::back();
+        abort(403);
 	}
 
 	/**
@@ -192,7 +192,7 @@ class UserController extends Controller {
         $userShown = User::find($id);
         if (is_null($user) || is_null($userShown))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->hasRole('admin') && $user->id != $userShown->id)
@@ -216,7 +216,7 @@ class UserController extends Controller {
             flash()->success(trans('messages.userDeleted'));
             return redirect('user');
         }
-        return Redirect::back();
+        abort(403);
 	}
 
     public function favorites($id, \Symfony\Component\HttpFoundation\Request $request)
@@ -225,7 +225,7 @@ class UserController extends Controller {
         $userShown = User::find($id);
         if (is_null($user) || is_null($userShown))
         {
-            return "404";
+            abort(404);
         }
 
         if ($userShown->id == $user->id)
@@ -234,7 +234,7 @@ class UserController extends Controller {
             $paginator = $this->pagination->set($people, $request->getBaseUrl());
             return view('user.favorites', compact('userShown','people','paginator'));
         }
-        return Redirect::back();
+        abort(403);
     }
 
     public function derivations($id, \Symfony\Component\HttpFoundation\Request $request)
@@ -243,7 +243,7 @@ class UserController extends Controller {
         $userShown = User::find($id);
         if (is_null($user) || is_null($userShown))
         {
-            return "404";
+            abort(404);
         }
 
         if ($userShown->id == $user->id && ($userShown->hasRole('admin') || $userShown->hasRole('posadero') || $userShown->hasRole('explorer')))
@@ -259,7 +259,7 @@ class UserController extends Controller {
             $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
             return view('derivations', compact('userShown','interactions','paginator'));
         }
-        return Redirect::back();
+        abort(403);
     }
 
     public function changePassword($id)
@@ -268,14 +268,14 @@ class UserController extends Controller {
         $userShown = User::find($id);
         if (is_null($user) || is_null($userShown))
         {
-            return "404";
+            abort(404);
         }
 
         if ($userShown->id == $user->id)
         {
             return view('user.changePassword',compact('userShown'));
         }
-        return Redirect::back();
+        abort(403);
     }
 
     public function storePassword(UserRequest $request, $id)

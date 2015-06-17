@@ -34,7 +34,7 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">{{ trans('messages.beRightBack') }}</div>
+				<div class="title">{{ trans('messages.error503') }}</div>
 			</div>
 		</div>
 	</body>

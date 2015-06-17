@@ -31,7 +31,7 @@ class FileEntryController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         $person = Person::findOrFail($id);
@@ -39,18 +39,14 @@ class FileEntryController extends Controller {
         {
             return view('fileentries.create', compact('person','uploadError'));
         }
-        return Redirect::back();
+        abort(403);
     }
 
     public function store(CreateFileEntryRequest $request)
     {
         $person_id = Request::input('person_id');
-        if(is_null($person_id))
-        {
-            abort("$person_id is NULL at FileEntryController@index");
-        }
-
         $person = Person::findOrFail($person_id);
+
         $files = Input::file('files');
         $messageSuccess = '';
         $messageErrors = '';
@@ -138,9 +134,9 @@ class FileEntryController extends Controller {
     public function show($id)
     {
         $file = FileEntry::find($id);
-        if (is_null($file))
+        if (is_null($file) || is_null(Auth::user()))
         {
-            return "404";
+            abort(404);
         }
 
         $filename = $file->filename;
@@ -158,12 +154,20 @@ class FileEntryController extends Controller {
 
     public function resize($size,$id)
     {
-	return $this->showWithSize($size,$id,false);
+        if (is_null(Auth::user()))
+        {
+            abort(404);
+        }
+	    return $this->showWithSize($size,$id,false);
     }
 
     public function thumb($size,$id)
     {
-	return $this->showWithSize($size,$id,true);
+        if (is_null(Auth::user()))
+        {
+            abort(404);
+        }
+	    return $this->showWithSize($size,$id,true);
     }
 
     /* Funciones privadas */

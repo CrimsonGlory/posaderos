@@ -41,7 +41,7 @@ class TagController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('see-tags'))
@@ -50,7 +50,7 @@ class TagController extends Controller {
             $paginator = $this->pagination->set($tags, $request->getBaseUrl());
             return view('tag.index',compact('tags','paginator'));
         }
-		return Redirect::back();
+        abort(403);
 	}
 
 	/**
@@ -63,14 +63,14 @@ class TagController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('add-tag'))
         {
             return view('tag.addTag');
         }
-        return Redirect::back();
+        abort(403);
 	}
 
 	/**
@@ -115,7 +115,7 @@ class TagController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('see-tags'))
@@ -143,7 +143,7 @@ class TagController extends Controller {
 
             return view('tag.show',compact('tagName','people','interactions'));
         }
-        return Redirect::back();
+        abort(403);
 	}
 
 	/**
@@ -158,14 +158,14 @@ class TagController extends Controller {
         $tag = Tag::find($id);
         if (is_null($user) || is_null($tag))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('edit-tags'))
         {
             return view('tag.editTag', compact('tag'));
         }
-        return Redirect::back();
+        abort(403);
 	}
 
 	/**
@@ -238,7 +238,7 @@ class TagController extends Controller {
         $tag = Tag::find($id);
         if (is_null($user) || is_null($tag))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->hasRole('admin'))
@@ -272,7 +272,7 @@ class TagController extends Controller {
             return redirect('tag');
         }
 
-        return Redirect::back();
+        abort(403);
 	}
 
 }

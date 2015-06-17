@@ -75,7 +75,9 @@ return [
     'restorePasswordContent'    => 'Haga click aquí para cambiar su contraseña:',
 
     // Errors
-    'beRightBack'               => 'Volverá enseguida',
+    'error403'                  => '403 - Acceso denegado',
+    'error404'                  => '404 - Archivo no encontrado',
+    'error503'                  => '503 - Servicio no disponible',
 
     // Fileentries
     'savePhotoOf'               => 'Guardar foto de',

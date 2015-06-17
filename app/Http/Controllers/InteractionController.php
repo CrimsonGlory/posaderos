@@ -26,7 +26,7 @@ class InteractionController extends Controller {
     public function __construct(Pagination $pagination)
     {
         $this->middleware('auth');
-	$this->middleware('cleanfields',['only' => ['store','update']]);
+	    $this->middleware('cleanfields',['only' => ['store','update']]);
         $this->pagination = $pagination;
     }
 
@@ -40,7 +40,7 @@ class InteractionController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         $interactions = null;
@@ -54,7 +54,7 @@ class InteractionController extends Controller {
         }
         else
         {
-            return Redirect::back();
+            abort(403);
         }
 
         $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
@@ -71,7 +71,7 @@ class InteractionController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('add-interaction'))
@@ -79,7 +79,7 @@ class InteractionController extends Controller {
             $person = Person::findOrFail($id);
             return view('interaction.create',compact('person'));
         }
-        return Redirect::back();
+        abort(403);
     }
 
     /**
@@ -180,14 +180,14 @@ class InteractionController extends Controller {
         $interaction = Interaction::find($id);
         if (is_null($user) || is_null($interaction))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('see-all-interactions') || ($user->can('see-new-interactions') && $interaction->user_id == $user->id))
         {
             return redirect('person/'.$interaction->person_id);
         }
-        return Redirect::back();
+        abort(403);
     }
 
     /**
@@ -202,7 +202,7 @@ class InteractionController extends Controller {
         $interaction = Interaction::find($id);
         if(is_null($user) || is_null($interaction))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->can('edit-all-interactions') || ($user->can('edit-new-interactions') && $interaction->user_id == $user->id))
@@ -210,7 +210,7 @@ class InteractionController extends Controller {
             $person = Person::findOrFail($interaction->person_id);
             return view('interaction.edit',compact('person','interaction'));
         }
-        return Redirect::back();
+        abort(404);
     }
 
     /**
@@ -267,7 +267,7 @@ class InteractionController extends Controller {
         $interaction = Interaction::find($id);
         if (is_null($user) || is_null($interaction))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->hasRole('admin'))
@@ -275,7 +275,7 @@ class InteractionController extends Controller {
             $interaction->delete();
             flash()->success(trans('messages.interactionDeleted'));
         }
-        return Redirect::back();
+        abort(403);
     }
 
 }

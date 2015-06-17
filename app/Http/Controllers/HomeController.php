@@ -43,7 +43,7 @@ class HomeController extends Controller {
         $user = Auth::user();
         if(is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->hasRole('admin'))
@@ -63,8 +63,7 @@ class HomeController extends Controller {
         {
             return view('search/searchView');
         }
-
-        return "404";
+        abort(403);
 	}
 
 }

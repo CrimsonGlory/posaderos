@@ -19,14 +19,14 @@ class ReportController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->hasRole('admin') && Agent::isDesktop())
         {
             return view('report.peopleList');
         }
-        return redirect('home');
+        abort(403);
     }
 
     public function downloadPeopleList(CreateReportRequest $request)
@@ -132,14 +132,14 @@ class ReportController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->hasRole('admin') && Agent::isDesktop())
         {
             return view('report.interactionsList');
         }
-        return redirect('home');
+        abort(403);
     }
 
     public function downloadInteractionsList(CreateReportRequest $request)
@@ -247,14 +247,14 @@ class ReportController extends Controller {
         $user = Auth::user();
         if (is_null($user))
         {
-            return "404";
+            abort(404);
         }
 
         if ($user->hasRole('admin') && Agent::isDesktop())
         {
             return view('report.usersList');
         }
-        return redirect('home');
+        abort(403);
     }
 
     public function downloadUsersList(CreateReportRequest $request)
