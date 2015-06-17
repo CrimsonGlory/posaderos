@@ -66,7 +66,7 @@
                                 <th scope="row">
                                     <a href="{{ action('PersonController@show',$interaction->getPerson()->id) }}">
                                         @if ($interaction->getPerson()->get_avatar != null)
-                                            <img src="{{ action("FileEntryController@show",$interaction->getPerson()->get_avatar) }}" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
+                                            <img src="{{ action("FileEntryController@thumb",[50,$interaction->getPerson()->get_avatar]) }}" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
                                         @else
                                             <img src="{{ asset("no-photo.png") }}" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
                                         @endif

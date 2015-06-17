@@ -68,7 +68,7 @@
                             <tr>
                                 <th scope="row">
                                     @if ($person->get_avatar != null)
-                                        <img src="{{ action("FileEntryController@show",$person->get_avatar) }}" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
+                                        <img src="{{ action("FileEntryController@thumb",[50,$person->get_avatar]) }}" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
                                     @else
                                         <img src="{{ asset("no-photo.png") }}" alt="" class="img-circle" style="max-width:50px; max-height:50px;"/>
                                     @endif
