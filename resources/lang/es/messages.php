@@ -80,7 +80,7 @@ return [
     'error503'                  => '503 - Servicio no disponible',
 
     // Fileentries
-    'savePhotoOf'               => 'Guardar foto de',
+    'saveFilesOf'               => 'Guardar archivos de',
     'maxSizeFile'               => 'El campo filename no puede ser superior a 8 MB.',
     'save'                      => 'Guardar',
     'cancel'                    => 'Cancelar',

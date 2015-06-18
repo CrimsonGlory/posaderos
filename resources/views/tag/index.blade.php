@@ -4,7 +4,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-10 col-md-offset-1">
                 <div class="panel-group" role="tablist" aria-multiselectable="false">
                     <div class="panel panel-default">
                         <script src="{{ asset('js/confirmDelete.js') }}"></script>

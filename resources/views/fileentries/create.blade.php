@@ -3,10 +3,10 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4>{{ trans('messages.savePhotoOf') }} {{ $person->first_name }} {{ $person->last_name }}</h4>
+                        <h4>{{ trans('messages.saveFilesOf') }} {{ $person->first_name }} {{ $person->last_name }}</h4>
                     </div>
                     <div class="panel-body">
 			            @include('flash::message')
@@ -24,11 +24,11 @@
                             </ul>
                         @endif
 
-                        <form action="{{ url('person/'.$person->id.'/fileentries') }}" method="post" enctype="multipart/form-data">
+                        <form class="form-horizontal" method="POST" action="{{ url('person/'.$person->id.'/fileentries') }}" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                             <div class="form-group" align="center">
-					            {!! Form::file('files[]', array('multiple'=>true)) !!}
+					            {!! Form::file('files[]', array('multiple' => true)) !!}
                             </div>
                             {!! Form::hidden('person_id', $person->id) !!}
 
