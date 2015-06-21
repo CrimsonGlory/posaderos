@@ -47,7 +47,7 @@
                                     {!! Form::close() !!}
                                 </td>
                                 <td align="right">
-                                    <button type="button" class="btn btn-primary next" id="next">
+                                    <button type="button" class="btn btn-primary next">
                                         <i class="glyphicon glyphicon-chevron-right"></i>
                                     </button>
                                 </td>
@@ -73,7 +73,7 @@
             }
         ?>
         @foreach ($images as $image)
-            <a href="{{ action("FileEntryController@resize",[$big,$image->id]) }}" title="" data-gallery="#blueimp-gallery-gallery">
+            <a href="{{ action("FileEntryController@resize",[$big,$image->id]) }}" title="" data-gallery>
                 <img src="{{ action("FileEntryController@thumb",[$thumb,$image->id]) }}" alt=""  style="max-width:205px; max-height:205px;"/>
             </a>
         @endforeach
