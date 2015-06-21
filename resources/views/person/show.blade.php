@@ -91,10 +91,10 @@
                                     <td align="center">
                                         @if ($images_counter > 0)
                                             <a class="btn btn-link" href="{{ action("PersonController@photos",$person->id) }}">{{ trans('messages.seePhotos') }} ({{$images_counter}})</a>
-                                            @if (Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id))
+                                            @if (Auth::user()->can('add-files-to-people') || $person->created_by == Auth::user()->id)
                                                 | <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i></a>
                                             @endif
-                                        @elseif (Auth::user()->can('edit-all-people') || (Auth::user()->can('edit-new-people') && $person->created_by == Auth::user()->id))
+                                        @elseif (Auth::user()->can('add-files-to-people') || $person->created_by == Auth::user()->id)
                                             <a class="btn btn-link" href="{{ url('person/'.$person->id.'/fileentries/photos') }}"><i class="glyphicon glyphicon-plus"></i> {{ trans('messages.addFiles') }}</a>
                                         @else
                                             <br/>

@@ -137,6 +137,12 @@ class RolesAndPermissionsSeeder extends Seeder {
         $seeNotImageFiles->description  = 'Ver todos los archivos subidos.'; // optional
         $seeNotImageFiles->save();
 
+        $addFilesToPeople = new Permission();
+        $addFilesToPeople->name         = 'add-files-to-people';
+        $addFilesToPeople->display_name = 'Agregar archivos de asistidos'; // optional
+        $addFilesToPeople->description  = 'Agregar archivos y cambiar avatar a los asistidos'; // optional
+        $addFilesToPeople->save();
+
         $seeAllPeople = new Permission();
         $seeAllPeople->name         = 'see-all-people';
         $seeAllPeople->display_name = 'Ver asistidos'; // optional
@@ -199,16 +205,16 @@ class RolesAndPermissionsSeeder extends Seeder {
 
         // Add Permisions to Roles
         $admin->attachPermissions(array($seeUsersSearchView, $seeUsers, $editUsers,
-                                        $seeTags, $editTags, $addTag, $seeNotImageFiles,
+                                        $seeTags, $editTags, $addTag, $seeNotImageFiles, $addFilesToPeople,
                                         $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
                                         $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
 
         $posadero->attachPermissions(array($seeUsersSearchView, $seeUsers,
-                                           $seeTags, $seeNotImageFiles,
+                                           $seeTags, $seeNotImageFiles, $addFilesToPeople,
                                            $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
                                            $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
 
-        $explorer->attachPermissions(array($seeTags,
+        $explorer->attachPermissions(array($seeTags, $addFilesToPeople,
                                            $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
                                            $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
 

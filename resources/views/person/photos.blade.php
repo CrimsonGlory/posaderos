@@ -37,15 +37,17 @@
                                         <i class="glyphicon glyphicon-chevron-left"></i>
                                     </button>
                                 </td>
-                                <td align="middle">
-                                    {!! Form::open(['id' => 'set_avatar', 'name' => 'set_avatar', 'class' => 'reset-this', 'method'=> 'POST', 'action' => ['PersonController@setAvatar',$person->id]]) !!}
-                                        <input type="hidden" name="fileentry_id" class="fileentry_id_class" value="">
-                                        <button type="submit" class="btn btn-default setavatar">
-                                            <i class="glyphicon glyphicon-user"></i>
-                                            {{ trans('messages.useAsProfile') }}
-                                        </button>
-                                    {!! Form::close() !!}
-                                </td>
+                                @if (Auth::user()->can('add-files-to-people') || $person->created_by == Auth::user()->id)
+                                    <td align="middle">
+                                        {!! Form::open(['id' => 'set_avatar', 'name' => 'set_avatar', 'class' => 'reset-this', 'method'=> 'POST', 'action' => ['PersonController@setAvatar',$person->id]]) !!}
+                                            <input type="hidden" name="fileentry_id" class="fileentry_id_class" value="">
+                                            <button type="submit" class="btn btn-default setavatar">
+                                                <i class="glyphicon glyphicon-user"></i>
+                                                {{ trans('messages.useAsProfile') }}
+                                            </button>
+                                        {!! Form::close() !!}
+                                    </td>
+                                @endif
                                 <td align="right">
                                     <button type="button" class="btn btn-primary next">
                                         <i class="glyphicon glyphicon-chevron-right"></i>
