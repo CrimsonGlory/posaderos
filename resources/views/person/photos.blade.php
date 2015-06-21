@@ -37,15 +37,15 @@
                                         <i class="glyphicon glyphicon-chevron-left"></i>
                                     </button>
                                 </td>
-                                <!--<td align="middle">
-                                    {!! Form::open(['name'=>'id','class' => 'reset-this', 'method'=> 'POST', 'action' => ['PersonController@setAvatar',$person->id]]) !!}
-                                        <input type="hidden" name="fileentry_id"  value="">
-                                        <button type="button submit" class="btn btn-default setavatar">
+                                <td align="middle">
+                                    {!! Form::open(['id'=> 'set_avatar','name'=>'set_avatar','class' => 'reset-this', 'method'=> 'POST', 'action' => ['PersonController@setAvatar',$person->id]]) !!}
+                                        <input type="hidden" name="fileentry_id" class="fileentry_id_class" value="">
+                                        <button type="submit" class="btn btn-default setavatar">
                                             <i class="glyphicon glyphicon-user"></i>
                                             Usar como perfil
                                         </button>
                                     {!! Form::close() !!}
-                                </td>-->
+                                </td>
                                 <td align="right">
                                     <button type="button" class="btn btn-primary next">
                                         <i class="glyphicon glyphicon-chevron-right"></i>
@@ -82,17 +82,31 @@
 @endsection
 
 @section('footer')
-    <script src="/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="/Gallery/js/jquery.blueimp-gallery.min.js"></script>
-    <script src="/js/bootstrap-image-gallery.min.js"></script>
-    <script type="text/javascript">
-        $( "formm" ).submit(function(){
-            alert(2);
-            // Let's find the input to check
-            var $input = $(this).find("input[name=fileentry_id]");
-            // Value is falsey (i.e. null), lets set a new one
-            $input.val("whatever you want");
-        });
-    </script>
+            <script src="/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+            <script src="/js/bootstrap-image-gallery.min.js"></script>
+            <script type="text/javascript">
+            document.getElementById('links').onclick = function (event) {
+                event = event || window.event;
+                var target = event.target || event.srcElement,
+                    link = target.src ? target.parentNode : target,
+                    options = {index: link, event: event, onslide: function (index, slide) {
+                        completefileentryinput(index);
+                    },},
+                        links = this.getElementsByTagName('a');
+                blueimp.Gallery(links, options);
+            };
+
+            {{-- Changes the value of all fileentry_id_class textbox --}}
+                function completefileentryinput(index){
+                    $( ".fileentry_id_class" ).val(fileentries_ids[index]);
+                }
+                {{-- Array of FileEntry's ids --}}
+                    var fileentries_ids = [
+                    @foreach( $images as $image)
+                {{ $image->id }},
+                @endforeach
+                ];
+                </script>
 
 @endsection
