@@ -126,6 +126,7 @@ return [
     'lastInteractions'          => 'Últimas interacciones',
     'files'                     => 'Archivos',
     'addFiles'                  => 'Agregar archivos',
+    'useAsProfile'              => 'Usar como perfil',
 
     // Reports
     'exportType'                => 'Tipo de exportación',
