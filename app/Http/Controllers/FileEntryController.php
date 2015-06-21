@@ -188,6 +188,14 @@ class FileEntryController extends Controller {
         {
             return "404";
         }
+        $filename = $img->filename;
+        $path = $this->storage_path;
+        list($width, $height) = getimagesize($path.$filename);
+        if($width < $size && $height < $size)
+        {
+            $image = Image::make($path.$filename);
+            return $image->response();
+        }
         if($outbound)
         {
             $separator = "thumb";
@@ -197,8 +205,6 @@ class FileEntryController extends Controller {
             $separator = "resize";
         }
 
-        $filename = $img->filename;
-        $path = $this->storage_path;
         $original = $path.$filename;
         $filename_without_extension = pathinfo($original)['filename'];
         $extension = pathinfo($original)['extension'];
