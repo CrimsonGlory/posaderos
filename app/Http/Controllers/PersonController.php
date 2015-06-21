@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Illuminate\Http\Request as Request2;
+use App\FileEntry;
 
 class PersonController extends Controller {
 
@@ -294,12 +295,11 @@ class PersonController extends Controller {
 
 	public function setAvatar(Request2 $request,$id)
     {
-		$input = $request->all();
-		return $input;
-		//$image=FileEntry::findOrFail($input->fileentry_id);
-		//$person=Person::findOrFail($id);
-		//$image->avatar_of()->save($person);
-		//return redirect('person/'.$input->person_id);
+        $input = $request->all();
+		$image=FileEntry::findOrFail($input["fileentry_id"]);
+		$person=Person::findOrFail($id);
+		$image->avatar_of()->save($person);
+		return redirect('person/'.$id);
 	}
 
     public function addFavorite($id)
