@@ -1,17 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-class WelcomeController extends Controller {
-
-	/*
-	|--------------------------------------------------------------------------
-	| Welcome Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller renders the "marketing page" for the application and
-	| is configured to only allow guests. Like most of the other sample
-	| controllers, you are free to modify or remove it as you desire.
-	|
-	*/
+class SetupController extends Controller {
 
 	/**
 	 * Create a new controller instance.
@@ -23,14 +12,22 @@ class WelcomeController extends Controller {
 		$this->middleware('guest');
 	}
 
-	/**
-	 * Show the application welcome screen to the user.
-	 *
-	 * @return Response
-	 */
 	public function index()
-	{
-		return view('welcome');
-	}
+    {
+        if($this->setup_done())
+        {
+            abort(404);
+        }
+        else
+        {
+            return view('setup.show');
+        }
+
+    }
+
+    private function setup_done()
+    {
+        return false;
+    }
 
 }

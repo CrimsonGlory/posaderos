@@ -1,8 +1,8 @@
 <?php
 /*
- * Parse the phone from 4xxx-xxx or 15-xxxx-xxxx 
- * to +54 9 11 xxxx xxxx (for celphones) 
- * or +54 11 xxxx xxxx 
+ * Parse the phone from 4xxx-xxx or 15-xxxx-xxxx
+ * to +54 9 11 xxxx xxxx (for celphones)
+ * or +54 11 xxxx xxxx
  */
 use App\User;
 use Illuminate\Support\Facades\Mail;
@@ -137,6 +137,15 @@ function humanReadableFileSize($bytes, $decimals = 2)
     $size = array('B','KB','MB','GB','TB','PB','EB','ZB','YB');
     $factor = floor((strlen($bytes) - 1) / 3);
     return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)).' '.@$size[$factor];
+}
+
+function schema_already_setup()
+{
+    return Schema::hasTable('users') &&
+        Schema::hasTable('roles') &&
+        Schema::hasTable('role_user') &&
+        Schema::hasTable('permissions') &&
+        Schema::hasTable('permission_role');
 }
 
 ?>
