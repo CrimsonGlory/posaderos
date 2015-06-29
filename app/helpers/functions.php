@@ -232,6 +232,12 @@ function create_roles_and_permissions()
     $seeNotImageFiles->description  = 'Ver todos los archivos subidos.'; // optional
     $seeNotImageFiles->save();
 
+    $addFilesToPeople = new Permission();
+    $addFilesToPeople->name         = 'add-files-to-people';
+    $addFilesToPeople->display_name = 'Agregar archivos de asistidos'; // optional
+    $addFilesToPeople->description  = 'Agregar archivos y cambiar avatar a los asistidos'; // optional
+    $addFilesToPeople->save();
+
     $seeAllPeople = new Permission();
     $seeAllPeople->name         = 'see-all-people';
     $seeAllPeople->display_name = 'Ver asistidos'; // optional
@@ -296,16 +302,16 @@ function create_roles_and_permissions()
     $admin->attachPermissions(array($seeUsersSearchView, $seeUsers, $editUsers,
         $seeTags, $editTags, $addTag, $seeNotImageFiles,
         $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
-        $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
+        $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions,$addFilesToPeople));
 
     $posadero->attachPermissions(array($seeUsersSearchView, $seeUsers,
         $seeTags, $seeNotImageFiles,
         $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
-        $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
+        $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions,$addFilesToPeople));
 
     $explorer->attachPermissions(array($seeTags,
         $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
-        $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions));
+        $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions,$addFilesToPeople));
 
     $newUser->attachPermissions(array($seeTags,
         $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editNewPeople,
