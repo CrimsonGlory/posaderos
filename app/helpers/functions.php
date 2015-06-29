@@ -170,7 +170,6 @@ function create_roles_and_permissions()
     $explorer->description  = 'Usuario explorador con acceso a las páginas de asistidos e interacciones.'; // optional
     $explorer->save();
 
-
     $newUser = new Role();
     $newUser->name         = 'new-user';
     $newUser->display_name = 'Nuevo usuario'; // optional
@@ -300,22 +299,22 @@ function create_roles_and_permissions()
 
     // Add Permisions to Roles
     $admin->attachPermissions(array($seeUsersSearchView, $seeUsers, $editUsers,
-        $seeTags, $editTags, $addTag, $seeNotImageFiles,
-        $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
-        $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions,$addFilesToPeople));
+                                    $seeTags, $editTags, $addTag, $seeNotImageFiles,
+                                    $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
+                                    $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions,$addFilesToPeople));
 
     $posadero->attachPermissions(array($seeUsersSearchView, $seeUsers,
-        $seeTags, $seeNotImageFiles,
-        $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
-        $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions,$addFilesToPeople));
+                                       $seeTags, $seeNotImageFiles,
+                                       $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
+                                       $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions,$addFilesToPeople));
 
     $explorer->attachPermissions(array($seeTags,
-        $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
-        $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions,$addFilesToPeople));
+                                       $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editAllPeople, $editNewPeople,
+                                       $seeInteractionsSearchView, $seeAllInteractions, $seeNewInteractions, $addInteraction, $editAllInteractions, $editNewInteractions,$addFilesToPeople));
 
     $newUser->attachPermissions(array($seeTags,
-        $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editNewPeople,
-        $seeInteractionsSearchView, $seeNewInteractions, $addInteraction, $editNewInteractions));
+                                      $seePeopleSearchView, $seeAllPeople, $seeNewPeople, $addPerson, $editNewPeople,
+                                      $seeInteractionsSearchView, $seeNewInteractions, $addInteraction, $editNewInteractions));
 
 }
 ?>

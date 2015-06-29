@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use App\Role;
 use App\Person;
 use App\Interaction;
 use App\User;
