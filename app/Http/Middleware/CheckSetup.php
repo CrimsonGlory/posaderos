@@ -1,7 +1,7 @@
 <?php namespace App\Http\Middleware;
 
 use Closure;
-
+use App\User;
 class CheckSetup {
 
 	/**
@@ -11,12 +11,16 @@ class CheckSetup {
 	 * @param  \Closure  $next
 	 * @return mixed
 	 */
-	public function handle($request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        if(schema_already_setup())
+        if(schema_already_setup() && User::count()!=0)
+        {
             return $next($request);
+        }
         else
-            dd("setup not done");
-	}
+        {
+            return redirect('/setup');
+        }
+    }
 
 }

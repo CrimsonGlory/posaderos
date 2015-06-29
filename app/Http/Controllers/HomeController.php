@@ -28,9 +28,9 @@ class HomeController extends Controller {
 	 * @return void
 	 */
 	public function __construct(Pagination $pagination)
-	{
+    {
+        $this->middleware('check.setup', ['only' => 'index']);
         $this->middleware('auth');
-        $this->middleware('check.setup', ['only' => ['index']]);
         $this->pagination = $pagination;
 	}
 
