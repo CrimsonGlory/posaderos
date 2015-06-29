@@ -21,7 +21,7 @@ class SetupController extends Controller {
 
 	public function index(Request $request)
     {
-        if (schema_already_setup() && User::count()!=0)
+        if (schema_already_setup() && User::count() != 0)
         {
             abort(404);
         }
@@ -31,7 +31,7 @@ class SetupController extends Controller {
             return view('setup.schema');
         }
 
-        if(User::count()==0)
+        if(User::count() == 0)
         {
             return view('setup.create_admin');
         }
@@ -49,7 +49,7 @@ class SetupController extends Controller {
 
     public function createAdmin()
     {
-        if(User::count()==0)
+        if(User::count() == 0)
         {
             return view('setup.create_admin');
         }
@@ -61,7 +61,7 @@ class SetupController extends Controller {
 
     public function admin(Request $request)
     {
-        if(schema_already_setup() && User::count()!=0)
+        if(schema_already_setup() && User::count() != 0)
         {
             abort(404);
 
@@ -75,10 +75,12 @@ class SetupController extends Controller {
             );
         }
         $this->auth->login($this->registrar->create($request->all()));
-        if(DB::table('roles')->where('name','admin')->count()==0)
+
+        if(DB::table('roles')->where('name','admin')->count() == 0)
         {
             create_roles_and_permissions();
         }
+
         //Add admin role
         $authUser = Auth::user();
         $roleNewUser = DB::table('roles')->where('name', 'admin')->first();
@@ -86,8 +88,6 @@ class SetupController extends Controller {
         {
             $authUser->attachRole($roleNewUser->id);
         }
-
-
 
         //Create admin
         return redirect("/home");

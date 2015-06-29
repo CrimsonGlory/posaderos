@@ -1,52 +1,36 @@
-<html>
-	<head>
-		<title>{{ trans('messages.posaderos') }}</title>
+@extends('app')
 
-		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+@section('content')
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 
-		<style>
-			body {
-				margin: 0;
-				padding: 0;
-				width: 100%;
-				height: 100%;
-				color: #B0BEC5;
-				display: table;
-				font-weight: 100;
-				font-family: 'Lato';
-			}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>{{ trans('messages.installation') }}</h4>
+                    </div>
+                    <div class="panel-body">
+                        @if ($errors->any())
+                            <ul class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
 
-			.container {
-				text-align: center;
-				display: table-cell;
-				vertical-align: middle;
-			}
+                        {!! Form::open(['class' => 'form-horizontal', 'method'=> 'POST', 'action' => 'SetupController@schema']) !!}
+                            <div class="title" align="center" style="color: #B0BEC5; font-size: 30px; font-weight: 100; font-family: 'Lato'; margin-bottom: 20px;">
+                                {{ trans('messages.schema_missing') }}
+                            </div>
 
-			.content {
-				text-align: center;
-				display: inline-block;
-			}
-
-			.title {
-				font-size: 96px;
-				margin-bottom: 40px;
-			}
-
-			.quote {
-				font-size: 24px;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<div class="content">
-                <div class="title">{{ trans('messages.installation') }}</div>
-                    <div>{{ trans('messages.schema_missing') }}</div>
-                   {!! Form::open(['class' => 'form-horizontal', 'method'=> 'POST', 'action' => 'SetupController@schema']) !!}
-                   <button type="submit" class="btn btn-primary">{{ trans('messages.create_schema') }}</button>
-                   {!! Form::close() !!}
-                <div class="quote">{{ Inspiring::quote() }}</div>
+                            <div class="form-group" align="center">
+                                <button type="submit" class="btn btn-primary">{{ trans('messages.create_schema') }}</button>
+                            </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+@endsection

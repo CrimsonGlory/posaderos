@@ -159,6 +159,14 @@ return [
     'advancedSearch'            => 'Búsqueda avanzada',
     'search'                    => '¿Búsqueda?',
 
+    // Setup
+    'schema_missing'            => 'El esquema de la base aun no se ha creado',
+    'create_schema'             => 'Crear esquema',
+    'schema_created'            => 'El esquema ha sido creado',
+    'installation'              => 'Instalación',
+    'admin_create_form'         => 'Usuario Administrador',
+    'continue'                  => 'Continuar',
+
     // Tags
     'lastPeople'                => 'Últimos asistidos',
     'addTag'                    => 'Agregar etiqueta',
@@ -228,14 +236,6 @@ return [
     'userDeleted'               => 'Usuario eliminado.',
     'oldPasswordMatch'          => 'La contraseña actual es incorrecta.',
     'passwordUpdated'           => 'Contraseña actualizada',
-
-    //Installer
-    'schema_missing'            => 'El esquema de la base aun no se creado',
-    'create_schema'             => 'Crear esquema',
-    'schema_created'            => 'El esquema ha sido creado',
-    'installation'              => 'Instalación',
-    'admin_create_form'         => 'Formulario para crear un usuario Administrador',
-    'continue'                  => 'Continuar',
 
     /* Helpers */
 
