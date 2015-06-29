@@ -19,6 +19,10 @@ Route::any('/', function()
 
 Route::get('/',                                 'HomeController@index');
 Route::get('home',                              'HomeController@index');
+Route::get('setup',                             'SetupController@index');
+Route::post('setup/schema',                     'SetupController@schema');
+Route::get('setup/create_admin',               'SetupController@createAdmin');
+Route::post('setup/admin',                      'SetupController@admin');
 Route::get('person/{id}/interaction/create',    'InteractionController@create');
 Route::post('person/{id}/interaction',          'InteractionController@store');
 Route::post('person/{id}/addFavorite',          'PersonController@addFavorite');

@@ -229,6 +229,14 @@ return [
     'oldPasswordMatch'          => 'La contraseña actual es incorrecta.',
     'passwordUpdated'           => 'Contraseña actualizada',
 
+    //Installer
+    'schema_missing'            => 'El esquema de la base aun no se creado',
+    'create_schema'             => 'Crear esquema',
+    'schema_created'            => 'El esquema ha sido creado',
+    'installation'              => 'Instalación',
+    'admin_create_form'         => 'Formulario para crear un usuario Administrador',
+    'continue'                  => 'Continuar',
+
     /* Helpers */
 
     // Functions
