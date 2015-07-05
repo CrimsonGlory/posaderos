@@ -43,7 +43,7 @@ class SetupController extends Controller {
         {
             abort(404);
         }
-        Artisan::call('migrate');
+        Artisan::call('migrate', array('--force' => true));
         return view('setup.schema_created');
     }
 
