@@ -53,7 +53,7 @@ class FileEntryController extends Controller {
         foreach($files as $file)
         {
             $rules = array(
-                'file' => 'required|max:8000|mimes:3gp,avi,bmp,csv,doc,docx,flac,gif,gz,gzip,jpeg,jpg,kml,kmz,m4a,mov,mp3,mp4,mpeg,mpg,odp,ods,odt,oga,ogg,ogv,pdf,png,pps,pptx,svg,swf,tar,text,tif,txt,wav,webm,wmv,xls,xlsx,xml,xsl,xsd,zip'
+                'file' => 'required|max:8000|mimes:3gp,avi,bmp,csv,doc,docx,flac,flv,gif,gz,gzip,jpeg,jpg,kml,kmz,m4a,mov,mp3,mp4,mpeg,mpg,odp,ods,odt,oga,ogg,ogv,pdf,png,pps,pptx,svg,swf,tar,text,tif,txt,wav,webm,wmv,xls,xlsx,xml,xsl,xsd,zip'
             );
             $validator = \Validator::make(array('file'=> $file), $rules);
 
@@ -238,7 +238,7 @@ class FileEntryController extends Controller {
 
     private function extension_is_valid($ext)
     {
-        return in_array(strtolower($ext),['3gp','avi','bmp','csv','doc','docx','flac','gif','gz','gzip','jpeg','jpg','kml','kmz','m4a','mov','mp3','mp4','mpeg','mpg','odp','ods','odt','oga','ogg','ogv','pdf','png','pps','pptx','svg','swf','tar','text','tif','txt','wav','webm','wmv','xls','xlsx','xml','xsl','xsd','zip']);
+        return in_array(strtolower($ext),['3gp','avi','bmp','csv','doc','docx','flac','flv','gif','gz','gzip','jpeg','jpg','kml','kmz','m4a','mov','mp3','mp4','mpeg','mpg','odp','ods','odt','oga','ogg','ogv','pdf','png','pps','pptx','svg','swf','tar','text','tif','txt','wav','webm','wmv','xls','xlsx','xml','xsl','xsd','zip']);
     }
 
     /*
