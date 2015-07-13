@@ -134,7 +134,8 @@ class FileEntryController extends Controller {
     public function show($id)
     {
         $file = FileEntry::find($id);
-        if (is_null($file) || is_null(Auth::user()))
+        $user = Auth::user();
+        if (is_null($file) || is_null($user))
         {
             abort(404);
         }
@@ -145,11 +146,12 @@ class FileEntryController extends Controller {
             $image = Image::make($this->storage_path.$filename);
             return $image->response();
         }
-        else
+        else if($user->can('see-not-image-files') || $file->uploader_id == $user->id)
         {
             $content = File::get($this->storage_path.$filename);
             return (new Response($content, 200))->header('Content-Type', $file->mime);
         }
+        abort(404);
     }
 
     public function resize($size,$id)
