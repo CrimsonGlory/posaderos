@@ -6255,6 +6255,8 @@ html, body {
 }
 .footermiddle {
 text-align: center;
+left: 45%;
+position: absolute;
 }
 .socialmedia {
 display: inline;
@@ -6264,7 +6266,8 @@ margin: 0.6em 0.5em -0.6em 0em;
 .claim {
 text-align: right;
 font-family: 'FiraSans-Regular';
-margin: -1.2em 5em 0em 0em;
+margin: 0.0em 2em 0em 0em;
+padding: 1.5em 0em  0em  0em  ;
 }
 .circle {
   width: 40px;

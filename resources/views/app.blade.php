@@ -197,9 +197,9 @@
 </div>
 --}}
 <div class="footermiddle">
-	<img src="{{ asset('/img/twitter.png') }}" class="circle socialmedia" />
-	<img src="{{ asset('/img/facebook.png') }}" class="circle socialmedia" />
-	<img src="{{ asset('/img/mail.png') }}" class="circle socialmedia" />
+	<a href="https://twitter.com/lumen_cor" target="_blank"><img src="{{ asset('/img/twitter.png') }}" class="circle socialmedia" /></a>
+	<a href="https://www.facebook.com/lumen.cor" target="_blank"><img src="{{ asset('/img/facebook.png') }}" class="circle socialmedia" /></a>
+	<a href="mailto:posaderos@lumencor.com.ar"><img src="{{ asset('/img/mail.png') }}" class="circle socialmedia" alt="mail" /></a>
 </div>
 
 <div class="claim">
