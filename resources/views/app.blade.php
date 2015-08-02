@@ -186,34 +186,30 @@
 	<script src="/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 </div>{{-- end of wrapper --}}
 <div id="footer">
-<div style="text-align: left">
-<img src="{{ asset('/img/lumencor2.png') }}"  style="float: left; margin: 0em 0em 0em 2em;" /> 
-</div>
-{{--
-<div class="container">
-<div class="col-lg-1 col-centered">
-	<img src="{{ asset('/img/twitter.png') }}" class="circle" />
-</div>
-</div>
---}}
-<div class="footermiddle">
-	<a href="https://twitter.com/lumen_cor" target="_blank"><img src="{{ asset('/img/twitter.png') }}" class="circle socialmedia" /></a>
-	<a href="https://www.facebook.com/lumen.cor" target="_blank"><img src="{{ asset('/img/facebook.png') }}" class="circle socialmedia" /></a>
-	<a href="mailto:posaderos@lumencor.com.ar"><img src="{{ asset('/img/mail.png') }}" class="circle socialmedia" alt="mail" /></a>
-</div>
-
-<div class="claim">
-<p><strong>El corazón es luz.</strong> Al servicio de los necesitados</p>
-</div>
-{{--
-<div class="row">
-    <div class="col-md-2 col-md-offset-5">
-	<img src="{{ asset('/img/twitter.png') }}" class="circle" />
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4" style="width: 32.5%">
+        <img src="{{ asset('/img/lumencor2.png') }}" style="margin: 4% auto auto auto" />
     </div>
+    <div class="col-sm-4" style="overflow: hidden">
+        <div class="row" style="margin-top: 5%; margin-left: 18%; margin-right: 18%">
+            <div class="col-sm-4">
+	            <a href="https://twitter.com/lumen_cor" target="_blank"><img src="{{ asset('/img/twitter.png') }}" class="circle socialmedia" style="margin: 0 auto; display: table;" /></a>
+            </div>
+            <div class="col-sm-4">
+	            <a href="https://www.facebook.com/lumen.cor" target="_blank"><img src="{{ asset('/img/facebook.png') }}" class="circle socialmedia" style="margin: 0 auto; display: table;" /></a>
+            </div>
+            <div class="col-sm-4">
+	            <a href="mailto:posaderos@lumencor.com.ar"><img src="{{ asset('/img/mail.png') }}" class="circle socialmedia" alt="mail" style="margin: 0 auto; display: table;" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4" style="width: 32.5%">
+        <h5 style="text-align: center; margin-top: 6%;"><strong>El corazón es luz.</strong> Al servicio de los necesitados</h5>
+    </div>
+  </div>
 </div>
---}}
-
- @yield('footer') 
+ @yield('footer')
 </div>
 <script>
 $('div.alert').not('.alert-important').delay(3000).slideUp(300);

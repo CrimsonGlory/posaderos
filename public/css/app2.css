@@ -6246,11 +6246,11 @@ html, body {
 #wrap {
   min-height: 100%;
   height: auto;
-  margin: 0 auto -60px;
-  padding: 0 0 60px;
+  margin: 0 auto -87px;
+  padding: 0 0 87px;
 }
 #footer {
-  height: 60px;
+  height: 87px;
   background-color: #ffffff;
 }
 .footermiddle {
