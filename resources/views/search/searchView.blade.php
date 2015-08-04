@@ -83,12 +83,12 @@
                             <button id="search" class="btn btn-default" type="button" onClick="buscar('<?php echo $people ?>')"><span class="glyphicon glyphicon-search"></span></button>
                         </span>
                     </div>
-                    <br />
-                    <br />
-                    <br />
                 </div>
 
                 <div class="panel-collapse collapse in" id="resultado"></div>
+                    <br />
+                    <br />
+                    <br />
             </div>
         </div>
     </div>
