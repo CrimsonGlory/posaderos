@@ -7,7 +7,8 @@ html {
 }
 body {
   margin: 0;
-  font-family: 'FiraSans-Regular';
+  font-family: 'Fira Sans';
+  font-weight: 400;
 }
 article,
 aside,
@@ -977,7 +978,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: 'FiraSans-Regular';
+  font-family: 'Fira Sans';
   font-weight: 500;
   line-height: 1.1;
   color: inherit;
@@ -3893,7 +3894,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   font-size: 18px;
   line-height: 20px;
   height: 50px;
-  font-family: 'FiraSans-Bold';
+  font-family: 'Fira Sans';
+  font-weight: bold;
 }
 .navbar-brand:hover,
 .navbar-brand:focus {
@@ -3939,7 +3941,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-nav {
   margin: 7.5px -15px;
-  font-family: 'FiraSans-Medium';
+  font-family: 'Fira Sans';
+  font-weight: 500;
 }
 .navbar-nav > li > a {
   padding-top: 10px;
@@ -4986,7 +4989,8 @@ a.list-group-item-danger.active:focus {
   border: 1px solid transparent;
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-  font-family: 'FiraSans-Regular';
+  font-family: 'Fira Sans';
+  font-weight: 400;
 }
 .panel-body {
   padding: 15px;
@@ -6265,7 +6269,8 @@ margin: 0.6em 0.5em -0.6em 0em;
 
 .claim {
 text-align: right;
-font-family: 'FiraSans-Regular';
+font-family: 'Fira Sans';
+font-weight: 400;
 margin: 0.0em 2em 0em 0em;
 padding: 1.5em 0em  0em  0em  ;
 }

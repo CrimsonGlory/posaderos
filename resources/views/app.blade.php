@@ -10,9 +10,10 @@
     <!-- Bootstrap core CSS -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Fonts -->
-	<link href='http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700,300italic,400italic,500italic,700italic|Roboto:400,300' rel='stylesheet' type='text/css'>
-	<link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+	{{-- <!--<link href='http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700,300italic,400italic,500italic,700italic|Roboto:400,300' rel='stylesheet' type='text/css'> --> --}}
+	<link href='http://fonts.googleapis.com/css?family=Fira+Sans%3a300%2c400%2c500%2c700%2c300italic%2c400italic%2c500italic%2c700italic%7cRoboto%3a400%2c300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="{{ asset('/css/app2.css') }}">
+<link rel="stylesheet" href="/ajax/libs/select2/4.0.0/css/select2.min.css" />
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -189,15 +190,15 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-4" style="width: 32.5%">
-        <img src="{{ asset('/img/lumencor2.png') }}" style="margin: 4% auto auto auto" />
+        <img src="{{ asset('/img/lumencor2.png') }}" style="margin: 4% auto auto auto" alt="Logo" />
     </div>
     <div class="col-sm-4" style="overflow: hidden">
         <div class="row" style="margin-top: 5%; margin-left: 18%; margin-right: 18%">
             <div class="col-sm-4">
-	            <a href="https://twitter.com/lumen_cor" target="_blank"><img src="{{ asset('/img/twitter.png') }}" class="circle socialmedia" style="margin: 0 auto; display: table;" /></a>
+	            <a href="https://twitter.com/lumen_cor" target="_blank"><img src="{{ asset('/img/twitter.png') }}" alt="Twitter" class="circle socialmedia" style="margin: 0 auto; display: table;" /></a>
             </div>
             <div class="col-sm-4">
-	            <a href="https://www.facebook.com/lumen.cor" target="_blank"><img src="{{ asset('/img/facebook.png') }}" class="circle socialmedia" style="margin: 0 auto; display: table;" /></a>
+	            <a href="https://www.facebook.com/lumen.cor" target="_blank"><img src="{{ asset('/img/facebook.png') }}" alt="Facebook" class="circle socialmedia" style="margin: 0 auto; display: table;" /></a>
             </div>
             <div class="col-sm-4">
 	            <a href="mailto:posaderos@lumencor.com.ar"><img src="{{ asset('/img/mail.png') }}" class="circle socialmedia" alt="mail" style="margin: 0 auto; display: table;" /></a>
