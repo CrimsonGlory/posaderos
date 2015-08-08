@@ -78,7 +78,7 @@
                                     {{ trans('messages.reports') }}
                                     <span class="caret"></span>
                                 </a>
-                                <ul class="dropdown-menu" role="menu">
+                                <ul class="dropdown-menu" role="menu" style="min-width: 100%;">
                                     <li>
                                         <a href="{{ action('ReportController@peopleList') }}">
                                             {{ trans('messages.peopleReport') }}
@@ -132,7 +132,7 @@
                                 <img src="{{ Auth::user()->gravatar() }}" class="img-circle" alt="" onerror="this.src='{{ asset("no-photo.png") }}';" style="width: 20px; height: 20px;"> {{ Auth::user()->name }}
                                 <span class="caret"></span>
                             </a>
-                            <ul class="dropdown-menu" role="menu">
+                            <ul class="dropdown-menu" role="menu" style="min-width: 100%;">
                                 <li>
                                     <a href="{{ action('UserController@show',Auth::user()->id) }}">
                                         <i class="glyphicon glyphicon-home iconos-menu"></i>
