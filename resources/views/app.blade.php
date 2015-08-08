@@ -25,7 +25,7 @@
 </head>
 <body>
 <div id="wrap">
-	<nav class="navbar navbar-default" style="border: 1px solid red; box-shadow: 1px 1px 6px black">
+	<nav class="navbar navbar-default" style="border: 1px solid red;">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
