@@ -3177,7 +3177,10 @@ tbody.collapse.in {
 }
 .dropdown-menu > li > a {
   display: block;
-  padding: 3px 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 8px;
+ // padding: 3px 20px;
   clear: both;
   font-weight: normal;
   line-height: 1.42857143;
@@ -6296,3 +6299,7 @@ padding: 1.5em 0em  0em  0em  ;
   border-radius: 20px;
 }
 
+ul.dropdown-menu > li > a ,
+ul.dropdown-menu > li {
+    min-height: 35px;
+}
