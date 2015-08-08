@@ -76,7 +76,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="glyphicon glyphicon-list iconos-menu"></i>
                                     {{ trans('messages.reports') }}
-                                    <span class="caret"></span>
+                                    <span class="caret" style="border-top-color: black; border-bottom-color: black"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu" style="min-width: 100%;">
                                     <li>
@@ -130,12 +130,12 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color: #ffffff">
                                 <img src="{{ Auth::user()->gravatar() }}" class="img-circle" alt="" onerror="this.src='{{ asset("no-photo.png") }}';" style="width: 20px; height: 20px;"> {{ Auth::user()->name }}
-                                <span class="caret"></span>
+                                <span class="caret" style="color: black; border-top-color: black; border-bottom-color: black"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu" style="min-width: 100%;">
                                 <li>
                                     <a href="{{ action('UserController@show',Auth::user()->id) }}">
-                                        <i class="glyphicon glyphicon-home iconos-menu"></i>
+                                        <i class="glyphicon glyphicon-home iconos-menu" style="color: black;"></i>
                                         {{ trans('messages.myProfile') }}
                                     </a>
                                 </li>
