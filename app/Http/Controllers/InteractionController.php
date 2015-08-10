@@ -112,45 +112,48 @@ class InteractionController extends Controller {
         $interaction->user_id = Auth::id();
         $success = $interaction->save();
 
-        $seEnviaronMails = false;
         if (!is_null($tags))
         {
             $interaction->retag($tags);
         }
 
-        // El usuario puede elegir un correo electrónico para enviar el mail de derivación
-        if ($destinationMail != '' && !is_null($person))
+        $seEnviaronMails = false;
+        if (env('MAIL_USERNAME') != null && env('MAIL_PASSWORD') != null)
         {
-            $seEnviaronMails = true;
-            try
-            {
-                sendMail($destinationMail,$person);
-                flash()->success(trans('messages.mailSuccess'));
-            }
-            catch (\Exception $e)
-            {
-                flash()->error(trans('messages.mailFailed'))->important();
-            }
-        }
-
-        // Si hay tags se envian mails a todos los usuarios que tengan alguno de los tags seleccionados
-        if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags) && !$interaction->fixed && !$seEnviaronMails)
-        {
-            $users = User::withAnyTag($tags)->get();
-            if ($users != null && count($users) > 0)
+            // El usuario puede elegir un correo electrónico para enviar el mail de derivación
+            if ($destinationMail != '' && !is_null($person))
             {
                 $seEnviaronMails = true;
                 try
                 {
-                    sendMailToUsers($users,$person);
-                    flash()->success(trans('messages.mailsSuccess'));
+                    sendMail($destinationMail,$person);
+                    flash()->success(trans('messages.mailSuccess'));
                 }
                 catch (\Exception $e)
                 {
-                    flash()->error(trans('messages.mailsFailed'))->important();
+                    flash()->error(trans('messages.mailFailed'))->important();
                 }
             }
 
+            // Si hay tags se envian mails a todos los usuarios que tengan alguno de los tags seleccionados
+            if (!is_null($tags) && allowed_to_tag(Auth::user(),$tags) && !$interaction->fixed && !$seEnviaronMails)
+            {
+                $users = User::withAnyTag($tags)->get();
+                if ($users != null && count($users) > 0)
+                {
+                    $seEnviaronMails = true;
+                    try
+                    {
+                        sendMailToUsers($users,$person);
+                        flash()->success(trans('messages.mailsSuccess'));
+                    }
+                    catch (\Exception $e)
+                    {
+                        flash()->error(trans('messages.mailsFailed'))->important();
+                    }
+                }
+
+            }
         }
 
         if (!$seEnviaronMails)
