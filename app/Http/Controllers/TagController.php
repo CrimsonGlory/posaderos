@@ -110,7 +110,7 @@ class TagController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($tagName)
+	public function show($tagName, \Symfony\Component\HttpFoundation\Request $request)
 	{
         $user = Auth::user();
         if (is_null($user))
@@ -120,28 +120,18 @@ class TagController extends Controller {
 
         if ($user->can('see-tags'))
         {
-            $people = null;
             $interactions = null;
-
-            if ($user->can('see-all-people'))
-            {
-                $people = Person::withAnyTag($tagName)->latest('id')->limit(10)->get();
-            }
-            else if ($user->can('see-new-people'))
-            {
-                $people = Person::withAnyTag($tagName)->where('created_by', $user->id)->latest('id')->limit(10)->get();
-            }
-
             if ($user->can('see-all-interactions'))
             {
-                $interactions = Interaction::withAnyTag($tagName)->latest('id')->limit(10)->get();
+                $interactions = Interaction::withAnyTag($tagName)->latest('id')->paginate(10);
             }
             else if ($user->can('see-new-interactions'))
             {
-                $interactions = Interaction::withAnyTag($tagName)->where('user_id', $user->id)->latest('id')->limit(10)->get();
+                $interactions = Interaction::withAnyTag($tagName)->where('user_id', $user->id)->latest('id')->paginate(10);
             }
 
-            return view('tag.show',compact('tagName','people','interactions'));
+            $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
+            return view('tag.show',compact('tagName', 'interactions', 'paginator'));
         }
         abort(403);
 	}
