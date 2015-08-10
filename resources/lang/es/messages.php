@@ -43,7 +43,7 @@ return [
     'derivations'               => 'Derivaciones',
     'favorites'                 => 'Favoritos',
     'login'                     => 'Login',
-    'logout'                    => 'Logout',
+    'logout'                    => 'Cerrar sesión',
 
     // Login
     'email'                     => 'Correo electrónico',
