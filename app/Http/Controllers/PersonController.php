@@ -147,7 +147,7 @@ class PersonController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($id, Request $request)
 	{
         $user = Auth::user();
         $person = Person::find($id);
@@ -161,12 +161,13 @@ class PersonController extends Controller {
         {
             if ($user->can('see-all-interactions'))
             {
-                $interactions = $person->interactions()->latest('id')->limit(10)->get();
+                $interactions = $person->interactions()->latest('id')->paginate(10);
             }
             else if ($user->can('see-new-interactions'))
             {
-                $interactions = $person->interactions()->where('user_id', $user->id)->latest('id')->limit(10)->get();
+                $interactions = $person->interactions()->where('user_id', $user->id)->latest('id')->paginate(10);
             }
+            $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
 
             $images_counter = $person->fileentries()->image()->count();
 	        $builder = $person->fileentries()->orderBy('id', 'desc')->notImage();
@@ -175,7 +176,7 @@ class PersonController extends Controller {
                 $builder = $builder->where('uploader_id', $user->id);
             }
             $files = $builder->get();
-            return view('person.show',compact('person','interactions','images_counter','files'));
+            return view('person.show',compact('person','interactions','images_counter','files','paginator'));
         }
         abort(403);
 	}
