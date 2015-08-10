@@ -21,28 +21,28 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.firstName') }}</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="name" value="" autofocus="true">
+                                    <input type="text" class="form-control" name="name" value="" maxlength="255" autofocus="true">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.email') }}</label>
                                 <div class="col-md-6">
-                                    <input type="email" class="form-control" name="email" value="">
+                                    <input type="email" class="form-control" name="email" value="" maxlength="255">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.password') }}</label>
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control" name="password" value="">
+                                    <input type="password" class="form-control" name="password" value="" maxlength="255">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.confirmPassword') }}</label>
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control" name="password_confirmation" value="">
+                                    <input type="password" class="form-control" name="password_confirmation" value="" maxlength="255">
                                 </div>
                             </div>
 

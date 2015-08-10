@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.tag') }}</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="tag" autofocus="true">
+                                    <input type="text" class="form-control" name="tag" maxlength="255" autofocus="true">
                                 </div>
                             </div>
 

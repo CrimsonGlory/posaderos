@@ -23,21 +23,21 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.firstName') }}</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="name" value="{{ $userShown->name }}" autofocus="true">
+                                    <input type="text" class="form-control" name="name" value="{{ $userShown->name }}" maxlength="255" autofocus="true">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.email') }}</label>
                                 <div class="col-md-6">
-                                    <input type="email" class="form-control" name="email" value="{{ $userShown->email }}">
+                                    <input type="email" class="form-control" name="email" value="{{ $userShown->email }}" maxlength="255">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.phone') }}</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="phone" value="{{ $userShown->phone }}">
+                                    <input type="text" class="form-control" name="phone" value="{{ $userShown->phone }}" maxlength="255">
                                 </div>
                             </div>
 
