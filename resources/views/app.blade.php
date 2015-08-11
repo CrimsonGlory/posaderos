@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{{ trans('messages.posaderos') }}</title>
-	<link href="{{ asset('css/footer.css') }}" rel="stylesheet">
+	{{-- <link href="{{ asset('css/footer.css') }}" rel="stylesheet">--}}
 
     <!-- Bootstrap core CSS -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
