@@ -43,13 +43,16 @@ class InteractionController extends Controller {
             abort(404);
         }
 
+        $interactionsCount = 0;
         $interactions = null;
         if ($user->can('see-all-interactions'))
         {
+            $interactionsCount = Interaction::count();
             $interactions = Interaction::orderBy('id', 'desc')->paginate(10);
         }
         else if ($user->can('see-new-interactions'))
         {
+            $interactionsCount = Interaction::where('user_id', $user->id)->count();
             $interactions = Interaction::orderBy('id', 'desc')->where('user_id', $user->id)->paginate(10);
         }
         else
@@ -58,7 +61,7 @@ class InteractionController extends Controller {
         }
 
         $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
-        return view('interaction.index',compact('interactions', 'paginator'));
+        return view('interaction.index',compact('interactions', 'paginator', 'interactionsCount'));
     }
 
     /**

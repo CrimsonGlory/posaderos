@@ -46,9 +46,10 @@ class TagController extends Controller {
 
         if ($user->can('see-tags'))
         {
+            $tagsCount = Tag::count();
             $tags = Tag::groupBy('name')->paginate(10);
             $paginator = $this->pagination->set($tags, $request->getBaseUrl());
-            return view('tag.index',compact('tags','paginator'));
+            return view('tag.index',compact('tags','paginator','tagsCount'));
         }
         abort(403);
 	}

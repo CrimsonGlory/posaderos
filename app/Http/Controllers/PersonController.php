@@ -42,13 +42,16 @@ class PersonController extends Controller {
             abort(404);
         }
 
+        $peopleCount = 0;
         $people = null;
         if ($user->can('see-all-people') && !$user->hasRole('new-user'))
         {
+            $peopleCount = Person::count();
             $people = Person::orderBy('id', 'desc')->paginate(10);
         }
         else if ($user->can('see-new-people'))
         {
+            $peopleCount = Person::where('created_by', $user->id)->count();
             $people = Person::orderBy('id', 'desc')->where('created_by', $user->id)->paginate(10);
         }
         else
@@ -57,7 +60,7 @@ class PersonController extends Controller {
         }
 
         $paginator = $this->pagination->set($people, $request->getBaseUrl());
-		return view('person.index', compact('people', 'paginator'));
+		return view('person.index', compact('people', 'paginator','peopleCount'));
 	}
 
 	/**

@@ -51,9 +51,10 @@ class UserController extends Controller {
 
         if ($user->can('see-users'))
         {
+            $usersCount = User::count();
             $users = User::orderBy('id', 'desc')->paginate(10);
             $paginator = $this->pagination->set($users, $request->getBaseUrl());
-            return view('user.index', compact('users', 'paginator'));
+            return view('user.index', compact('users', 'paginator', 'usersCount'));
         }
         abort(403);
 	}
