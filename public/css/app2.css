@@ -6275,6 +6275,22 @@ html, body {
   height: 87px;
   background-color: #ffffff;
 }
+@media (max-width: 767px)
+{
+#wrap {
+    margin: 0 auto -136px;
+    padding: 0 0 136px;
+}
+#footer {
+    height: 136px;
+}
+}
+@media (min-width: 768px)
+{
+#footer{
+    padding-top: 20px;
+}
+}
 .footermiddle {
 text-align: center;
 left: 45%;
@@ -6301,7 +6317,35 @@ padding: 1.5em 0em  0em  0em  ;
   border-radius: 20px;
 }
 
+.circle:hover {
+  background: red;
+}
 ul.dropdown-menu > li > a ,
 ul.dropdown-menu > li {
     min-height: 35px;
+}
+
+@media (max-width: 768px){
+.align-slogan {
+    text-align: center;
+    line-height: 1.6;
+}
+}
+@media (min-width: 768px){
+.align-slogan {
+    padding-top: 10px;
+    text-align: right;
+}
+}
+
+@media (max-width: 768px){
+.align-logo{
+    text-align: center;
+    padding-bottom: 15px;
+}
+}
+@media (min-width: 768px){
+.align-logo{
+    text-align: left;
+}
 }

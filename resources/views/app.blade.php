@@ -188,25 +188,27 @@
 </div>{{-- end of wrapper --}}
 <div id="footer">
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-4" style="width: 32.5%">
-        <img src="{{ asset('/img/lumencor2.png') }}" style="margin: 4% auto auto auto" alt="Logo" />
+  <div class="row" style="background-color: white">
+    <div class="col-lg-5 col-sm-4 col-xs-12 align-logo">
+        <img src="{{ asset('/img/lumencor2.png') }}" alt="Logo" />
     </div>
-    <div class="col-sm-4" style="overflow: hidden">
-        <div class="row" style="margin-top: 5%; margin-left: 18%; margin-right: 18%">
-            <div class="col-sm-4">
-	            <a href="https://twitter.com/lumen_cor" target="_blank"><img src="{{ asset('/img/twitter.png') }}" alt="Twitter" class="circle socialmedia" style="margin: 0 auto; display: table;" /></a>
+    <div class="col-lg-2 col-sm-4 col-xs-12">
+        <div class="row" style="text-align: center">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                </div>
+            <div class="col-md-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-4" style="padding-right: 0; padding-left: 0"><a href="https://twitter.com/lumen_cor" target="_blank"><img src="{{ asset('/img/twitter.png') }}" alt="Twitter" class="circle"/></a></div>
+                    <div class="col-md-4 col-sm-4 col-xs-4" style="padding-right: 0; padding-left: 0;"><a href="https://www.facebook.com/lumen.cor" target="_blank"><img src="{{ asset('/img/facebook.png') }}" alt="Facebook" class="circle" /></a></div>
+                    <div class="col-md-4 col-sm-4 col-xs-4" style="padding-right: 0; padding-left: 0;"><a href="mailto:posaderos@lumencor.com.ar"><img src="{{ asset('/img/mail.png') }}" class="circle" alt="mail" /></a></div>
+                </div>
             </div>
-            <div class="col-sm-4">
-	            <a href="https://www.facebook.com/lumen.cor" target="_blank"><img src="{{ asset('/img/facebook.png') }}" alt="Facebook" class="circle socialmedia" style="margin: 0 auto; display: table;" /></a>
-            </div>
-            <div class="col-sm-4">
-	            <a href="mailto:posaderos@lumencor.com.ar"><img src="{{ asset('/img/mail.png') }}" class="circle socialmedia" alt="mail" style="margin: 0 auto; display: table;" /></a>
-            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            </div>
         </div>
     </div>
-    <div class="col-sm-4" style="width: 32.5%">
-        <h5 style="text-align: center; margin-top: 6%;"><strong>El corazón es luz.</strong> Al servicio de los necesitados</h5>
+    <div class="col-lg-5 col-sm-4 col-xs-12 align-slogan">
+        <strong>El corazón es Luz.</strong> Al servicio de los más necesitados
     </div>
   </div>
 </div>
