@@ -159,6 +159,9 @@ return [
     'advancedSearch'            => 'Búsqueda avanzada',
     'search'                    => '¿Búsqueda?',
 
+    // Search
+    'maxSearchResultsMessage'   => 'La búsqueda que hizo generó más de 30 resultados. Por favor, refine su búsqueda para que se puedan mostrar los resultados.',
+
     // Setup
     'schema_missing'            => 'El esquema de la base aun no se ha creado',
     'create_schema'             => 'Crear esquema',
@@ -221,6 +224,12 @@ return [
     'maxRowsForExcel'           => '1000',
     'reportLimitForPDF'         => 'No se pudo generar el PDF porque el rango es demasiado amplio.',
     'reportLimitForExcel'       => 'No se pudo generar el archivo porque el rango es demasiado amplio.',
+
+    // SearchController
+    'maxSearchResults'          => '30',
+    'noErrorNumber'             => '0',
+    'searchErrorNumber'         => '1',
+    'maxSearchResultsNumber'    => '2',
 
     // TagController
     'tagCreated'                => 'Etiqueta creada.',
