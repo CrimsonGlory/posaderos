@@ -6349,3 +6349,15 @@ ul.dropdown-menu > li {
     text-align: left;
 }
 }
+@media (min-width: 768px){
+.menu-active{
+background-repeat: no-repeat;
+background-image: url('/img/triangle-transparent.png');
+width: 100%;
+height: 10px;
+position: absolute;
+margin-top: 62px;
+z-index: 100;
+background-position: center;
+}
+}

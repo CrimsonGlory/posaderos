@@ -41,7 +41,7 @@
                 @if (!Auth::guest())
                     @if (Auth::user()->can('see-all-people') || Auth::user()->can('see-new-people'))
                         <ul class="nav navbar-nav">
-                            <li><a href="{{ url('/person') }}">
+                            <li>{!! Request::is('person') ? '<div class=\'menu-active\'></div>' : '' !!}<a href="{{ url('/person') }}">
                                     <i class="glyphicon glyphicon-user iconos-menu"></i>
                                     {{ trans('messages.people') }}
                                 </a>
@@ -51,7 +51,7 @@
 
                     @if (Auth::user()->can('see-all-interactions') || Auth::user()->can('see-new-interactions'))
                         <ul class="nav navbar-nav">
-                            <li><a href="{{ url('/interaction') }}">
+                            <li>{!! Request::is('interaction') ? '<div class=\'menu-active\'></div>' : '' !!}<a href="{{ url('/interaction') }}">
                                     <i class="glyphicon glyphicon-edit iconos-menu"></i>
                                     {{ trans('messages.interactions') }}
                                 </a>
@@ -61,7 +61,7 @@
 
                     @if (Auth::user()->can('see-users'))
                         <ul class="nav navbar-nav">
-                            <li>
+                            <li> {!! Request::is('user') ? '<div class=\'menu-active\'></div>' : '' !!}
                                 <a href="{{ url('/user') }}">
                                     <i class="glyphicon glyphicon-lock iconos-menu"></i>
                                     {{ trans('messages.users') }}
@@ -101,7 +101,7 @@
 
                     @if (Auth::user()->can('add-person'))
                         <ul class="nav navbar-nav">
-                            <li>
+                            <li> {!! Request::is('person/create') ? '<div class=\'menu-active\'></div>' : '' !!}
                                 <a href="{{ action('PersonController@create') }}">
                                     <i class="glyphicon glyphicon-plus iconos-menu"></i>
                                     {{ trans('messages.newPerson') }}
@@ -112,7 +112,7 @@
 
                     @if (Auth::user()->can('see-people-search-view') || Auth::user()->can('see-interactions-search-view') || Auth::user()->can('see-users-search-view'))
                         <ul class="nav navbar-nav">
-                            <li>
+                            <li> {!! Request::is('search/searchView') ? '<div class=\'menu-active\'></div>' : '' !!}
                                 <a href="{{ url('/search/searchView') }}">
                                     <i class="glyphicon glyphicon-search iconos-menu"></i>
                                     {{ trans('messages.find') }}
