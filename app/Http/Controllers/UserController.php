@@ -87,7 +87,7 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($id, \Symfony\Component\HttpFoundation\Request $request)
 	{
         $user = Auth::user();
         $userShown = User::find($id);
@@ -99,8 +99,9 @@ class UserController extends Controller {
         if ($user->can('see-users') || $userShown->id == $user->id)
         {
             $gravatar = Gravatar::get($userShown->email);
-            $people = $userShown->people()->latest('id')->limit(10)->get();
-            return view('user.show',compact('userShown','gravatar','people'));
+            $people = $userShown->people()->latest('id')->paginate(10);
+            $paginator = $this->pagination->set($people, $request->getBaseUrl());
+            return view('user.show',compact('userShown','gravatar','people','paginator'));
         }
         abort(403);
 	}

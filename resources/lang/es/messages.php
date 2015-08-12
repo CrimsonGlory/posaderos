@@ -180,6 +180,7 @@ return [
     // Users
     'updateUser'                => 'Actualizar usuario',
     'lastPeopleAddedBy'         => 'Últimos asistidos dados de alta por',
+    'peopleAddedBy'             => 'Asistidos dados de alta por',
     'currentPassword'           => 'Contraseña actual',
     'newPassword'               => 'Nueva contraseña',
 
