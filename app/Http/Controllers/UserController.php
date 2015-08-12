@@ -252,14 +252,16 @@ class UserController extends Controller {
         {
             if ($userShown->hasRole('admin'))
             {
+                $interactionsCount = Interaction::where('fixed', '=', 0)->count();
                 $interactions = Interaction::where('fixed', '=', 0)->orderBy('id', 'desc')->paginate(10);
             }
             else
             {
+                $interactionsCount = Interaction::withAnyTag($userShown->tagNames())->where('fixed', '=', 0)->count();
                 $interactions = Interaction::withAnyTag($userShown->tagNames())->where('fixed', '=', 0)->orderBy('id', 'desc')->paginate(10);
             }
             $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
-            return view('derivations', compact('userShown','interactions','paginator'));
+            return view('derivations', compact('userShown','interactions','paginator','interactionsCount'));
         }
         abort(403);
     }

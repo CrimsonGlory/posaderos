@@ -134,12 +134,6 @@
                                         {{ trans('messages.myProfile') }}
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="{{ action('UserController@changePassword', Auth::user()->id) }}">
-                                        <i class="glyphicon glyphicon-cog"></i>
-                                        {{ trans('messages.changePassword') }}
-                                    </a>
-                                </li>
                                 @if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('posadero') || Auth::user()->hasRole('explorer'))
                                     <li>
                                         <a href="{{ action('UserController@derivations', Auth::user()->id) }}">
@@ -158,6 +152,12 @@
                                     <a href="{{ action('UserController@favorites', Auth::user()->id) }}">
                                         <i class="glyphicon glyphicon-star"></i>
                                         {{ trans('messages.favorites') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ action('UserController@changePassword', Auth::user()->id) }}">
+                                        <i class="glyphicon glyphicon-cog"></i>
+                                        {{ trans('messages.changePassword') }}
                                     </a>
                                 </li>
                                 <li>
