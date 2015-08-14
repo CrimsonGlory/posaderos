@@ -86,6 +86,9 @@
                 </div>
 
                 <div class="panel-collapse collapse in" id="resultado"></div>
+                    <br />
+                    <br />
+                    <br />
             </div>
         </div>
     </div>
