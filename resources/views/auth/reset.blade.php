@@ -24,21 +24,21 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.email') }}</label>
                                 <div class="col-md-6">
-                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}" autofocus="true">
+                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}" maxlength="255" autofocus="true">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.password') }}</label>
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control" name="password">
+                                    <input type="password" class="form-control" name="password" maxlength="255">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.confirmPassword') }}</label>
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control" name="password_confirmation">
+                                    <input type="password" class="form-control" name="password_confirmation" maxlength="255">
                                 </div>
                             </div>
 

@@ -141,7 +141,7 @@
                                 </li>
                                 <li>
                                     <a href="{{ action('UserController@changePassword', Auth::user()->id) }}">
-                                        <i class="glyphicon glyphicon-cog iconos-menu"></i>
+                                        <i class="glyphicon glyphicon-cog iconos-menu" style="color: black;"></i>
                                         {{ trans('messages.changePassword') }}
                                     </a>
                                 </li>
@@ -163,6 +163,12 @@
                                     <a href="{{ action('UserController@favorites', Auth::user()->id) }}">
                                         <i class="glyphicon glyphicon-star iconos-menu"></i>
                                         {{ trans('messages.favorites') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ action('UserController@changePassword', Auth::user()->id) }}">
+                                        <i class="glyphicon glyphicon-cog"></i>
+                                        {{ trans('messages.changePassword') }}
                                     </a>
                                 </li>
                                 <li>

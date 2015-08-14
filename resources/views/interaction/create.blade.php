@@ -52,7 +52,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.particularDerivation') }}</label>
                                 <div class="col-md-6">
-                                    <input type="email" class="form-control" name="destination" placeholder="alguien@ejemplo.com">
+                                    <input type="email" class="form-control" name="destination" placeholder="alguien@ejemplo.com" maxlength="255">
                                 </div>
                             </div>
 

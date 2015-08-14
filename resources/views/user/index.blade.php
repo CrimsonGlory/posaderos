@@ -10,7 +10,7 @@
                     <table width="100%">
                         <tr>
                             <td>
-                                <h4>{{ trans('messages.users') }}</h4>
+                                <h4>{{ trans('messages.users') }} ({{ $usersCount }})</h4>
                             </td>
                         </tr>
                     </table>

@@ -23,21 +23,21 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.currentPassword') }}</label>
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control" name="old_password" autofocus="true">
+                                    <input type="password" class="form-control" name="old_password" maxlength="255" autofocus="true">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.newPassword') }}</label>
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control" name="new_password">
+                                    <input type="password" class="form-control" name="new_password" maxlength="255">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.confirmPassword') }}</label>
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control" name="confirm_password">
+                                    <input type="password" class="form-control" name="confirm_password" maxlength="255">
                                 </div>
                             </div>
 

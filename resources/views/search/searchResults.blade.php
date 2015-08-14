@@ -1,7 +1,13 @@
-@if ($data['error'] == 1)
+@if ($data['error'] == trans('messages.searchErrorNumber'))
     <div class="panel-body">
         <ul class="alert alert-danger">
             <label>{{ trans('messages.searchError') }}</label>
+        </ul>
+    </div>
+@elseif ($data['error'] == trans('messages.maxSearchResultsNumber'))
+    <div class="panel-body">
+        <ul class="alert alert-danger">
+            <label>{{ trans('messages.maxSearchResultsMessage') }}</label>
         </ul>
     </div>
 @elseif (!is_null($people))

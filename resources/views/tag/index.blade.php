@@ -12,7 +12,7 @@
                         <div class="panel-heading">
                             <table width="100%">
                                 <tr>
-                                    <td><h4>{{ trans('messages.tags') }}</h4></td>
+                                    <td><h4>{{ trans('messages.tags') }} ({{ $tagsCount }})</h4></td>
                                     @if (Auth::user()->can('add-tag'))
                                         <td align="right">
                                             <a class="btn btn-primary" href="{{ action('TagController@create') }}" style="width:85px;">

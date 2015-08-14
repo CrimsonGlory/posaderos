@@ -44,7 +44,7 @@ class SearchController extends Controller {
             abort(404);
         }
 
-        $data = array('toFind' => Input::get('toFind'),'keyWord' => trim(Input::get('key')),'error' => 1);
+        $data = array('toFind' => Input::get('toFind'),'keyWord' => trim(Input::get('key')),'error' => trans('messages.searchErrorNumber'));
         $q = $data['keyWord'];
         $tags = $this->get_tags_from_query($q);
         $q = $this->clean_tags($q);
@@ -113,11 +113,18 @@ class SearchController extends Controller {
             $builder = $builder->withAllTags($tags);
         }
 
-        $results = $builder->orderBy('id','desc')->limit(10)->get();
-        if($results)
+        $results = $builder->orderBy('id','desc')->get();
+
+        if(count($results) > trans('messages.maxSearchResults'))
         {
-            $data['error'] = 0;
+            $data['error'] = trans('messages.maxSearchResultsNumber');
+            return view('search.searchResults', compact('data'));
         }
+        else if($results)
+        {
+            $data['error'] = trans('messages.noErrorNumber');
+        }
+
         switch($data['toFind'])
         {
             case trans('messages.people'):

@@ -23,14 +23,14 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.firstName') }}</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="first_name" value="{{ $firstName }}" autofocus="true">
+                                    <input type="text" class="form-control" name="first_name" value="{{ $firstName }}" maxlength="255" autofocus="true">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.lastName') }}</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}">
+                                    <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" maxlength="255">
                                 </div>
                             </div>
 
@@ -61,21 +61,21 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.email') }}</label>
                                 <div class="col-md-6">
-                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}" maxlength="255">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.address') }}</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="address" value="{{ old('address') }}">
+                                    <input type="text" class="form-control" name="address" value="{{ old('address') }}" maxlength="255">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.phone') }}</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+                                    <input type="text" class="form-control" name="phone" value="{{ old('phone') }}" maxlength="255">
                                 </div>
                             </div>
 
@@ -89,7 +89,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('messages.observations') }}</label>
                                 <div class="col-md-6">
-                                    <textarea type="text" class="form-control" name="other" value="{{ old('other') }}"></textarea>
+                                    <textarea type="text" class="form-control" name="other" value="{{ old('other') }}" maxlength="255"></textarea>
                                 </div>
                             </div>
 

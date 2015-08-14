@@ -51,9 +51,10 @@ class UserController extends Controller {
 
         if ($user->can('see-users'))
         {
+            $usersCount = User::count();
             $users = User::orderBy('id', 'desc')->paginate(10);
             $paginator = $this->pagination->set($users, $request->getBaseUrl());
-            return view('user.index', compact('users', 'paginator'));
+            return view('user.index', compact('users', 'paginator', 'usersCount'));
         }
         abort(403);
 	}
@@ -86,7 +87,7 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($id, \Symfony\Component\HttpFoundation\Request $request)
 	{
         $user = Auth::user();
         $userShown = User::find($id);
@@ -98,8 +99,9 @@ class UserController extends Controller {
         if ($user->can('see-users') || $userShown->id == $user->id)
         {
             $gravatar = Gravatar::get($userShown->email);
-            $people = $userShown->people()->latest('id')->limit(10)->get();
-            return view('user.show',compact('userShown','gravatar','people'));
+            $people = $userShown->people()->latest('id')->paginate(10);
+            $paginator = $this->pagination->set($people, $request->getBaseUrl());
+            return view('user.show',compact('userShown','gravatar','people','paginator'));
         }
         abort(403);
 	}
@@ -250,14 +252,16 @@ class UserController extends Controller {
         {
             if ($userShown->hasRole('admin'))
             {
+                $interactionsCount = Interaction::where('fixed', '=', 0)->count();
                 $interactions = Interaction::where('fixed', '=', 0)->orderBy('id', 'desc')->paginate(10);
             }
             else
             {
+                $interactionsCount = Interaction::withAnyTag($userShown->tagNames())->where('fixed', '=', 0)->count();
                 $interactions = Interaction::withAnyTag($userShown->tagNames())->where('fixed', '=', 0)->orderBy('id', 'desc')->paginate(10);
             }
             $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
-            return view('derivations', compact('userShown','interactions','paginator'));
+            return view('derivations', compact('userShown','interactions','paginator','interactionsCount'));
         }
         abort(403);
     }

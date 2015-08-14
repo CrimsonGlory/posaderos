@@ -42,13 +42,16 @@ class PersonController extends Controller {
             abort(404);
         }
 
+        $peopleCount = 0;
         $people = null;
         if ($user->can('see-all-people') && !$user->hasRole('new-user'))
         {
+            $peopleCount = Person::count();
             $people = Person::orderBy('id', 'desc')->paginate(10);
         }
         else if ($user->can('see-new-people'))
         {
+            $peopleCount = Person::where('created_by', $user->id)->count();
             $people = Person::orderBy('id', 'desc')->where('created_by', $user->id)->paginate(10);
         }
         else
@@ -57,7 +60,7 @@ class PersonController extends Controller {
         }
 
         $paginator = $this->pagination->set($people, $request->getBaseUrl());
-		return view('person.index', compact('people', 'paginator'));
+		return view('person.index', compact('people', 'paginator','peopleCount'));
 	}
 
 	/**
@@ -147,7 +150,7 @@ class PersonController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($id, Request $request)
 	{
         $user = Auth::user();
         $person = Person::find($id);
@@ -161,12 +164,13 @@ class PersonController extends Controller {
         {
             if ($user->can('see-all-interactions'))
             {
-                $interactions = $person->interactions()->latest('id')->limit(10)->get();
+                $interactions = $person->interactions()->latest('id')->paginate(10);
             }
             else if ($user->can('see-new-interactions'))
             {
-                $interactions = $person->interactions()->where('user_id', $user->id)->latest('id')->limit(10)->get();
+                $interactions = $person->interactions()->where('user_id', $user->id)->latest('id')->paginate(10);
             }
+            $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
 
             $images_counter = $person->fileentries()->image()->count();
 	        $builder = $person->fileentries()->orderBy('id', 'desc')->notImage();
@@ -175,7 +179,7 @@ class PersonController extends Controller {
                 $builder = $builder->where('uploader_id', $user->id);
             }
             $files = $builder->get();
-            return view('person.show',compact('person','interactions','images_counter','files'));
+            return view('person.show',compact('person','interactions','images_counter','files','paginator'));
         }
         abort(403);
 	}

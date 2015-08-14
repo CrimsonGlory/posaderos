@@ -106,11 +106,12 @@
                 <div class="panel-heading" role="tab" id="PersonasCreadas">
                     <table width="100%">
                         <tr>
-                            <td><h4>{{ trans('messages.lastPeopleAddedBy') }} {{ $userShown->name }}</h4></td>
+                            <td><h4>{{ trans('messages.peopleAddedBy') }} {{ $userShown->name }}</h4></td>
                         </tr>
                     </table>
                 </div>
                 @include('person.list_people',['people' => $people])
+                @include('paginator',['paginator' => $paginator])
             </div>
         </div>
     </div>

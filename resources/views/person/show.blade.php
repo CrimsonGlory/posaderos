@@ -158,7 +158,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">{{ trans('messages.observations') }}</label>
                                     <div class="col-md-6">
-                                        <label class="form-control" style="height: 50px; overflow:auto;" name="other">{{ $person->other }}</label>
+                                        <label class="form-control" style="height: 50px; overflow:auto;" name="other"><?php echo nl2br($person->other) ?></label>
                                     </div>
                                 </div>
 			                @endif
@@ -229,7 +229,7 @@
                     <div class="panel-heading">
                         <table width="100%">
                             <tr>
-                                <td><h4>{{ trans('messages.lastInteractions') }}</h4></td>
+                                <td><h4>{{ trans('messages.interactions') }}</h4></td>
                                 @if (Auth::user()->can('add-interaction'))
                                     <td align="right"><a class="btn btn-primary" href="{{ url('person/'.$person->id.'/interaction/create') }}" style="width:85px;">{{ trans('messages.add') }}</a></td>
                                 @endif
@@ -256,9 +256,9 @@
                                     </td>
                                     <td align="left">
                                         @if (!Agent::isDesktop() && strlen($interaction->text) > 30)
-                                            <label>{{ substr($interaction->text, 0, 29) }}...</label>
+                                            <label><?php echo substr($interaction->text, 0, 29)."..." ?></label>
                                         @else
-                                            <label>{{ $interaction->text }}</label>
+                                            <label><?php echo nl2br($interaction->text) ?></label>
                                         @endif
                                         <br/>
                                         <label>{{ trans('messages.state') }}:</label>
@@ -313,6 +313,7 @@
                                 </tr>
                             @endforeach
                         </table>
+                        @include('paginator',['paginator' => $paginator])
                     @else
                         <div id="collapseOne" class="panel-collapse collapse in">
                             <div class="panel-body">

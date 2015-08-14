@@ -56,9 +56,10 @@ class HomeController extends Controller {
         else if ($user->hasRole('posadero'))
         {
             $userShown = $user;
+            $interactionsCount = Interaction::withAnyTag($user->tagNames())->where('fixed', '=', 0)->count();
             $interactions = Interaction::withAnyTag($user->tagNames())->where('fixed', '=', 0)->orderBy('id', 'desc')->paginate(10);
             $paginator = $this->pagination->set($interactions, $request->getBaseUrl());
-            return view('derivations', compact('userShown','interactions','paginator'));
+            return view('derivations', compact('userShown','interactions','paginator','interactionsCount'));
         }
         else if ($user->hasRole('explorer') || $user->hasRole('new-user'))
         {
