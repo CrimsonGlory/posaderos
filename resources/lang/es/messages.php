@@ -27,6 +27,7 @@ return [
 
     // Menu
     'posaderos'                 => 'Posaderos',
+    'posaderos_network'         => 'Red de Posaderos',
     'people'                    => 'Asistidos',
     'interactions'              => 'Interacciones',
     'users'                     => 'Usuarios',
