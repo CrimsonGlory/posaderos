@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ trans('messages.posaderos') }}</title>
+    <title>{{ trans('messages.posaderos_network') }}</title>
     {{-- <link href="{{ asset('css/footer.css') }}" rel="stylesheet">--}}
 
     <!-- Bootstrap core CSS -->
@@ -198,9 +198,9 @@
                     </div>
                     <div class="col-md-8 col-md-8 col-sm-8 col-xs-8">
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 col-xs-4" style="padding-right: 0; padding-left: 0"><a href="https://twitter.com/lumen_cor" target="_blank"><img src="{{ asset('/img/twitter.png') }}" alt="Twitter" class="circle"/></a></div>
-                            <div class="col-md-4 col-sm-4 col-xs-4" style="padding-right: 0; padding-left: 0;"><a href="https://www.facebook.com/lumen.cor" target="_blank"><img src="{{ asset('/img/facebook.png') }}" alt="Facebook" class="circle" /></a></div>
-                            <div class="col-md-4 col-sm-4 col-xs-4" style="padding-right: 0; padding-left: 0;"><a href="mailto:posaderos@lumencor.com.ar"><img src="{{ asset('/img/mail.png') }}" class="circle" alt="mail" /></a></div>
+                            <div class="col-md-4 col-sm-4 col-xs-4" style="padding-right: 0; padding-left: 0; padding-top: 15px"><a href="https://twitter.com/lumen_cor" target="_blank"><img src="{{ asset('/img/twitter.png') }}" alt="Twitter" class="circle"/></a></div>
+                            <div class="col-md-4 col-sm-4 col-xs-4" style="padding-right: 0; padding-left: 0; padding-top: 15px"><a href="https://www.facebook.com/lumen.cor" target="_blank"><img src="{{ asset('/img/facebook.png') }}" alt="Facebook" class="circle" /></a></div>
+                            <div class="col-md-4 col-sm-4 col-xs-4" style="padding-right: 0; padding-left: 0; padding-top: 15px"><a href="mailto:posaderos@lumencor.com.ar"><img src="{{ asset('/img/mail.png') }}" class="circle" alt="mail" /></a></div>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -208,7 +208,7 @@
                 </div>
             </div>
             <div class="col-lg-5 col-sm-4 col-xs-12 align-slogan">
-                <strong>El corazón es Luz.</strong> Al servicio de los más necesitados
+               <p style="padding-left: 0; padding-top: 15px;"><strong>El corazón es la Luz.</strong> Al servicio de los más necesitados</p>
             </div>
         </div>
     </div>
