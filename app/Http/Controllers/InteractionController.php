@@ -280,6 +280,7 @@ class InteractionController extends Controller {
         {
             $interaction->delete();
             flash()->success(trans('messages.interactionDeleted'));
+            return redirect('person/'.$interaction->person_id);
         }
         abort(403);
     }
