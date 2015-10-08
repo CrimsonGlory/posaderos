@@ -161,7 +161,7 @@
                                 </li>
                                 <li>
                                     <a href="{{ action('UserController@changePassword', Auth::user()->id) }}">
-                                        <i class="glyphicon glyphicon-cog"></i>
+                                        <i class="glyphicon glyphicon-cog iconos-menu"></i>
                                         {{ trans('messages.changePassword') }}
                                     </a>
                                 </li>
