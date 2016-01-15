@@ -8,7 +8,7 @@ db:
 
 web:
   build: .
-  command: bash -c "echo updating composer. This may take a few minutes... && composer --working-dir=/myapp update && echo installing dependencies.... && composer --working-dir=/myapp install && echo starting php server...Check 127.0.0.1:8888 &&  php -S $HOSTNAME:8888 -t /myapp/public"
+  command: bash -c "echo updating composer. This may take a few minutes... && composer --working-dir=/myapp update && echo installing dependencies.... && composer --working-dir=/myapp install && echo starting php server...Check 127.0.0.1:8888 &&  php -S $$HOSTNAME:8888 -t /myapp/public"
   volumes:
     - .:/myapp
   ports:
